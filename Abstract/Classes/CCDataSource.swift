@@ -29,37 +29,47 @@ extension CCDataSource {
     //  MARK: Cells
     
     public func cell(at indexPath: IndexPath) -> CCViewModelCell? {
-        return nil
+        return self.template.cells.first(where: { (cell) -> Bool in
+            return self.template.sections[indexPath.section].id == cell.id
+        })
     }
     
-    public func cell(at id: String) -> CCViewModelCell? {
-        return nil
+    public func cell(at id: String?) -> CCViewModelCell? {
+        return self.template.cells.first(where: { (cell) -> Bool in
+            return cell.id == id
+        })
     }
     
-    public func cell(at paths: [IndexPath]) -> [CCViewModelCell] {
+    public func cells(at paths: [IndexPath]) -> [CCViewModelCell] {
         return []
     }
     
-    public func cell(at ids: [String]) -> [CCViewModelCell] {
-        return []
+    public func cells(at ids: [String?]) -> [CCViewModelCell] {
+        return self.template.cells.filter({ (cell) -> Bool in
+            return ids.contains(cell.id)
+        })
     }
     
     //  MARK: Reload
     
     public func reloadCell(at indexPath: IndexPath) {
-        
+        self.template.reloadCell(at: indexPath.section)
     }
     
-    public func reloadCell(at id: String) {
-        
+    public func reloadCell(at id: String?) {
+        self.template.reloadCell(at: id)
+    }
+    
+    public func reloadCells() {
+        self.template.reloadCells()
     }
     
     public func reloadCells(at paths: [IndexPath]) {
-        
+        self.template.reloadCells()
     }
     
     public func reloadCells(at ids: [String]) {
-        
+        self.template.reloadCells()
     }
     
     //  MARK:

@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+class CCViewModelSection {
+    
+    var id: String?
+    
+    init(id: String?) {
+        self.id = id
+    }
+    
+}

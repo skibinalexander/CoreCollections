@@ -9,8 +9,8 @@
 import Foundation
 
 class CCTemplateViewModels {
-    private var sections:   [CCViewModelCell & CCViewModelBehaviorsCell]
-    private var cells:      [CCViewModelCell & CCViewModelBehaviorsCell]
+    var sections:   [CCViewModelSection]
+    var cells:      [CCViewModelCell & CCViewModelBehaviorsCell]
     
     private weak var output: CCViewModelCellOutputProtocol?
     
@@ -19,4 +19,41 @@ class CCTemplateViewModels {
         self.sections = []
         self.cells = []
     }
+    
+}
+
+//  MARK: Override Reload Sections
+
+extension CCTemplateViewModels {
+    
+    func reloadSections() {
+        
+    }
+    
+    func reloadSection(at index: Int) {
+        
+    }
+    
+    func reloadSection(at id: String?) {
+        
+    }
+    
+}
+
+//  MARK: Override Reload Cells
+
+extension CCTemplateViewModels {
+    
+    func reloadCells() {
+        
+    }
+    
+    func reloadCell(at index: Int) {
+        
+    }
+    
+    func reloadCell(at id: String?) {
+        
+    }
+    
 }

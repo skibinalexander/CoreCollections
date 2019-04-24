@@ -19,15 +19,19 @@ protocol CCViewModelBehaviorsCell {
 }
 
 class CCViewModelCell {
+    
+    //  MARK: Private
+    
     private var view:       CCViewCellProtocol?
     private var model:      CCModelCellProtocol
     
     private var output:     CCViewModelCellOutputProtocol?
     
-    private var id:         String?
+    //  MARK: Public
     
-    private var reusebleId: String?
-    private var nibName:    String?
+    var id:                 String?
+    var reusebleId:         String?
+    var nibName:            String?
     
     //  MARK: Initialization
     
