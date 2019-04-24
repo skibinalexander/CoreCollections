@@ -5,4 +5,5 @@ Simple Framework work with collections (UITableView / UICollectionView) by SOLID
 
 * Сonvenience
 * Simplicity
-* Adapted
+* Adapted by VIPER / SOLID
+
