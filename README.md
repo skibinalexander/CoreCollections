@@ -19,5 +19,5 @@ git clone https://github.com/skibinalexander/CoreCollections.git
 Or add submodule for your project. Need write this in your terminal program at source folder
 
 ```
-https://github.com/skibinalexander/CoreCollections.git
+git submodule add https://github.com/skibinalexander/CoreCollections.git
 ```
