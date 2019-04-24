@@ -8,12 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		CE2E107A22704B8C00D2B888 /* CoreCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2E107822704B8C00D2B888 /* CoreCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE2E108422704BE400D2B888 /* CCViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E108322704BE400D2B888 /* CCViewCell.swift */; };
+		CE2E108622704BF500D2B888 /* CCModelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E108522704BF500D2B888 /* CCModelCell.swift */; };
+		CE2E108822704BFE00D2B888 /* CCViewModelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E108722704BFE00D2B888 /* CCViewModelCell.swift */; };
+		CE2E108C22704C2E00D2B888 /* CCViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E108B22704C2E00D2B888 /* CCViewSection.swift */; };
+		CE2E108E22704C3800D2B888 /* CCModelSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E108D22704C3800D2B888 /* CCModelSection.swift */; };
+		CE2E109022704C4000D2B888 /* CCViewModelSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E108F22704C4000D2B888 /* CCViewModelSection.swift */; };
+		CE2E109322704C7400D2B888 /* CCDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E109222704C7400D2B888 /* CCDataSource.swift */; };
+		CE2E109522704C8100D2B888 /* CCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E109422704C8100D2B888 /* CCDelegate.swift */; };
+		CE2E109722704C9D00D2B888 /* CCTemplateViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E109622704C9D00D2B888 /* CCTemplateViewModels.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CE2E107522704B8C00D2B888 /* CoreCollection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoreCollection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE2E107822704B8C00D2B888 /* CoreCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreCollection.h; sourceTree = "<group>"; };
 		CE2E107922704B8C00D2B888 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE2E108322704BE400D2B888 /* CCViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCViewCell.swift; sourceTree = "<group>"; };
+		CE2E108522704BF500D2B888 /* CCModelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCModelCell.swift; sourceTree = "<group>"; };
+		CE2E108722704BFE00D2B888 /* CCViewModelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCViewModelCell.swift; sourceTree = "<group>"; };
+		CE2E108B22704C2E00D2B888 /* CCViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCViewSection.swift; sourceTree = "<group>"; };
+		CE2E108D22704C3800D2B888 /* CCModelSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCModelSection.swift; sourceTree = "<group>"; };
+		CE2E108F22704C4000D2B888 /* CCViewModelSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCViewModelSection.swift; sourceTree = "<group>"; };
+		CE2E109222704C7400D2B888 /* CCDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCDataSource.swift; sourceTree = "<group>"; };
+		CE2E109422704C8100D2B888 /* CCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCDelegate.swift; sourceTree = "<group>"; };
+		CE2E109622704C9D00D2B888 /* CCTemplateViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCTemplateViewModels.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,10 +64,67 @@
 		CE2E107722704B8C00D2B888 /* CoreCollection */ = {
 			isa = PBXGroup;
 			children = (
+				CE2E108022704BA900D2B888 /* Source */,
 				CE2E107822704B8C00D2B888 /* CoreCollection.h */,
 				CE2E107922704B8C00D2B888 /* Info.plist */,
 			);
 			path = CoreCollection;
+			sourceTree = "<group>";
+		};
+		CE2E108022704BA900D2B888 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				CE2E108222704BC200D2B888 /* Implementation */,
+				CE2E108122704BBC00D2B888 /* Abstract */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		CE2E108122704BBC00D2B888 /* Abstract */ = {
+			isa = PBXGroup;
+			children = (
+				CE2E109122704C5700D2B888 /* Classes */,
+				CE2E108A22704C1A00D2B888 /* Section */,
+				CE2E108922704C0100D2B888 /* Cell */,
+			);
+			path = Abstract;
+			sourceTree = "<group>";
+		};
+		CE2E108222704BC200D2B888 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Implementation;
+			sourceTree = "<group>";
+		};
+		CE2E108922704C0100D2B888 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CE2E108322704BE400D2B888 /* CCViewCell.swift */,
+				CE2E108522704BF500D2B888 /* CCModelCell.swift */,
+				CE2E108722704BFE00D2B888 /* CCViewModelCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		CE2E108A22704C1A00D2B888 /* Section */ = {
+			isa = PBXGroup;
+			children = (
+				CE2E108B22704C2E00D2B888 /* CCViewSection.swift */,
+				CE2E108D22704C3800D2B888 /* CCModelSection.swift */,
+				CE2E108F22704C4000D2B888 /* CCViewModelSection.swift */,
+			);
+			path = Section;
+			sourceTree = "<group>";
+		};
+		CE2E109122704C5700D2B888 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				CE2E109222704C7400D2B888 /* CCDataSource.swift */,
+				CE2E109422704C8100D2B888 /* CCDelegate.swift */,
+				CE2E109622704C9D00D2B888 /* CCTemplateViewModels.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,6 +170,7 @@
 				TargetAttributes = {
 					CE2E107422704B8C00D2B888 = {
 						CreatedOnToolsVersion = 10.2;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -130,6 +206,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE2E108C22704C2E00D2B888 /* CCViewSection.swift in Sources */,
+				CE2E108422704BE400D2B888 /* CCViewCell.swift in Sources */,
+				CE2E108E22704C3800D2B888 /* CCModelSection.swift in Sources */,
+				CE2E108622704BF500D2B888 /* CCModelCell.swift in Sources */,
+				CE2E109522704C8100D2B888 /* CCDelegate.swift in Sources */,
+				CE2E109322704C7400D2B888 /* CCDataSource.swift in Sources */,
+				CE2E109022704C4000D2B888 /* CCViewModelSection.swift in Sources */,
+				CE2E109722704C9D00D2B888 /* CCTemplateViewModels.swift in Sources */,
+				CE2E108822704BFE00D2B888 /* CCViewModelCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +346,7 @@
 		CE2E107E22704B8C00D2B888 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -278,6 +364,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = skibinalexander.devteam.CoreCollection;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -286,6 +373,7 @@
 		CE2E107F22704B8C00D2B888 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
