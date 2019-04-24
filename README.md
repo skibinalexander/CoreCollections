@@ -3,8 +3,8 @@ Simple Framework work with collections (UITableView / UICollectionView) by SOLID
 
 ## Opportunities
 
+* Adapted by VIPER / SOLID
 * Сonvenience
 * Simplicity
-* Adapted by VIPER / SOLID
 * Scalability for any projects
 * Universal for any cases in your projects
