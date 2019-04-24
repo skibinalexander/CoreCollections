@@ -8,6 +8,6 @@
 
 import Foundation
 
-class CCColectionViewDataSource {
+class CCColectionViewDataSource: CCDataSource {
     
 }

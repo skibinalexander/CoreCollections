@@ -8,41 +8,140 @@
 
 import Foundation
 
-protocol CCDataSourceProtocol {
+class CCDataSource {
     
-    //  MARK: CellsDataSource
+    //  MARK: Properties
     
-    func cell(at indexPath: IndexPath)              -> CCViewModelCell?
-    func cell(at id: String)                        -> CCViewModelCell?
-    func cell(at paths: [IndexPath])                -> [CCViewModelCell]
-    func cell(at ids: [String])                     -> [CCViewModelCell]
+    private var template: CCTemplateViewModels
     
-    func reloadCell(at indexPath: IndexPath)
-    func reloadCell(at id: String)
-    func reloadCells(at paths: [IndexPath])
-    func reloadCells(at ids: [String])
+    //  MARK: Lifecycle
     
-    func insertCell(at indexPath: IndexPath)        -> IndexPath?
-    func insertCell(at id: String)                  -> IndexPath?
-    func insertCells(at paths: [IndexPath])         -> [IndexPath]
-    func insertCells(at ids: [String])              -> [IndexPath]
-    
-    func appendCell()                               -> IndexPath?
-    func appendCells()                              -> [IndexPath]
-    
-    func removeCell(at indexPath: IndexPath)        -> IndexPath?
-    func removeCell(at id: String)                  -> IndexPath?
-    func removeCells(at paths: [IndexPath])         -> [IndexPath]
-    func removeCells(at ids: [String])              -> [IndexPath]
-    
-    func updateViewCell(at indexPath: IndexPath)
-    func updateViewCell(at paths: [IndexPath])
-    func updateViewCell(at id: String)
-    func updateViewCell(at ids: [String])
-    
-    func updateModelCell(at indexPath: IndexPath)
-    func updateModelCell(at paths: [IndexPath])
-    func updateModelCell(at id: String)
-    func updateModelCell(at ids: [String])
+    init(template: CCTemplateViewModels) {
+        self.template = template
+    }
     
 }
+
+//  MARK: Imeplementation
+
+extension CCDataSource {
+    
+    //  MARK: Cells
+    
+    public func cell(at indexPath: IndexPath) -> CCViewModelCell? {
+        return nil
+    }
+    
+    public func cell(at id: String) -> CCViewModelCell? {
+        return nil
+    }
+    
+    public func cell(at paths: [IndexPath]) -> [CCViewModelCell] {
+        return []
+    }
+    
+    public func cell(at ids: [String]) -> [CCViewModelCell] {
+        return []
+    }
+    
+    //  MARK: Reload
+    
+    public func reloadCell(at indexPath: IndexPath) {
+        
+    }
+    
+    public func reloadCell(at id: String) {
+        
+    }
+    
+    public func reloadCells(at paths: [IndexPath]) {
+        
+    }
+    
+    public func reloadCells(at ids: [String]) {
+        
+    }
+    
+    //  MARK:
+    
+    public func insertCell(at indexPath: IndexPath) -> IndexPath? {
+        return nil
+    }
+    
+    public func insertCell(at id: String) -> IndexPath? {
+        return nil
+    }
+    
+    public func insertCells(at paths: [IndexPath]) -> [IndexPath] {
+        return []
+    }
+    
+    public func insertCells(at ids: [String]) -> [IndexPath] {
+        return []
+    }
+    
+    //  MARK: Append
+    
+    public func appendCell() -> IndexPath? {
+        return nil
+    }
+    
+    public func appendCells() -> [IndexPath] {
+        return []
+    }
+    
+    //  MARK: Remove
+    
+    public func removeCell(at indexPath: IndexPath) -> IndexPath? {
+        return nil
+    }
+    
+    public func removeCell(at id: String) -> IndexPath? {
+        return nil
+    }
+    
+    public func removeCells(at paths: [IndexPath]) -> [IndexPath] {
+        return []
+    }
+    
+    public func removeCells(at ids: [String]) -> [IndexPath] {
+        return []
+    }
+    
+    //  MARK: Update
+    
+    public func updateViewCell(at indexPath: IndexPath) {
+        
+    }
+    
+    public func updateViewCell(at paths: [IndexPath]) {
+        
+    }
+    
+    public func updateViewCell(at id: String) {
+        
+    }
+    
+    public func updateViewCell(at ids: [String]) {
+        
+    }
+    
+    public func updateModelCell(at indexPath: IndexPath) {
+        
+    }
+    
+    public func updateModelCell(at paths: [IndexPath]) {
+        
+    }
+    
+    public func updateModelCell(at id: String) {
+        
+    }
+    
+    public func updateModelCell(at ids: [String]) {
+        
+    }
+    
+}
+
+

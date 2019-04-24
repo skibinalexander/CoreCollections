@@ -8,6 +8,6 @@
 
 import Foundation
 
-class CCTableViewDataSource {
+class CCTableViewDataSource: CCDataSource {
     
 }
