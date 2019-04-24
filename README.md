@@ -5,4 +5,4 @@ Simple Framework work with collections (UITableView / UICollectionView) by SOLID
 
 * Сonvenience
 * Simplicity
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* Adapted
