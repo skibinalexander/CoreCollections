@@ -19,12 +19,12 @@ protocol CCViewModelBehaviorsCell {
 }
 
 class CCViewModelCell {
-    private var view:   CCViewCellProtocol?
-    private var model:  CCModelCellProtocol
+    private var view:       CCViewCellProtocol?
+    private var model:      CCModelCellProtocol
     
-    private var output: CCViewModelCellOutputProtocol?
+    private var output:     CCViewModelCellOutputProtocol?
     
-    private var id: String?
+    private var id:         String?
     
     private var reusebleId: String?
     private var nibName:    String?
@@ -44,6 +44,30 @@ class CCViewModelCell {
     
     convenience init(model: CCModelCellProtocol, id: String? = nil, nibName: String) {
         self.init(model: model, id: id, reusebleId: nil, nibName: nibName)
+    }
+    
+}
+
+//  MARK: Public
+
+extension CCViewModelCell {
+    
+    //  MARK: ReloadView
+    
+    public func reloadView() {
+        
+    }
+    
+    //  MARK: UpdateView
+    
+    public func updateView() {
+        
+    }
+    
+    //  MARK: UpdateModel
+    
+    func updateModel() {
+        
     }
     
 }

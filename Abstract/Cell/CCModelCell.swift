@@ -9,5 +9,5 @@
 import Foundation
 
 protocol CCModelCellProtocol {
-    
+    var viewModel: CCViewModelCell? { get set }
 }
