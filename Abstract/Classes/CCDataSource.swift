@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CCDataSource {
+class CCDataSource<T: CCTemplateViewModels> {
     
     //  MARK: Properties
     
@@ -16,8 +16,8 @@ class CCDataSource {
     
     //  MARK: Lifecycle
     
-    init(template: CCTemplateViewModels) {
-        self.template = template
+    init(output: CCViewModelCellOutputProtocol?) {
+        self.template = T(output: output)
     }
     
 }

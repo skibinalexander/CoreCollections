@@ -12,7 +12,7 @@ class CCTemplateViewModels {
     private var sections:   [CCViewModelCell & CCViewModelBehaviorsCell]
     private var cells:      [CCViewModelCell & CCViewModelBehaviorsCell]
     
-    init() {
+    required init(output: CCViewModelCellOutputProtocol?) {
         self.sections = []
         self.cells = []
     }
