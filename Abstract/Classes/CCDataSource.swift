@@ -8,6 +8,13 @@
 
 import Foundation
 
+protocol CCDataSourceExecuteCellsProtocol {
+    func cell<T: CCViewModelCell>(at indexPath: IndexPath) -> T?
+    func cell<T: CCViewModelCell>(at id: String?) -> T?
+    func cells<T: CCViewModelCell>(at paths: [IndexPath]) -> [T]
+    func cells(at ids: [String?]) -> [CCViewModelCell]
+}
+
 class CCDataSource<T: CCTemplateViewModels>: NSObject {
     
     //  MARK: Properties
@@ -24,7 +31,7 @@ class CCDataSource<T: CCTemplateViewModels>: NSObject {
 
 //  MARK: Imeplementation
 
-extension CCDataSource {
+extension CCDataSource: CCDataSourceExecuteCellsProtocol {
     
     //  MARK: Cells
     

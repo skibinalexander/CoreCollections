@@ -12,10 +12,10 @@ class CCDelegate: NSObject {
     
     //  Properties
     
-    internal var template: CCTemplateViewModels?
+    internal var cellsExecutor: CCDataSourceExecuteCellsProtocol?
     
-    init(template: CCTemplateViewModels?) {
-        self.template = template
+    init(cellsExecutor: CCDataSourceExecuteCellsProtocol?) {
+        self.cellsExecutor = cellsExecutor
     }
     
 }
