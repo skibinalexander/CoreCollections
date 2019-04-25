@@ -21,7 +21,7 @@ class CCTableViewController: UIViewController{
     
     //  MARK: Properties
     
-    var output: CCTableViewControllerOutputProtocol?
+    var tableViewOutput: CCTableViewControllerOutputProtocol?
     
 }
 
@@ -39,7 +39,7 @@ extension CCTableViewController {
 
 extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
     
-    func configure(dataSource: Any, delegate: Any) {
+    func configure(dataSource: Any?, delegate: Any?) {
         let dataSource  = (dataSource as? UITableViewDataSource)
         let delegate    = (delegate as? UITableViewDelegate)
         
@@ -87,7 +87,7 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
 extension CCTableViewController: UITableViewDataSourcePrefetching {
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        guard let output = self.output else {
+        guard let output = self.tableViewOutput else {
             return
         }
         

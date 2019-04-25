@@ -22,7 +22,7 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
 
     private weak var output: CCTableViewDelegateOutputProtocol?
     
-    init(cellsExecutor: CCDataSourceExecuteCellsProtocol?, output: CCTableViewDelegateOutputProtocol?) {
+    init(cellsExecutor: CCDataSourceExecuteViewModelsCellsProtocol?, output: CCTableViewDelegateOutputProtocol?) {
         self.output = output
         super.init(cellsExecutor: cellsExecutor)
     }

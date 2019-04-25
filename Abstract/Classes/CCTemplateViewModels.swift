@@ -8,59 +8,29 @@
 
 import Foundation
 
+protocol CCTemplateViewModelsDataSource: class {
+    
+}
+
 class CCTemplateViewModels {
     var sections:   [CCViewModelSection]
     var cells:      [CCViewModelCell & CCViewModelBehaviorsCell]
     
-    private weak var output: CCViewModelCellOutputProtocol?
+    interal var dataSource:     CCTemplateViewModelsDataSource
+    private weak var output:    CCViewModelCellOutputProtocol?
     
-    required init(output: CCViewModelCellOutputProtocol?) {
+    required init(dataSource: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
+        self.dataSource = dataSource
         self.output = output
         self.sections = []
         self.cells = []
     }
     
-}
-
-//  MARK: Override Reload Sections
-
-extension CCTemplateViewModels {
-    
     func reloadSections() {
         
     }
     
-    func reloadSection(at index: Int) {
-        
-    }
-    
-    func reloadSection(at id: String?) {
-        
-    }
-    
-}
-
-//  MARK: Override Reload Cells
-
-extension CCTemplateViewModels {
-    
     func reloadCells() {
-        
-    }
-    
-    func reloadCells(at indexs: [Int]) {
-        
-    }
-    
-    func reloadCells(at ids: [String]) {
-        
-    }
-    
-    func reloadCell(at index: Int) {
-        
-    }
-    
-    func reloadCell(at id: String?) {
         
     }
     

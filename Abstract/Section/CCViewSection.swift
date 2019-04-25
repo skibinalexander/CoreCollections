@@ -6,4 +6,8 @@
 //  Copyright © 2019 com.skibinalexander.ru. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+protocol CCViewSectionProtocol {
+    var viewModel: CCViewModelSection?  { get set }
+}

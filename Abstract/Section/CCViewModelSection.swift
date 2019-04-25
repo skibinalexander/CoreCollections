@@ -10,9 +10,9 @@ import Foundation
 
 class CCViewModelSection {
     
-    var id: String?
+    var id: String
     
-    init(id: String?) {
+    init(id: String) {
         self.id = id
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CCTableViewModelCell: UITableViewCell, CCModelCellProtocol {
+class CCTableViewModelCell: CCModelCellProtocol {
     
     //  MARK: CCModelCellProtocol
     

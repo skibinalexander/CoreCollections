@@ -8,11 +8,15 @@
 
 import Foundation
 
-protocol CCDataSourceExecuteCellsProtocol {
+protocol CCDataSourceExecuteViewModelsCellsProtocol {
     func cell<T: CCViewModelCell>(at indexPath: IndexPath) -> T?
     func cell<T: CCViewModelCell>(at id: String?) -> T?
     func cells<T: CCViewModelCell>(at paths: [IndexPath]) -> [T]
     func cells(at ids: [String?]) -> [CCViewModelCell]
+}
+
+protocol CCDataSourceReloadViewModelsCellsProtocol {
+    func reloadCells()      //  Reload all cells with binding models
 }
 
 class CCDataSource<T: CCTemplateViewModels>: NSObject {
@@ -23,15 +27,15 @@ class CCDataSource<T: CCTemplateViewModels>: NSObject {
     
     //  MARK: Lifecycle
     
-    init(output: CCViewModelCellOutputProtocol?) {
-        self.template = T(output: output)
+    init(templateData: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
+        self.template = T(dataSource: templateData, output: output)
     }
     
 }
 
 //  MARK: Imeplementation
 
-extension CCDataSource: CCDataSourceExecuteCellsProtocol {
+extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
     
     //  MARK: Cells
     
@@ -61,28 +65,10 @@ extension CCDataSource: CCDataSourceExecuteCellsProtocol {
 
 //  MARK: ReloadCells
 
-extension CCDataSource {
+extension CCDataSource: CCDataSourceReloadViewModelsCellsProtocol {
     
-    public func reloadCell(at indexPath: IndexPath) {
-        self.template.reloadCell(at: indexPath.section)
-    }
-    
-    public func reloadCell(at id: String?) {
-        self.template.reloadCell(at: id)
-    }
-    
-    public func reloadCells() {
+    func reloadCells() {
         self.template.reloadCells()
-    }
-    
-    public func reloadCells(at paths: [IndexPath]) {
-        self.template.reloadCells(at: paths.map({ (path) -> Int in
-            return path.row
-        }))
-    }
-    
-    public func reloadCells(at ids: [String]) {
-        self.template.reloadCells(at: ids)
     }
     
 }

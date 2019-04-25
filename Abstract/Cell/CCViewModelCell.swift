@@ -43,6 +43,8 @@ class CCViewModelCell {
         self.id = id
         self.reusebleId = reusebleId
         self.nibName = nibName
+        
+        self.model.viewModel = self
     }
     
     convenience init(model: CCModelCellProtocol, sectionId: String, id: String? = nil, reusebleId: String) {
@@ -57,6 +59,7 @@ class CCViewModelCell {
     
     func inject(view: CCViewCellProtocol?) {
         self.view = view
+        view?.viewModel = self
     }
     
 }

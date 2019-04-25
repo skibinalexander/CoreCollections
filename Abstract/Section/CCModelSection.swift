@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+protocol CCModelSectionProtocol {
+    var viewModel: CCViewModelCell? { get set }
+}
