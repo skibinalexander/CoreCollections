@@ -8,6 +8,14 @@
 
 import Foundation
 
-class CCDelegate {
+class CCDelegate: NSObject {
+    
+    //  Properties
+    
+    internal var template: CCTemplateViewModels?
+    
+    init(template: CCTemplateViewModels?) {
+        self.template = template
+    }
     
 }

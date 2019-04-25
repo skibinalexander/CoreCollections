@@ -13,8 +13,8 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels> {
     var delegate:   CCTableViewDelegate?
     
     init() {
-        self.dataSource = CCTableViewDataSource<T>(output: self)
-        self.delegate   = CCTableViewDelegate()
+//        self.dataSource = CCTableViewDataSource<T>(output: self)
+//        self.delegate   = CCTableViewDelegate(template: self.dataSource?.template, output: self)
     }
 }
 

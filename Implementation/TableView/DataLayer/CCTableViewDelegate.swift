@@ -8,6 +8,19 @@
 
 import Foundation
 
+protocol CCTableViewDelegateOutputProtocol: class {
+    func didSelect(cell: CCTableViewViewModelCell, at indexPath: IndexPath, id: String?)
+}
+
 class CCTableViewDelegate: CCDelegate {
+    
+    //  MARK: Properties
+
+    private weak var output: CCTableViewDelegateOutputProtocol?
+    
+    init(template: CCTemplateViewModels?, output: CCTableViewDelegateOutputProtocol?) {
+        self.output = output
+        super.init(template: template)
+    }
     
 }

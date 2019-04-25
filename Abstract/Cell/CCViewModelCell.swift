@@ -22,8 +22,8 @@ class CCViewModelCell {
     
     //  MARK: Private
     
-    private var view:       CCViewCellProtocol?
-    private var model:      CCModelCellProtocol
+    var view:               CCViewCellProtocol?
+    var model:              CCModelCellProtocol
     
     private var output:     CCViewModelCellOutputProtocol?
     
@@ -33,21 +33,30 @@ class CCViewModelCell {
     var reusebleId:         String?
     var nibName:            String?
     
+    var sectionId:          String
+    
     //  MARK: Initialization
     
-    init(model: CCModelCellProtocol, id: String?, reusebleId: String?, nibName: String?) {
+    init(model: CCModelCellProtocol, sectionId: String, id: String?, reusebleId: String?, nibName: String?) {
         self.model = model
+        self.sectionId = sectionId
         self.id = id
         self.reusebleId = reusebleId
         self.nibName = nibName
     }
     
-    convenience init(model: CCModelCellProtocol, id: String? = nil, reusebleId: String) {
-        self.init(model: model, id: id, reusebleId: reusebleId, nibName: nil)
+    convenience init(model: CCModelCellProtocol, sectionId: String, id: String? = nil, reusebleId: String) {
+        self.init(model: model, sectionId: sectionId, id: id, reusebleId: reusebleId, nibName: nil)
     }
     
-    convenience init(model: CCModelCellProtocol, id: String? = nil, nibName: String) {
-        self.init(model: model, id: id, reusebleId: nil, nibName: nibName)
+    convenience init(model: CCModelCellProtocol, sectionId: String, id: String? = nil, nibName: String) {
+        self.init(model: model, sectionId: sectionId, id: id, reusebleId: nil, nibName: nibName)
+    }
+    
+    //  MARK: Setters
+    
+    func inject(view: CCViewCellProtocol?) {
+        self.view = view
     }
     
 }
@@ -55,12 +64,6 @@ class CCViewModelCell {
 //  MARK: Public
 
 extension CCViewModelCell {
-    
-    //  MARK: ReloadView
-    
-    public func reloadView() {
-        
-    }
     
     //  MARK: UpdateView
     

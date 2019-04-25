@@ -48,6 +48,14 @@ extension CCTemplateViewModels {
         
     }
     
+    func reloadCells(at indexs: [Int]) {
+        
+    }
+    
+    func reloadCells(at ids: [String]) {
+        
+    }
+    
     func reloadCell(at index: Int) {
         
     }

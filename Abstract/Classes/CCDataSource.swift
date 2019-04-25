@@ -8,11 +8,11 @@
 
 import Foundation
 
-class CCDataSource<T: CCTemplateViewModels> {
+class CCDataSource<T: CCTemplateViewModels>: NSObject {
     
     //  MARK: Properties
     
-    private var template: CCTemplateViewModels
+    internal var template: CCTemplateViewModels
     
     //  MARK: Lifecycle
     
@@ -28,19 +28,19 @@ extension CCDataSource {
     
     //  MARK: Cells
     
-    public func cell(at indexPath: IndexPath) -> CCViewModelCell? {
+    public func cell<T: CCViewModelCell>(at indexPath: IndexPath) -> T? {
         return self.template.cells.first(where: { (cell) -> Bool in
-            return self.template.sections[indexPath.section].id == cell.id
-        })
+            return self.template.sections[indexPath.section].id == cell.sectionId
+        }) as? T
     }
     
-    public func cell(at id: String?) -> CCViewModelCell? {
+    public func cell<T: CCViewModelCell>(at id: String?) -> T? {
         return self.template.cells.first(where: { (cell) -> Bool in
             return cell.id == id
-        })
+        }) as? T
     }
     
-    public func cells(at paths: [IndexPath]) -> [CCViewModelCell] {
+    public func cells<T: CCViewModelCell>(at paths: [IndexPath]) -> [T] {
         return []
     }
     
@@ -50,7 +50,11 @@ extension CCDataSource {
         })
     }
     
-    //  MARK: Reload
+}
+
+//  MARK: ReloadCells
+
+extension CCDataSource {
     
     public func reloadCell(at indexPath: IndexPath) {
         self.template.reloadCell(at: indexPath.section)
@@ -65,91 +69,44 @@ extension CCDataSource {
     }
     
     public func reloadCells(at paths: [IndexPath]) {
-        self.template.reloadCells()
+        self.template.reloadCells(at: paths.map({ (path) -> Int in
+            return path.row
+        }))
     }
     
     public func reloadCells(at ids: [String]) {
-        self.template.reloadCells()
+        self.template.reloadCells(at: ids)
     }
     
-    //  MARK:
+}
+
+//  MARK: UpdateCells
+
+extension CCDataSource {
     
-    public func insertCell(at indexPath: IndexPath) -> IndexPath? {
-        return nil
-    }
-    
-    public func insertCell(at id: String) -> IndexPath? {
-        return nil
-    }
-    
-    public func insertCells(at paths: [IndexPath]) -> [IndexPath] {
-        return []
-    }
-    
-    public func insertCells(at ids: [String]) -> [IndexPath] {
-        return []
-    }
-    
-    //  MARK: Append
-    
-    public func appendCell() -> IndexPath? {
-        return nil
-    }
-    
-    public func appendCells() -> [IndexPath] {
-        return []
-    }
-    
-    //  MARK: Remove
-    
-    public func removeCell(at indexPath: IndexPath) -> IndexPath? {
-        return nil
-    }
-    
-    public func removeCell(at id: String) -> IndexPath? {
-        return nil
-    }
-    
-    public func removeCells(at paths: [IndexPath]) -> [IndexPath] {
-        return []
-    }
-    
-    public func removeCells(at ids: [String]) -> [IndexPath] {
-        return []
-    }
-    
-    //  MARK: Update
-    
-    public func updateViewCell(at indexPath: IndexPath) {
+    public func updateViewModelCell(at indexPath: IndexPath) {
+        let cell = self.cell(at: indexPath)
+        cell?.updateView()
+        cell?.updateModel()
         
     }
     
-    public func updateViewCell(at paths: [IndexPath]) {
-        
+    public func updateViewModelCell(at paths: [IndexPath]) {
+        let _ = paths.map { (path) in
+            self.updateViewModelCell(at: path)
+        }
     }
     
-    public func updateViewCell(at id: String) {
-        
+    public func updateViewModelCell(at id: String?) {
+        let cell = self.cell(at: id)
+        cell?.updateView()
+        cell?.updateModel()
     }
     
     public func updateViewCell(at ids: [String]) {
-        
-    }
-    
-    public func updateModelCell(at indexPath: IndexPath) {
-        
-    }
-    
-    public func updateModelCell(at paths: [IndexPath]) {
-        
-    }
-    
-    public func updateModelCell(at id: String) {
-        
-    }
-    
-    public func updateModelCell(at ids: [String]) {
-        
+        let _ = ids.map { (id) in
+            self.updateViewModelCell(at: id)
+        }
     }
     
 }
