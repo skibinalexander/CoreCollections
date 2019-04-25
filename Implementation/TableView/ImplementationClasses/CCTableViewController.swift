@@ -8,11 +8,20 @@
 
 import UIKit
 
+protocol CCTableViewControllerOutputProtocol: class {
+    func fetchList()
+    func countList() -> Int
+}
+
 class CCTableViewController: UIViewController{
     
     //  MARK: IBOutlets
     
     @IBOutlet weak var tableView: UITableView!
+    
+    //  MARK: Properties
+    
+    var output: CCTableViewControllerOutputProtocol?
     
 }
 
@@ -30,13 +39,21 @@ extension CCTableViewController {
 
 extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
     
-    func configure(dataSource: CCTableViewDataSource<CCTemplateViewModels>, delegate: CCTableViewDelegate) {
+    func configure(dataSource: Any, delegate: Any) {
+        let dataSource  = (dataSource as? UITableViewDataSource)
+        let delegate    = (delegate as? UITableViewDelegate)
+        
+        guard dataSource != nil && delegate != nil else {
+            assertionFailure("CCTableViewController: dataSourse \(String(describing: dataSource)) is nil or delegate \(String(describing: delegate)) is nil")
+            return
+        }
+        
         self.tableView.dataSource   = dataSource
         self.tableView.delegate     = delegate
     }
     
     func configurePagination() {
-        
+        self.tableView.prefetchDataSource = self
     }
     
     func configureRefresh() {
@@ -60,6 +77,28 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
     }
     
     func updateHieghtCell(at paths: [IndexPath]) {
+        
+    }
+    
+}
+
+//  MARK: UITableViewDataSourcePrefetching
+
+extension CCTableViewController: UITableViewDataSourcePrefetching {
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard let output = self.output else {
+            return
+        }
+        
+        let _ = indexPaths.map({ (indexPath) in
+            if indexPath.row >= output.countList() {
+                output.fetchList()
+            }
+        })
+    }
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
         
     }
     

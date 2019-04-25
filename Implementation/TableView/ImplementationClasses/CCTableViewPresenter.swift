@@ -9,8 +9,7 @@
 import Foundation
 
 protocol CCTableViewPresenterViewInputProtocol: class {
-    func configure(dataSource: CCTableViewDataSource<CCTemplateViewModels>, delegate: CCTableViewDelegate)
-    func configurePagination()
+    func configure(dataSource: Any, delegate: Any)
     func configureRefresh()
     func reloadTableView()
     func insertCellsIntoTableView(at paths: [IndexPath])
@@ -19,12 +18,14 @@ protocol CCTableViewPresenterViewInputProtocol: class {
     func updateHieghtCell(at paths: [IndexPath])
 }
 
+//  MARK: BasicTableViewPresenter
+
 class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewDelegateOutputProtocol {
     
     //  MARK: Properties
     
-    var dataSource: CCTableViewDataSource<T>?
-    var delegate:   CCTableViewDelegate?
+    var dataSource: CCDataSourceExecuteCellsProtocol?
+    var delegate:   CCTableViewDelegateProtocol?
     
     //  MARK: Lifecycle
     
@@ -52,5 +53,28 @@ extension CCTableViewPresenter: CCViewModelCellOutputProtocol {
     func modelDidChage() {
         
     }
+    
+}
+
+//  MARK: PaginationTableView
+
+protocol CCPaginationTableViewPresenterViewInputProtocol: CCTableViewPresenterViewInputProtocol {
+    func configurePagination()
+}
+
+class CCPaginationModel {
+    var currentItem:    Int
+    var countItems:     Int
+    var itemOnPage:     Int
+    
+    init(currentItem: Int = 0, countItems: Int = 0, itemOnPage: Int = 25) {
+        self.currentItem = currentItem
+        self.countItems = countItems
+        self.itemOnPage = itemOnPage
+    }
+}
+
+class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T> {
+    
     
 }

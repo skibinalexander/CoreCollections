@@ -12,7 +12,11 @@ protocol CCTableViewDelegateOutputProtocol: class {
     func didSelect(cell: CCTableViewViewModelCell?, at indexPath: IndexPath, id: String?)
 }
 
-class CCTableViewDelegate: CCDelegate, UITableViewDelegate {
+protocol CCTableViewDelegateProtocol: class {
+    
+}
+
+class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewDelegate {
     
     //  MARK: Properties
 
