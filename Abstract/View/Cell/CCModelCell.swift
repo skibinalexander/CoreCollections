@@ -1,5 +1,5 @@
 //
-//  CCViewCell.swift
+//  CCModelCell.swift
 //  CoreCollection
 //
 //  Created by Пользователь on 24/04/2019.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol CCViewCellProtocol: class {
-    var viewModel: CCViewModelCell?     { get set }
+protocol CCModelCellProtocol: CCModelProtocol {
+    
 }

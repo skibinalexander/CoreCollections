@@ -1,5 +1,5 @@
 //
-//  CCViewModelSection.swift
+//  CCViewCell.swift
 //  CoreCollection
 //
 //  Created by Пользователь on 24/04/2019.
@@ -8,12 +8,6 @@
 
 import Foundation
 
-class CCViewModelSection {
-    
-    var id: String
-    
-    init(id: String) {
-        self.id = id
-    }
+protocol CCViewCellProtocol: CCViewProtocol {
     
 }

@@ -14,9 +14,9 @@ protocol CCTemplateViewModelsDataSource: class {
 
 class CCTemplateViewModels {
     var sections:   [CCViewModelSection]
-    var cells:      [CCViewModelCell & CCViewModelBehaviorsCell]
+    var cells:      [CCViewModelCell]
     
-    interal var dataSource:     CCTemplateViewModelsDataSource
+    internal var dataSource:     CCTemplateViewModelsDataSource
     private weak var output:    CCViewModelCellOutputProtocol?
     
     required init(dataSource: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
@@ -27,11 +27,11 @@ class CCTemplateViewModels {
     }
     
     func reloadSections() {
-        
+        self.sections = []
     }
     
     func reloadCells() {
-        
+        self.cells = []
     }
     
 }

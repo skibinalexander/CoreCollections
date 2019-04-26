@@ -28,15 +28,17 @@ class CCTableViewDataSource<T: CCTemplateViewModels>: CCDataSource<T>, UITableVi
         
         //  Иницализация view для ячейки
         
-        if cell?.reusebleId != nil {
-            cell?.inject(view: tableView.dequeueReusableCell(withIdentifier: cell!.reusebleId!, for: indexPath) as? CCTableViewCell)
-        } else if cell?.nibName != nil {
-            cell?.inject(view: self.nibCell(nameNib: cell!.nibName!) as? CCTableViewCell)
+        switch cell?.nibType {
+        case .reusebleId?:  cell?.inject(view: tableView.dequeueReusableCell(withIdentifier: cell!.nibId, for: indexPath) as? CCViewProtocol); break;
+        case .nibName?:     cell?.inject(view: self.nibCell(nameNib: cell!.nibId) as? CCViewProtocol); break;
+        default:break;
         }
         
         guard let viewCell = cell?.view as? UITableViewCell else {
             fatalError("CCTableViewDataSource: view for id ViewModel \(String(describing: cell?.id)) not initialization!")
         }
+        
+        cell?.updateView()
         
         return viewCell
     }

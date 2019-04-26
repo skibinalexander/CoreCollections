@@ -38,8 +38,8 @@ extension CCTableViewController {
 //  MARK: CCTableViewPresenterViewInputProtocol
 
 extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
-    
-    func configure(dataSource: Any?, delegate: Any?) {
+
+    func configure(dataSource: Any?, delegate: Any?, output: CCTableViewControllerOutputProtocol?) {
         let dataSource  = (dataSource as? UITableViewDataSource)
         let delegate    = (delegate as? UITableViewDelegate)
         
@@ -48,12 +48,15 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
             return
         }
         
-        self.tableView.dataSource   = dataSource
-        self.tableView.delegate     = delegate
+        self.tableView.dataSource           = dataSource
+        self.tableView.delegate             = delegate
+        self.tableView.prefetchDataSource   = self
+        
+        self.tableViewOutput = output
     }
     
     func configurePagination() {
-        self.tableView.prefetchDataSource = self
+//        self.tableView.prefetchDataSource = self
     }
     
     func configureRefresh() {
@@ -61,7 +64,7 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
     }
     
     func reloadTableView() {
-        
+        self.tableView.reloadData()
     }
     
     func insertCellsIntoTableView(at paths: [IndexPath]) {
@@ -87,15 +90,18 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
 extension CCTableViewController: UITableViewDataSourcePrefetching {
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        
         guard let output = self.tableViewOutput else {
             return
         }
         
-        let _ = indexPaths.map({ (indexPath) in
-            if indexPath.row >= output.countList() {
-                output.fetchList()
-            }
-        })
+        if indexPaths.contains(where: { (indexPath) -> Bool in
+            print(String(describing: indexPath.row) + "|" + String(describing: output.countList()))
+            return indexPath.row >= output.countList()
+        }) {
+            self.tableViewOutput?.fetchList()
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {

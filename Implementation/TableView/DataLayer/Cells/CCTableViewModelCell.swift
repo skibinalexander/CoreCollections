@@ -9,9 +9,5 @@
 import UIKit
 
 class CCTableViewModelCell: CCModelCellProtocol {
-    
-    //  MARK: CCModelCellProtocol
-    
-    weak var viewModel: CCViewModelCell?
-    
+    var viewModel: CCViewModel?
 }

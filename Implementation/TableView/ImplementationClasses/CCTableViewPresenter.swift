@@ -9,7 +9,7 @@
 import Foundation
 
 protocol CCTableViewPresenterViewInputProtocol: class {
-    func configure(dataSource: Any?, delegate: Any?)
+    func configure(dataSource: Any?, delegate: Any?, output: CCTableViewControllerOutputProtocol?)
     func configurePagination()
     func configureRefresh()
     
@@ -36,7 +36,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewDelegateOutputPr
     //  MARK: Lifecycle
     
     init() {
-        self.dataSource = CCTableViewDataSource<T>(templateData: self, output: self)
+        self.dataSource = CCTableViewDataSource<T>(templateDataSource: self, output: self)
         self.delegate   = CCTableViewDelegate(cellsExecutor: self.dataSource,  output: self)
     }
     
@@ -52,13 +52,17 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewDelegateOutputPr
 
 extension CCTableViewPresenter {
     
-    final func configure(tableView: CCTableViewPresenterViewInputProtocol?) {
+    final func configure(tableView: CCTableViewPresenterViewInputProtocol?, tableViewOutput: CCTableViewControllerOutputProtocol?) {
         self.tableViewInput = tableView
-        self.tableViewInput?.configure(dataSource: self.dataSource, delegate: self.delegate)
+        self.tableViewInput?.configure(dataSource: self.dataSource, delegate: self.delegate, output: tableViewOutput)
     }
     
     final func configurePagination() {
         self.tableViewInput?.configurePagination()
+    }
+    
+    final func reloadTableView() {
+        self.tableViewInput?.reloadTableView()
     }
     
 }
@@ -81,7 +85,7 @@ struct CCPaginationModel {
     var currentItem:    Int     = 0
     var countItems:     Int     = 0
     var itemsOnPage:    Int     = 0
-    var hasMode:        Bool    = true
+    var hasMore:        Bool    = true
 }
 
 class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T> {
