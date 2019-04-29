@@ -113,6 +113,7 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
     override func refreshList() {
         super.refreshList()
         self.pagination = CCPaginationModel()
+        self.fetchList()
     }
 
 }
