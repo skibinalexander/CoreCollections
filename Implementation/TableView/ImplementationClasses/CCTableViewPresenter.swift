@@ -14,7 +14,11 @@ protocol CCTableViewPresenterProtocol: class {
     var tableViewInput: CCTableViewPresenterViewInputProtocol?  { get set }
 }
 
-class CCTableViewPresenter<T: CCTemplateViewModels>:CCTableViewPresenterProtocol, CCTableViewDelegateOutputProtocol, CCTemplateViewModelsDataSource {
+class CCTableViewPresenter<T: CCTemplateViewModels>:CCTableViewPresenterProtocol,
+                                CCTableViewDelegateOutputProtocol,
+                                CCTemplateViewModelsDataSource,
+                                CCTableViewRefreshOutputProtocol,
+                                CCViewModelCellOutputProtocol {
     
     var itemsCells:     [CCTableViewModelCell]      = []
     var itemsSections:  [CCTableViewModelSection]   = []
@@ -41,6 +45,25 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:CCTableViewPresenterProtocol
     
     func didSelect(cell: CCTableViewViewModelCell?, at indexPath: IndexPath, id: String?) {
         
+    }
+    
+    //  MARK: CCViewModelCellOutputProtocol
+    
+    func viewDidChange() {
+        
+    }
+    
+    func modelDidChage() {
+        
+    }
+    
+    //  MARK: CCTableViewRefreshOutputProtocol
+    
+    func refreshList() {
+        self.itemsCells = []
+        self.dataSource?.reload()
+        self.tableViewInput?.reloadTableView()
+        self.becomeViewRefresing()
     }
     
 }
@@ -73,28 +96,8 @@ extension CCTableViewPresenter {
     
 }
 
-//  MARK: CCViewModelCellOutputProtocol
-
-extension CCTableViewPresenter: CCViewModelCellOutputProtocol {
-    
-    func viewDidChange() {
-        
-    }
-    
-    func modelDidChage() {
-        
-    }
-    
-}
-
-struct CCPaginationModel {
-    var currentItem:    Int     = 0
-    var countItems:     Int     = 0
-    var itemsOnPage:    Int     = 0
-    var hasMore:        Bool    = true
-}
-
 class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T>, CCTableViewPrefetchOutputProtocol {
+    
     var pagination: CCPaginationModel   = CCPaginationModel()
     
     //  MARK: CCTableViewControllerPrefetchOutputProtocol
@@ -105,6 +108,11 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
     
     func countList() -> Int {
         return itemsCells.count
+    }
+    
+    override func refreshList() {
+        super.refreshList()
+        self.pagination = CCPaginationModel()
     }
 
 }
