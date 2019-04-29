@@ -8,7 +8,21 @@
 
 import UIKit
 
-protocol CCTableViewControllerOutputProtocol: class {
+protocol CCTableViewPresenterViewInputProtocol: class {
+    func configure(dataSource: Any?, delegate: Any?)
+    func configurePagination(prefetchOutput: CCTableViewPrefetchOutputProtocol?)
+    func configureRefresh()
+    
+    func reloadTableView()
+    
+    func insertCellsIntoTableView(at paths: [IndexPath])
+    func removeCellsIntoTableView(at paths: [IndexPath])
+    func reloadCellsIntoTableView(at paths: [IndexPath])
+    
+    func updateHieghtCell(at paths: [IndexPath])
+}
+
+protocol CCTableViewPrefetchOutputProtocol: class {
     func fetchList()
     func countList() -> Int
 }
@@ -21,7 +35,7 @@ class CCTableViewController: UIViewController{
     
     //  MARK: Properties
     
-    var tableViewOutput: CCTableViewControllerOutputProtocol?
+    var prefetchOutput: CCTableViewPrefetchOutputProtocol?
     
 }
 
@@ -39,24 +53,22 @@ extension CCTableViewController {
 
 extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
 
-    func configure(dataSource: Any?, delegate: Any?, output: CCTableViewControllerOutputProtocol?) {
+    func configure(dataSource: Any?, delegate: Any?) {
         let dataSource  = (dataSource as? UITableViewDataSource)
         let delegate    = (delegate as? UITableViewDelegate)
         
         guard dataSource != nil && delegate != nil else {
-            assertionFailure("CCTableViewController: dataSourse \(String(describing: dataSource)) is nil or delegate \(String(describing: delegate)) is nil")
+            assertionFailure("CCTableViewController: dataSourse \(String(describing: dataSource)) or delegate \(String(describing: delegate))")
             return
         }
         
         self.tableView.dataSource           = dataSource
         self.tableView.delegate             = delegate
-        self.tableView.prefetchDataSource   = self
-        
-        self.tableViewOutput = output
     }
     
-    func configurePagination() {
-//        self.tableView.prefetchDataSource = self
+    func configurePagination(prefetchOutput: CCTableViewPrefetchOutputProtocol?) {
+        self.tableView.prefetchDataSource = self
+        self.prefetchOutput = prefetchOutput
     }
     
     func configureRefresh() {
@@ -91,7 +103,7 @@ extension CCTableViewController: UITableViewDataSourcePrefetching {
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         
-        guard let output = self.tableViewOutput else {
+        guard let output = self.prefetchOutput else {
             return
         }
         
@@ -99,7 +111,7 @@ extension CCTableViewController: UITableViewDataSourcePrefetching {
             print(String(describing: indexPath.row) + "|" + String(describing: output.countList()))
             return indexPath.row >= (output.countList() - 1)
         }) {
-            self.tableViewOutput?.fetchList()
+            self.prefetchOutput?.fetchList()
         }
         
     }

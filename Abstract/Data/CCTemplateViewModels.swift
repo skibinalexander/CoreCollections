@@ -20,8 +20,10 @@ class CCTemplateViewModels {
     var sections:   [CCViewModelSection]
     var cells:      [CCViewModelCell]
     
-    internal var dataSource:     CCTemplateViewModelsDataSource
+    internal var dataSource:    CCTemplateViewModelsDataSource
     private weak var output:    CCViewModelCellOutputProtocol?
+    
+    var createCell: ((CCTableViewModelCell)->(CCTableViewViewModelCell)?)?
     
     required init(dataSource: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
         self.dataSource = dataSource
@@ -39,7 +41,33 @@ class CCTemplateViewModels {
     }
     
     func insertCells() -> [IndexPath] {
-        return []
+        
+        var paths = [IndexPath]()
+        
+        guard let dataSource = self.dataSource as? CCPaginationTemplateViewModelsDataSource else {
+            return []
+        }
+        
+        let insertModels = dataSource.items.filter { (item) -> Bool in
+            return item.viewModel == nil
+        }
+        
+        let _ = insertModels.map { (insert) in
+            
+            if let index = dataSource.items.firstIndex(where: { (first) -> Bool in
+                return first === insert
+            }) {
+                paths.append(IndexPath(row: index, section: 0))
+                if let cell = self.createCell?(insert) {
+                    cell.inject(model: insert)
+                    self.cells.insert(cell, at: index)
+                }
+            }
+            
+        }
+        
+        return paths
+        
     }
     
 }

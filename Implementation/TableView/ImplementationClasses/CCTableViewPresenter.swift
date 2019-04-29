@@ -8,30 +8,23 @@
 
 import Foundation
 
-protocol CCTableViewPresenterViewInputProtocol: class {
-    func configure(dataSource: Any?, delegate: Any?, output: CCTableViewControllerOutputProtocol?)
-    func configurePagination()
-    func configureRefresh()
-    
-    func reloadTableView()
-    
-    func insertCellsIntoTableView(at paths: [IndexPath])
-    func removeCellsIntoTableView(at paths: [IndexPath])
-    func reloadCellsIntoTableView(at paths: [IndexPath])
-    
-    func updateHieghtCell(at paths: [IndexPath])
-}
-
 //  MARK: BasicTableViewPresenter
 
-class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewDelegateOutputProtocol, CCTemplateViewModelsDataSource {
+protocol CCTableViewPresenterProtocol: class {
+    var tableViewInput: CCTableViewPresenterViewInputProtocol?  { get set }
+}
+
+class CCTableViewPresenter<T: CCTemplateViewModels>:CCTableViewPresenterProtocol, CCTableViewDelegateOutputProtocol, CCTemplateViewModelsDataSource {
     
     //  MARK: Properties
     
-    var dataSource: (CCDataSourceExecuteViewModelsCellsProtocol & CCDataSourceReloadViewModelsCellsProtocol & CCDataSourceUpdateViewModelsCellsProtocol)?
+    var dataSource: (CCDataSourceExecuteViewModelsCellsProtocol &
+                    CCDataSourceReloadViewModelsCellsProtocol &
+                    CCDataSourceUpdateViewModelsCellsProtocol)?
+    
     var delegate:   CCTableViewDelegateProtocol?
     
-    private weak var tableViewInput: CCTableViewPresenterViewInputProtocol?
+    weak var tableViewInput: CCTableViewPresenterViewInputProtocol?
     
     //  MARK: Lifecycle
     
@@ -48,26 +41,22 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewDelegateOutputPr
     
 }
 
-//  MARK: Final
+
+//  MARK:
 
 extension CCTableViewPresenter {
     
-    final func configure(tableView: CCTableViewPresenterViewInputProtocol?, tableViewOutput: CCTableViewControllerOutputProtocol?) {
-        self.tableViewInput = tableView
-        self.tableViewInput?.configure(dataSource: self.dataSource, delegate: self.delegate, output: tableViewOutput)
-    }
-    
-    final func configurePagination() {
-        self.tableViewInput?.configurePagination()
-    }
-    
-    final func reloadTableView() {
+    final func reloadCells() {
         self.tableViewInput?.reloadTableView()
     }
     
-    final func insertNewCellsTableView() {
+    final func insertCells() {
         guard let insertedCells = self.dataSource?.insertCells() else { return }
         self.tableViewInput?.insertCellsIntoTableView(at: insertedCells)
+    }
+    
+    final func removeCells() {
+        
     }
     
 }
@@ -93,7 +82,18 @@ struct CCPaginationModel {
     var hasMore:        Bool    = true
 }
 
-class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T> {
+class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T>, CCTableViewPrefetchOutputProtocol {
     var pagination: CCPaginationModel   = CCPaginationModel()
     var items: [CCTableViewModelCell]   = []
+    
+    //  MARK: CCTableViewControllerPrefetchOutputProtocol
+    
+    func fetchList() {
+        
+    }
+    
+    func countList() -> Int {
+        return items.count
+    }
+
 }

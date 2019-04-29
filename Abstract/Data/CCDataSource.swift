@@ -8,20 +8,20 @@
 
 import Foundation
 
-protocol CCDataSourceExecuteViewModelsCellsProtocol {
+protocol CCDataSourceExecuteViewModelsCellsProtocol: class {
     func cell<T: CCViewModelCell>(at indexPath: IndexPath) -> T?
     func cell<T: CCViewModelCell>(at id: String?) -> T?
     func cells<T: CCViewModelCell>(at paths: [IndexPath]) -> [T]
     func cells(at ids: [String?]) -> [CCViewModelCell]
 }
 
-protocol CCDataSourceReloadViewModelsCellsProtocol {
+protocol CCDataSourceReloadViewModelsCellsProtocol: class {
     func reload()
     func reloadSections()
     func reloadCells()      //  Reload all cells with binding models
 }
 
-protocol CCDataSourceUpdateViewModelsCellsProtocol {
+protocol CCDataSourceUpdateViewModelsCellsProtocol: class {
     func insertCells() -> [IndexPath]
 }
 
