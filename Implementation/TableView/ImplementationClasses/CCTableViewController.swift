@@ -68,11 +68,11 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
     }
     
     func insertCellsIntoTableView(at paths: [IndexPath]) {
-        
+        self.tableView.insertRows(at: paths, with: .automatic)
     }
     
     func removeCellsIntoTableView(at paths: [IndexPath]) {
-        
+        self.tableView.deleteRows(at: paths, with: .automatic)
     }
     
     func reloadCellsIntoTableView(at paths: [IndexPath]) {
@@ -97,7 +97,7 @@ extension CCTableViewController: UITableViewDataSourcePrefetching {
         
         if indexPaths.contains(where: { (indexPath) -> Bool in
             print(String(describing: indexPath.row) + "|" + String(describing: output.countList()))
-            return indexPath.row >= output.countList()
+            return indexPath.row >= (output.countList() - 1)
         }) {
             self.tableViewOutput?.fetchList()
         }

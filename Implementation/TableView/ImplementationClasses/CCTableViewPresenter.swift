@@ -28,7 +28,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewDelegateOutputPr
     
     //  MARK: Properties
     
-    var dataSource: (CCDataSourceExecuteViewModelsCellsProtocol & CCDataSourceReloadViewModelsCellsProtocol)?
+    var dataSource: (CCDataSourceExecuteViewModelsCellsProtocol & CCDataSourceReloadViewModelsCellsProtocol & CCDataSourceUpdateViewModelsCellsProtocol)?
     var delegate:   CCTableViewDelegateProtocol?
     
     private weak var tableViewInput: CCTableViewPresenterViewInputProtocol?
@@ -65,6 +65,11 @@ extension CCTableViewPresenter {
         self.tableViewInput?.reloadTableView()
     }
     
+    final func insertNewCellsTableView() {
+        guard let insertedCells = self.dataSource?.insertCells() else { return }
+        self.tableViewInput?.insertCellsIntoTableView(at: insertedCells)
+    }
+    
 }
 
 //  MARK: CCViewModelCellOutputProtocol
@@ -89,5 +94,6 @@ struct CCPaginationModel {
 }
 
 class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T> {
-    var pagination: CCPaginationModel = CCPaginationModel()
+    var pagination: CCPaginationModel   = CCPaginationModel()
+    var items: [CCTableViewModelCell]   = []
 }

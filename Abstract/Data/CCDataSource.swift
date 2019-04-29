@@ -17,7 +17,12 @@ protocol CCDataSourceExecuteViewModelsCellsProtocol {
 
 protocol CCDataSourceReloadViewModelsCellsProtocol {
     func reload()
+    func reloadSections()
     func reloadCells()      //  Reload all cells with binding models
+}
+
+protocol CCDataSourceUpdateViewModelsCellsProtocol {
+    func insertCells() -> [IndexPath]
 }
 
 class CCDataSource<T: CCTemplateViewModels>: NSObject {
@@ -69,12 +74,26 @@ extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
 extension CCDataSource: CCDataSourceReloadViewModelsCellsProtocol {
     
     func reload() {
+        self.reloadSections()
+        self.reloadCells()
+    }
+    
+    func reloadSections() {
         self.template.reloadSections()
-        self.template.reloadCells()
     }
     
     func reloadCells() {
         self.template.reloadCells()
+    }
+    
+}
+
+//  MARK: UpdateCells
+
+extension CCDataSource: CCDataSourceUpdateViewModelsCellsProtocol {
+    
+    func insertCells() -> [IndexPath] {
+        return self.template.insertCells()
     }
     
 }

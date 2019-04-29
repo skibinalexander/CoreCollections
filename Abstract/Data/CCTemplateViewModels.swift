@@ -12,6 +12,10 @@ protocol CCTemplateViewModelsDataSource: class {
     
 }
 
+protocol CCPaginationTemplateViewModelsDataSource: class {
+    var items: [CCTableViewModelCell]   { get set }
+}
+
 class CCTemplateViewModels {
     var sections:   [CCViewModelSection]
     var cells:      [CCViewModelCell]
@@ -32,6 +36,10 @@ class CCTemplateViewModels {
     
     func reloadCells() {
         self.cells = []
+    }
+    
+    func insertCells() -> [IndexPath] {
+        return []
     }
     
 }
