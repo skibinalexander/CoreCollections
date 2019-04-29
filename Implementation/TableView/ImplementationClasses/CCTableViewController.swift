@@ -10,8 +10,11 @@ import UIKit
 
 protocol CCTableViewPresenterViewInputProtocol: class {
     func configure(dataSource: Any?, delegate: Any?)
-    func configurePagination(prefetchOutput: CCTableViewPrefetchOutputProtocol?)
-    func configureRefresh()
+    func configurePagination(output: CCTableViewPrefetchOutputProtocol?)
+    func configureRefresh(output: CCTableViewRefreshOutputProtocol?)
+    
+    func becomeRefresing()
+    func endRefresing()
     
     func reloadTableView()
     
@@ -27,15 +30,21 @@ protocol CCTableViewPrefetchOutputProtocol: class {
     func countList() -> Int
 }
 
+protocol CCTableViewRefreshOutputProtocol: class {
+    func refreshList()
+}
+
 class CCTableViewController: UIViewController{
     
     //  MARK: IBOutlets
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView:   UITableView!
+    private let refreshControl:     UIRefreshControl = UIRefreshControl()
     
     //  MARK: Properties
     
-    var prefetchOutput: CCTableViewPrefetchOutputProtocol?
+    private var prefetchOutput: CCTableViewPrefetchOutputProtocol?
+    private var refreshOutput:  CCTableViewRefreshOutputProtocol?
     
 }
 
@@ -66,13 +75,15 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
         self.tableView.delegate             = delegate
     }
     
-    func configurePagination(prefetchOutput: CCTableViewPrefetchOutputProtocol?) {
+    func configurePagination(output: CCTableViewPrefetchOutputProtocol?) {
         self.tableView.prefetchDataSource = self
-        self.prefetchOutput = prefetchOutput
+        self.prefetchOutput = output
     }
     
-    func configureRefresh() {
-        
+    func configureRefresh(output: CCTableViewRefreshOutputProtocol?) {
+        self.tableView.refreshControl = refreshControl
+        self.refreshControl.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
+        self.refreshOutput = output
     }
     
     func reloadTableView() {
@@ -93,6 +104,16 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
     
     func updateHieghtCell(at paths: [IndexPath]) {
         
+    }
+    
+    func becomeRefresing() {
+        self.refreshControl.beginRefreshing()
+    }
+    
+    func endRefresing() {
+        if self.refreshControl.isRefreshing {
+            self.refreshControl.endRefreshing()
+        }
     }
     
 }
@@ -118,6 +139,16 @@ extension CCTableViewController: UITableViewDataSourcePrefetching {
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
         
+    }
+    
+}
+
+//  MARK: Actions
+
+extension CCTableViewController {
+    
+    @objc public final func refreshTableView(_ sender: UIRefreshControl) {
+        self.refreshOutput?.refreshList()
     }
     
 }

@@ -17,6 +17,7 @@ class CCTableViewBuilderPresenter {
     private weak var dataSource:        AnyObject?
     private weak var delegate:          AnyObject?
     private weak var prefetchOutput:    CCTableViewPrefetchOutputProtocol?
+    private weak var refreshOutput:     CCTableViewRefreshOutputProtocol?
     
     final func configure(presenter: CCTableViewPresenterProtocol) -> CCTableViewBuilderPresenter {
         self.presenter = presenter
@@ -43,10 +44,16 @@ class CCTableViewBuilderPresenter {
         return self
     }
     
+    final func configure(refresh output: CCTableViewRefreshOutputProtocol?) -> CCTableViewBuilderPresenter {
+        self.refreshOutput = output
+        return self
+    }
+    
     final func build() {
         self.tableView?.configure(dataSource: self.dataSource, delegate: self.delegate)
         tableView?.configure(dataSource: dataSource, delegate: delegate)
-        tableView?.configurePagination(prefetchOutput: prefetchOutput)
+        tableView?.configurePagination(output: prefetchOutput)
+        tableView?.configureRefresh(output: refreshOutput)
         presenter?.tableViewInput = tableView
     }
     

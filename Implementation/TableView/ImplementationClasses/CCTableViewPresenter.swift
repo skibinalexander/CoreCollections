@@ -16,6 +16,10 @@ protocol CCTableViewPresenterProtocol: class {
 
 class CCTableViewPresenter<T: CCTemplateViewModels>:CCTableViewPresenterProtocol, CCTableViewDelegateOutputProtocol, CCTemplateViewModelsDataSource {
     
+    var itemsCells:     [CCTableViewModelCell]      = []
+    var itemsSections:  [CCTableViewModelSection]   = []
+    
+    
     //  MARK: Properties
     
     var dataSource: (CCDataSourceExecuteViewModelsCellsProtocol &
@@ -59,6 +63,14 @@ extension CCTableViewPresenter {
         
     }
     
+    final func becomeViewRefresing() {
+        self.tableViewInput?.becomeRefresing()
+    }
+    
+    final func endViewRefresing() {
+        self.tableViewInput?.endRefresing()
+    }
+    
 }
 
 //  MARK: CCViewModelCellOutputProtocol
@@ -84,7 +96,6 @@ struct CCPaginationModel {
 
 class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T>, CCTableViewPrefetchOutputProtocol {
     var pagination: CCPaginationModel   = CCPaginationModel()
-    var items: [CCTableViewModelCell]   = []
     
     //  MARK: CCTableViewControllerPrefetchOutputProtocol
     
@@ -93,7 +104,7 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
     }
     
     func countList() -> Int {
-        return items.count
+        return itemsCells.count
     }
 
 }
