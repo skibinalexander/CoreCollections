@@ -40,11 +40,24 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     init() {
         self.dataSource = CCTableViewDataSource<T>(templateDataSource: self, output: self)
         self.delegate   = CCTableViewDelegate(cellsExecutor: self.dataSource,  output: self)
+        
+        self.initFillSections()
+        self.initFillCells()
     }
     
     //  MARK: CCTableViewDelegateOutputProtocol
     
     func didSelect(cell: CCTableViewViewModelCell?, at indexPath: IndexPath, id: String?) {
+        
+    }
+    
+    //  MARK: Initial filling
+    
+    func initFillSections() {
+        
+    }
+    
+    func initFillCells() {
         
     }
     
