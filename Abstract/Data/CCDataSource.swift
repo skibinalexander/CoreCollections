@@ -23,6 +23,7 @@ protocol CCDataSourceReloadViewModelsCellsProtocol: class {
 
 protocol CCDataSourceUpdateViewModelsCellsProtocol: class {
     func insertCells() -> [IndexPath]
+    func removeCells() -> [IndexPath]
 }
 
 class CCDataSource<T: CCTemplateViewModels>: NSObject {
@@ -92,8 +93,16 @@ extension CCDataSource: CCDataSourceReloadViewModelsCellsProtocol {
 
 extension CCDataSource: CCDataSourceUpdateViewModelsCellsProtocol {
     
+    func updateCells() -> ([IndexPath], [IndexPath]) {
+        return (self.template.insertCells(), self.template.removeCells())
+    }
+    
     func insertCells() -> [IndexPath] {
         return self.template.insertCells()
+    }
+    
+    func removeCells() -> [IndexPath] {
+        return self.template.removeCells()
     }
     
 }

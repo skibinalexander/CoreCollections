@@ -9,19 +9,19 @@
 import Foundation
 
 protocol CCTemplateViewModelsDataSource: class {
-    var itemsCells:     [CCTableViewModelCell]      { get set }
-    var itemsSections:  [CCTableViewModelSection]   { get set }
+    var itemsCells:     [CCModelCellProtocol]      { get set }
+    var itemsSections:  [CCModelSectionProtocol]   { get set }
 }
 
 class CCTemplateViewModels {
     var sections:   [CCViewModelSection]
     var cells:      [CCViewModelCell]
     
-    private weak var dataSource:    CCTemplateViewModelsDataSource?
-    private weak var output:        CCViewModelCellOutputProtocol?
+    private     weak var dataSource:    CCTemplateViewModelsDataSource?
+    internal    weak var output:        CCViewModelCellOutputProtocol?
     
-    var createCell: ((CCTableViewModelCell, Int)->(CCTableViewViewModelCell)?)?
-    var createSection: ((CCTableViewModelSection, Int)->(CCTableViewViewModelSection)?)?
+    var createCell: ((CCModelCellProtocol, Int)->(CCTableViewViewModelCell)?)?
+    var createSection: ((CCModelSectionProtocol, Int)->(CCTableViewViewModelSection)?)?
     
     required init(dataSource: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
         self.dataSource = dataSource
@@ -44,6 +44,7 @@ extension CCTemplateViewModels {
                 self.sections.append(section)
             }
         }
+        
     }
     
 }
@@ -52,7 +53,7 @@ extension CCTemplateViewModels {
 
 extension CCTemplateViewModels {
     
-    func reloadCells() {
+    final func reloadCells() {
         self.cells = []
         
         let _ = dataSource?.itemsCells.enumerated().map({ (index, element) in
@@ -63,6 +64,7 @@ extension CCTemplateViewModels {
                 }
             }
         })
+        
     }
     
     final func insertCells() -> [IndexPath] {
@@ -80,6 +82,24 @@ extension CCTemplateViewModels {
                 }
             }
         }
+        
+        return paths
+        
+    }
+    
+    final func removeCells() -> [IndexPath] {
+        
+        var paths = [IndexPath]()
+        
+        let _ = self.cells.enumerated().map { (index, cell) in
+            if cell.model == nil {
+                if let sectionIndex = self.sections.firstIndex(where: {$0.id == cell.sectionId}) {
+                    paths.append(IndexPath(row: index, section: sectionIndex))
+                }
+            }
+        }
+        
+        self.cells.removeAll(where: { $0.model == nil })
         
         return paths
         

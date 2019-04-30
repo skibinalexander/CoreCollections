@@ -28,8 +28,17 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = self.cellsExecutor?.cell(at: indexPath) as? CCTableViewViewModelCell
-        self.output?.didSelect(cell: cell, at: indexPath, id: cell?.id)
+        if let cell = self.cellsExecutor?.cell(at: indexPath) as? CCTableViewViewModelCell {
+            self.output?.didSelect(cell: cell, at: indexPath, id: cell.id)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let cell = cellsExecutor?.cell(at: indexPath) {
+            return CGFloat(cell.height)
+        }
+        
+        return CGFloat.leastNonzeroMagnitude
     }
     
 }

@@ -14,21 +14,22 @@ protocol CCTableViewPresenterProtocol: class {
     var tableViewInput: CCTableViewPresenterViewInputProtocol?  { get set }
 }
 
-class CCTableViewPresenter<T: CCTemplateViewModels>:CCTableViewPresenterProtocol,
+class CCTableViewPresenter<T: CCTemplateViewModels>:
+                                CCTableViewPresenterProtocol,
                                 CCTableViewDelegateOutputProtocol,
                                 CCTemplateViewModelsDataSource,
                                 CCTableViewRefreshOutputProtocol,
                                 CCViewModelCellOutputProtocol {
     
-    var itemsCells:     [CCTableViewModelCell]      = []
-    var itemsSections:  [CCTableViewModelSection]   = []
+    var itemsCells:     [CCModelCellProtocol]      = []
+    var itemsSections:  [CCModelSectionProtocol]   = []
     
     
     //  MARK: Properties
     
     var dataSource: (CCDataSourceExecuteViewModelsCellsProtocol &
-                    CCDataSourceReloadViewModelsCellsProtocol &
-                    CCDataSourceUpdateViewModelsCellsProtocol)?
+                            CCDataSourceReloadViewModelsCellsProtocol &
+                            CCDataSourceUpdateViewModelsCellsProtocol)?
     
     var delegate:   CCTableViewDelegateProtocol?
     
@@ -73,8 +74,20 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:CCTableViewPresenterProtocol
 
 extension CCTableViewPresenter {
     
+    //
+    
     final func reloadCells() {
+        self.dataSource?.reloadCells()
         self.tableViewInput?.reloadTableView()
+    }
+    
+    //
+    
+    final func updateCells() {
+//        guard let insertedCells = self.dataSource?.insertCells() else { return }
+//        guard let removedCells = self.dataSource?.removeCells() else { return }
+//
+//        self.tableViewInput?.insertCellsIntoTableView(at: insertedCells)
     }
     
     final func insertCells() {
@@ -83,8 +96,11 @@ extension CCTableViewPresenter {
     }
     
     final func removeCells() {
-        
+        guard let insertedCells = self.dataSource?.insertCells() else { return }
+        self.tableViewInput?.insertCellsIntoTableView(at: insertedCells)
     }
+    
+    //  
     
     final func becomeViewRefresing() {
         self.tableViewInput?.becomeRefresing()
