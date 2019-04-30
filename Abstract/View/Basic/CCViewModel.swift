@@ -17,11 +17,11 @@ public enum CCViewModelCellViewSourceType {
 
 //  MARK: Protocols
 
-protocol CCViewProtocol {
+protocol CCViewProtocol: class {
     var viewModel: CCViewModel?  { get set }
 }
 
-protocol CCModelProtocol {
+protocol CCModelProtocol: class {
     var viewModel: CCViewModel?  { get set }
 }
 
@@ -29,8 +29,8 @@ class CCViewModel {
     
     //  MARK: Private
     
-    var view:               CCViewProtocol?
-    var model:              CCModelProtocol?
+    weak var view:          CCViewProtocol?
+    weak var model:         CCModelProtocol?
     
     //  MARK: Public
     
