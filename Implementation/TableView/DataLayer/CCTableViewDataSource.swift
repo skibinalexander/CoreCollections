@@ -39,7 +39,7 @@ class CCTableViewDataSource<T: CCTemplateViewModels>: CCDataSource<T>, UITableVi
         }
         
         guard let viewCell = cell?.view as? UITableViewCell else {
-            fatalError("CCTableViewDataSource: view for id ViewModel \(String(describing: cell?.id)) not initialization!")
+            fatalError("CCTableViewDataSource: view for id ViewModel \(String(describing: type(of: cell))) not initialization!")
         }
         
         cell?.updateView()

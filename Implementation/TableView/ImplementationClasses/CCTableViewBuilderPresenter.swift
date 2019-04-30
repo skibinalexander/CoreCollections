@@ -50,11 +50,12 @@ class CCTableViewBuilderPresenter {
     }
     
     final func build() {
-        self.tableView?.configure(dataSource: self.dataSource, delegate: self.delegate)
+        tableView?.configure(dataSource: self.dataSource, delegate: self.delegate)
         tableView?.configure(dataSource: dataSource, delegate: delegate)
         tableView?.configurePagination(output: prefetchOutput)
         tableView?.configureRefresh(output: refreshOutput)
         presenter?.tableViewInput = tableView
+        presenter?.reloadList()
     }
     
 //    final func configurePagination() -> CCTableViewPresenter {

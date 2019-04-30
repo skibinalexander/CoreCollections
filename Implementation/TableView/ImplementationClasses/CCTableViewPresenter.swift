@@ -12,6 +12,8 @@ import Foundation
 
 protocol CCTableViewPresenterProtocol: class {
     var tableViewInput: CCTableViewPresenterViewInputProtocol?  { get set }
+    
+    func reloadList()
 }
 
 class CCTableViewPresenter<T: CCTemplateViewModels>:
@@ -88,6 +90,12 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
 extension CCTableViewPresenter {
     
     //
+    
+    final func reloadList() {
+        self.dataSource?.reloadSections()
+        self.dataSource?.reloadCells()
+        self.tableViewInput?.reloadTableView()
+    }
     
     final func reloadCells() {
         self.dataSource?.reloadCells()
