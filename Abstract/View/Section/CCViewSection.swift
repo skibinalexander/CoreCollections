@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol CCViewSectionProtocol {
-    var viewModel: CCViewModelSection?  { get set }
+protocol CCViewSectionProtocol: CCViewProtocol {
+    
 }

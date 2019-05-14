@@ -10,11 +10,15 @@ import Foundation
 
 class CCDelegate: NSObject {
     
-    //  Properties
+    //  MARK: Properties
     
+    internal var sectionsExecutor: CCDataSourceExecuteViewModelsSectionsProtocol?
     internal var cellsExecutor: CCDataSourceExecuteViewModelsCellsProtocol?
     
-    init(cellsExecutor: CCDataSourceExecuteViewModelsCellsProtocol?) {
+    //  MARK: Lifecycle
+    
+    init(sectionsExecutor: CCDataSourceExecuteViewModelsSectionsProtocol?, cellsExecutor: CCDataSourceExecuteViewModelsCellsProtocol?) {
+        self.sectionsExecutor = sectionsExecutor
         self.cellsExecutor = cellsExecutor
     }
     

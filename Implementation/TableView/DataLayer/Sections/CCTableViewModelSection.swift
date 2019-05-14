@@ -12,6 +12,6 @@ class CCTableViewModelSection: CCModelSectionProtocol {
     
     //  MARK: CCModelCellProtocol
     
-    weak var viewModel: CCViewModelCell?
+    weak var viewModel: CCViewModel?
     
 }

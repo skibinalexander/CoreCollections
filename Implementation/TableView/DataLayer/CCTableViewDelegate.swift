@@ -22,9 +22,9 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
 
     private weak var output: CCTableViewDelegateOutputProtocol?
     
-    init(cellsExecutor: CCDataSourceExecuteViewModelsCellsProtocol?, output: CCTableViewDelegateOutputProtocol?) {
+    init(sectionsExecutor: CCDataSourceExecuteViewModelsSectionsProtocol?, cellsExecutor: CCDataSourceExecuteViewModelsCellsProtocol?, output: CCTableViewDelegateOutputProtocol?) {
         self.output = output
-        super.init(cellsExecutor: cellsExecutor)
+        super.init(sectionsExecutor: sectionsExecutor, cellsExecutor: cellsExecutor)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -39,6 +39,32 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
         }
         
         return CGFloat.leastNonzeroMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let sectionViewModel: CCTableViewViewModelSection? = self.sectionsExecutor?.section(at: section)
+        
+        switch sectionViewModel?.nibType {
+        case .nibName?:     sectionViewModel?.inject(view: self.nibSection(nameNib: sectionViewModel!.nibId) as? CCViewProtocol); break;
+        default:break;
+        }
+        
+        guard let viewSection = sectionViewModel?.view as? UIView else {
+            fatalError("CCTableViewDataSource: view for id ViewModel \(String(describing: type(of: sectionViewModel?.view))) not initialization!")
+        }
+        
+        sectionViewModel?.updateView()
+        
+        return viewSection
+    }
+    
+}
+
+extension CCTableViewDelegate {
+    
+    func nibSection<T: UIView>(nameNib: String) -> T {
+        return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as! T
     }
     
 }

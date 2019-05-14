@@ -41,6 +41,7 @@ extension CCTemplateViewModels {
         
         let _ = dataSource?.itemsSections.enumerated().map { (index, element) in
             if let section = self.createSection?(element, index) {
+                section.inject(model: element)
                 self.sections.append(section)
             }
         }

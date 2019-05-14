@@ -8,6 +8,15 @@
 
 import Foundation
 
+//  MARK: Sections
+
+protocol CCDataSourceExecuteViewModelsSectionsProtocol: class {
+    func section<T: CCViewModelSection>(at index: Int) -> T?
+    func section<T: CCViewModelSection>(at id: String?) -> T?
+}
+
+//  MARK: Cells
+
 protocol CCDataSourceExecuteViewModelsCellsProtocol: class {
     func cell<T: CCViewModelCell>(at indexPath: IndexPath) -> T?
     func cell<T: CCViewModelCell>(at id: String?) -> T?
@@ -26,6 +35,8 @@ protocol CCDataSourceUpdateViewModelsCellsProtocol: class {
     func removeCells() -> [IndexPath]
 }
 
+//  MARK: DataSource
+
 class CCDataSource<T: CCTemplateViewModels>: NSObject {
     
     //  MARK: Properties
@@ -40,11 +51,25 @@ class CCDataSource<T: CCTemplateViewModels>: NSObject {
     
 }
 
-//  MARK: Imeplementation
+//  MARK: Implementation Sections
+
+extension CCDataSource: CCDataSourceExecuteViewModelsSectionsProtocol {
+    
+    public func section<T: CCViewModelSection>(at index: Int) -> T? {
+        return self.template.sections[index] as? T
+    }
+    
+    public func section<T: CCViewModelSection>(at id: String?) -> T? {
+        return self.template.sections.first(where: { (section) -> Bool in
+            return section.id == id
+        }) as? T
+    }
+    
+}
+
+//  MARK: Imeplementation Cells
 
 extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
-    
-    //  MARK: Cells
     
     public func cell<T: CCViewModelCell>(at indexPath: IndexPath) -> T? {
         let section = self.template.sections[indexPath.section]
