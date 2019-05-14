@@ -51,7 +51,8 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
         }
         
         guard let viewSection = sectionViewModel?.view as? UIView else {
-            fatalError("CCTableViewDataSource: view for id ViewModel \(String(describing: type(of: sectionViewModel?.view))) not initialization!")
+            assert(((sectionViewModel?.view as? UIView) != nil))
+            return UIView()
         }
         
         sectionViewModel?.updateView()
