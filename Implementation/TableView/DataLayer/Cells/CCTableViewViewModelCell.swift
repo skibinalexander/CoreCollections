@@ -8,6 +8,32 @@
 
 import Foundation
 
+//  MARK: Base ViewModelCell
+
 class CCTableViewViewModelCell: CCViewModelCell {
+    
+}
+
+//  MARK: Expanded ViewModelCell
+
+class CCTableViewViewModelExpandedCell: CCTableViewViewModelCell {
+    
+    //  MARK: Private
+    
+    private var expandedHeight: Float?
+    
+    //  MARK: Lifecycle
+    
+    convenience init(sectionId: String, output: CCViewModelCellOutputProtocol?, id: String?, nibId: String, nibType: CCViewModelCellViewSourceType, expandedHeight: Float) {
+        self.init(sectionId: sectionId, output: output, id: id, nibId: nibId, nibType: nibType, height: expandedHeight)
+        
+        self.expandedHeight = expandedHeight
+    }
+    
+    //  MARK: Public
+    
+    public func changeHeight(with state: CCTableViewViewModelExpandedState) {
+        self.height = (state == .expanded) ? (self.expandedHeight ?? .zero) : .zero
+    }
     
 }

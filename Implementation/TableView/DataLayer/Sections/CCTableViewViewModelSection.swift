@@ -16,7 +16,7 @@ class CCTableViewViewModelSection: CCViewModelSection {
 
 //  MARK: Expanded ViewModel
 
-enum CCTableViewViewModelExpandedState {
+public enum CCTableViewViewModelExpandedState {
     case expanded
     case collapsed
 }
@@ -29,6 +29,7 @@ class CCTableViewViewModelExpandedSection: CCTableViewViewModelSection {
     
     private weak var output:    CCTableViewViewModelExpandedSectionOutputProtocol?
     private var state:          CCTableViewViewModelExpandedState?
+    
     
     convenience init(output: CCTableViewViewModelExpandedSectionOutputProtocol? = nil,
                      state: CCTableViewViewModelExpandedState = .expanded,
@@ -47,9 +48,9 @@ class CCTableViewViewModelExpandedSection: CCTableViewViewModelSection {
     
     public func changeState() {
         guard let state = self.state else {
+            assert(true)
             return
         }
-        
         
         if state == .expanded {
             self.state = .collapsed

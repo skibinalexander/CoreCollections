@@ -22,7 +22,7 @@ protocol CCTableViewPresenterViewInputProtocol: class {
     func removeCellsIntoTableView(at paths: [IndexPath])
     func reloadCellsIntoTableView(at paths: [IndexPath])
     
-    func updateHieghtCell(at paths: [IndexPath])
+    func updateHieghtCell(completion: (()->Void)?)
 }
 
 protocol CCTableViewPrefetchOutputProtocol: class {
@@ -105,8 +105,16 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
         self.tableView.reloadRows(at: paths, with: .automatic)
     }
     
-    func updateHieghtCell(at paths: [IndexPath]) {
-        
+    func updateHieghtCell(completion: (()->Void)?) {
+        if #available(iOS 11.0, *) {
+            self.tableView.performBatchUpdates({
+                completion?()
+            }, completion: nil)
+        } else {
+            self.tableView.beginUpdates()
+            completion?()
+            self.tableView.endUpdates()
+        }
     }
     
     func becomeRefresing() {

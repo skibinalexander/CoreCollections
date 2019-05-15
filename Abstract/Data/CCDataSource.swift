@@ -13,6 +13,7 @@ import Foundation
 protocol CCDataSourceExecuteViewModelsSectionsProtocol: class {
     func section<T: CCViewModelSection>(at index: Int) -> T?
     func section<T: CCViewModelSection>(at id: String?) -> T?
+    func index(at section: CCViewModelSection) -> Int?
 }
 
 //  MARK: Cells
@@ -63,6 +64,12 @@ extension CCDataSource: CCDataSourceExecuteViewModelsSectionsProtocol {
         return self.template.sections.first(where: { (section) -> Bool in
             return section.id == id
         }) as? T
+    }
+    
+    func index(at section: CCViewModelSection) -> Int? {
+        return self.template.sections.firstIndex(where: { (find) -> Bool in
+            return section.id == find.id
+        })
     }
 }
 
