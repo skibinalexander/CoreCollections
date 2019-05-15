@@ -30,6 +30,7 @@ protocol CCTableViewPrefetchOutputProtocol: class {
     func countList() -> Int
 }
 
+@objc
 protocol CCTableViewRefreshOutputProtocol: class {
     func refreshList()
 }
@@ -44,7 +45,6 @@ class CCTableViewController: UIViewController{
     //  MARK: Properties
     
     private var prefetchOutput: CCTableViewPrefetchOutputProtocol?
-    private var refreshOutput:  CCTableViewRefreshOutputProtocol?
     
 }
 
@@ -76,14 +76,17 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
     }
     
     func configurePagination(output: CCTableViewPrefetchOutputProtocol?) {
-        self.tableView.prefetchDataSource = self
-        self.prefetchOutput = output
+        if output != nil {
+            self.tableView.prefetchDataSource = self
+            self.prefetchOutput = output
+        }
     }
     
     func configureRefresh(output: CCTableViewRefreshOutputProtocol?) {
-        self.tableView.refreshControl = refreshControl
-        self.refreshControl.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
-        self.refreshOutput = output
+        if output != nil {
+            self.tableView.refreshControl = refreshControl
+            self.refreshControl.addTarget(output!, action: #selector(CCTableViewRefreshOutputProtocol.refreshList), for: .valueChanged)
+        }
     }
     
     func reloadTableView() {
@@ -139,16 +142,6 @@ extension CCTableViewController: UITableViewDataSourcePrefetching {
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
         
-    }
-    
-}
-
-//  MARK: Actions
-
-extension CCTableViewController {
-    
-    @objc public final func refreshTableView(_ sender: UIRefreshControl) {
-        self.refreshOutput?.refreshList()
     }
     
 }
