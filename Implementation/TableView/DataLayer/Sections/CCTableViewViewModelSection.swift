@@ -28,7 +28,7 @@ protocol CCTableViewViewModelExpandedSectionOutputProtocol: class {
 class CCTableViewViewModelExpandedSection: CCTableViewViewModelSection {
     
     private weak var output:    CCTableViewViewModelExpandedSectionOutputProtocol?
-    private var state:          CCTableViewViewModelExpandedState?
+    internal var state:          CCTableViewViewModelExpandedState?
     
     
     convenience init(output: CCTableViewViewModelExpandedSectionOutputProtocol? = nil,
@@ -58,7 +58,7 @@ class CCTableViewViewModelExpandedSection: CCTableViewViewModelSection {
             self.state = .expanded
         }
         
-        self.output?.stateDidChange(state: state, viewModel: self)
+        self.output?.stateDidChange(state: (self.state ?? .collapsed), viewModel: self)
     }
     
 }

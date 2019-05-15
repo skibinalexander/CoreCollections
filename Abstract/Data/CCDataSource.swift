@@ -103,7 +103,7 @@ extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
     
     public func cells<T>(in sectionId: String?) -> [T]? where T : CCViewModelCell {
         return self.template.cells.filter({ (cell) -> Bool in
-            return cell.id == sectionId
+            return cell.sectionId == sectionId
         }) as? [T]
     }
     
