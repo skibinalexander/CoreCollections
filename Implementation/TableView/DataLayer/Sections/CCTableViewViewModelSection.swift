@@ -46,13 +46,18 @@ class CCTableViewViewModelExpandedSection: CCTableViewViewModelSection {
     //  MARK: Public
     
     public func changeState() {
-        if let state = self.state {
-            if state == .expanded {
-                self.state = .collapsed
-            } else {
-                self.state = .expanded
-            }
+        guard let state = self.state else {
+            return
         }
+        
+        
+        if state == .expanded {
+            self.state = .collapsed
+        } else {
+            self.state = .expanded
+        }
+        
+        self.output?.stateDidChange(state)
     }
     
 }
