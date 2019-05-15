@@ -22,7 +22,7 @@ enum CCTableViewViewModelExpandedState {
 }
 
 protocol CCTableViewViewModelExpandedSectionOutputProtocol: class {
-    func stateDidChange(_ state: CCTableViewViewModelExpandedState)
+    func stateDidChange(state: CCTableViewViewModelExpandedState, viewModel: CCTableViewViewModelExpandedSection)
 }
 
 class CCTableViewViewModelExpandedSection: CCTableViewViewModelSection {
@@ -57,7 +57,7 @@ class CCTableViewViewModelExpandedSection: CCTableViewViewModelSection {
             self.state = .expanded
         }
         
-        self.output?.stateDidChange(state)
+        self.output?.stateDidChange(state: state, viewModel: self)
     }
     
 }

@@ -8,11 +8,21 @@
 
 import Foundation
 
+//  MARK: Sections
+
+protocol CCDataSourceExecuteViewModelsSectionsProtocol: class {
+    func section<T: CCViewModelSection>(at index: Int) -> T?
+    func section<T: CCViewModelSection>(at id: String?) -> T?
+}
+
+//  MARK: Cells
+
 protocol CCDataSourceExecuteViewModelsCellsProtocol: class {
     func cell<T: CCViewModelCell>(at indexPath: IndexPath) -> T?
     func cell<T: CCViewModelCell>(at id: String?) -> T?
     func cells<T: CCViewModelCell>(at paths: [IndexPath]) -> [T]
     func cells(at ids: [String?]) -> [CCViewModelCell]
+    func cells<T: CCViewModelCell>(in sectionId: String?) -> [T]?
 }
 
 protocol CCDataSourceReloadViewModelsCellsProtocol: class {
@@ -25,6 +35,8 @@ protocol CCDataSourceUpdateViewModelsCellsProtocol: class {
     func insertCells() -> [IndexPath]
     func removeCells() -> [IndexPath]
 }
+
+//  MARK: DataSource
 
 class CCDataSource<T: CCTemplateViewModels>: NSObject {
     
@@ -40,7 +52,21 @@ class CCDataSource<T: CCTemplateViewModels>: NSObject {
     
 }
 
-//  MARK: Imeplementation
+//  MARK: Implementation Sections
+
+extension CCDataSource: CCDataSourceExecuteViewModelsSectionsProtocol {
+    func section<T: CCViewModelSection>(at index: Int) -> T? {
+        return self.template.sections[index] as? T
+    }
+    
+    func section<T: CCViewModelSection>(at id: String?) -> T? {
+        return self.template.sections.first(where: { (section) -> Bool in
+            return section.id == id
+        }) as? T
+    }
+}
+
+//  MARK: Imeplementation Cells
 
 extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
     
@@ -66,6 +92,12 @@ extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
         return self.template.cells.filter({ (cell) -> Bool in
             return ids.contains(cell.id)
         })
+    }
+    
+    public func cells<T>(in sectionId: String?) -> [T]? where T : CCViewModelCell {
+        return self.template.cells.filter({ (cell) -> Bool in
+            return cell.id == sectionId
+        }) as? [T]
     }
     
 }

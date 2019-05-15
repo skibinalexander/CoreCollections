@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol CCModelSectionProtocol {
-    var viewModel: CCViewModelCell? { get set }
+protocol CCModelSectionProtocol: CCModelProtocol {
+    
 }

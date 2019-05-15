@@ -20,8 +20,8 @@ class CCTemplateViewModels {
     private     weak var dataSource:    CCTemplateViewModelsDataSource?
     internal    weak var output:        CCViewModelCellOutputProtocol?
     
-    var createCell: ((CCModelCellProtocol, Int)->(CCTableViewViewModelCell)?)?
-    var createSection: ((CCModelSectionProtocol, Int)->(CCTableViewViewModelSection)?)?
+    var createSection: ((_ model: CCModelSectionProtocol, _ index: Int)->(CCTableViewViewModelSection)?)?
+    var createCell: ((_ model: CCModelCellProtocol, _ index: Int, _ count: Int)->(CCTableViewViewModelCell)?)?
     
     required init(dataSource: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
         self.dataSource = dataSource
@@ -41,6 +41,7 @@ extension CCTemplateViewModels {
         
         let _ = dataSource?.itemsSections.enumerated().map { (index, element) in
             if let section = self.createSection?(element, index) {
+                section.inject(model: element)
                 self.sections.append(section)
             }
         }
@@ -56,8 +57,8 @@ extension CCTemplateViewModels {
     final func reloadCells() {
         self.cells = []
         
-        let _ = dataSource?.itemsCells.enumerated().map({ (index, element) in
-            if let cell = self.createCell?(element, index) {
+        let _ = dataSource?.itemsCells.enumerated().map({ [weak dataSource] (index, element) in
+            if let cell = self.createCell?(element, index, dataSource?.itemsCells.count ?? 0) {
                 if self.sections.firstIndex(where: {$0.id == cell.sectionId}) != nil {
                     cell.inject(model: element)
                     self.cells.insert(cell, at: index)
@@ -71,9 +72,9 @@ extension CCTemplateViewModels {
         
         var paths = [IndexPath]()
 
-        let _ = dataSource?.itemsCells.enumerated().map { (index, element) in
+        let _ = dataSource?.itemsCells.enumerated().map { [unowned self] (index, element) in
             if element.viewModel == nil {
-                if let cell = self.createCell?(element, index) {
+                if let cell = self.createCell?(element, index, self.cells.count) {
                     if let sectionIndex = self.sections.firstIndex(where: {$0.id == cell.sectionId}) {
                         paths.append(IndexPath(row: index, section: sectionIndex))
                         cell.inject(model: element)

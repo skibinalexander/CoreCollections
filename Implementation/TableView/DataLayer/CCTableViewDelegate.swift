@@ -20,11 +20,11 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     //  MARK: Properties
 
-    private weak var output: CCTableViewDelegateOutputProtocol?
+    private weak var output:            CCTableViewDelegateOutputProtocol?
     
-    init(cellsExecutor: CCDataSourceExecuteViewModelsCellsProtocol?, output: CCTableViewDelegateOutputProtocol?) {
+    init(sectionsExecutor: CCDataSourceExecuteViewModelsSectionsProtocol?, cellsExecutor: CCDataSourceExecuteViewModelsCellsProtocol?, output: CCTableViewDelegateOutputProtocol?) {
         self.output = output
-        super.init(cellsExecutor: cellsExecutor)
+        super.init(sectionsExecutor: sectionsExecutor, cellsExecutor: cellsExecutor)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -39,6 +39,37 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
         }
         
         return CGFloat.leastNonzeroMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let viewModelSection: CCTableViewViewModelSection? = self.sectionsExecutor?.section(at: section)
+        
+        //  Иницализация view для секции
+        
+        switch viewModelSection?.nibType {
+//        case .reusebleId?:  cell?.inject(view: tableView.dequeueReusableCell(withIdentifier: viewModelSection!.nibId, for: indexPath) as? CCViewProtocol); break;
+        case .nibName?:     viewModelSection?.inject(view: self.nibSection(nameNib: viewModelSection!.nibId) as? CCViewProtocol); break;
+        default:break;
+        }
+        
+        assert(viewModelSection?.view != nil, "CCTableViewDataSource: view for id ViewModel \(String(describing: type(of: viewModelSection))) not initialization!")
+        
+        viewModelSection?.updateView()
+        
+        return viewModelSection?.view as? UIView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat(self.sectionsExecutor?.section(at: section)?.height ?? .zero)
+    }
+    
+}
+
+extension CCTableViewDelegate {
+    
+    func nibSection<T: UIView>(nameNib: String) -> T {
+        return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as! T
     }
     
 }

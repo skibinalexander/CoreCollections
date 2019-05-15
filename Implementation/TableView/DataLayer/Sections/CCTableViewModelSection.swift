@@ -10,8 +10,8 @@ import Foundation
 
 class CCTableViewModelSection: CCModelSectionProtocol {
     
-    //  MARK: CCModelCellProtocol
+    //  MARK: CCModelSectionProtocol
     
-    weak var viewModel: CCViewModelCell?
+    weak var viewModel: CCViewModel?
     
 }

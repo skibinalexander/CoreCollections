@@ -14,7 +14,7 @@ class CCTableViewSection: UIView, CCViewSectionProtocol {
     
     //  MARK: CCViewCellProtocol
     
-    weak var viewModel: CCViewModelSection?
+    weak var viewModel: CCViewModel?
 }
 
 //  MARK: Expanded ViewSection

@@ -29,9 +29,10 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     
     //  MARK: Properties
     
-    var dataSource: (CCDataSourceExecuteViewModelsCellsProtocol &
-                            CCDataSourceReloadViewModelsCellsProtocol &
-                            CCDataSourceUpdateViewModelsCellsProtocol)?
+    var dataSource: (CCDataSourceExecuteViewModelsSectionsProtocol &
+                        CCDataSourceExecuteViewModelsCellsProtocol &
+                        CCDataSourceReloadViewModelsCellsProtocol &
+                        CCDataSourceUpdateViewModelsCellsProtocol)?
     
     var delegate:   CCTableViewDelegateProtocol?
     
@@ -41,7 +42,9 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     
     init() {
         self.dataSource = CCTableViewDataSource<T>(templateDataSource: self, output: self)
-        self.delegate   = CCTableViewDelegate(cellsExecutor: self.dataSource,  output: self)
+        self.delegate   = CCTableViewDelegate(sectionsExecutor: self.dataSource,
+                                              cellsExecutor: self.dataSource,
+                                              output: self)
         
         self.initFillSections()
         self.initFillCells()
