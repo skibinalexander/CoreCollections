@@ -15,26 +15,20 @@ protocol CCViewModelCellOutputProtocol: class {
 
 class CCViewModelCell: CCViewModel {
     
-    //  MARK: Public
-    
-    public var sectionId:       String
-    
     //  MARK: Private
     
-    private var output:     CCViewModelCellOutputProtocol?
+    internal var output:     CCViewModelCellOutputProtocol?
     
     //  MARK: Lifecycle
     
-    init(sectionId: String, output: CCViewModelCellOutputProtocol?, id: String?, nibId: String, nibType: CCViewModelCellViewSourceType, height: Float) {
-        self.sectionId = sectionId
+    init(output: CCViewModelCellOutputProtocol?, nibId: String, nibType: CCViewModelCellViewSourceType, height: Float) {
         self.output = output
         
-        super.init(id: id, nibId: nibId, nibType: nibType, height: height)
+        super.init(nibId: nibId, nibType: nibType, height: height)
     }
     
-    required init(id: String?, nibId: String, nibType: CCViewModelCellViewSourceType, height: Float) {
-        self.sectionId = ""
-        super.init(id: id, nibId: nibId, nibType: nibType, height: height)
+    required init(nibId: String, nibType: CCViewModelCellViewSourceType, height: Float) {
+        super.init(nibId: nibId, nibType: nibType, height: height)
     }
     
 }

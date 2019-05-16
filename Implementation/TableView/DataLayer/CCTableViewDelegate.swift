@@ -29,7 +29,7 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = self.cellsExecutor?.cell(at: indexPath) as? CCTableViewViewModelCell {
-            self.output?.didSelect(cell: cell, at: indexPath, id: cell.id)
+            self.output?.didSelect(cell: cell, at: indexPath, id: cell.model?.modelId)
         }
     }
     

@@ -59,10 +59,8 @@ extension CCTemplateViewModels {
         
         let _ = dataSource?.itemsCells.enumerated().map({ [weak dataSource] (index, element) in
             if let cell = self.createCell?(element, index, dataSource?.itemsCells.count ?? 0) {
-                if self.sections.firstIndex(where: {$0.id == cell.sectionId}) != nil {
-                    cell.inject(model: element)
-                    self.cells.insert(cell, at: index)
-                }
+                cell.inject(model: element)
+                self.cells.insert(cell, at: index)
             }
         })
         
@@ -75,10 +73,12 @@ extension CCTemplateViewModels {
         let _ = dataSource?.itemsCells.enumerated().map { [unowned self] (index, element) in
             if element.viewModel == nil {
                 if let cell = self.createCell?(element, index, self.cells.count) {
-                    if let sectionIndex = self.sections.firstIndex(where: {$0.id == cell.sectionId}) {
-                        paths.append(IndexPath(row: index, section: sectionIndex))
-                        cell.inject(model: element)
-                        self.cells.insert(cell, at: index)
+                    if let model = cell.model as? CCModelCellProtocol {
+                        if let sectionIndex = self.sections.firstIndex(where: {$0.model?.modelId == model.sectionId}) {
+                            paths.append(IndexPath(row: index, section: sectionIndex))
+                            cell.inject(model: element)
+                            self.cells.insert(cell, at: index)
+                        }
                     }
                 }
             }
@@ -93,8 +93,8 @@ extension CCTemplateViewModels {
         var paths = [IndexPath]()
         
         let _ = self.cells.enumerated().map { (index, cell) in
-            if cell.model == nil {
-                if let sectionIndex = self.sections.firstIndex(where: {$0.id == cell.sectionId}) {
+            if let model = cell.model as? CCModelCellProtocol {
+                if let sectionIndex = self.sections.firstIndex(where: {$0.model?.modelId == model.sectionId}) {
                     paths.append(IndexPath(row: index, section: sectionIndex))
                 }
             }

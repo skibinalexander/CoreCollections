@@ -58,11 +58,11 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     
     //  MARK: Initial filling
     
-    func initFillSections() {
+    @objc dynamic func initFillSections() {
         
     }
     
-    func initFillCells() {
+    @objc dynamic func initFillCells() {
         
     }
     

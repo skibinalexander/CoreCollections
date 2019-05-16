@@ -62,13 +62,13 @@ extension CCDataSource: CCDataSourceExecuteViewModelsSectionsProtocol {
     
     func section<T: CCViewModelSection>(at id: String?) -> T? {
         return self.template.sections.first(where: { (section) -> Bool in
-            return section.id == id
+            return section.model?.modelId == id
         }) as? T
     }
     
     func index(at section: CCViewModelSection) -> Int? {
         return self.template.sections.firstIndex(where: { (find) -> Bool in
-            return section.id == find.id
+            return section.model?.modelId == find.model?.modelId
         })
     }
 }
@@ -81,13 +81,26 @@ extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
     
     public func cell<T: CCViewModelCell>(at indexPath: IndexPath) -> T? {
         let section = self.template.sections[indexPath.section]
-        let cells = self.template.cells.filter({ $0.sectionId == section.id })
+        let cells = self.template.cells.filter({ (cell) -> Bool in
+            if let model = cell.model as? CCModelCellProtocol {
+                return model.sectionId == section.model?.modelId
+            }
+            
+            return false
+        })
+        
+        
+        guard cells.count > indexPath.row else {
+            assert(cells.count > indexPath.row, "Count Cells = \(cells.count)")
+            return nil
+        }
+        
         return cells[indexPath.row] as? T
     }
     
     public func cell<T: CCViewModelCell>(at id: String?) -> T? {
         return self.template.cells.first(where: { (cell) -> Bool in
-            return cell.id == id
+            return cell.model?.modelId == id
         }) as? T
     }
     
@@ -97,13 +110,17 @@ extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
     
     public func cells(at ids: [String?]) -> [CCViewModelCell] {
         return self.template.cells.filter({ (cell) -> Bool in
-            return ids.contains(cell.id)
+            return ids.contains(cell.model?.modelId)
         })
     }
     
     public func cells<T>(in sectionId: String?) -> [T]? where T : CCViewModelCell {
         return self.template.cells.filter({ (cell) -> Bool in
-            return cell.sectionId == sectionId
+            if let model = cell.model as? CCTableViewModelCell {
+                return model.sectionId == sectionId
+            }
+            
+            return false
         }) as? [T]
     }
     

@@ -33,12 +33,11 @@ class CCTableViewViewModelExpandedSection: CCTableViewViewModelSection {
     
     convenience init(output: CCTableViewViewModelExpandedSectionOutputProtocol? = nil,
                      state: CCTableViewViewModelExpandedState = .expanded,
-                     id: String?,
                      nibId: String,
                      nibType: CCViewModelCellViewSourceType,
                      height: Float) {
         
-        self.init(id: id, nibId: nibId, nibType: nibType, height: height)
+        self.init(nibId: nibId, nibType: nibType, height: height)
         
         self.output = output
         self.state = state

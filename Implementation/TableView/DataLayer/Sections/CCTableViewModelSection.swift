@@ -13,5 +13,10 @@ class CCTableViewModelSection: CCModelSectionProtocol {
     //  MARK: CCModelSectionProtocol
     
     weak var viewModel: CCViewModel?
+    var modelId: String?
+    
+    init(modelId: String?) {
+        self.modelId = modelId
+    }
     
 }

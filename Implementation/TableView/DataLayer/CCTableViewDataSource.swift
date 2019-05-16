@@ -22,7 +22,11 @@ class CCTableViewDataSource<T: CCTemplateViewModels>: CCDataSource<T>, UITableVi
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.template.cells.filter({ (cell) -> Bool in
-            self.template.sections[section].id == cell.sectionId
+            if let model = cell.model as? CCModelCellProtocol {
+                return self.template.sections[section].model?.modelId == model.sectionId
+            }
+            
+            return false
         }).count
     }
     

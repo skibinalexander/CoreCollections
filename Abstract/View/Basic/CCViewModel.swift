@@ -22,7 +22,8 @@ protocol CCViewProtocol: class {
 }
 
 protocol CCModelProtocol: class {
-    var viewModel: CCViewModel?  { get set }
+    var viewModel:  CCViewModel?    { get set }
+    var modelId:    String?         { get set }
 }
 
 class CCViewModel {
@@ -34,16 +35,13 @@ class CCViewModel {
     
     //  MARK: Public
     
-    var id:                 String?
-    
     var nibId:              String
     var nibType:            CCViewModelCellViewSourceType
     var height:             Float
     
     //  MARK: Initialization
     
-    required init(id: String?, nibId: String, nibType: CCViewModelCellViewSourceType, height: Float) {
-        self.id = id
+    required init(nibId: String, nibType: CCViewModelCellViewSourceType, height: Float) {
         self.nibId = nibId
         self.nibType = nibType
         self.height = height
