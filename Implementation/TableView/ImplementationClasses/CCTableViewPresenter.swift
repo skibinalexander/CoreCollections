@@ -52,7 +52,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     
     //  MARK: CCTableViewDelegateOutputProtocol
     
-    func didSelect(cell: CCTableViewViewModelCell?, at indexPath: IndexPath, id: String?) {
+    func didSelect(indexPath: IndexPath, id: String?) {
         
     }
     

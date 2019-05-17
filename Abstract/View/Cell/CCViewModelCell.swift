@@ -13,7 +13,7 @@ protocol CCViewModelCellOutputProtocol: class {
     func modelDidChage()
 }
 
-class CCViewModelCell: CCViewModel {
+class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M> {
     
     //  MARK: Private
     

@@ -18,26 +18,72 @@ public enum CCViewModelCellViewSourceType {
 //  MARK: Protocols
 
 protocol CCViewProtocol: class {
-    var viewModel: CCViewModel?  { get set }
+    var viewModel: CCViewModelProtocol?    { get set }
 }
 
 protocol CCModelProtocol: class {
-    var viewModel:  CCViewModel?    { get set }
-    var modelId:    String?         { get set }
+    var viewModel:  CCViewModelProtocol?    { get set }
+    var modelId:    String?                 { get set }
 }
 
-class CCViewModel {
+//  MARK:
+
+protocol CCViewModelProtocol: class {
+    var nibId:              String                              { get set }
+    var nibType:            CCViewModelCellViewSourceType       { get set }
+    var height:             Float                               { get set }
     
-    //  MARK: Private
+    var modelId:            String?                             { get }
     
-    weak var view:          CCViewProtocol?
-    weak var model:         CCModelProtocol?
+    var getModel:           CCModelProtocol?                    { get }
+    var getView:            CCViewProtocol?                     { get }
+    
+    //  MARK: Inection
+    
+    func inject(model: CCModelProtocol?)
+    func inject(view: CCViewProtocol?)
+    
+    //  MARK: Update
+    
+    func updateView()
+    func updateModel()
+}
+
+protocol CCViewModelInitialization {
+    associatedtype Model:   CCModelProtocol
+    associatedtype View:    CCViewProtocol
+    
+    var view:               View?                     { get set }
+    var model:              Model?                    { get set }
+}
+
+class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, CCViewModelInitialization {
+    
+    typealias View = V
+    typealias Model = M
+    
+    weak var view: V?
+    weak var model: M?
     
     //  MARK: Public
     
     var nibId:              String
     var nibType:            CCViewModelCellViewSourceType
     var height:             Float
+    
+    //  Getters Properties
+    
+    final var modelId: String? {
+        return model?.modelId
+    }
+    
+    final var getView: CCViewProtocol? {
+        return self.view
+    }
+    
+    final var getModel: CCModelProtocol? {
+        return self.model
+    }
     
     //  MARK: Initialization
     
@@ -47,27 +93,25 @@ class CCViewModel {
         self.height = height
     }
     
-    //  MARK: Setters
-    
-    func inject(model: CCModelProtocol?) {
-        self.model = model
-        self.model?.viewModel = self
-    }
+    //  MARK: Injections
     
     func inject(view: CCViewProtocol?) {
-        self.view = view
+        self.view = view as? V
         self.view?.viewModel = self
     }
     
-    //  MARK: UpdateView
+    func inject(model: CCModelProtocol?) {
+        self.model = model as? M
+        self.model?.viewModel = self
+    }
     
-    public func updateView() {
+    //  MARK: Updating
+    
+    func updateView() {
         
     }
     
-    //  MARK: UpdateModel
-    
-    public func updateModel() {
+    func updateModel() {
         
     }
     

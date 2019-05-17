@@ -9,7 +9,7 @@
 import UIKit
 
 class CCTableViewModelCell: CCModelCellProtocol {
-    var viewModel:  CCViewModel?
+    var viewModel:  CCViewModelProtocol?
     var sectionId:  String
     var modelId:    String?
     

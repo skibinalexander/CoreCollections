@@ -10,13 +10,17 @@ import Foundation
 
 //  MARK: Base ViewModelCell
 
-class CCTableViewViewModelCell: CCViewModelCell {
+class CCTableViewViewModelCell<V: CCTableViewCell, M: CCTableViewModelCell>: CCViewModelCell<V, M> {
     
 }
 
 //  MARK: Expanded ViewModelCell
 
-class CCTableViewViewModelExpandedCell: CCTableViewViewModelCell {
+protocol CCTableViewViewModelExpandedCellProtocol {
+    func changeHeight(with state: CCTableViewViewModelExpandedState)
+}
+
+class CCTableViewViewModelExpandedCell<V: CCTableViewCell, M: CCTableViewModelCell>: CCTableViewViewModelCell<V, M>, CCTableViewViewModelExpandedCellProtocol {
     
     //  MARK: Private
     

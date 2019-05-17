@@ -8,6 +8,6 @@
 
 import Foundation
 
-class CCViewModelSection: CCViewModel {
+class CCViewModelSection<V: CCViewSectionProtocol, M: CCModelSectionProtocol>: CCViewModel<V, M> {
 
 }

@@ -14,14 +14,14 @@ protocol CCTemplateViewModelsDataSource: class {
 }
 
 class CCTemplateViewModels {
-    var sections:   [CCViewModelSection]
-    var cells:      [CCViewModelCell]
+    var sections:   [CCViewModelProtocol]
+    var cells:      [CCViewModelProtocol]
     
     private     weak var dataSource:    CCTemplateViewModelsDataSource?
     internal    weak var output:        CCViewModelCellOutputProtocol?
     
-    var createSection: ((_ model: CCModelSectionProtocol, _ index: Int)->(CCTableViewViewModelSection)?)?
-    var createCell: ((_ model: CCModelCellProtocol, _ index: Int, _ count: Int)->(CCTableViewViewModelCell)?)?
+    var createSection: ((_ model: CCModelSectionProtocol, _ index: Int)->(CCViewModelProtocol)?)?
+    var createCell: ((_ model: CCModelCellProtocol, _ index: Int, _ count: Int)->(CCViewModelProtocol)?)?
     
     required init(dataSource: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
         self.dataSource = dataSource
@@ -70,19 +70,19 @@ extension CCTemplateViewModels {
         
         var paths = [IndexPath]()
 
-        let _ = dataSource?.itemsCells.enumerated().map { [unowned self] (index, element) in
-            if element.viewModel == nil {
-                if let cell = self.createCell?(element, index, self.cells.count) {
-                    if let model = cell.model as? CCModelCellProtocol {
-                        if let sectionIndex = self.sections.firstIndex(where: {$0.model?.modelId == model.sectionId}) {
-                            paths.append(IndexPath(row: index, section: sectionIndex))
-                            cell.inject(model: element)
-                            self.cells.insert(cell, at: index)
-                        }
-                    }
-                }
-            }
-        }
+//        let _ = dataSource?.itemsCells.enumerated().map { [unowned self] (index, element) in
+//            if element.viewModel == nil {
+//                if let cell = self.createCell?(element, index, self.cells.count) {
+//                    if let model = cell.model as? CCModelCellProtocol {
+//                        if let sectionIndex = self.sections.firstIndex(where: {$0.model?.modelId == model.sectionId}) {
+//                            paths.append(IndexPath(row: index, section: sectionIndex))
+//                            cell.inject(model: element)
+//                            self.cells.insert(cell, at: index)
+//                        }
+//                    }
+//                }
+//            }
+//        }
         
         return paths
         
@@ -92,15 +92,15 @@ extension CCTemplateViewModels {
         
         var paths = [IndexPath]()
         
-        let _ = self.cells.enumerated().map { (index, cell) in
-            if let model = cell.model as? CCModelCellProtocol {
-                if let sectionIndex = self.sections.firstIndex(where: {$0.model?.modelId == model.sectionId}) {
-                    paths.append(IndexPath(row: index, section: sectionIndex))
-                }
-            }
-        }
-        
-        self.cells.removeAll(where: { $0.model == nil })
+//        let _ = self.cells.enumerated().map { (index, cell) in
+//            if let model = cell.model as? CCModelCellProtocol {
+//                if let sectionIndex = self.sections.firstIndex(where: {$0.model?.modelId == model.sectionId}) {
+//                    paths.append(IndexPath(row: index, section: sectionIndex))
+//                }
+//            }
+//        }
+//
+//        self.cells.removeAll(where: { $0.model == nil })
         
         return paths
         

@@ -14,7 +14,7 @@ class CCTableViewSection: UIView, CCViewSectionProtocol {
     
     //  MARK: CCViewCellProtocol
     
-    weak var viewModel: CCViewModel?
+    weak var viewModel: CCViewModelProtocol?
 }
 
 //  MARK: Expanded ViewSection
@@ -29,7 +29,7 @@ class CCTableViewExpandedSection: CCTableViewSection {
     
     @IBAction func actionStateButtonDidTouch(_ sender: UIButton) {
         
-        if let viewModel = self.viewModel as? CCTableViewViewModelExpandedSection {
+        if let viewModel = self.viewModel as? CCTableViewViewModelExpandedSectionProtocol {
             viewModel.changeState()
         }
         

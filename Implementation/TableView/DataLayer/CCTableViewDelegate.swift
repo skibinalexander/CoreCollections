@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CCTableViewDelegateOutputProtocol: class {
-    func didSelect(cell: CCTableViewViewModelCell?, at indexPath: IndexPath, id: String?)
+    func didSelect(indexPath: IndexPath, id: String?)
 }
 
 protocol CCTableViewDelegateProtocol: class {
@@ -28,8 +28,8 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = self.cellsExecutor?.cell(at: indexPath) as? CCTableViewViewModelCell {
-            self.output?.didSelect(cell: cell, at: indexPath, id: cell.model?.modelId)
+        if let cell = self.cellsExecutor?.cell(at: indexPath) {
+            self.output?.didSelect(indexPath: indexPath, id: cell.modelId)
         }
     }
     
@@ -43,25 +43,24 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let viewModelSection: CCTableViewViewModelSection? = self.sectionsExecutor?.section(at: section)
+        let viewModelSection = self.sectionsExecutor?.section(at: section)
         
         //  Иницализация view для секции
         
         switch viewModelSection?.nibType {
 //        case .reusebleId?:  cell?.inject(view: tableView.dequeueReusableCell(withIdentifier: viewModelSection!.nibId, for: indexPath) as? CCViewProtocol); break;
-        case .nibName?:     viewModelSection?.inject(view: self.nibSection(nameNib: viewModelSection!.nibId) as? CCViewProtocol); break;
+        case .nibName?:     viewModelSection?.inject(view: self.nibSection(nameNib: viewModelSection!.nibId) as? CCTableViewSection); break;
         default:break;
         }
         
-        assert(viewModelSection?.view != nil, "CCTableViewDataSource: view for id ViewModel \(String(describing: type(of: viewModelSection))) not initialization!")
-        
         viewModelSection?.updateView()
         
-        return viewModelSection?.view as? UIView
+        return viewModelSection?.getView as? UIView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat(self.sectionsExecutor?.section(at: section)?.height ?? .zero)
+        let viewModelSection = self.sectionsExecutor?.section(at: section)
+        return CGFloat(viewModelSection?.height ?? .zero)
     }
     
 }

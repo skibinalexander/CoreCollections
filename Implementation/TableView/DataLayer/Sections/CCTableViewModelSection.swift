@@ -12,7 +12,7 @@ class CCTableViewModelSection: CCModelSectionProtocol {
     
     //  MARK: CCModelSectionProtocol
     
-    weak var viewModel: CCViewModel?
+    weak var viewModel: CCViewModelProtocol?
     var modelId: String?
     
     init(modelId: String?) {

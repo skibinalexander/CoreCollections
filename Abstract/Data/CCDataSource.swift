@@ -11,19 +11,19 @@ import Foundation
 //  MARK: Sections
 
 protocol CCDataSourceExecuteViewModelsSectionsProtocol: class {
-    func section<T: CCViewModelSection>(at index: Int) -> T?
-    func section<T: CCViewModelSection>(at id: String?) -> T?
-    func index(at section: CCViewModelSection) -> Int?
+    func section(at index: Int)     -> CCViewModelProtocol?
+    func section(at id: String?)    -> CCViewModelProtocol?
+    func index(at section: CCViewModelProtocol) -> Int?
 }
 
 //  MARK: Cells
 
 protocol CCDataSourceExecuteViewModelsCellsProtocol: class {
-    func cell<T: CCViewModelCell>(at indexPath: IndexPath) -> T?
-    func cell<T: CCViewModelCell>(at id: String?) -> T?
-    func cells<T: CCViewModelCell>(at paths: [IndexPath]) -> [T]
-    func cells(at ids: [String?]) -> [CCViewModelCell]
-    func cells<T: CCViewModelCell>(in sectionId: String?) -> [T]?
+    func cell(at indexPath: IndexPath)  -> CCViewModelProtocol?
+    func cell(at id: String?)           -> CCViewModelProtocol?
+    func cells(at paths: [IndexPath])   -> [CCViewModelProtocol]
+    func cells(at ids: [String?])       -> [CCViewModelProtocol]
+    func cells(in sectionId: String?)   -> [CCViewModelProtocol?]?
 }
 
 protocol CCDataSourceReloadViewModelsCellsProtocol: class {
@@ -39,7 +39,7 @@ protocol CCDataSourceUpdateViewModelsCellsProtocol: class {
 
 //  MARK: DataSource
 
-class CCDataSource<T: CCTemplateViewModels>: NSObject {
+class CCDataSource<TemplateU: CCTemplateViewModels>: NSObject {
     
     //  MARK: Properties
     
@@ -48,7 +48,7 @@ class CCDataSource<T: CCTemplateViewModels>: NSObject {
     //  MARK: Lifecycle
     
     init(templateDataSource: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
-        self.template = T(dataSource: templateDataSource, output: output)
+        self.template = TemplateU(dataSource: templateDataSource, output: output)
     }
     
 }
@@ -56,19 +56,19 @@ class CCDataSource<T: CCTemplateViewModels>: NSObject {
 //  MARK: Implementation Sections
 
 extension CCDataSource: CCDataSourceExecuteViewModelsSectionsProtocol {
-    func section<T: CCViewModelSection>(at index: Int) -> T? {
-        return self.template.sections[index] as? T
+    func section(at index: Int) -> CCViewModelProtocol? {
+        return self.template.sections[index]
     }
     
-    func section<T: CCViewModelSection>(at id: String?) -> T? {
+    func section(at id: String?) -> CCViewModelProtocol? {
         return self.template.sections.first(where: { (section) -> Bool in
-            return section.model?.modelId == id
-        }) as? T
+            return section.modelId == id
+        })
     }
     
-    func index(at section: CCViewModelSection) -> Int? {
+    func index(at section: CCViewModelProtocol) -> Int? {
         return self.template.sections.firstIndex(where: { (find) -> Bool in
-            return section.model?.modelId == find.model?.modelId
+            return section.modelId == find.modelId
         })
     }
 }
@@ -79,49 +79,50 @@ extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
     
     //  MARK: Cells
     
-    public func cell<T: CCViewModelCell>(at indexPath: IndexPath) -> T? {
+    public func cell(at indexPath: IndexPath) -> CCViewModelProtocol? {
         let section = self.template.sections[indexPath.section]
-        let cells = self.template.cells.filter({ (cell) -> Bool in
-            if let model = cell.model as? CCModelCellProtocol {
-                return model.sectionId == section.model?.modelId
+        let cells = self.template.cells.filter { (cell) -> Bool in
+            if let model = cell.getModel as? CCTableViewModelCell {
+                return model.sectionId == section.modelId
             }
             
             return false
-        })
-        
-        
-        guard cells.count > indexPath.row else {
-            assert(cells.count > indexPath.row, "Count Cells = \(cells.count)")
-            return nil
         }
         
-        return cells[indexPath.row] as? T
+        return cells[indexPath.row]
     }
     
-    public func cell<T: CCViewModelCell>(at id: String?) -> T? {
+    public func cell(at id: String?) -> CCViewModelProtocol? {
         return self.template.cells.first(where: { (cell) -> Bool in
-            return cell.model?.modelId == id
-        }) as? T
+            return cell.modelId == id
+        })
     }
     
-    public func cells<T: CCViewModelCell>(at paths: [IndexPath]) -> [T] {
+    public func cells(at paths: [IndexPath]) -> [CCViewModelProtocol] {
         return []
     }
     
-    public func cells(at ids: [String?]) -> [CCViewModelCell] {
-        return self.template.cells.filter({ (cell) -> Bool in
-            return ids.contains(cell.model?.modelId)
-        })
+    public func cells(at ids: [String?]) -> [CCViewModelProtocol] {
+//        let _ = self.template.cells.mapValues({ (cells) in
+//            return cells.filter({ (cell) -> Bool in
+//                return ids.contains(cell.modelId)
+//            })
+//        })
+        
+        return []
     }
     
-    public func cells<T>(in sectionId: String?) -> [T]? where T : CCViewModelCell {
-        return self.template.cells.filter({ (cell) -> Bool in
-            if let model = cell.model as? CCTableViewModelCell {
-                return model.sectionId == sectionId
+    public func cells(in sectionId: String?) -> [CCViewModelProtocol?]? {
+        let section = self.template.sections.first(where: {$0.modelId == sectionId})
+        return self.template.cells.map({ (cell) -> CCViewModelProtocol? in
+            if let model = cell.getModel as? CCModelCellProtocol {
+                if model.sectionId == section?.modelId {
+                    return cell
+                }
             }
             
-            return false
-        }) as? [T]
+            return nil
+        })
     }
     
 }
@@ -168,9 +169,9 @@ extension CCDataSource: CCDataSourceUpdateViewModelsCellsProtocol {
 extension CCDataSource {
     
     public func updateViewModelCell(at indexPath: IndexPath) {
-        let cell = self.cell(at: indexPath)
-        cell?.updateView()
-        cell?.updateModel()
+//        let cell = self.cell(at: indexPath)
+//        cell?.updateView()
+//        cell?.updateModel()
         
     }
     
@@ -181,9 +182,9 @@ extension CCDataSource {
     }
     
     public func updateViewModelCell(at id: String?) {
-        let cell = self.cell(at: id)
-        cell?.updateView()
-        cell?.updateModel()
+//        let cell = self.cell(at: id)
+//        cell?.updateView()
+//        cell?.updateModel()
     }
     
     public func updateViewCell(at ids: [String]) {
