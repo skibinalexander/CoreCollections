@@ -23,8 +23,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
                                 CCTableViewRefreshOutputProtocol,
                                 CCViewModelCellOutputProtocol {
     
-    var itemsCells:     [CCModelCellProtocol]      = []
-    var itemsSections:  [CCModelSectionProtocol]   = []
+    var items:  [CCModelSectionProtocol]   = []
     
     
     //  MARK: Properties
@@ -79,7 +78,6 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     //  MARK: CCTableViewRefreshOutputProtocol
     
     func refreshList() {
-        self.itemsCells = []
         self.dataSource?.reload()
         self.tableViewInput?.reloadTableView()
         self.becomeViewRefresing()
@@ -147,7 +145,7 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
     }
     
     func countList() -> Int {
-        return itemsCells.count
+        return items.first?.cells.count ?? 0
     }
     
     override func refreshList() {

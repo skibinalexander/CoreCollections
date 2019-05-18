@@ -17,19 +17,19 @@ class CCTableViewDataSource<T: CCTemplateViewModels>: CCDataSource<T>, UITableVi
     //  MARK: UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.template.sections.count
+        return self.template.items.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let sectionId = self.section(at: section)?.getModel?.modelId {
-            return self.template.cells.filter({ (cell) -> Bool in
-                if let model = cell.getModel as? CCTableViewModelCell {
-                    return model.sectionId == sectionId
-                }
-                
-                return false
-            }).count 
-        }
+//        if let sectionId = self.section(at: section)?.getModel?.modelId {
+//            return self.template.items.cells.filter({ (cell) -> Bool in
+//                if let model = cell.getModel as? CCTableViewModelCell {
+//                    return model.sectionId == sectionId
+//                }
+//                
+//                return false
+//            }).count 
+//        }
         
         return 0
     }

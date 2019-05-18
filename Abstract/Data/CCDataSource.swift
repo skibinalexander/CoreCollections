@@ -57,17 +57,17 @@ class CCDataSource<TemplateU: CCTemplateViewModels>: NSObject {
 
 extension CCDataSource: CCDataSourceExecuteViewModelsSectionsProtocol {
     func section(at index: Int) -> CCViewModelProtocol? {
-        return self.template.sections[index]
+        return self.template.items[index]
     }
     
     func section(at id: String?) -> CCViewModelProtocol? {
-        return self.template.sections.first(where: { (section) -> Bool in
+        return self.template.items.first(where: { (section) -> Bool in
             return section.modelId == id
         })
     }
     
     func index(at section: CCViewModelProtocol) -> Int? {
-        return self.template.sections.firstIndex(where: { (find) -> Bool in
+        return self.template.items.firstIndex(where: { (find) -> Bool in
             return section.modelId == find.modelId
         })
     }
@@ -80,22 +80,17 @@ extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
     //  MARK: Cells
     
     public func cell(at indexPath: IndexPath) -> CCViewModelProtocol? {
-        let section = self.template.sections[indexPath.section]
-        let cells = self.template.cells.filter { (cell) -> Bool in
-            if let model = cell.getModel as? CCTableViewModelCell {
-                return model.sectionId == section.modelId
-            }
-            
-            return false
-        }
-        
-        return cells[indexPath.row]
+        return self.template.items[indexPath.section].cells[indexPath.row]
     }
     
     public func cell(at id: String?) -> CCViewModelProtocol? {
-        return self.template.cells.first(where: { (cell) -> Bool in
-            return cell.modelId == id
-        })
+//        return self.template.items.map({ (section) -> T in
+//            <#code#>
+//        }).cells.first(where: { (cell) -> Bool in
+//            return cell.modelId == id
+//        })
+        
+        return nil
     }
     
     public func cells(at paths: [IndexPath]) -> [CCViewModelProtocol] {
@@ -113,16 +108,18 @@ extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
     }
     
     public func cells(in sectionId: String?) -> [CCViewModelProtocol?]? {
-        let section = self.template.sections.first(where: {$0.modelId == sectionId})
-        return self.template.cells.map({ (cell) -> CCViewModelProtocol? in
-            if let model = cell.getModel as? CCModelCellProtocol {
-                if model.sectionId == section?.modelId {
-                    return cell
-                }
-            }
-            
-            return nil
-        })
+//        let section = self.template.sections.first(where: {$0.modelId == sectionId})
+//        return self.template.cells.map({ (cell) -> CCViewModelProtocol? in
+//            if let model = cell.getModel as? CCModelCellProtocol {
+//                if model.sectionId == section?.modelId {
+//                    return cell
+//                }
+//            }
+//            
+//            return nil
+//        })
+        
+        return nil
     }
     
 }

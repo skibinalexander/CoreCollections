@@ -27,8 +27,4 @@ class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewMode
         super.init(nibId: nibId, nibType: nibType, height: height)
     }
     
-    required init(nibId: String, nibType: CCViewModelCellViewSourceType, height: Float) {
-        super.init(nibId: nibId, nibType: nibType, height: height)
-    }
-    
 }

@@ -9,25 +9,22 @@
 import Foundation
 
 protocol CCTemplateViewModelsDataSource: class {
-    var itemsCells:     [CCModelCellProtocol]      { get set }
-    var itemsSections:  [CCModelSectionProtocol]   { get set }
+    var items:     [CCModelSectionProtocol]      { get set }
 }
 
 class CCTemplateViewModels {
-    var sections:   [CCViewModelProtocol]
-    var cells:      [CCViewModelProtocol]
+    var items:      [CCViewModelSectionProtocol]
     
     private     weak var dataSource:    CCTemplateViewModelsDataSource?
     internal    weak var output:        CCViewModelCellOutputProtocol?
     
-    var createSection: ((_ model: CCModelSectionProtocol, _ index: Int)->(CCViewModelProtocol)?)?
+    var createSection: ((_ model: CCModelSectionProtocol, _ index: Int)->(CCViewModelSectionProtocol)?)?
     var createCell: ((_ model: CCModelCellProtocol, _ index: Int, _ count: Int)->(CCViewModelProtocol)?)?
     
     required init(dataSource: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
         self.dataSource = dataSource
         self.output = output
-        self.sections = []
-        self.cells = []
+        self.items = []
     }
     
 }
@@ -37,12 +34,12 @@ class CCTemplateViewModels {
 extension CCTemplateViewModels {
     
     final func reloadSections() {
-        self.sections = []
+        self.items = []
         
-        let _ = dataSource?.itemsSections.enumerated().map { (index, element) in
+        let _ = dataSource?.items.enumerated().map { (index, element) in
             if let section = self.createSection?(element, index) {
                 section.inject(model: element)
-                self.sections.append(section)
+                self.items.append(section)
             }
         }
         
@@ -55,14 +52,17 @@ extension CCTemplateViewModels {
 extension CCTemplateViewModels {
     
     final func reloadCells() {
-        self.cells = []
+        self.items.map({$0.clear()})
         
-        let _ = dataSource?.itemsCells.enumerated().map({ [weak dataSource] (index, element) in
-            if let cell = self.createCell?(element, index, dataSource?.itemsCells.count ?? 0) {
-                cell.inject(model: element)
-                self.cells.insert(cell, at: index)
-            }
-        })
+//        let _ = dataSource?.items.enumerated().map({ [weak dataSource] (index, element) in
+//            let _ = element.cells.map({ (cell) ->  in
+//                <#code#>
+//            })
+//            if let cell = self.createCell?(element.cells, index, dataSource?.itemsCells.count ?? 0) {
+//                cell.inject(model: element)
+//                self.cells.insert(cell, at: index)
+//            }
+//        })
         
     }
     

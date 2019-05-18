@@ -14,9 +14,11 @@ class CCTableViewModelSection: CCModelSectionProtocol {
     
     weak var viewModel: CCViewModelProtocol?
     var modelId: String?
+    var cells: [CCModelCellProtocol]
     
-    init(modelId: String?) {
+    init(modelId: String?, cells: [CCModelCellProtocol] = []) {
         self.modelId = modelId
+        self.cells = cells
     }
     
 }

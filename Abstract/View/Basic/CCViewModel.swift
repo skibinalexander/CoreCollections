@@ -49,7 +49,7 @@ protocol CCViewModelProtocol: class {
     func updateModel()
 }
 
-protocol CCViewModelInitialization {
+protocol CCViewModelInitialization: class {
     associatedtype Model:   CCModelProtocol
     associatedtype View:    CCViewProtocol
     
@@ -87,7 +87,7 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     
     //  MARK: Initialization
     
-    required init(nibId: String, nibType: CCViewModelCellViewSourceType, height: Float) {
+    init(nibId: String, nibType: CCViewModelCellViewSourceType, height: Float) {
         self.nibId = nibId
         self.nibType = nibType
         self.height = height
