@@ -43,24 +43,24 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let viewModelSection = self.sectionsExecutor?.section(at: section)
+        let item = self.sectionsExecutor?.item(at: section)
         
         //  Иницализация view для секции
         
-        switch viewModelSection?.nibType {
+        switch item?.header?.nibType {
 //        case .reusebleId?:  cell?.inject(view: tableView.dequeueReusableCell(withIdentifier: viewModelSection!.nibId, for: indexPath) as? CCViewProtocol); break;
-        case .nibName?:     viewModelSection?.inject(view: self.nibSection(nameNib: viewModelSection!.nibId) as? CCTableViewSection); break;
+        case .nibName?: item?.header?.inject(view: self.nibSection(nameNib: item!.header!.nibId) as? CCTableViewSection); break;
         default:break;
         }
         
-        viewModelSection?.updateView()
+        item?.header?.updateView()
         
-        return viewModelSection?.getView as? UIView
+        return item?.header?.getView as? UIView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let viewModelSection = self.sectionsExecutor?.section(at: section)
-        return CGFloat(viewModelSection?.height ?? .zero)
+        let item = self.sectionsExecutor?.item(at: section)
+        return CGFloat(item?.header?.height ?? .zero)
     }
     
 }

@@ -11,9 +11,8 @@ import Foundation
 //  MARK: Sections
 
 protocol CCDataSourceExecuteViewModelsSectionsProtocol: class {
-    func section(at index: Int)     -> CCViewModelProtocol?
-    func section(at id: String?)    -> CCViewModelProtocol?
-    func index(at section: CCViewModelProtocol) -> Int?
+    func item(at index: Int)     -> CCItemViewModel?
+    func item(at id: String?)    -> CCItemViewModel?
 }
 
 //  MARK: Cells
@@ -28,7 +27,6 @@ protocol CCDataSourceExecuteViewModelsCellsProtocol: class {
 
 protocol CCDataSourceReloadViewModelsCellsProtocol: class {
     func reload()
-    func reloadSections()
     func reloadCells()      //  Reload all cells with binding models
 }
 
@@ -56,20 +54,12 @@ class CCDataSource<TemplateU: CCTemplateViewModels>: NSObject {
 //  MARK: Implementation Sections
 
 extension CCDataSource: CCDataSourceExecuteViewModelsSectionsProtocol {
-    func section(at index: Int) -> CCViewModelProtocol? {
+    func item(at index: Int) -> CCItemViewModel? {
         return self.template.items[index]
     }
     
-    func section(at id: String?) -> CCViewModelProtocol? {
-        return self.template.items.first(where: { (section) -> Bool in
-            return section.modelId == id
-        })
-    }
-    
-    func index(at section: CCViewModelProtocol) -> Int? {
-        return self.template.items.firstIndex(where: { (find) -> Bool in
-            return section.modelId == find.modelId
-        })
+    func item(at id: String?) -> CCItemViewModel? {
+        return self.template.items.first(where: { $0.id == id })
     }
 }
 
@@ -84,10 +74,8 @@ extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
     }
     
     public func cell(at id: String?) -> CCViewModelProtocol? {
-//        return self.template.items.map({ (section) -> T in
-//            <#code#>
-//        }).cells.first(where: { (cell) -> Bool in
-//            return cell.modelId == id
+//        return template.items.map({ (item) -> CCViewModelProtocol? in
+//            return item.cells.first(where: {$0?.modelId == id})
 //        })
         
         return nil
@@ -129,12 +117,7 @@ extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
 extension CCDataSource: CCDataSourceReloadViewModelsCellsProtocol {
     
     func reload() {
-        self.reloadSections()
-        self.reloadCells()
-    }
-    
-    func reloadSections() {
-        self.template.reloadSections()
+        self.template.reloadItems()
     }
     
     func reloadCells() {

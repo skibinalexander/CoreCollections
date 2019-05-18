@@ -43,6 +43,9 @@ protocol CCViewModelProtocol: class {
     func inject(model: CCModelProtocol?)
     func inject(view: CCViewProtocol?)
     
+    func inject(with model: CCModelProtocol?)    -> CCViewModelProtocol?
+    func inject(with view: CCViewProtocol?)      -> CCViewModelProtocol?
+    
     //  MARK: Update
     
     func updateView()
@@ -103,6 +106,16 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     func inject(model: CCModelProtocol?) {
         self.model = model as? M
         self.model?.viewModel = self
+    }
+    
+    func inject(with view: CCViewProtocol?) -> CCViewModelProtocol? {
+        self.inject(view: view)
+        return self
+    }
+    
+    func inject(with model: CCModelProtocol?) -> CCViewModelProtocol? {
+        self.inject(model: model)
+        return self
     }
     
     //  MARK: Updating

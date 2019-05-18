@@ -16,7 +16,7 @@ class CCTableViewModelSection: CCModelSectionProtocol {
     var modelId: String?
     var cells: [CCModelCellProtocol]
     
-    init(modelId: String?, cells: [CCModelCellProtocol] = []) {
+    init(modelId: String? = nil, cells: [CCModelCellProtocol] = []) {
         self.modelId = modelId
         self.cells = cells
     }

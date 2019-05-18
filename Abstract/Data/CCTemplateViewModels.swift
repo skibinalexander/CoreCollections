@@ -9,17 +9,18 @@
 import Foundation
 
 protocol CCTemplateViewModelsDataSource: class {
-    var items:     [CCModelSectionProtocol]      { get set }
+    var models:     [CCItemModel]      { get set }
 }
 
 class CCTemplateViewModels {
-    var items:      [CCViewModelSectionProtocol]
+    var items:      [CCItemViewModel]
     
     private     weak var dataSource:    CCTemplateViewModelsDataSource?
     internal    weak var output:        CCViewModelCellOutputProtocol?
     
-    var createSection: ((_ model: CCModelSectionProtocol, _ index: Int)->(CCViewModelSectionProtocol)?)?
-    var createCell: ((_ model: CCModelCellProtocol, _ index: Int, _ count: Int)->(CCViewModelProtocol)?)?
+    internal var createHeader: ((_ model: CCModelSectionProtocol?, _ index: Int)->CCViewModelProtocol?)?
+    internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int)->CCViewModelProtocol?)?
+    internal var createCell: ((_ model: CCModelCellProtocol?, _ index: Int)->CCViewModelProtocol?)?
     
     required init(dataSource: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
         self.dataSource = dataSource
@@ -33,16 +34,13 @@ class CCTemplateViewModels {
 
 extension CCTemplateViewModels {
     
-    final func reloadSections() {
-        self.items = []
-        
-        let _ = dataSource?.items.enumerated().map { (index, element) in
-            if let section = self.createSection?(element, index) {
-                section.inject(model: element)
-                self.items.append(section)
-            }
+    final func reloadItems() {
+        let _ = dataSource?.models.enumerated().map { (index, element) in
+            self.items.append(CCItemViewModel(header: self.createHeader?(element.header, index)?.inject(with: element.header),
+                                              footer: self.createFooter?(element.footer, index)?.inject(with: element.footer)))
         }
         
+        self.reloadCells()
     }
     
 }
@@ -52,17 +50,12 @@ extension CCTemplateViewModels {
 extension CCTemplateViewModels {
     
     final func reloadCells() {
-        self.items.map({$0.clear()})
         
-//        let _ = dataSource?.items.enumerated().map({ [weak dataSource] (index, element) in
-//            let _ = element.cells.map({ (cell) ->  in
-//                <#code#>
-//            })
-//            if let cell = self.createCell?(element.cells, index, dataSource?.itemsCells.count ?? 0) {
-//                cell.inject(model: element)
-//                self.cells.insert(cell, at: index)
-//            }
-//        })
+        let _ = dataSource?.models.map({ (element) in
+            let _  = element.cells.enumerated().map({ (index, model) in
+                self.items[index].cells.append(self.createCell?(model, index)?.inject(with: model))
+            })
+        })
         
     }
     

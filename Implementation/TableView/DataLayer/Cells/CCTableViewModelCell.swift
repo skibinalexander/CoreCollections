@@ -10,11 +10,9 @@ import UIKit
 
 class CCTableViewModelCell: CCModelCellProtocol {
     var viewModel:  CCViewModelProtocol?
-    var sectionId:  String
     var modelId:    String?
     
-    init(sectionId: String, modelId: String? = nil) {
-        self.sectionId = sectionId
+    init(modelId: String? = nil) {
         self.modelId = modelId
     }
 }

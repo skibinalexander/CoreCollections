@@ -23,7 +23,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
                                 CCTableViewRefreshOutputProtocol,
                                 CCViewModelCellOutputProtocol {
     
-    var items:  [CCModelSectionProtocol]   = []
+    var models: [CCItemModel] = []
     
     
     //  MARK: Properties
@@ -45,8 +45,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
                                               cellsExecutor: self.dataSource,
                                               output: self)
         
-        self.initFillSections()
-        self.initFillCells()
+        self.initModels()
     }
     
     //  MARK: CCTableViewDelegateOutputProtocol
@@ -57,12 +56,11 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     
     //  MARK: Initial filling
     
-    @objc dynamic func initFillSections() {
-        
-    }
-    
-    @objc dynamic func initFillCells() {
-        
+    @objc dynamic func initModels() {
+        self.models = []
+        guard self.models.count == 0 else {
+            fatalError("CCTableViewPresenter already not empty")
+        }
     }
     
     //  MARK: CCViewModelCellOutputProtocol
@@ -93,8 +91,7 @@ extension CCTableViewPresenter {
     //
     
     final func reloadList() {
-        self.dataSource?.reloadSections()
-        self.dataSource?.reloadCells()
+        self.dataSource?.reload()
         self.tableViewInput?.reloadTableView()
     }
     
@@ -145,7 +142,8 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
     }
     
     func countList() -> Int {
-        return items.first?.cells.count ?? 0
+        return 0
+//        return items.first?.cells.count ?? 0
     }
     
     override func refreshList() {

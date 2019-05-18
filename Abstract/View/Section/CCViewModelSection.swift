@@ -8,17 +8,5 @@
 
 import Foundation
 
-protocol CCViewModelSectionProtocol: CCViewModelProtocol {
-    var cells: [CCViewModelProtocol] { get set }
-    
-    func clear()
-}
-
-class CCViewModelSection<V: CCViewSectionProtocol, M: CCModelSectionProtocol>:
-                                                        CCViewModel<V, M>, CCViewModelSectionProtocol {
-    public var cells: [CCViewModelProtocol] = []
-    
-    func clear() {
-        self.cells = []
-    }
+class CCViewModelSection<V: CCViewSectionProtocol, M: CCModelSectionProtocol>: CCViewModel<V, M> {
 }
