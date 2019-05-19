@@ -42,15 +42,26 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
         let item = self.sectionsExecutor?.item(at: section)
         
         //  Иницализация view для секции
         
         switch item?.header?.nibType {
-//        case .reusebleId?:  cell?.inject(view: tableView.dequeueReusableCell(withIdentifier: viewModelSection!.nibId, for: indexPath) as? CCViewProtocol); break;
-        case .nibName?: item?.header?.inject(view: self.nibSection(nameNib: item!.header!.nibId) as? CCTableViewSection); break;
-        default:break;
+        default: item?.header?.inject(view: self.nibSection(nameNib: item!.header!.nibId) as? CCTableViewSection); break;
+        }
+        
+        item?.header?.updateView()
+        
+        return item?.header?.getView as? UIView
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let item = self.sectionsExecutor?.item(at: section)
+        
+        //  Иницализация view для секции
+        
+        switch item?.header?.nibType {
+        default: item?.footer?.inject(view: self.nibSection(nameNib: item!.header!.nibId) as? CCTableViewSection); break;
         }
         
         item?.header?.updateView()
@@ -61,6 +72,11 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let item = self.sectionsExecutor?.item(at: section)
         return CGFloat(item?.header?.height ?? .zero)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let item = self.sectionsExecutor?.item(at: section)
+        return CGFloat(item?.footer?.height ?? .zero)
     }
     
 }
