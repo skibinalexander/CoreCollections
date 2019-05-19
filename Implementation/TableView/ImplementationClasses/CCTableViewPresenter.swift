@@ -28,11 +28,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     
     //  MARK: Properties
     
-    var dataSource: (CCDataSourceExecuteViewModelsSectionsProtocol &
-                        CCDataSourceExecuteViewModelsCellsProtocol &
-                        CCDataSourceReloadViewModelsCellsProtocol &
-                        CCDataSourceUpdateViewModelsCellsProtocol)?
-    
+    var dataSource: (CCDataSourceExecuteItemsProtocol & CCDataSourceExecuteCellsProtocol)?
     var delegate:   CCTableViewDelegateProtocol?
     
     weak var tableViewInput: CCTableViewPresenterViewInputProtocol?
@@ -40,11 +36,8 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     //  MARK: Lifecycle
     
     init() {
-        self.dataSource = CCTableViewDataSource<T>(templateDataSource: self, output: self)
-        self.delegate   = CCTableViewDelegate(sectionsExecutor: self.dataSource,
-                                              cellsExecutor: self.dataSource,
-                                              output: self)
-        
+        self.dataSource     = CCTableViewDataSource<T>(template: self, output: self)
+        self.delegate       = CCTableViewDelegate(executor: self.dataSource, output: self)
         self.initModels()
     }
     

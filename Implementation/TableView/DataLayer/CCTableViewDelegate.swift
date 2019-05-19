@@ -22,19 +22,21 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
 
     private weak var output:            CCTableViewDelegateOutputProtocol?
     
-    init(sectionsExecutor: CCDataSourceExecuteViewModelsSectionsProtocol?, cellsExecutor: CCDataSourceExecuteViewModelsCellsProtocol?, output: CCTableViewDelegateOutputProtocol?) {
+    init(executor: (CCDataSourceExecuteItemsProtocol & CCDataSourceExecuteCellsProtocol)?,
+         output: CCTableViewDelegateOutputProtocol?) {
+        
         self.output = output
-        super.init(sectionsExecutor: sectionsExecutor, cellsExecutor: cellsExecutor)
+        super.init(executor: executor)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = self.cellsExecutor?.cell(at: indexPath) {
+        if let cell = self.executor?.cell(at: indexPath) {
             self.output?.didSelect(indexPath: indexPath, id: cell.modelId)
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let cell = cellsExecutor?.cell(at: indexPath) {
+        if let cell = self.executor?.cell(at: indexPath) {
             return CGFloat(cell.height)
         }
         
@@ -42,7 +44,7 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let item = self.sectionsExecutor?.item(at: section)
+        let item = self.executor?.item(at: section)
         
         //  Иницализация view для секции
         
@@ -56,7 +58,7 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let item = self.sectionsExecutor?.item(at: section)
+        let item = self.executor?.item(at: section)
         
         //  Иницализация view для секции
         
@@ -70,12 +72,12 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let item = self.sectionsExecutor?.item(at: section)
+        let item = self.executor?.item(at: section)
         return CGFloat(item?.header?.height ?? .zero)
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let item = self.sectionsExecutor?.item(at: section)
+        let item = self.executor?.item(at: section)
         return CGFloat(item?.footer?.height ?? .zero)
     }
     

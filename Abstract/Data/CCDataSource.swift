@@ -10,27 +10,23 @@ import Foundation
 
 //  MARK: Sections
 
-protocol CCDataSourceExecuteViewModelsSectionsProtocol: class {
+protocol CCDataSourceExecuteItemsProtocol: class {
     func item(at index: Int)     -> CCItemViewModel?
     func item(at id: String?)    -> CCItemViewModel?
+    
+    func reload()
 }
 
 //  MARK: Cells
 
-protocol CCDataSourceExecuteViewModelsCellsProtocol: class {
+protocol CCDataSourceExecuteCellsProtocol: class {
     func cell(at indexPath: IndexPath)  -> CCViewModelProtocol?
     func cell(at id: String?)           -> CCViewModelProtocol?
     func cells(at paths: [IndexPath])   -> [CCViewModelProtocol]
     func cells(at ids: [String?])       -> [CCViewModelProtocol]
     func cells(in sectionId: String?)   -> [CCViewModelProtocol?]?
-}
-
-protocol CCDataSourceReloadViewModelsCellsProtocol: class {
-    func reload()
-    func reloadCells()      //  Reload all cells with binding models
-}
-
-protocol CCDataSourceUpdateViewModelsCellsProtocol: class {
+    
+    func reloadCells()
     func insertCells() -> [IndexPath]
     func removeCells() -> [IndexPath]
 }
@@ -45,15 +41,15 @@ class CCDataSource<TemplateU: CCTemplateViewModels>: NSObject {
     
     //  MARK: Lifecycle
     
-    init(templateDataSource: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
-        self.template = TemplateU(dataSource: templateDataSource, output: output)
+    init(template: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
+        self.template = TemplateU(dataSource: template, output: output)
     }
     
 }
 
 //  MARK: Implementation Sections
 
-extension CCDataSource: CCDataSourceExecuteViewModelsSectionsProtocol {
+extension CCDataSource: CCDataSourceExecuteItemsProtocol {
     func item(at index: Int) -> CCItemViewModel? {
         return self.template.items[index]
     }
@@ -65,7 +61,7 @@ extension CCDataSource: CCDataSourceExecuteViewModelsSectionsProtocol {
 
 //  MARK: Imeplementation Cells
 
-extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
+extension CCDataSource: CCDataSourceExecuteCellsProtocol {
     
     //  MARK: Cells
     
@@ -114,7 +110,7 @@ extension CCDataSource: CCDataSourceExecuteViewModelsCellsProtocol {
 
 //  MARK: ReloadCells
 
-extension CCDataSource: CCDataSourceReloadViewModelsCellsProtocol {
+extension CCDataSource {
     
     func reload() {
         self.template.reloadItems()
@@ -128,11 +124,7 @@ extension CCDataSource: CCDataSourceReloadViewModelsCellsProtocol {
 
 //  MARK: UpdateCells
 
-extension CCDataSource: CCDataSourceUpdateViewModelsCellsProtocol {
-    
-    func updateCells() -> ([IndexPath], [IndexPath]) {
-        return (self.template.insertCells(), self.template.removeCells())
-    }
+extension CCDataSource {
     
     func insertCells() -> [IndexPath] {
         return self.template.insertCells()
@@ -140,6 +132,10 @@ extension CCDataSource: CCDataSourceUpdateViewModelsCellsProtocol {
     
     func removeCells() -> [IndexPath] {
         return self.template.removeCells()
+    }
+    
+    func updateCells() -> ([IndexPath], [IndexPath]) {
+        return (self.template.insertCells(), self.template.removeCells())
     }
     
 }
