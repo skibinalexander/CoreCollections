@@ -15,11 +15,9 @@ class CCTableViewModelSection: CCModelSectionProtocol {
     weak var item: CCItemModel?
     weak var viewModel: CCViewModelProtocol?
     var modelId: String?
-    var cells: [CCModelCellProtocol]
     
-    init(modelId: String? = nil, cells: [CCModelCellProtocol] = []) {
+    init(modelId: String? = nil) {
         self.modelId = modelId
-        self.cells = cells
     }
     
 }

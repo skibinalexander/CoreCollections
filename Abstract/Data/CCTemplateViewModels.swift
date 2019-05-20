@@ -47,7 +47,7 @@ extension CCTemplateViewModels {
         let _ = self.items.map { (item) in
             item.header?.reference(item: item)
             item.footer?.reference(item: item)
-            item.cells.map({ [weak self] in $0?.reference(item: item)})
+            let _ = item.cells.map({ $0?.reference(item: item)})
         }
     }
     

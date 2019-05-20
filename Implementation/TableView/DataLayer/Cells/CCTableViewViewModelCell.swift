@@ -28,7 +28,7 @@ class CCTableViewViewModelExpandedCell<V: CCTableViewCell, M: CCTableViewModelCe
     
     //  MARK: Lifecycle
     
-    convenience init(output: CCViewModelCellOutputProtocol?, nibId: String, nibType: CCViewModelCellViewSourceType, expandedHeight: Float) {
+    convenience init(output: CCViewModelCellOutputProtocol? = nil, nibId: String, nibType: CCViewModelCellViewSourceType, expandedHeight: Float) {
         self.init(output: output, nibId: nibId, nibType: nibType, height: expandedHeight)
         
         self.expandedHeight = expandedHeight
