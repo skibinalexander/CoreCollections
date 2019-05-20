@@ -18,9 +18,9 @@ class CCTemplateViewModels {
     private     weak var dataSource:    CCTemplateViewModelsDataSource?
     internal    weak var output:        CCViewModelCellOutputProtocol?
     
-    internal var createHeader: ((_ model: CCModelSectionProtocol?, _ index: Int)->CCViewModelProtocol?)?
-    internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int)->CCViewModelProtocol?)?
-    internal var createCell: ((_ model: CCModelCellProtocol?, _ index: Int)->CCViewModelProtocol?)?
+    internal var createHeader: ((_ model: CCModelSectionProtocol?, _ index: Int)    ->CCViewModelProtocol?)?
+    internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int)    ->CCViewModelProtocol?)?
+    internal var createCell: ((_ model: CCModelCellProtocol?, _ index: Int)         ->CCViewModelProtocol?)?
     
     required init(dataSource: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
         self.dataSource = dataSource
@@ -35,12 +35,20 @@ class CCTemplateViewModels {
 extension CCTemplateViewModels {
     
     final func reloadItems() {
+        self.items = []
+        
         let _ = dataSource?.models.enumerated().map { (index, element) in
             self.items.append(CCItemViewModel(header: self.createHeader?(element.header, index)?.inject(with: element.header),
                                               footer: self.createFooter?(element.footer, index)?.inject(with: element.footer)))
         }
         
         self.reloadCells()
+        
+        let _ = self.items.map { (item) in
+            item.header?.reference(item: item)
+            item.footer?.reference(item: item)
+            item.cells.map({ [weak self] in $0?.reference(item: item)})
+        }
     }
     
 }
@@ -50,17 +58,17 @@ extension CCTemplateViewModels {
 extension CCTemplateViewModels {
     
     final func reloadCells() {
+        let _ = self.items.map({$0.cells = []})
         
-        let _ = dataSource?.models.map({ (element) in
-            let _  = element.cells.enumerated().map({ (index, model) in
-                self.items[index].cells.append(self.createCell?(model, index)?.inject(with: model))
+        let _ = dataSource?.models.enumerated().map({ (section, element) in
+            let _  = element.cells.enumerated().map({ (row, model) in
+                self.items[section].cells.append(self.createCell?(model, row)?.inject(with: model))
             })
         })
         
     }
     
     final func insertCells() -> [IndexPath] {
-        
         var paths = [IndexPath]()
 
 //        let _ = dataSource?.itemsCells.enumerated().map { [unowned self] (index, element) in

@@ -22,6 +22,7 @@ protocol CCViewProtocol: class {
 }
 
 protocol CCModelProtocol: class {
+    var item:       CCItemModel?            { get set }
     var viewModel:  CCViewModelProtocol?    { get set }
     var modelId:    String?                 { get set }
 }
@@ -29,6 +30,8 @@ protocol CCModelProtocol: class {
 //  MARK:
 
 protocol CCViewModelProtocol: class {
+    var item:               CCItemViewModel?                    { get set }
+    
     var nibId:              String                              { get set }
     var nibType:            CCViewModelCellViewSourceType       { get set }
     var height:             Float                               { get set }
@@ -43,8 +46,10 @@ protocol CCViewModelProtocol: class {
     func inject(model: CCModelProtocol?)
     func inject(view: CCViewProtocol?)
     
-    func inject(with model: CCModelProtocol?)    -> CCViewModelProtocol?
-    func inject(with view: CCViewProtocol?)      -> CCViewModelProtocol?
+    func inject(with model: CCModelProtocol?)   -> CCViewModelProtocol?
+    func inject(with view: CCViewProtocol?)     -> CCViewModelProtocol?
+    
+    func reference(item: CCItemViewModel?)
     
     //  MARK: Update
     
@@ -69,6 +74,7 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     weak var model: M?
     
     //  MARK: Public
+    weak var                item: CCItemViewModel?
     
     var nibId:              String
     var nibType:            CCViewModelCellViewSourceType
@@ -116,6 +122,10 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     func inject(with model: CCModelProtocol?) -> CCViewModelProtocol? {
         self.inject(model: model)
         return self
+    }
+    
+    func reference(item: CCItemViewModel?) {
+        self.item = item
     }
     
     //  MARK: Updating

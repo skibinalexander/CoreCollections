@@ -21,17 +21,7 @@ class CCTableViewDataSource<T: CCTemplateViewModels>: CCDataSource<T>, UITableVi
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if let sectionId = self.section(at: section)?.getModel?.modelId {
-//            return self.template.items.cells.filter({ (cell) -> Bool in
-//                if let model = cell.getModel as? CCTableViewModelCell {
-//                    return model.sectionId == sectionId
-//                }
-//                
-//                return false
-//            }).count 
-//        }
-        
-        return 0
+        return self.template.items[section].cells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

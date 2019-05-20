@@ -32,10 +32,7 @@ protocol CCTableViewViewModelExpandedSectionProtocol {
 class CCTableViewViewModelExpandedSection<V: CCTableViewSection, M: CCTableViewModelSection>: CCTableViewViewModelSection<V, M>, CCTableViewViewModelExpandedSectionProtocol {
     
     private weak var output:    CCTableViewViewModelExpandedSectionOutputProtocol?
-    internal var state:          CCTableViewViewModelExpandedState?
-    
-    
-    
+    internal var state:         CCTableViewViewModelExpandedState?
     
     convenience init(output: CCTableViewViewModelExpandedSectionOutputProtocol? = nil,
          state: CCTableViewViewModelExpandedState = .expanded,

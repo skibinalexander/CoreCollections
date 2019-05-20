@@ -9,8 +9,9 @@
 import UIKit
 
 class CCTableViewModelCell: CCModelCellProtocol {
-    var viewModel:  CCViewModelProtocol?
-    var modelId:    String?
+    weak var item:      CCItemModel?
+    weak var viewModel: CCViewModelProtocol?
+    var modelId:        String?
     
     init(modelId: String? = nil) {
         self.modelId = modelId

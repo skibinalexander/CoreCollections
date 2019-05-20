@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CCItems<U,T> {
+class CCItems<U, T> {
     
     typealias SectionType = U
     typealias CellType = T
@@ -30,25 +30,6 @@ class CCItems<U,T> {
         self.cells = cells
     }
     
-    //  MARK: Sections
-    
-    func addSection(header: U) {
-        
-    }
-    
-    func addSection(footer: U) {
-        
-    }
-    
-    //  MARK: Cells
-    
-    func addCell(row: T) {
-        
-    }
-    
-    func addCell(rows: [T]) {
-        
-    }
 }
 
 //  MARK: CCItemModels
@@ -60,8 +41,6 @@ class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
 //  MARK: CCItemViewModelsProtocol
 
 class CCItemViewModel: CCItems<CCViewModelProtocol, CCViewModelProtocol> {
-    
-    
     
 }
 

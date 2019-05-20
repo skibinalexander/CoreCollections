@@ -62,13 +62,13 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
         
         //  Иницализация view для секции
         
-        switch item?.header?.nibType {
-        default: item?.footer?.inject(view: self.nibSection(nameNib: item!.header!.nibId) as? CCTableViewSection); break;
+        switch item?.footer?.nibType {
+        default: item?.footer?.inject(view: self.nibSection(nameNib: item!.footer!.nibId) as? CCTableViewSection); break;
         }
         
-        item?.header?.updateView()
+        item?.footer?.updateView()
         
-        return item?.header?.getView as? UIView
+        return item?.footer?.getView as? UIView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
