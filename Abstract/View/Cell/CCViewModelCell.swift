@@ -29,6 +29,7 @@ class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewMode
     
     override func updateView() {
         super.updateView()
+        self.view?.output = self.output
         self.output?.viewDidChange(view: self.getView as? CCViewCellProtocol,
                                    model: self.getModel as? CCModelCellProtocol)
     }

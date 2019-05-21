@@ -26,25 +26,23 @@ class CCTableViewDataSource<T: CCTemplateViewModels>: CCDataSource<T>, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = self.cell(at: indexPath)
-        
-        guard cell != nil else {
-            fatalError()
+        guard let cell = self.cell(at: indexPath) else {
+            assertionFailure("Cell is Nil")
+            return UITableViewCell(style: .default, reuseIdentifier: "")
         }
         
         //  Иницализация view для ячейки
         
-        switch cell?.nibType {
-        case .reusebleId?:  cell?.inject(view: tableView.dequeueReusableCell(withIdentifier: cell!.nibId, for: indexPath) as? CCTableViewCell); break;
-        case .nibName?:     cell?.inject(view: self.nibCell(nameNib: cell!.nibId) as? CCTableViewCell); break;
-        default:break;
+        switch cell.nibType {
+        case .reusebleId:  cell.inject(view: tableView.dequeueReusableCell(withIdentifier: cell.nibId, for: indexPath) as? CCTableViewCell); break;
+        case .nibName:     cell.inject(view: self.nibCell(nameNib: cell.nibId) as? CCTableViewCell); break;
         }
         
-        guard let viewCell = cell?.getView as? UITableViewCell else {
+        guard let viewCell = cell.getView as? UITableViewCell & CCViewCellProtocol else {
             fatalError("CCTableViewDataSource: view for id ViewModel \(String(describing: type(of: cell))) not initialization!")
         }
         
-        cell?.updateView()
+        cell.updateView()
         
         return viewCell
     }
