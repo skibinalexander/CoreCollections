@@ -9,8 +9,8 @@
 import Foundation
 
 protocol CCViewModelCellOutputProtocol: class {
-    func viewDidChange()
-    func modelDidChage()
+    func viewDidChange(view: CCViewCellProtocol?, model: CCModelCellProtocol?)
+    func modelDidChage(view: CCViewCellProtocol?, model: CCModelCellProtocol?)
 }
 
 class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M> {
@@ -25,6 +25,18 @@ class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewMode
         self.output = output
         
         super.init(nibId: nibId, nibType: nibType, height: height)
+    }
+    
+    override func updateView() {
+        super.updateView()
+        self.output?.viewDidChange(view: self.getView as? CCViewCellProtocol,
+                                   model: self.getModel as? CCModelCellProtocol)
+    }
+    
+    override func updateModel() {
+        super.updateModel()
+        self.output?.modelDidChage(view: self.getView as? CCViewCellProtocol,
+                                   model: self.getModel as? CCModelCellProtocol)
     }
     
 }

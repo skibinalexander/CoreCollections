@@ -22,11 +22,11 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels> {
 
 extension CCCollectionViewPresenter: CCViewModelCellOutputProtocol {
     
-    func viewDidChange() {
+    func viewDidChange(view: CCViewCellProtocol?, model: CCModelCellProtocol?) {
         
     }
     
-    func modelDidChage() {
+    func modelDidChage(view: CCViewCellProtocol?, model: CCModelCellProtocol?) {
         
     }
     

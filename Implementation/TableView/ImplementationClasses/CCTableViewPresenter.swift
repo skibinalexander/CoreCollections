@@ -58,13 +58,8 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     
     //  MARK: CCViewModelCellOutputProtocol
     
-    func viewDidChange() {
-        
-    }
-    
-    func modelDidChage() {
-        
-    }
+    func viewDidChange(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
+    func modelDidChage(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
     
     //  MARK: CCTableViewRefreshOutputProtocol
     
