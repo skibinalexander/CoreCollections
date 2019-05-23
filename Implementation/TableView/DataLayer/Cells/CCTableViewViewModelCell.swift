@@ -24,11 +24,11 @@ class CCTableViewViewModelExpandedCell<V: CCTableViewCell, M: CCTableViewModelCe
     
     //  MARK: Private
     
-    private var expandedHeight: Float?
+    private var expandedHeight: CCViewModelHeight?
     
     //  MARK: Lifecycle
     
-    convenience init(output: CCViewModelCellOutputProtocol? = nil, nibId: String, nibType: CCViewModelCellViewSourceType, expandedHeight: Float) {
+    convenience init(output: CCViewModelCellOutputProtocol? = nil, nibId: String, nibType: CCViewModelCellViewSourceType, expandedHeight: CCViewModelHeight) {
         self.init(output: output, nibId: nibId, nibType: nibType, height: expandedHeight)
         
         self.expandedHeight = expandedHeight
@@ -37,7 +37,7 @@ class CCTableViewViewModelExpandedCell<V: CCTableViewCell, M: CCTableViewModelCe
     //  MARK: Public
     
     public func changeHeight(with state: CCTableViewViewModelExpandedState) {
-        self.height = (state == .expanded) ? (self.expandedHeight ?? .zero) : .zero
+        self.height = (state == .expanded) ? self.expandedHeight ?? .value(.zero) : .value(.zero)
     }
     
 }

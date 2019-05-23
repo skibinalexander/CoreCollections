@@ -14,6 +14,10 @@ public enum CCViewModelCellViewSourceType {
     case reusebleId
     case nibName
 }
+public enum CCViewModelHeight {
+    case automatic
+    case value(Float)
+}
 
 //  MARK: Protocols
 
@@ -34,7 +38,7 @@ protocol CCViewModelProtocol: class {
     
     var nibId:              String                              { get set }
     var nibType:            CCViewModelCellViewSourceType       { get set }
-    var height:             Float                               { get set }
+    var height:             CCViewModelHeight                               { get set }
     
     var modelId:            String?                             { get }
     
@@ -78,7 +82,7 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     
     var nibId:              String
     var nibType:            CCViewModelCellViewSourceType
-    var height:             Float
+    var height:             CCViewModelHeight
     
     //  Getters Properties
     
@@ -96,7 +100,7 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     
     //  MARK: Initialization
     
-    init(nibId: String, nibType: CCViewModelCellViewSourceType, height: Float) {
+    init(nibId: String, nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
         self.nibId = nibId
         self.nibType = nibType
         self.height = height

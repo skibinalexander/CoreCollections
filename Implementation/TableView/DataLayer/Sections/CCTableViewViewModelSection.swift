@@ -35,10 +35,10 @@ class CCTableViewViewModelExpandedSection<V: CCTableViewSection, M: CCTableViewM
     internal var state:         CCTableViewViewModelExpandedState?
     
     convenience init(output: CCTableViewViewModelExpandedSectionOutputProtocol? = nil,
-         state: CCTableViewViewModelExpandedState = .expanded,
-         nibId: String,
-         nibType: CCViewModelCellViewSourceType,
-         height: Float) {
+                     state: CCTableViewViewModelExpandedState = .expanded,
+                     nibId: String,
+                     nibType: CCViewModelCellViewSourceType,
+                     height: CCViewModelHeight) {
         
         self.init(nibId: nibId, nibType: nibType, height: height)
         

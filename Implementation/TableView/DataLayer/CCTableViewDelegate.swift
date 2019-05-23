@@ -36,8 +36,12 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let cell = self.executor?.cell(at: indexPath) {
-            return CGFloat(cell.height)
+        if let item = self.executor?.cell(at: indexPath) {
+            switch item.height {
+            case .automatic: return UITableView.automaticDimension
+            case .value(let height): return CGFloat(height)
+            default: return .zero
+            }
         }
         
         return CGFloat.leastNonzeroMagnitude
@@ -73,12 +77,20 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let item = self.executor?.item(at: section)
-        return CGFloat(item?.header?.height ?? .zero)
+        switch item?.header?.height {
+        case .automatic?: return UITableView.automaticDimension
+        case .value(let height)?: return CGFloat(height)
+        default: return .zero
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let item = self.executor?.item(at: section)
-        return CGFloat(item?.footer?.height ?? .zero)
+        switch item?.footer?.height {
+        case .automatic?: return UITableView.automaticDimension
+        case .value(let height)?: return CGFloat(height)
+        default: return .zero
+        }
     }
     
 }
