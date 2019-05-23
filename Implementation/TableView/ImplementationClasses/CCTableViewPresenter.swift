@@ -66,7 +66,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     func refreshList() {
         self.dataSource?.reload()
         self.tableViewInput?.reloadTableView()
-        self.becomeViewRefresing()
+        self.beginRefresging()
     }
     
 }
@@ -109,8 +109,8 @@ extension CCTableViewPresenter {
     
     //  
     
-    final func becomeViewRefresing() {
-        self.tableViewInput?.becomeRefresing()
+    final func beginRefresging() {
+        self.tableViewInput?.beginRefresing()
     }
     
     final func endViewRefresing() {

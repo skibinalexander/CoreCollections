@@ -13,7 +13,7 @@ protocol CCTableViewPresenterViewInputProtocol: class {
     func configurePagination(output: CCTableViewPrefetchOutputProtocol?)
     func configureRefresh(output: CCTableViewRefreshOutputProtocol?)
     
-    func becomeRefresing()
+    func beginRefresing()
     func endRefresing()
     
     func reloadTableView()
@@ -117,7 +117,7 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
         }
     }
     
-    func becomeRefresing() {
+    func beginRefresing() {
         self.refreshControl.beginRefreshing()
     }
     
