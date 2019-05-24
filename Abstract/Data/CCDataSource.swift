@@ -71,8 +71,10 @@ extension CCDataSource: CCDataSourceExecuteCellsProtocol {
     
     public func cell(at id: String?) -> CCViewModelProtocol? {
         var cell: CCViewModelProtocol?
-        let _ = self.template.items.map { (item) in
-            cell = item.cells.first(where: { $0?.modelId == id }) as? CCViewModelProtocol
+        self.template.items.forEach { (item) in
+            if let find = item.cells.first(where: { $0?.modelId == id }) as? CCViewModelProtocol {
+                cell = find
+            }
         }
         
         return cell

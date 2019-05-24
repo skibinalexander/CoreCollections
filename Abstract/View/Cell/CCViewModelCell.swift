@@ -21,7 +21,7 @@ class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewMode
     
     //  MARK: Lifecycle
     
-    init(output: CCViewModelCellOutputProtocol?, nibId: String, nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
+    init(output: CCViewModelCellOutputProtocol? = nil, nibId: String, nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
         self.output = output
         
         super.init(nibId: nibId, nibType: nibType, height: height)
