@@ -25,7 +25,6 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     
     var models: [CCItemModel] = []
     
-    
     //  MARK: Properties
     
     var dataSource: (CCDataSourceExecuteItemsProtocol & CCDataSourceExecuteCellsProtocol)?
@@ -129,9 +128,13 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
         
     }
     
-    func countList() -> Int {
-        return 0
-//        return items.first?.cells.count ?? 0
+    func numberRows(in section: Int) -> Int {
+        guard section < models.count else {
+            assertionFailure()
+            return 0
+        }
+        
+        return models[section].cells.count
     }
     
     override func refreshList() {
