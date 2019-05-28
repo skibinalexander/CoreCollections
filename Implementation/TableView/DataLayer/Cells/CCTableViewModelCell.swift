@@ -8,7 +8,11 @@
 
 import UIKit
 
-class CCTableViewModelCell: CCModelCellProtocol {
+protocol CCTableViewModelCellProtocol: CCModelCellProtocol {
+    
+}
+
+class CCTableViewModelCell: CCTableViewModelCellProtocol {
     weak var item:      CCItemModel?
     weak var viewModel: CCViewModelProtocol?
     var modelId:        String?

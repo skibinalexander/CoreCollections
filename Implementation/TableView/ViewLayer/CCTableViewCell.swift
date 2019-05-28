@@ -11,4 +11,10 @@ import UIKit
 class CCTableViewCell: UITableViewCell, CCViewCellProtocol {
     weak var viewModel: CCViewModelProtocol?
     weak var output:    CCViewModelCellOutputProtocol?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.viewModel?.updateView()
+    }
 }
