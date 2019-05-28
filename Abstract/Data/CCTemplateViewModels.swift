@@ -9,23 +9,27 @@
 import Foundation
 
 protocol CCTemplateViewModelsDataSource: class {
-    var models:     [CCItemModel]      { get set }
+    var containerModels: CCItemModelsContainer { get set }
+}
+
+protocol CCTemplateViewModelsHandlerProtocol: CCTemplateViewModelsDataSource, CCViewModelCellOutputProtocol {
+    func templateViewModelsDidReload()      -> [IndexPath]
+    func templateViewModelsDidInserted()    -> [IndexPath]
+    func templateViewModelsDidRemoved()     -> [IndexPath]
 }
 
 class CCTemplateViewModels {
-    var items:      [CCItemViewModel]
     
-    private     weak var dataSource:    CCTemplateViewModelsDataSource?
-    internal    weak var output:        CCViewModelCellOutputProtocol?
+    var viewModels: [CCItemViewModel] = []
+    
+    private weak var handler: CCTemplateViewModelsHandlerProtocol?
     
     internal var createHeader: ((_ model: CCModelSectionProtocol?, _ index: Int)    ->CCViewModelProtocol?)?
     internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int)    ->CCViewModelProtocol?)?
     internal var createCell: ((_ model: CCModelCellProtocol?, _ index: Int)         ->CCViewModelProtocol?)?
     
-    required init(dataSource: CCTemplateViewModelsDataSource, output: CCViewModelCellOutputProtocol?) {
-        self.dataSource = dataSource
-        self.output = output
-        self.items = []
+    required init(handler: CCTemplateViewModelsHandlerProtocol) {
+        self.handler = handler
     }
     
 }
@@ -34,17 +38,23 @@ class CCTemplateViewModels {
 
 extension CCTemplateViewModels {
     
-    final func reloadItems() {
-        self.items = []
+    final func reloadViewModels() {
+        self.viewModels = []
         
-        let _ = dataSource?.models.enumerated().map { (index, element) in
-            self.items.append(CCItemViewModel(header: self.createHeader?(element.header, index)?.inject(with: element.header),
-                                              footer: self.createFooter?(element.footer, index)?.inject(with: element.footer)))
+        handler?.containerModels.models.enumerated().forEach { (index, element) in
+            self.viewModels.append(CCItemViewModel(header: self.createHeader?(element.header, index)?.inject(with: element.header),
+                                                   footer: self.createFooter?(element.footer, index)?.inject(with: element.footer)))
         }
         
-        self.reloadCells()
+        self.viewModels.forEach({$0.cells = []})
         
-        let _ = self.items.map { (item) in
+        handler?.containerModels.models.enumerated().forEach({ (section, element) in
+            element.cells.enumerated().forEach({ (row, model) in
+                self.viewModels[section].cells.append(self.createCell?(model, row)?.inject(with: model))
+            })
+        })
+        
+        self.viewModels.forEach { (item) in
             item.header?.reference(item: item)
             item.footer?.reference(item: item)
             let _ = item.cells.map({ $0?.reference(item: item)})
@@ -57,21 +67,10 @@ extension CCTemplateViewModels {
 
 extension CCTemplateViewModels {
     
-    final func reloadCells() {
-        let _ = self.items.map({$0.cells = []})
-        
-        let _ = dataSource?.models.enumerated().map({ (section, element) in
-            let _  = element.cells.enumerated().map({ (row, model) in
-                self.items[section].cells.append(self.createCell?(model, row)?.inject(with: model))
-            })
-        })
-        
-    }
-    
     final func insertCells() -> [IndexPath] {
         var paths = [IndexPath]()
 
-//        let _ = dataSource?.itemsCells.enumerated().map { [unowned self] (index, element) in
+//        let _ = dataSource?.viewModelsCells.enumerated().map { [unowned self] (index, element) in
 //            if element.viewModel == nil {
 //                if let cell = self.createCell?(element, index, self.cells.count) {
 //                    if let model = cell.model as? CCModelCellProtocol {

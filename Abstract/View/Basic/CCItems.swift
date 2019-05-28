@@ -38,6 +38,20 @@ class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
     
 }
 
+class CCItemModelsContainer {
+    var models:     [CCItemModel]
+    var template:   CCTemplateViewModels
+    
+    init(template: CCTemplateViewModels, models: [CCItemModel] = []) {
+        self.template = template
+        self.models = models
+        
+        //  Initialization ViewModels in template
+        
+        self.template.reloadViewModels()
+    }
+}
+
 //  MARK: CCItemViewModelsProtocol
 
 class CCItemViewModel: CCItems<CCViewModelProtocol, CCViewModelProtocol> {

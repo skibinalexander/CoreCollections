@@ -12,22 +12,16 @@ import Foundation
 
 protocol CCTableViewPresenterProtocol: class {
     var tableViewInput: CCTableViewPresenterViewInputProtocol?  { get set }
-    
-    func reloadList()
 }
 
 class CCTableViewPresenter<T: CCTemplateViewModels>:
                                 CCTableViewPresenterProtocol,
                                 CCTableViewDelegateOutputProtocol,
-                                CCTemplateViewModelsDataSource,
-                                CCTableViewRefreshOutputProtocol,
-                                CCViewModelCellOutputProtocol {
-    
-    var models: [CCItemModel] = []
+                                CCTableViewRefreshOutputProtocol  {
     
     //  MARK: Properties
     
-    var dataSource: (CCDataSourceExecuteItemsProtocol & CCDataSourceExecuteCellsProtocol)?
+    var dataSource: (CCDataSourceExecuteViewModelsProtocol & CCDataSourceExecuteCellsProtocol)?
     var delegate:   CCTableViewDelegateProtocol?
     
     weak var tableViewInput: CCTableViewPresenterViewInputProtocol?
@@ -35,7 +29,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
     //  MARK: Lifecycle
     
     init() {
-        self.dataSource     = CCTableViewDataSource<T>(template: self, output: self)
+        self.dataSource     = CCTableViewDataSource<T>(handler: self) as! (CCDataSourceExecuteCellsProtocol & CCDataSourceExecuteViewModelsProtocol)
         self.delegate       = CCTableViewDelegate(executor: self.dataSource, output: self)
         self.initModels()
     }
@@ -66,6 +60,22 @@ class CCTableViewPresenter<T: CCTemplateViewModels>:
         self.dataSource?.reload()
         self.tableViewInput?.reloadTableView()
         self.beginRefresging()
+    }
+    
+}
+
+extension CCTableViewPresenter: CCTemplateViewModelsHandlerProtocol {
+    
+    func templateViewModelsDidReload() {
+        
+    }
+    
+    func templateViewModelsDidInserted() -> [IndexPath] {
+        
+    }
+    
+    func templateViewModelsDidRemoved() -> [IndexPath] {
+        
     }
     
 }
