@@ -27,7 +27,7 @@ protocol CCTableViewPresenterViewInputProtocol: class {
 
 protocol CCTableViewPrefetchOutputProtocol: class {
     func fetchList()
-    func countList() -> Int
+    func numberRows(in section: Int) -> Int
 }
 
 @objc
@@ -140,8 +140,7 @@ extension CCTableViewController: UITableViewDataSourcePrefetching {
         }
         
         if indexPaths.contains(where: { (indexPath) -> Bool in
-            print(String(describing: indexPath.row) + "|" + String(describing: output.countList()))
-            return indexPath.row >= (output.countList() - 1)
+            return indexPath.row >= (output.numberRows(in: indexPath.section) - 1)
         }) {
             self.prefetchOutput?.fetchList()
         }
