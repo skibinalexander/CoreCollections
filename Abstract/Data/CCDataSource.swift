@@ -11,10 +11,9 @@ import Foundation
 //  MARK: CCDataSourceControlFlowProtocol
 
 protocol CCDataSourceControlFlowProtocol {
+    func clearDataSource()
     func reloadDataSource()
-    func insert(in itemId: String, cell: CCViewModelProtocol)
-    func insert(in itemId: String, cells: [CCViewModelProtocol])
-    func removeCell(from itemId: String)
+    func updateDataSource()
 }
 
 //  MARK: CCDataSourceExecuteViewModelsProtocol
@@ -103,19 +102,15 @@ extension CCDataSource {
 
 extension CCDataSource {
     
+    func clearDataSource() {
+        
+    }
+    
     func reloadDataSource() {
         self.template?.reloadViewModels()
     }
     
-    func insert(in itemId: String, cell: CCViewModelProtocol) {
-        
-    }
-    
-    func insert(in itemId: String, cells: [CCViewModelProtocol]) {
-        
-    }
-    
-    func removeCell(from itemId: String) {
+    func updateDataSource() {
         
     }
     
