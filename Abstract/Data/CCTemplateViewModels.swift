@@ -9,27 +9,29 @@
 import Foundation
 
 protocol CCTemplateViewModelsDataSource: class {
-    var containerModels: CCItemModelsContainer { get set }
+    var models: [CCItemModel] { get set }
 }
 
-protocol CCTemplateViewModelsHandlerProtocol: CCTemplateViewModelsDataSource, CCViewModelCellOutputProtocol {
-    func templateViewModelsDidReload()      -> [IndexPath]
-    func templateViewModelsDidInserted()    -> [IndexPath]
-    func templateViewModelsDidRemoved()     -> [IndexPath]
+protocol CCTemplateViewModelsHandlerProtocol: CCViewModelCellOutputProtocol {
+    func templateViewModelsDidReload(paths: [IndexPath])
+    func templateViewModelsDidInserted(paths: [IndexPath])
+    func templateViewModelsDidRemoved(paths: [IndexPath])
 }
 
 class CCTemplateViewModels {
     
-    var viewModels: [CCItemViewModel] = []
+    private weak var dataSource:    CCTemplateViewModelsDataSource?
+    internal weak var handler:       CCTemplateViewModelsHandlerProtocol?
     
-    private weak var handler: CCTemplateViewModelsHandlerProtocol?
+    var viewModels: [CCItemViewModel] = []
     
     internal var createHeader: ((_ model: CCModelSectionProtocol?, _ index: Int)    ->CCViewModelProtocol?)?
     internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int)    ->CCViewModelProtocol?)?
     internal var createCell: ((_ model: CCModelCellProtocol?, _ index: Int)         ->CCViewModelProtocol?)?
     
-    required init(handler: CCTemplateViewModelsHandlerProtocol) {
+    required init(handler: CCTemplateViewModelsHandlerProtocol, dataSource: CCTemplateViewModelsDataSource) {
         self.handler = handler
+        self.dataSource = dataSource
     }
     
 }
@@ -41,14 +43,14 @@ extension CCTemplateViewModels {
     final func reloadViewModels() {
         self.viewModels = []
         
-        handler?.containerModels.models.enumerated().forEach { (index, element) in
+        dataSource?.models.enumerated().forEach { (index, element) in
             self.viewModels.append(CCItemViewModel(header: self.createHeader?(element.header, index)?.inject(with: element.header),
                                                    footer: self.createFooter?(element.footer, index)?.inject(with: element.footer)))
         }
         
         self.viewModels.forEach({$0.cells = []})
         
-        handler?.containerModels.models.enumerated().forEach({ (section, element) in
+        dataSource?.models.enumerated().forEach({ (section, element) in
             element.cells.enumerated().forEach({ (row, model) in
                 self.viewModels[section].cells.append(self.createCell?(model, row)?.inject(with: model))
             })

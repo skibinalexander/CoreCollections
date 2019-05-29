@@ -55,7 +55,7 @@ class CCTableViewBuilderPresenter {
         tableView?.configurePagination(output: prefetchOutput)
         tableView?.configureRefresh(output: refreshOutput)
         presenter?.tableViewInput = tableView
-        presenter?.reloadList()
+        presenter?.reloadTableView()
     }
     
 //    final func configurePagination() -> CCTableViewPresenter {

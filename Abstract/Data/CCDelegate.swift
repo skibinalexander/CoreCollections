@@ -12,9 +12,9 @@ class CCDelegate: NSObject {
     
     //  Properties
     
-    internal weak var executor: (CCDataSourceExecuteItemsProtocol & CCDataSourceExecuteCellsProtocol)?
+    internal weak var executor: (CCDataSourceExecuteItemsViewModelsProtocol & CCDataSourceExecuteCellsViewModelsProtocol)?
     
-    init(executor: (CCDataSourceExecuteItemsProtocol & CCDataSourceExecuteCellsProtocol)?) {
+    init(executor: (CCDataSourceExecuteItemsViewModelsProtocol & CCDataSourceExecuteCellsViewModelsProtocol)?) {
         self.executor = executor
     }
     

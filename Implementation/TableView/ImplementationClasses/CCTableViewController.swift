@@ -26,13 +26,13 @@ protocol CCTableViewPresenterViewInputProtocol: class {
 }
 
 protocol CCTableViewPrefetchOutputProtocol: class {
-    func fetchList()
+    func batchList()
     func numberRows(in section: Int) -> Int
 }
 
 @objc
 protocol CCTableViewRefreshOutputProtocol: class {
-    func refreshList()
+    func refreshTableView()
 }
 
 class CCTableViewController: UIViewController{
@@ -85,7 +85,7 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
     func configureRefresh(output: CCTableViewRefreshOutputProtocol?) {
         if output != nil {
             self.tableView.refreshControl = refreshControl
-            self.refreshControl.addTarget(output!, action: #selector(CCTableViewRefreshOutputProtocol.refreshList), for: .valueChanged)
+            self.refreshControl.addTarget(output!, action: #selector(CCTableViewRefreshOutputProtocol.refreshTableView), for: .valueChanged)
         }
     }
     
@@ -142,7 +142,7 @@ extension CCTableViewController: UITableViewDataSourcePrefetching {
         if indexPaths.contains(where: { (indexPath) -> Bool in
             return indexPath.row >= (output.numberRows(in: indexPath.section) - 1)
         }) {
-            self.prefetchOutput?.fetchList()
+            self.prefetchOutput?.batchList()
         }
         
     }

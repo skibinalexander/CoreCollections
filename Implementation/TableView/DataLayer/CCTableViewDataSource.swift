@@ -17,11 +17,11 @@ class CCTableViewDataSource<T: CCTemplateViewModels>: CCDataSource<T>, UITableVi
     //  MARK: UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.template.viewModels.count
+        return self.template?.viewModels.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.template.viewModels[section].cells.count
+        return self.template?.viewModels[section].cells.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
