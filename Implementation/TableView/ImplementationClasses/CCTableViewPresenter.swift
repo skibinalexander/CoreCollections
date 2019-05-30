@@ -43,7 +43,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     //  MARK: CCTableViewRefreshOutputProtocol
     
     func refreshTableView() {
-        self.beginRefresging()
+        self.beginViewRefresging()
     }
     
     //  MARK: CCTableViewDelegateOutputProtocol
@@ -100,7 +100,7 @@ extension CCTableViewPresenter {
     
     //  
     
-    final func beginRefresging() {
+    final func beginViewRefresging() {
         self.tableViewInput?.beginRefresing()
     }
     
@@ -116,17 +116,19 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
     
     //  MARK: CCTableViewControllerPrefetchOutputProtocol
     
-    func fetchList() {
-        
-    }
-    
     func numberRows(in section: Int) -> Int {
         return dataSource?.cells(in: section).count ?? 0
     }
     
-    func batchList() {
+    override func refreshTableView() {
+        super.refreshTableView()
         self.pagination = CCPaginationModel()
-        self.fetchList()
+    }
+    
+    func batchList() {
+        if pagination.hasMore ?? true {
+            self.beginViewRefresging()
+        }
     }
 
 }
