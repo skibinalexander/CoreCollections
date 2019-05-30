@@ -21,15 +21,20 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     //  MARK: Properties
     
-    var dataSource: CCDataSourceProtocol?
+    weak var tableViewInput: CCTableViewPresenterViewInputProtocol?
     
+    var dataSource: CCDataSourceProtocol?
     var delegate:   CCTableViewDelegateProtocol?
     
-    weak var tableViewInput: CCTableViewPresenterViewInputProtocol?
+    //  MARK: Private
+    
+    var isRefresing: Bool
     
     //  MARK: Lifecycle
     
     init() {
+        self.isRefresing = false
+        
         self.dataSource     = CCTableViewDataSource<T>(handler: self)
         self.delegate       = CCTableViewDelegate(executor: self.dataSource, output: self)
         
@@ -58,7 +63,11 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     func modelDidChage(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
     
     func templateViewModelsDidReload(paths: [IndexPath])    { }
-    func templateViewModelsDidInserted(paths: [IndexPath])  { }
+    
+    func templateViewModelsDidInserted(paths: [IndexPath]) {
+        self.tableViewInput?.insertCellsIntoTableView(at: paths)
+    }
+    
     func templateViewModelsDidRemoved(paths: [IndexPath])   { }
     
 }
@@ -71,41 +80,20 @@ extension CCTableViewPresenter {
     //
     
     final func reloadTableView() {
-        self.dataSource?.reloadDataSource()
+        self.dataSource?.reload()
         self.tableViewInput?.reloadTableView()
-    }
-    
-    final func reloadCells() {
-        
-    }
-    
-    //
-    
-    final func updateCells() {
-//        guard let insertedCells = self.dataSource?.insertCells() else { return }
-//        guard let removedCells = self.dataSource?.removeCells() else { return }
-//
-//        self.tableViewInput?.insertCellsIntoTableView(at: insertedCells)
-    }
-    
-    final func insertCells() {
-//        guard let insertedCells = self.dataSource?.insertCells() else { return }
-//        self.tableViewInput?.insertCellsIntoTableView(at: insertedCells)
-    }
-    
-    final func removeCells() {
-//        guard let insertedCells = self.dataSource?.insertCells() else { return }
-//        self.tableViewInput?.insertCellsIntoTableView(at: insertedCells)
     }
     
     //  
     
     final func beginViewRefresging() {
+        self.isRefresing = true
         self.tableViewInput?.beginRefresing()
     }
     
     final func endViewRefresing() {
         self.tableViewInput?.endRefresing()
+        self.isRefresing = false
     }
     
 }
@@ -126,9 +114,7 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
     }
     
     func batchList() {
-        if pagination.hasMore ?? true {
-            self.beginViewRefresging()
-        }
+        
     }
 
 }

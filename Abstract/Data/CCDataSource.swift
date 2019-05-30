@@ -11,27 +11,23 @@ import Foundation
 //  MARK: CCDataSourceControlFlowProtocol
 
 protocol CCDataSourceControlFlowProtocol {
-    func clearDataSource()
-    func reloadDataSource()
-    func updateDataSource()
-}
-
-//  MARK: CCDataSourceExecuteViewModelsProtocol
-
-protocol CCDataSourceExecuteItemsViewModelsProtocol: class {
-    func item(at index: Int)     -> CCItemViewModel?
-    func item(at id: String?)    -> CCItemViewModel?
+    func clear()
+    func reload()
+    func insert(in id: String, cells: [CCModelCellProtocol?])
 }
 
 //  MARK: CCDataSourceExecuteCellsProtocol
 
-protocol CCDataSourceExecuteCellsViewModelsProtocol: class {
+protocol CCDataSourceExecuteViewModelsProtocol: class {
     func cell(at indexPath: IndexPath)  -> CCViewModelProtocol?
     func cell(at id: String?)           -> CCViewModelProtocol?
     func cells(in item: Int)            -> [CCViewModelProtocol?]
+    
+    func item(at index: Int)     -> CCItemViewModel?
+    func item(at id: String?)    -> CCItemViewModel?
 }
 
-protocol CCDataSourceProtocol: CCDataSourceControlFlowProtocol, CCDataSourceExecuteItemsViewModelsProtocol, CCDataSourceExecuteCellsViewModelsProtocol {
+protocol CCDataSourceProtocol: CCDataSourceControlFlowProtocol, CCDataSourceExecuteViewModelsProtocol {
     var models: [CCItemModel]   { get set }
 }
 
@@ -49,12 +45,13 @@ class CCDataSource<TemplateU: CCTemplateViewModels>: NSObject, CCTemplateViewMod
     
     //  MARK: Lifecycle
     
-    init(handler: CCTemplateViewModelsHandlerProtocol, models: [CCItemModel] = []) {
+    init(handler: CCTemplateViewModelsHandlerProtocol, models: [CCItemModel] = [CCItemModel.empty()]) {
         self.models = models
         
         super.init()
         
         self.template = TemplateU(handler: handler, dataSource: self)
+        self.template?.reloadViewModels()
     }
     
 }
@@ -102,17 +99,25 @@ extension CCDataSource {
 
 extension CCDataSource {
     
-    func clearDataSource() {
-        
-    }
-    
-    func reloadDataSource() {
+    func clear() {
+        self.models = []
         self.template?.reloadViewModels()
     }
     
-    func updateDataSource() {
-        
+    func reload() {
+        self.template?.reloadViewModels()
     }
     
+    func insert(in id: String, cells: [CCModelCellProtocol?]) {
+        if let item = self.models.first(where: {$0.id == id}) {
+            if item.cells.count > 0 {
+                item.cells.insert(contentsOf: cells, at: item.cells.count - 1)
+            } else {
+                item.cells.insert(contentsOf: cells, at: 0)
+            }
+        }
+        
+        self.template?.insertCells()
+    }
     
 }

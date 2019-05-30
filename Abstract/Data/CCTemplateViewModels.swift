@@ -69,42 +69,27 @@ extension CCTemplateViewModels {
 
 extension CCTemplateViewModels {
     
-    final func insertCells() -> [IndexPath] {
+    final func insertCells() {
         var paths = [IndexPath]()
-
-//        let _ = dataSource?.viewModelsCells.enumerated().map { [unowned self] (index, element) in
-//            if element.viewModel == nil {
-//                if let cell = self.createCell?(element, index, self.cells.count) {
-//                    if let model = cell.model as? CCModelCellProtocol {
-//                        if let sectionIndex = self.sections.firstIndex(where: {$0.model?.modelId == model.sectionId}) {
-//                            paths.append(IndexPath(row: index, section: sectionIndex))
-//                            cell.inject(model: element)
-//                            self.cells.insert(cell, at: index)
-//                        }
-//                    }
-//                }
-//            }
-//        }
         
-        return paths
+        dataSource?.models.enumerated().forEach({ (position, item) in
+            item.cells.enumerated().forEach({ (index, model) in
+                if model?.viewModel == nil {
+                    if let viewModel = self.createCell?(model, index) {
+                        viewModel.inject(model: model)
+                        viewModel.reference(item: self.viewModels[position])
+                        self.viewModels[position].cells.insert(viewModel, at: index)
+                        paths.append(IndexPath(row: index, section: position))
+                    }
+                }
+            })
+        })
+        
+        handler?.templateViewModelsDidInserted(paths: paths)
         
     }
     
-    final func removeCells() -> [IndexPath] {
-        
-        var paths = [IndexPath]()
-        
-//        let _ = self.cells.enumerated().map { (index, cell) in
-//            if let model = cell.model as? CCModelCellProtocol {
-//                if let sectionIndex = self.sections.firstIndex(where: {$0.model?.modelId == model.sectionId}) {
-//                    paths.append(IndexPath(row: index, section: sectionIndex))
-//                }
-//            }
-//        }
-//
-//        self.cells.removeAll(where: { $0.model == nil })
-        
-        return paths
+    final func removeCells() {
         
     }
     
