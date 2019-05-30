@@ -8,16 +8,14 @@
 
 import Foundation
 
-struct CCPaginationModel {
-    var currentItem:    Int?
-    var countItems:     Int?
-    var itemsOnPage:    Int?
-    var hasMore:        Bool?
+struct CCPaginationModel<T> {
+    var current:    T?
+    var limit:      Int
+    var hasMore:    Bool?
     
-    init(currentItem: Int? = nil, countItems: Int? = nil, itemsOnPage: Int? = 25, hasMore: Bool? = false) {
-        self.currentItem = currentItem
-        self.countItems = countItems
-        self.itemsOnPage = itemsOnPage
+    init(current: T? = nil, limit: Int = 25, hasMore: Bool? = false) {
+        self.current = current
+        self.limit = limit
         self.hasMore = hasMore
     }
     

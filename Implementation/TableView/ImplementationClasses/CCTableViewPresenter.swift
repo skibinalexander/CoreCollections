@@ -98,9 +98,9 @@ extension CCTableViewPresenter {
     
 }
 
-class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T>, CCTableViewPrefetchOutputProtocol {
+class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: CCTableViewPresenter<T>, CCTableViewPrefetchOutputProtocol {
     
-    var pagination: CCPaginationModel   = CCPaginationModel()
+    var pagination: CCPaginationModel = CCPaginationModel<PaginationType>()
     
     //  MARK: CCTableViewControllerPrefetchOutputProtocol
     
