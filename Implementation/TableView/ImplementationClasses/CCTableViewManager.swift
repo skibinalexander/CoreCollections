@@ -11,8 +11,16 @@ import Foundation
 class CCTableViewManager<T: CCTemplateViewModels>: CCManager<T> {
     
     init(delegateOutput: CCTableViewDelegateOutputProtocol, cellOutput: CCViewModelCellOutputProtocol) {
-        self.dataSource = CCTableViewDataSource(handler: self, output: cellOutput)
-        self.delegate   = CCTableViewDelegate(output: self)
+        super.init()
+        
+        self.template   = T(handler: self, output: cellOutput, dataSource: self)
+        
+        if let template = self.template {
+            self.dataSource = CCTableViewDataSource(template: template)
+            self.delegate   = CCTableViewDelegate(output: delegateOutput, template: template)
+        } else {
+            assertionFailure()
+        }
     }
     
 }

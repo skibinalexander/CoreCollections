@@ -9,8 +9,7 @@
 import Foundation
 
 class CCCollectionViewPresenter<T: CCTemplateViewModels> {
-    var dataSource: CCTableViewDataSource<T>?
-    var delegate:   CCTableViewDelegate?
+    
     
     init() {
 //        self.dataSource = CCTableViewDataSource<T>(output: self)

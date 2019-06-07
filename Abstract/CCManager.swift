@@ -40,7 +40,7 @@ class CCManagerBuilder {
     }
     
     final func build() {
-        containerView?.configure(dataSource: self.manager?.getDataSource(), delegate: self.manager?.getDelegate())
+//        containerView?.configure(dataSource: self.manager?.getDataSource(), delegate: self.manager?.getDelegate())
         containerView?.configurePagination(output: prefetchOutput)
         containerView?.configureRefresh(output: refreshOutput)
         containerView?.reloadContainer()
@@ -51,8 +51,6 @@ class CCManagerBuilder {
 //  MARK: CCManager
 
 protocol CCManagerProtocol: class {
-    func getDataSource()    -> CCDataSourceProtocol?
-    func getDelegate()      -> CCTableViewDelegateProtocol?
     
     func append(item: CCItemModel)
     func remove(item at: Int)
@@ -67,46 +65,39 @@ protocol CCManagerProtocol: class {
     func endRefreshing()
 }
 
-class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModelsHandlerProtocol {
-    
+class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModelsHandlerProtocol, CCTemplateViewModelsDataSource {
     var containerView:  CCTableViewPresenterViewInputProtocol?
+    var template:       CCTemplateViewModels?
     var dataSource:     CCDataSourceProtocol?
-    var delegate:       CCTableViewDelegateProtocol?
+    var delegate:       CCDelegateProtocol?
     
-    func getDataSource() -> CCDataSourceProtocol? {
-        return self.dataSource
-    }
-    
-    func getDelegate() -> CCTableViewDelegateProtocol? {
-        return self.delegate
-    }
-    
+    var models:         [CCItemModel] = []
 }
 
 extension CCManager {
     
     func append(item: CCItemModel) {
-        self.dataSource?.models.append(item)
+        self.models.append(item)
     }
     
     func remove(item at: Int) {
-        self.dataSource?.models.remove(at: at)
+        self.models.remove(at: at)
     }
     
     func countCells(in index: Int) -> Int {
-        return dataSource?.models[index].cells.count ?? 0
+        return models[index].cells.count
     }
     
     func modelCell(at indexPath: IndexPath) -> CCModelProtocol? {
-        return dataSource?.models[indexPath.section].cells[indexPath.row]
+        return models[indexPath.section].cells[indexPath.row]
     }
     
     func modelHeader(at index: Int) -> CCModelSectionProtocol? {
-        return dataSource?.models[index].header
+        return models[index].header
     }
     
     func modelFooter(at index: Int) -> CCModelSectionProtocol? {
-        return dataSource?.models[index].footer
+        return models[index].footer
     }
     
     func beginRefreshing() {

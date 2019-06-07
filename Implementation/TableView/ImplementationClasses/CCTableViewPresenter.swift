@@ -10,7 +10,7 @@ import Foundation
 
 //  MARK: BasicTableViewPresenter
 
-protocol CCTableViewPresenterProtocol: CCTableViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol {
+protocol CCTableViewPresenterProtocol: CCTableViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol, CCViewModelCellOutputProtocol {
     
 }
 
@@ -18,29 +18,29 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     //  MARK: Properties
     
-    var manager: CCManagerProtocol
+    var manager: CCManagerProtocol?
     
     //  MARK: Lifecycle
     
     init() {
-        self.manager = CCTableViewManager(output: self)
+        self.manager = CCTableViewManager(delegateOutput: self, cellOutput: self)
         self.initializationModels()
     }
     
-    func initializationModels() {
-        
-    }
+    func initializationModels() { }
     
     //  MARK: CCTableViewDelegateOutputProtocol
     
-    func didSelect(indexPath: IndexPath, id: String?) {
-        
-    }
+    func didSelect(indexPath: IndexPath, id: String?) { }
     
     //  MARK: CCTemplateViewModelsHandlerProtocol
     
     func viewDidChange(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
     func modelDidChage(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
+    
+    //  MARK:
+    
+    func refreshTableView() { }
     
 }
 
@@ -50,8 +50,8 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: C
     
     //  MARK: CCTableViewControllerPrefetchOutputProtocol
     
-    func numberRowsInItem(by index: Int) -> Int {
-        return manager.countCells(in: index)
+    func numberRows(in index: Int) -> Int {
+        return manager?.countCells(in: index) ?? 0
     }
     
     func batchList() {

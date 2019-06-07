@@ -11,11 +11,7 @@ import UIKit
 protocol CCTableViewPresenterViewInputProtocol: class {
     func configure(dataSource: Any?, delegate: Any?)
     func configurePagination(output: CCTableViewPrefetchOutputProtocol?)
-    func configureRefresh(output: CCTableViewRefreshOutpu
-    func refreshTableView() {
-    <#code#>
-    }
-    tProtocol?)
+    func configureRefresh(output: CCTableViewRefreshOutputProtocol?)
     
     func beginRefresing()
     func endRefresing()
@@ -31,14 +27,14 @@ protocol CCTableViewPresenterViewInputProtocol: class {
 
 @objc protocol CCTableViewPrefetchOutputProtocol: class {
     func batchList()
-    func numberRows(in section: Int) -> Int
+    func numberRows(in index: Int) -> Int
 }
 
 @objc protocol CCTableViewRefreshOutputProtocol: class {
     func refreshTableView()
 }
 
-class CCTableViewController: UIViewController{
+class CCTableViewController: UIViewController {
     
     //  MARK: IBOutlets
     

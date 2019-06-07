@@ -12,7 +12,7 @@ protocol CCTableViewDelegateOutputProtocol: class {
     func didSelect(indexPath: IndexPath, id: String?)
 }
 
-protocol CCTableViewDelegateProtocol: class {
+protocol CCTableViewDelegateProtocol: CCDelegateProtocol {
     
 }
 
@@ -22,22 +22,22 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
 
     private weak var output:    CCTableViewDelegateOutputProtocol?
     
-    init(output: CCTableViewDelegateOutputProtocol?, template: CCTemplateViewModelsDataSource?) {
+    init(output: CCTableViewDelegateOutputProtocol?, template: CCTemplateViewModelsProtocol?) {
         self.output = output
         super.init(template: template)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = self.template?.models[indexPath.section].cells[indexPath.row] {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
             self.output?.didSelect(indexPath: indexPath, id: cell.modelId)
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let cell = self.template?.models[indexPath.section].cells[indexPath.row] {
-            switch cell.viewModel?.height {
-            case .automatic?: return UITableView.automaticDimension
-            case .value(let height)?: return CGFloat(height)
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
+            switch cell.height {
+            case .automatic: return UITableView.automaticDimension
+            case .value(let height): return CGFloat(height)
             default: return .zero
             }
         }
@@ -46,7 +46,7 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let viewModel = self.template?.models[section].header?.viewModel {
+        if let viewModel = self.template?.viewModels[section].header {
             
             //  Иницализация view для секции
             
@@ -63,7 +63,7 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if let viewModel = self.template?.models[section].footer?.viewModel {
+        if let viewModel = self.template?.viewModels[section].footer {
             
             //  Иницализация view для секции
             
@@ -80,7 +80,7 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let item = self.template?.models[section].header?.viewModel
+        let item = self.template?.viewModels[section].header
         switch item?.height {
         case .automatic?: return UITableView.automaticDimension
         case .value(let height)?: return CGFloat(height)
@@ -89,7 +89,7 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let item = self.template?.models[section].footer?.viewModel
+        let item = self.template?.viewModels[section].footer
         switch item?.height {
         case .automatic?: return UITableView.automaticDimension
         case .value(let height)?: return CGFloat(height)

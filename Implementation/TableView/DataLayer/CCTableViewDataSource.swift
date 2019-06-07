@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol CCTableViewDataSourceProtocol {
+protocol CCTableViewDataSourceProtocol: CCDataSourceProtocol {
     
 }
 
-class CCTableViewDataSource<T: CCTemplateViewModels>: CCDataSource<T>, UITableViewDataSource {
+class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITableViewDataSource {
     
     //  MARK: UITableViewDataSource
     

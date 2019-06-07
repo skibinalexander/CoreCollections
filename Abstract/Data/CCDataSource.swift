@@ -8,28 +8,23 @@
 
 import Foundation
 
-protocol CCDataSourceProtocol {
-    var models: [CCItemModel]   { get set }
-}
-
 //  MARK: DataSource
 
-class CCDataSource<TemplateU: CCTemplateViewModels>: NSObject, CCTemplateViewModelsDataSource, CCDataSourceProtocol {
+protocol CCDataSourceProtocol: class {
+    
+}
+
+class CCDataSource: NSObject {
     
     //  Public Properties
     
-    public var models:      [CCItemModel]
-    
-    //  MARK: Private Properties
-    
-    internal var template:  CCTemplateViewModels?
+    internal weak var template:  CCTemplateViewModelsProtocol?
     
     //  MARK: Lifecycle
     
-    init(handler: CCTemplateViewModelsHandlerProtocol, output: CCViewModelCellOutputProtocol) {
-        self.models = []
+    init(template: CCTemplateViewModelsProtocol) {
         super.init()
-        self.template = TemplateU(handler: handler, output: output, dataSource: self)
+        self.template = template
     }
     
 }

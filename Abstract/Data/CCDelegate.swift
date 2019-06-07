@@ -8,13 +8,18 @@
 
 import Foundation
 
-class CCDelegate: NSObject {
+protocol CCDelegateProtocol: class {
+    
+}
+
+class CCDelegate: NSObject, CCDelegateProtocol {
     
     //  Properties
     
-    weak var template: CCTemplateViewModelsDataSource?
+    weak var template: CCTemplateViewModelsProtocol?
     
-    init(template: CCTemplateViewModelsDataSource?) {
+    init(template: CCTemplateViewModelsProtocol?) {
+        super.init()
         self.template = template
     }
     

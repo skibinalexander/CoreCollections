@@ -18,7 +18,11 @@ protocol CCTemplateViewModelsHandlerProtocol: class {
     func templateViewModelsDidRemoved(paths: [IndexPath])
 }
 
-class CCTemplateViewModels {
+protocol CCTemplateViewModelsProtocol: class {
+    var viewModels: [CCItemViewModel]   { get set }
+}
+
+class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     
     private weak var dataSource:    CCTemplateViewModelsDataSource?
     private weak var handler:       CCTemplateViewModelsHandlerProtocol?
