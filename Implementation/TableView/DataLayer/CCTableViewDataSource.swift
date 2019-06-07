@@ -26,7 +26,7 @@ class CCTableViewDataSource<T: CCTemplateViewModels>: CCDataSource<T>, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = self.cell(at: indexPath) else {
+        guard let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] else {
             assertionFailure("Cell is Nil")
             return UITableViewCell(style: .default, reuseIdentifier: "")
         }

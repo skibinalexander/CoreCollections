@@ -12,7 +12,7 @@ protocol CCTemplateViewModelsDataSource: class {
     var models: [CCItemModel] { get set }
 }
 
-protocol CCTemplateViewModelsHandlerProtocol: CCViewModelCellOutputProtocol {
+protocol CCTemplateViewModelsHandlerProtocol: class {
     func templateViewModelsDidReload(paths: [IndexPath])
     func templateViewModelsDidInserted(paths: [IndexPath])
     func templateViewModelsDidRemoved(paths: [IndexPath])
@@ -21,7 +21,8 @@ protocol CCTemplateViewModelsHandlerProtocol: CCViewModelCellOutputProtocol {
 class CCTemplateViewModels {
     
     private weak var dataSource:    CCTemplateViewModelsDataSource?
-    internal weak var handler:       CCTemplateViewModelsHandlerProtocol?
+    private weak var handler:       CCTemplateViewModelsHandlerProtocol?
+    internal weak var output:        CCViewModelCellOutputProtocol?
     
     var viewModels: [CCItemViewModel] = []
     
@@ -29,8 +30,9 @@ class CCTemplateViewModels {
     internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int)    ->CCViewModelProtocol?)?
     internal var createCell: ((_ model: CCModelCellProtocol?, _ index: Int)         ->CCViewModelProtocol?)?
     
-    required init(handler: CCTemplateViewModelsHandlerProtocol, dataSource: CCTemplateViewModelsDataSource) {
+    required init(handler: CCTemplateViewModelsHandlerProtocol, output: CCViewModelCellOutputProtocol, dataSource: CCTemplateViewModelsDataSource) {
         self.handler = handler
+        self.output = output
         self.dataSource = dataSource
     }
     

@@ -20,25 +20,24 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     //  MARK: Properties
 
-    private weak var output:            CCTableViewDelegateOutputProtocol?
+    private weak var output:    CCTableViewDelegateOutputProtocol?
     
-    init(executor: CCDataSourceExecuteViewModelsProtocol?, output: CCTableViewDelegateOutputProtocol?) {
-        
+    init(output: CCTableViewDelegateOutputProtocol?, template: CCTemplateViewModelsDataSource?) {
         self.output = output
-        super.init(executor: executor)
+        super.init(template: template)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = self.executor?.cell(at: indexPath) {
+        if let cell = self.template?.models[indexPath.section].cells[indexPath.row] {
             self.output?.didSelect(indexPath: indexPath, id: cell.modelId)
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let item = self.executor?.cell(at: indexPath) {
-            switch item.height {
-            case .automatic: return UITableView.automaticDimension
-            case .value(let height): return CGFloat(height)
+        if let cell = self.template?.models[indexPath.section].cells[indexPath.row] {
+            switch cell.viewModel?.height {
+            case .automatic?: return UITableView.automaticDimension
+            case .value(let height)?: return CGFloat(height)
             default: return .zero
             }
         }
@@ -47,36 +46,42 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let item = self.executor?.item(at: section)
-        
-        //  Иницализация view для секции
-        
-        switch item?.header?.nibType {
-        default: item?.header?.inject(view: self.nibSection(nameNib: item!.header!.nibId) as? CCTableViewSection); break;
+        if let viewModel = self.template?.models[section].header?.viewModel {
+            
+            //  Иницализация view для секции
+            
+            switch viewModel.nibType {
+            default: viewModel.inject(view: self.nibSection(nameNib: viewModel.nibId) as? CCTableViewSection); break;
+            }
+            
+            viewModel.updateView()
+            
+            return viewModel.getView as? UIView
         }
         
-        item?.header?.updateView()
-        
-        return item?.header?.getView as? UIView
+        return nil
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let item = self.executor?.item(at: section)
-        
-        //  Иницализация view для секции
-        
-        switch item?.footer?.nibType {
-        default: item?.footer?.inject(view: self.nibSection(nameNib: item!.footer!.nibId) as? CCTableViewSection); break;
+        if let viewModel = self.template?.models[section].footer?.viewModel {
+            
+            //  Иницализация view для секции
+            
+            switch viewModel.nibType {
+            default: viewModel.inject(view: self.nibSection(nameNib: viewModel.nibId) as? CCTableViewSection); break;
+            }
+            
+            viewModel.updateView()
+            
+            return viewModel.getView as? UIView
         }
         
-        item?.footer?.updateView()
-        
-        return item?.footer?.getView as? UIView
+        return nil
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let item = self.executor?.item(at: section)
-        switch item?.header?.height {
+        let item = self.template?.models[section].header?.viewModel
+        switch item?.height {
         case .automatic?: return UITableView.automaticDimension
         case .value(let height)?: return CGFloat(height)
         default: return .zero
@@ -84,8 +89,8 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let item = self.executor?.item(at: section)
-        switch item?.footer?.height {
+        let item = self.template?.models[section].footer?.viewModel
+        switch item?.height {
         case .automatic?: return UITableView.automaticDimension
         case .value(let height)?: return CGFloat(height)
         default: return .zero

@@ -11,7 +11,11 @@ import UIKit
 protocol CCTableViewPresenterViewInputProtocol: class {
     func configure(dataSource: Any?, delegate: Any?)
     func configurePagination(output: CCTableViewPrefetchOutputProtocol?)
-    func configureRefresh(output: CCTableViewRefreshOutputProtocol?)
+    func configureRefresh(output: CCTableViewRefreshOutpu
+    func refreshTableView() {
+    <#code#>
+    }
+    tProtocol?)
     
     func beginRefresing()
     func endRefresing()
@@ -25,13 +29,12 @@ protocol CCTableViewPresenterViewInputProtocol: class {
     func updateHieghtCell(completion: (()->Void)?)
 }
 
-protocol CCTableViewPrefetchOutputProtocol: class {
+@objc protocol CCTableViewPrefetchOutputProtocol: class {
     func batchList()
     func numberRows(in section: Int) -> Int
 }
 
-@objc
-protocol CCTableViewRefreshOutputProtocol: class {
+@objc protocol CCTableViewRefreshOutputProtocol: class {
     func refreshTableView()
 }
 

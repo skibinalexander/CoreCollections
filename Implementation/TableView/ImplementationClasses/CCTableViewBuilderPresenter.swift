@@ -58,14 +58,4 @@ class CCTableViewBuilderPresenter {
         presenter?.reloadTableView()
     }
     
-//    final func configurePagination() -> CCTableViewPresenter {
-//        self.tableViewInput?.configurePagination()
-//        return self
-//    }
-//
-//    final func configureRefresh() -> CCTableViewPresenter {
-//        self.tableViewInput?.configureRefresh()
-//        return self
-//    }
-    
 }

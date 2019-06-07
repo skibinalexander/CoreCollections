@@ -12,10 +12,10 @@ class CCDelegate: NSObject {
     
     //  Properties
     
-    internal weak var executor: CCDataSourceExecuteViewModelsProtocol?
+    weak var template: CCTemplateViewModelsDataSource?
     
-    init(executor: CCDataSourceExecuteViewModelsProtocol?) {
-        self.executor = executor
+    init(template: CCTemplateViewModelsDataSource?) {
+        self.template = template
     }
     
 }
