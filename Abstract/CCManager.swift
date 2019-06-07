@@ -19,7 +19,7 @@ class CCManagerBuilder {
     private weak var prefetchOutput:    CCContainerViewPrefetchOutputProtocol?
     private weak var refreshOutput:     CCContainerViewRefreshOutputProtocol?
     
-    final func configure(manager: CCManagerProtocol) -> CCManagerBuilder {
+    final func configure(manager: CCManagerProtocol?) -> CCManagerBuilder {
         self.manager = manager
         return self
     }
@@ -40,10 +40,12 @@ class CCManagerBuilder {
     }
     
     final func build() {
-//        containerView?.configure(dataSource: self.manager?.getDataSource(), delegate: self.manager?.getDelegate())
+        containerView?.configure(dataSource: self.manager?.getDataSource(), delegate: self.manager?.getDelegate())
         containerView?.configurePagination(output: prefetchOutput)
         containerView?.configureRefresh(output: refreshOutput)
-        containerView?.reloadContainer()
+        
+        manager?.set(containerView: containerView)
+        manager?.reloadAllCells()
     }
     
 }
@@ -51,6 +53,14 @@ class CCManagerBuilder {
 //  MARK: CCManager
 
 protocol CCManagerProtocol: class {
+    var isRefreshing: Bool  { get set }
+    
+    func set(containerView: CCContainerViewInputProtocol?)
+    
+    func getDataSource()    -> CCDataSourceProtocol?
+    func getDelegate()      -> CCDelegateProtocol?
+    
+    func item(id: String?) -> CCItemModel?
     
     func append(item: CCItemModel)
     func remove(item at: Int)
@@ -61,17 +71,41 @@ protocol CCManagerProtocol: class {
     func modelHeader(at index: Int)             -> CCModelSectionProtocol?
     func modelFooter(at index: Int)             -> CCModelSectionProtocol?
     
+    func reloadAllCells()
+    func insertNewCells()
+    
     func beginRefreshing()
     func endRefreshing()
+    
 }
 
-class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModelsHandlerProtocol, CCTemplateViewModelsDataSource {
-    var containerView:  CCTableViewPresenterViewInputProtocol?
+class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModelsDataSource {
+    
+    var containerView:  CCContainerViewInputProtocol?
     var template:       CCTemplateViewModels?
     var dataSource:     CCDataSourceProtocol?
     var delegate:       CCDelegateProtocol?
     
     var models:         [CCItemModel] = []
+    
+    var isRefreshing: Bool = false
+    
+    //
+    
+    func set(containerView: CCContainerViewInputProtocol?) {
+        self.containerView = containerView
+    }
+    
+    //
+    
+    func getDataSource() -> CCDataSourceProtocol? {
+        return dataSource
+    }
+    
+    func getDelegate() -> CCDelegateProtocol? {
+        return delegate
+    }
+    
 }
 
 extension CCManager {
@@ -82,6 +116,18 @@ extension CCManager {
     
     func remove(item at: Int) {
         self.models.remove(at: at)
+    }
+    
+    func item(id: String?) -> CCItemModel? {
+        return models.first(where: {$0.id == id })
+    }
+    
+    func reloadAllCells() {
+        template?.reloadViewModels()
+    }
+    
+    func insertNewCells() {
+        template?.insertCells()
     }
     
     func countCells(in index: Int) -> Int {
@@ -101,23 +147,33 @@ extension CCManager {
     }
     
     func beginRefreshing() {
-        
+        isRefreshing = true
+        containerView?.beginRefresing()
     }
     
     func endRefreshing() {
-        
+        isRefreshing = false
+        containerView?.endRefresing()
     }
     
 }
 
-extension CCManager {
+//  MARK: CCTemplateViewModelsHandlerProtocol
+
+extension CCManager: CCTemplateViewModelsHandlerProtocol {
+    
+    func templateViewModelsDidReloadAll() {
+        containerView?.reloadContainer()
+        endRefreshing()
+    }
     
     func templateViewModelsDidReload(paths: [IndexPath]) {
         
     }
     
     func templateViewModelsDidInserted(paths: [IndexPath]) {
-        
+        containerView?.insertCellsIntoTableView(at: paths)
+        endRefreshing()
     }
     
     func templateViewModelsDidRemoved(paths: [IndexPath]) {

@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol CCContainerViewPrefetchOutputProtocol: class {
+@objc protocol CCContainerViewPrefetchOutputProtocol: class {
     func batchList()
     func numberRows(in section: Int) -> Int
 }
 
-protocol CCContainerViewRefreshOutputProtocol: class {
+@objc protocol CCContainerViewRefreshOutputProtocol: class {
     func refreshTableView()
 }
 

@@ -13,6 +13,7 @@ protocol CCTemplateViewModelsDataSource: class {
 }
 
 protocol CCTemplateViewModelsHandlerProtocol: class {
+    func templateViewModelsDidReloadAll()
     func templateViewModelsDidReload(paths: [IndexPath])
     func templateViewModelsDidInserted(paths: [IndexPath])
     func templateViewModelsDidRemoved(paths: [IndexPath])
@@ -67,6 +68,8 @@ extension CCTemplateViewModels {
             item.footer?.reference(item: item)
             let _ = item.cells.map({ $0?.reference(item: item)})
         }
+        
+        handler?.templateViewModelsDidReloadAll()
     }
     
 }

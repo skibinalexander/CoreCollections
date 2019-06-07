@@ -8,32 +8,6 @@
 
 import UIKit
 
-protocol CCTableViewPresenterViewInputProtocol: class {
-    func configure(dataSource: Any?, delegate: Any?)
-    func configurePagination(output: CCTableViewPrefetchOutputProtocol?)
-    func configureRefresh(output: CCTableViewRefreshOutputProtocol?)
-    
-    func beginRefresing()
-    func endRefresing()
-    
-    func reloadTableView()
-    
-    func insertCellsIntoTableView(at paths: [IndexPath])
-    func removeCellsIntoTableView(at paths: [IndexPath])
-    func reloadCellsIntoTableView(at paths: [IndexPath])
-    
-    func updateHieghtCell(completion: (()->Void)?)
-}
-
-@objc protocol CCTableViewPrefetchOutputProtocol: class {
-    func batchList()
-    func numberRows(in index: Int) -> Int
-}
-
-@objc protocol CCTableViewRefreshOutputProtocol: class {
-    func refreshTableView()
-}
-
 class CCTableViewController: UIViewController {
     
     //  MARK: IBOutlets
@@ -43,7 +17,7 @@ class CCTableViewController: UIViewController {
     
     //  MARK: Properties
     
-    private var prefetchOutput: CCTableViewPrefetchOutputProtocol?
+    private var prefetchOutput: CCContainerViewPrefetchOutputProtocol?
     
 }
 
@@ -59,7 +33,7 @@ extension CCTableViewController {
 
 //  MARK: CCTableViewPresenterViewInputProtocol
 
-extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
+extension CCTableViewController: CCContainerViewInputProtocol {
 
     func configure(dataSource: Any?, delegate: Any?) {
         let dataSource  = (dataSource as? UITableViewDataSource)
@@ -74,21 +48,21 @@ extension CCTableViewController: CCTableViewPresenterViewInputProtocol {
         self.tableView.delegate             = delegate
     }
     
-    func configurePagination(output: CCTableViewPrefetchOutputProtocol?) {
+    func configurePagination(output: CCContainerViewPrefetchOutputProtocol?) {
         if output != nil {
             self.tableView.prefetchDataSource = self
             self.prefetchOutput = output
         }
     }
     
-    func configureRefresh(output: CCTableViewRefreshOutputProtocol?) {
+    func configureRefresh(output: CCContainerViewRefreshOutputProtocol?) {
         if output != nil {
             self.tableView.refreshControl = refreshControl
-            self.refreshControl.addTarget(output!, action: #selector(CCTableViewRefreshOutputProtocol.refreshTableView), for: .valueChanged)
+            self.refreshControl.addTarget(output!, action: #selector(CCContainerViewRefreshOutputProtocol.refreshTableView), for: .valueChanged)
         }
     }
     
-    func reloadTableView() {
+    func reloadContainer() {
         self.tableView.reloadData()
     }
     

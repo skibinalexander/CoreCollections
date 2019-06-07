@@ -41,6 +41,7 @@ class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
     static func empty() -> CCItemModel {
         return CCItemModel(id: CCItemModel.signle)
     }
+    
 }
 
 //  MARK: CCItemViewModelsProtocol

@@ -10,7 +10,7 @@ import Foundation
 
 //  MARK: BasicTableViewPresenter
 
-protocol CCTableViewPresenterProtocol: CCTableViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol, CCViewModelCellOutputProtocol {
+protocol CCTableViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol, CCViewModelCellOutputProtocol {
     
 }
 
@@ -23,7 +23,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     //  MARK: Lifecycle
     
     init() {
-        self.manager = CCTableViewManager(delegateOutput: self, cellOutput: self)
+        self.manager = CCTableViewManager<T>(delegateOutput: self, cellOutput: self)
         self.initializationModels()
     }
     
@@ -44,7 +44,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
 }
 
-class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: CCTableViewPresenter<T>, CCTableViewPrefetchOutputProtocol {
+class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: CCTableViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
     
     var pagination: CCPaginationModel = CCPaginationModel<PaginationType>()
     
