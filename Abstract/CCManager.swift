@@ -45,14 +45,25 @@ class CCManagerBuilder {
         containerView?.configureRefresh(output: refreshOutput)
         
         manager?.set(containerView: containerView)
-        manager?.reloadAllCells()
+        manager?.refreshCells()
     }
     
 }
 
 //  MARK: CCManager
 
-protocol CCManagerProtocol: class {
+enum CCManagerCellsAddType {
+    case append         //  Append and reload All
+    case insert(Int)    //  Insert and reload empty view models
+}
+
+protocol CCManagerCellsProtocol: class {
+    func refreshCells()
+    func reloadCells()
+    func addCells(in item: CCItemModel, type: CCManagerCellsAddType, cells: [CCModelCellProtocol])
+}
+
+protocol CCManagerProtocol: CCManagerCellsProtocol {
     var isRefreshing: Bool  { get set }
     
     func set(containerView: CCContainerViewInputProtocol?)
@@ -60,7 +71,8 @@ protocol CCManagerProtocol: class {
     func getDataSource()    -> CCDataSourceProtocol?
     func getDelegate()      -> CCDelegateProtocol?
     
-    func item(id: String?) -> CCItemModel?
+    func item(index: Int)   -> CCItemModel?
+    func item(id: String?)  -> CCItemModel?
     
     func append(item: CCItemModel)
     func remove(item at: Int)
@@ -71,12 +83,8 @@ protocol CCManagerProtocol: class {
     func modelHeader(at index: Int)             -> CCModelSectionProtocol?
     func modelFooter(at index: Int)             -> CCModelSectionProtocol?
     
-    func reloadAllCells()
-    func insertNewCells()
-    
     func beginRefreshing()
     func endRefreshing()
-    
 }
 
 class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModelsDataSource {
@@ -86,7 +94,7 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
     var dataSource:     CCDataSourceProtocol?
     var delegate:       CCDelegateProtocol?
     
-    var models:         [CCItemModel] = []
+    internal var models: [CCItemModel] = []
     
     var isRefreshing: Bool = false
     
@@ -118,16 +126,16 @@ extension CCManager {
         self.models.remove(at: at)
     }
     
+    func item(index: Int) -> CCItemModel? {
+        if models.count > index {
+            return models[index]
+        }
+        
+        return nil
+    }
+    
     func item(id: String?) -> CCItemModel? {
         return models.first(where: {$0.id == id })
-    }
-    
-    func reloadAllCells() {
-        template?.reloadViewModels()
-    }
-    
-    func insertNewCells() {
-        template?.insertCells()
     }
     
     func countCells(in index: Int) -> Int {
@@ -154,6 +162,33 @@ extension CCManager {
     func endRefreshing() {
         isRefreshing = false
         containerView?.endRefresing()
+    }
+
+}
+
+extension CCManager {
+    
+    func refreshCells() {
+        models.forEach({$0.cells = []})
+        template?.reloadViewModels()
+    }
+    
+    func reloadCells() {
+        template?.reloadViewModels()
+    }
+    
+    func addCells(in item: CCItemModel, type: CCManagerCellsAddType, cells: [CCModelCellProtocol]) {
+        switch type {
+        case .append:
+            item.cells.append(contentsOf: cells)
+            template?.reloadViewModels()
+            break;
+        case .insert(let index):
+            item.cells.insert(contentsOf: cells, at: index)
+            template?.insertCells()
+            break;
+            
+        }
     }
     
 }

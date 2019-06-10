@@ -54,6 +54,10 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: C
         return manager?.countCells(in: index) ?? 0
     }
     
+    override func refreshTableView() {
+        pagination = CCPaginationModel()
+    }
+    
     func batchList() {
         
     }

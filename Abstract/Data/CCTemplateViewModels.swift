@@ -72,6 +72,10 @@ extension CCTemplateViewModels {
         handler?.templateViewModelsDidReloadAll()
     }
     
+    final func reloadViewModels(in index: Int) {
+        
+    }
+    
 }
 
 //  MARK: Cells
