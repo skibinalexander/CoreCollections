@@ -29,6 +29,11 @@ extension CCTableViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        refreshControl.endRefreshing()
+    }
+    
 }
 
 //  MARK: CCTableViewPresenterViewInputProtocol

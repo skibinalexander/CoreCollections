@@ -36,10 +36,17 @@ class CCItems<U, T> {
 
 class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
     
-    static let signle: String = "signle"
+    enum identifiers: String {
+        case signle = "single"
+        case bottom = "bottom"
+    }
     
-    static func empty() -> CCItemModel {
-        return CCItemModel(id: CCItemModel.signle)
+    static func single() -> CCItemModel {
+        return CCItemModel(id: identifiers.signle.rawValue)
+    }
+    
+    static func bottom() -> CCItemModel {
+        return CCItemModel(id: identifiers.signle.rawValue)
     }
     
 }

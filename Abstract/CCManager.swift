@@ -53,7 +53,7 @@ class CCManagerBuilder {
 //  MARK: CCManager
 
 enum CCManagerCellsAddType {
-    case append         //  Append and reload All
+    case append(Bool)   //  Append and is Bool reload All
     case insert(Int)    //  Insert and reload empty view models
 }
 
@@ -179,9 +179,9 @@ extension CCManager {
     
     func addCells(in item: CCItemModel, type: CCManagerCellsAddType, cells: [CCModelCellProtocol]) {
         switch type {
-        case .append:
+        case .append(let isReload):
             item.cells.append(contentsOf: cells)
-            template?.reloadViewModels()
+            if isReload { template?.reloadViewModels() }
             break;
         case .insert(let index):
             item.cells.insert(contentsOf: cells, at: index)
