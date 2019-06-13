@@ -11,3 +11,8 @@ import Foundation
 protocol CCViewCellProtocol: CCViewProtocol {
     var output: CCViewModelCellOutputProtocol? { get set }
 }
+
+protocol CCViewHighlightedCellProtocol {
+    func highlight()
+    func unhiglight()
+}

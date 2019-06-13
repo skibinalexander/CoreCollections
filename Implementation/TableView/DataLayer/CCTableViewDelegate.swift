@@ -38,7 +38,6 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
             switch cell.height {
             case .automatic: return UITableView.automaticDimension
             case .value(let height): return CGFloat(height)
-            default: return .zero
             }
         }
         
@@ -94,6 +93,18 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
         case .automatic?: return UITableView.automaticDimension
         case .value(let height)?: return CGFloat(height)
         default: return .zero
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        if let item = template?.viewModels[indexPath.section].cells[indexPath.row]?.getView as? CCViewHighlightedCellProtocol {
+            item.highlight()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        if let item = template?.viewModels[indexPath.section].cells[indexPath.row]?.getView as? CCViewHighlightedCellProtocol {
+            item.unhiglight()
         }
     }
     
