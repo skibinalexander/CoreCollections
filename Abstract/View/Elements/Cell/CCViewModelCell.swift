@@ -17,13 +17,12 @@ class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewMode
     
     //  MARK: Private
     
-    internal var output:     CCViewModelCellOutputProtocol?
+    internal var output: CCViewModelCellOutputProtocol?
     
     //  MARK: Lifecycle
     
     init(output: CCViewModelCellOutputProtocol? = nil, nibId: String, nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
         self.output = output
-        
         super.init(nibId: nibId, nibType: nibType, height: height)
     }
     

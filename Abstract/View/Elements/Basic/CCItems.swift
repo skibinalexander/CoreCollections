@@ -38,15 +38,35 @@ class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
     
     enum identifiers: String {
         case signle = "single"
+        case top = "top"
+        case middle = "middle"
         case bottom = "bottom"
+        case list = "list"
+        case content = "content"
     }
     
     static func single() -> CCItemModel {
         return CCItemModel(id: identifiers.signle.rawValue)
     }
     
+    static func top() -> CCItemModel {
+        return CCItemModel(id: identifiers.top.rawValue)
+    }
+    
+    static func middle() -> CCItemModel {
+        return CCItemModel(id: identifiers.middle.rawValue)
+    }
+    
     static func bottom() -> CCItemModel {
         return CCItemModel(id: identifiers.bottom.rawValue)
+    }
+    
+    static func list() -> CCItemModel {
+        return CCItemModel(id: identifiers.list.rawValue)
+    }
+    
+    static func content() -> CCItemModel {
+        return CCItemModel(id: identifiers.content.rawValue)
     }
     
 }

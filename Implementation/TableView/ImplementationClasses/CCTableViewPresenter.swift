@@ -40,7 +40,9 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     //  MARK:
     
-    func refreshTableView() { }
+    func refreshTableView() {
+        manager?.beginRefreshing()
+    }
     
 }
 
