@@ -46,7 +46,7 @@ class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
     }
     
     static func bottom() -> CCItemModel {
-        return CCItemModel(id: identifiers.signle.rawValue)
+        return CCItemModel(id: identifiers.bottom.rawValue)
     }
     
 }

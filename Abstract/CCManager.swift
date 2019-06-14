@@ -12,7 +12,9 @@ import Foundation
 
 class CCManagerBuilder {
     
-    static let shared: CCManagerBuilder = CCManagerBuilder()
+    static func shared() -> CCManagerBuilder {
+        return CCManagerBuilder()
+    }
     
     private weak var manager:           CCManagerProtocol?
     private weak var containerView:     CCContainerViewInputProtocol?
