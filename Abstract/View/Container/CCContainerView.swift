@@ -14,7 +14,7 @@ import Foundation
 }
 
 @objc protocol CCContainerViewRefreshOutputProtocol: class {
-    func refreshTableView()
+    func refresh()
 }
 
 protocol CCContainerViewInputProtocol: class {

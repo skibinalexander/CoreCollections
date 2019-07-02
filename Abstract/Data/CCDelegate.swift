@@ -8,7 +8,11 @@
 
 import Foundation
 
-protocol CCDelegateProtocol: class {
+protocol CCDelegateOutputProtocol: class {
+    func didSelect(indexPath: IndexPath, model: CCModelProtocol?)
+}
+
+protocol CCDelegateProtocol {
     
 }
 

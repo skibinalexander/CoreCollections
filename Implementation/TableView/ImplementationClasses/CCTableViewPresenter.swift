@@ -31,7 +31,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     //  MARK: CCTableViewDelegateOutputProtocol
     
-    func didSelect(indexPath: IndexPath, id: String?) { }
+    func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
     
     //  MARK: CCTemplateViewModelsHandlerProtocol
     
@@ -40,7 +40,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     //  MARK:
     
-    func refreshTableView() {
+    func refresh() {
         manager?.beginRefreshing()
     }
     
@@ -56,7 +56,8 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: C
         return manager?.countCells(in: index) ?? 0
     }
     
-    override func refreshTableView() {
+    override func refresh() {
+        super.refresh()
         pagination = CCPaginationModel()
     }
     

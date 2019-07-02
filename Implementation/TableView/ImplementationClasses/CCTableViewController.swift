@@ -63,7 +63,7 @@ extension CCTableViewController: CCContainerViewInputProtocol {
     func configureRefresh(output: CCContainerViewRefreshOutputProtocol?) {
         if output != nil {
             self.tableView.refreshControl = refreshControl
-            self.refreshControl.addTarget(output!, action: #selector(CCContainerViewRefreshOutputProtocol.refreshTableView), for: .valueChanged)
+            self.refreshControl.addTarget(output!, action: #selector(CCContainerViewRefreshOutputProtocol.refresh), for: .valueChanged)
         }
     }
     

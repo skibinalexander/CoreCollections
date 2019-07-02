@@ -14,7 +14,7 @@ protocol CCDataSourceProtocol: class {
     
 }
 
-class CCDataSource: NSObject {
+class CCDataSource: NSObject, CCDataSourceProtocol {
     
     //  Public Properties
     

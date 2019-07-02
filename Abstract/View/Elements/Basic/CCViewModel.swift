@@ -38,7 +38,7 @@ protocol CCViewModelProtocol: class {
     
     var nibId:              String                              { get set }
     var nibType:            CCViewModelCellViewSourceType       { get set }
-    var height:             CCViewModelHeight                               { get set }
+    var height:             CCViewModelHeight                   { get set }
     
     var modelId:            String?                             { get }
     

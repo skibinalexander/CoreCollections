@@ -8,24 +8,60 @@
 
 import Foundation
 
-class CCCollectionViewPresenter<T: CCTemplateViewModels> {
+//  MARK: BasicCollectionViewPresenter
+
+protocol CCCollectionViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCCollectionViewDelegateOutputProtocol, CCViewModelCellOutputProtocol {
     
-    
-    init() {
-//        self.dataSource = CCTableViewDataSource<T>(output: self)
-//        self.delegate   = CCTableViewDelegate(template: self.dataSource?.template, output: self)
-    }
 }
 
-//  MARK: CCViewModelCellOutputProtocol
-
-extension CCCollectionViewPresenter: CCViewModelCellOutputProtocol {
+class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresenterProtocol {
     
-    func viewDidChange(view: CCViewCellProtocol?, model: CCModelCellProtocol?) {
-        
+    //  MARK: Properties
+    
+    var manager: CCManagerProtocol?
+    
+    //  MARK: Lifecycle
+    
+    init() {
+        self.manager = CCCollectionViewManager<T>(delegateOutput: self, cellOutput: self)
+        self.initializationModels()
     }
     
-    func modelDidChage(view: CCViewCellProtocol?, model: CCModelCellProtocol?) {
+    func initializationModels() { }
+    
+    //  MARK: CCCollectionViewDelegateOutputProtocol
+    
+    func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
+    
+    //  MARK: CCTemplateViewModelsHandlerProtocol
+    
+    func viewDidChange(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
+    func modelDidChage(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
+    
+    //  MARK:
+    
+    func refresh() {
+        manager?.beginRefreshing()
+    }
+    
+}
+
+class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationType>: CCCollectionViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
+    
+    var pagination: CCPaginationModel = CCPaginationModel<PaginationType>()
+    
+    //  MARK: CCCollectionViewControllerPrefetchOutputProtocol
+    
+    func numberRows(in index: Int) -> Int {
+        return manager?.countCells(in: index) ?? 0
+    }
+    
+    override func refresh() {
+        super.refresh()
+        pagination = CCPaginationModel()
+    }
+    
+    func batchList() {
         
     }
     

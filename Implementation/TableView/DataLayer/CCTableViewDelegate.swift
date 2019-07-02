@@ -8,8 +8,8 @@
 
 import UIKit
 
-protocol CCTableViewDelegateOutputProtocol: class {
-    func didSelect(indexPath: IndexPath, id: String?)
+protocol CCTableViewDelegateOutputProtocol: CCDelegateOutputProtocol {
+    
 }
 
 protocol CCTableViewDelegateProtocol: CCDelegateProtocol {
@@ -29,7 +29,9 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
-            self.output?.didSelect(indexPath: indexPath, id: cell.modelId)
+            self.output?.didSelect(indexPath: indexPath, model: cell.getModel)
+        } else {
+            assertionFailure("CCTableViewDelegate: undefined cell")
         }
     }
     
