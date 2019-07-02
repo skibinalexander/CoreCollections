@@ -17,7 +17,7 @@ class CCTableViewController: UIViewController {
     
     //  MARK: Properties
     
-    private var prefetchOutput: CCContainerViewPrefetchOutputProtocol?
+    private weak var prefetchOutput: CCContainerViewPrefetchOutputProtocol?
     
 }
 
