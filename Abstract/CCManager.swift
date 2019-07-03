@@ -221,12 +221,4 @@ extension CCManager: CCTemplateViewModelsHandlerProtocol {
         
     }
     
-    func viewDidChange(view: CCViewCellProtocol?, model: CCModelCellProtocol?) {
-        
-    }
-    
-    func modelDidChage(view: CCViewCellProtocol?, model: CCModelCellProtocol?) {
-        
-    }
-    
 }

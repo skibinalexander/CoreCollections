@@ -10,6 +10,7 @@ import Foundation
 
 protocol CCDelegateOutputProtocol: class {
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?)
+    func willDisplay(indexPath: IndexPath, model: CCModelProtocol?)
 }
 
 protocol CCDelegateProtocol {

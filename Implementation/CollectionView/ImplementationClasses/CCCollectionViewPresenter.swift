@@ -31,7 +31,8 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresen
     
     //  MARK: CCCollectionViewDelegateOutputProtocol
     
-    func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
+    func didSelect(indexPath: IndexPath, model: CCModelProtocol?)   { }
+    func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
     
     //  MARK: CCTemplateViewModelsHandlerProtocol
     
@@ -40,8 +41,8 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresen
     
     //  MARK:
     
-    func refresh() {
-        manager?.beginRefreshing()
+    func refreshList(in containerView: CCContainerViewInputProtocol) {
+        
     }
     
 }
@@ -52,17 +53,19 @@ class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationTyp
     
     //  MARK: CCCollectionViewControllerPrefetchOutputProtocol
     
-    func numberRows(in index: Int) -> Int {
-        return manager?.countCells(in: index) ?? 0
-    }
-    
-    override func refresh() {
-        super.refresh()
-        pagination = CCPaginationModel()
-    }
-    
-    func batchList() {
+    func batchList(in containerView: CCContainerViewInputProtocol) {
         
+    }
+    
+    func numberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
+        return manager?.countCells(in: section) ?? 0
+    }
+    
+    //  MARK:
+    
+    override func refreshList(in containerView: CCContainerViewInputProtocol) {
+        super.refreshList(in: containerView)
+        pagination = CCPaginationModel()
     }
     
 }

@@ -31,12 +31,17 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     //  MARK: CCTableViewDelegateOutputProtocol
     
-    func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
+    func didSelect(indexPath: IndexPath, model: CCModelProtocol?)   { }
+    func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
     
     //  MARK: CCTemplateViewModelsHandlerProtocol
     
     func viewDidChange(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
     func modelDidChage(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
+    
+    //  MARK:
+    
+    func refreshList(in containerView: CCContainerViewInputProtocol) { }
     
     //  MARK:
     
@@ -52,17 +57,19 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: C
     
     //  MARK: CCTableViewControllerPrefetchOutputProtocol
     
-    func numberRows(in index: Int) -> Int {
-        return manager?.countCells(in: index) ?? 0
+    func numberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
+        return manager?.countCells(in: section) ?? 0
     }
     
-    override func refresh() {
-        super.refresh()
-        pagination = CCPaginationModel()
-    }
-    
-    func batchList() {
+    func batchList(in containerView: CCContainerViewInputProtocol) {
         
+    }
+    
+    //  MARK:
+    
+    override func refreshList(in containerView: CCContainerViewInputProtocol) {
+        super.refreshList(in: containerView)
+        pagination = CCPaginationModel()
     }
 
 }

@@ -106,6 +106,12 @@ class CCCollectionViewDelegate: CCDelegate, CCCollectionViewDelegateProtocol, UI
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
+            self.output?.willDisplay(indexPath: indexPath, model: cell.getModel)
+        }
+    }
+    
 }
 
 extension CCCollectionViewDelegate {

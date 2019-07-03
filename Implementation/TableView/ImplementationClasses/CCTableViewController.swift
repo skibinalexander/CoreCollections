@@ -17,7 +17,8 @@ class CCTableViewController: UIViewController {
     
     //  MARK: Properties
     
-    private weak var prefetchOutput: CCContainerViewPrefetchOutputProtocol?
+    private weak var refreshOutput:     CCContainerViewRefreshOutputProtocol?
+    private weak var prefetchOutput:    CCContainerViewPrefetchOutputProtocol?
     
 }
 
@@ -63,7 +64,8 @@ extension CCTableViewController: CCContainerViewInputProtocol {
     func configureRefresh(output: CCContainerViewRefreshOutputProtocol?) {
         if output != nil {
             self.tableView.refreshControl = refreshControl
-            self.refreshControl.addTarget(output!, action: #selector(CCContainerViewRefreshOutputProtocol.refresh), for: .valueChanged)
+            self.refreshOutput = output
+            self.refreshControl.addTarget(output!, action: #selector(refreshAction), for: .valueChanged)
         }
     }
     
@@ -107,6 +109,16 @@ extension CCTableViewController: CCContainerViewInputProtocol {
     
 }
 
+//  MARK:
+
+extension CCTableViewController {
+    
+    @objc func refreshAction() {
+        refreshOutput?.refreshList(in: self)
+    }
+    
+}
+
 //  MARK: UITableViewDataSourcePrefetching
 
 extension CCTableViewController: UITableViewDataSourcePrefetching {
@@ -117,12 +129,11 @@ extension CCTableViewController: UITableViewDataSourcePrefetching {
             return
         }
         
-        if indexPaths.contains(where: { (indexPath) -> Bool in
-            return indexPath.row >= (output.numberRows(in: indexPath.section) - 1)
+        if indexPaths.contains(where: { (path) -> Bool in
+            return path.row >= output.numberRows(in: path.section, in: self)
         }) {
-            self.prefetchOutput?.batchList()
+            self.prefetchOutput?.batchList(in: self)
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
