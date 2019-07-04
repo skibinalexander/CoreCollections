@@ -65,7 +65,7 @@ extension CCTableViewController: CCContainerViewInputProtocol {
         if output != nil {
             self.tableView.refreshControl = refreshControl
             self.refreshOutput = output
-            self.refreshControl.addTarget(output!, action: #selector(refreshAction), for: .valueChanged)
+            self.refreshControl.addTarget(self, action: #selector(refreshAction), for: .valueChanged)
         }
     }
     
