@@ -32,13 +32,12 @@ class CCCollectionViewDataSource: CCDataSource, UICollectionViewDataSource {
         }
         
         guard let viewCell = cell.getView as? UICollectionViewCell & CCViewCellProtocol else {
-            fatalError("CCTableViewDataSource: view for id ViewModel \(String(describing: type(of: cell))) not initialization!")
+            fatalError("CCCollectionViewDataSource: view for id ViewModel \(String(describing: type(of: cell))) not initialization!")
         }
         
         cell.updateView()
         
         return viewCell
-        
     }
     
 }
