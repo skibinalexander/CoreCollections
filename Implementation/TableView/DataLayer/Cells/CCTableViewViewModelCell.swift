@@ -11,7 +11,9 @@ import Foundation
 // MARK: - Base ViewModelCell
 
 class CCTableViewViewModelCell<V: CCTableViewCell, M: CCTableViewModelCellProtocol>: CCViewModelCell<V, M> {
-    
+    override init(output: CCViewModelCellOutputProtocol? = nil, nibId: String = V.className, nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
+        super.init(output: output, nibId: nibId, nibType: nibType, height: height)
+    }
 }
 
 // MARK: - Expanded ViewModelCell

@@ -38,7 +38,7 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
         }
         
         guard let viewCell = cell.getView as? UITableViewCell & CCViewCellProtocol else {
-            fatalError("CCTableViewDataSource: view for id ViewModel \(String(describing: type(of: cell))) not initialization!")
+            fatalError("CCTableViewDataSource: view for ViewModel \(String(describing: type(of: cell))) not initialization!")
         }
         
         cell.updateView()
