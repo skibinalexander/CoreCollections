@@ -36,8 +36,7 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresen
     
     //  MARK: CCTemplateViewModelsHandlerProtocol
     
-    func viewDidChange(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
-    func modelDidChage(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
+    func modelDidChage(viewModel: CCViewModelProtocol?) { }
     
     //  MARK:
     

@@ -14,10 +14,10 @@ class CCCollectionViewModelSection: CCModelSectionProtocol {
     
     weak var item: CCItemModel?
     weak var viewModel: CCViewModelProtocol?
-    var modelId: String?
+    var id: String?
     
-    init(modelId: String? = nil) {
-        self.modelId = modelId
+    init(id: String? = nil) {
+        self.id = id
     }
     
 }

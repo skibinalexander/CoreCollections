@@ -13,11 +13,11 @@ protocol CCTableViewModelCellProtocol: CCModelCellProtocol {
 }
 
 class CCTableViewModelCell: CCTableViewModelCellProtocol {
+    var id:             String?
     weak var item:      CCItemModel?
     weak var viewModel: CCViewModelProtocol?
-    var modelId:        String?
     
-    init(modelId: String? = nil) {
-        self.modelId = modelId
+    init(id: String? = nil) {
+        self.id = id
     }
 }

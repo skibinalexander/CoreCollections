@@ -14,7 +14,5 @@ class CCTableViewCell: UITableViewCell, CCViewCellProtocol {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        self.viewModel?.updateView()
     }
 }

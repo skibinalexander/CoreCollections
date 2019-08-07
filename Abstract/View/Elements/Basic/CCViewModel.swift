@@ -26,9 +26,9 @@ protocol CCViewProtocol: class {
 }
 
 protocol CCModelProtocol: class {
+    var id:         String?                 { get set }
     var item:       CCItemModel?            { get set }
     var viewModel:  CCViewModelProtocol?    { get set }
-    var modelId:    String?                 { get set }
 }
 
 //  MARK:
@@ -39,8 +39,6 @@ protocol CCViewModelProtocol: class {
     var nibId:              String                              { get set }
     var nibType:            CCViewModelCellViewSourceType       { get set }
     var height:             CCViewModelHeight                   { get set }
-    
-    var modelId:            String?                             { get }
     
     var getModel:           CCModelProtocol?                    { get }
     var getView:            CCViewProtocol?                     { get }
@@ -85,10 +83,6 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     var height:             CCViewModelHeight
     
     //  Getters Properties
-    
-    final var modelId: String? {
-        return model?.modelId
-    }
     
     final var getView: CCViewProtocol? {
         return self.view

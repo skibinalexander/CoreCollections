@@ -36,8 +36,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     //  MARK: CCTemplateViewModelsHandlerProtocol
     
-    func viewDidChange(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
-    func modelDidChage(view: CCViewCellProtocol?, model: CCModelCellProtocol?) { }
+    func modelDidChage(viewModel: CCViewModelProtocol?) { }
     
     //  MARK:
     
