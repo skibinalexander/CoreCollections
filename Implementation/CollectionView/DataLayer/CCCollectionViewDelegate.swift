@@ -18,7 +18,7 @@ protocol CCCollectionViewDelegateProtocol: CCDelegateProtocol {
 
 class CCCollectionViewDelegate: CCDelegate, CCCollectionViewDelegateProtocol, UICollectionViewDelegate {
     
-    //  MARK: Properties
+    // MARK: - Properties
     
     private weak var output: CCCollectionViewDelegateOutputProtocol?
     
@@ -50,7 +50,7 @@ class CCCollectionViewDelegate: CCDelegate, CCCollectionViewDelegateProtocol, UI
             //  Иницализация view для секции
             
             switch viewModel.nibType {
-            default: viewModel.inject(view: self.nibSection(nameNib: viewModel.nibId) as? CCCollectionViewSection); break;
+            default: viewModel.inject(view: self.nibSection(nameNib: viewModel.nibId) as? CCCollectionViewSection)
             }
             
             viewModel.updateView()
@@ -67,7 +67,7 @@ class CCCollectionViewDelegate: CCDelegate, CCCollectionViewDelegateProtocol, UI
             //  Иницализация view для секции
             
             switch viewModel.nibType {
-            default: viewModel.inject(view: self.nibSection(nameNib: viewModel.nibId) as? CCCollectionViewSection); break;
+            default: viewModel.inject(view: self.nibSection(nameNib: viewModel.nibId) as? CCCollectionViewSection)
             }
             
             viewModel.updateView()
@@ -116,8 +116,8 @@ class CCCollectionViewDelegate: CCDelegate, CCCollectionViewDelegateProtocol, UI
 
 extension CCCollectionViewDelegate {
     
-    func nibSection<T: UIView>(nameNib: String) -> T {
-        return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as! T
+    func nibSection<T: UIView>(nameNib: String) -> T? {
+        return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as? T
     }
     
 }

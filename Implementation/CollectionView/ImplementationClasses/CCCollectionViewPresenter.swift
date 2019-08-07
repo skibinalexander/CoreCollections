@@ -16,11 +16,11 @@ protocol CCCollectionViewPresenterProtocol: CCContainerViewRefreshOutputProtocol
 
 class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresenterProtocol {
     
-    //  MARK: Properties
+    // MARK: - Properties
     
     var manager: CCManagerProtocol?
     
-    //  MARK: Lifecycle
+    // MARK: - Lifecycle
     
     init() {
         self.manager = CCCollectionViewManager<T>(delegateOutput: self, cellOutput: self)
@@ -29,16 +29,16 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresen
     
     func initializationModels() { }
     
-    //  MARK: CCCollectionViewDelegateOutputProtocol
+    // MARK: - CCCollectionViewDelegateOutputProtocol
     
-    func didSelect(indexPath: IndexPath, model: CCModelProtocol?)   { }
+    func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
     
-    //  MARK: CCTemplateViewModelsHandlerProtocol
+    // MARK: - CCTemplateViewModelsHandlerProtocol
     
     func modelDidChage(viewModel: CCViewModelProtocol?) { }
     
-    //  MARK:
+    // MARK: -
     
     func refreshList(in containerView: CCContainerViewInputProtocol) {
         
@@ -50,7 +50,7 @@ class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationTyp
     
     var pagination: CCPaginationModel = CCPaginationModel<PaginationType>()
     
-    //  MARK: CCCollectionViewControllerPrefetchOutputProtocol
+    // MARK: - CCCollectionViewControllerPrefetchOutputProtocol
     
     func batchList(in containerView: CCContainerViewInputProtocol) {
         
@@ -60,7 +60,7 @@ class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationTyp
         return manager?.countCells(in: section) ?? 0
     }
     
-    //  MARK:
+    // MARK: -
     
     override func refreshList(in containerView: CCContainerViewInputProtocol) {
         super.refreshList(in: containerView)

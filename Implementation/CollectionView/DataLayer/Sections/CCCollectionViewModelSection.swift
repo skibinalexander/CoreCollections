@@ -10,7 +10,7 @@ import Foundation
 
 class CCCollectionViewModelSection: CCModelSectionProtocol {
     
-    //  MARK: CCModelSectionProtocol
+    // MARK: - CCModelSectionProtocol
     
     weak var item: CCItemModel?
     weak var viewModel: CCViewModelProtocol?

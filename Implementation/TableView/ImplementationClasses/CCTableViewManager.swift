@@ -17,7 +17,7 @@ class CCTableViewManager<T: CCTemplateViewModels>: CCManager<T> {
         
         if let template = self.template {
             self.dataSource = CCTableViewDataSource(template: template)
-            self.delegate   = CCTableViewDelegate(output: delegateOutput, template: template)
+            self.dataHandler = CCTableViewDelegate(output: delegateOutput, template: template)
         } else {
             assertionFailure()
         }

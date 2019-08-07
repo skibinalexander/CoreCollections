@@ -14,11 +14,11 @@ protocol CCViewModelCellOutputProtocol: class {
 
 class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M> {
     
-    //  MARK: Private
+    // MARK: - Private
     
     internal var output: CCViewModelCellOutputProtocol?
     
-    //  MARK: Lifecycle
+    // MARK: - Lifecycle
     
     init(output: CCViewModelCellOutputProtocol? = nil, nibId: String, nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
         self.output = output

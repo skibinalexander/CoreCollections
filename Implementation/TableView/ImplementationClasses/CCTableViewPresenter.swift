@@ -8,7 +8,7 @@
 
 import Foundation
 
-//  MARK: BasicTableViewPresenter
+// MARK: - BasicTableViewPresenter
 
 protocol CCTableViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol, CCViewModelCellOutputProtocol {
     
@@ -16,11 +16,11 @@ protocol CCTableViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCT
 
 class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtocol {
     
-    //  MARK: Properties
+    // MARK: - Properties
     
     var manager: CCManagerProtocol?
     
-    //  MARK: Lifecycle
+    // MARK: - Lifecycle
     
     init() {
         self.manager = CCTableViewManager<T>(delegateOutput: self, cellOutput: self)
@@ -29,16 +29,16 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     func initializationModels() { }
     
-    //  MARK: CCTableViewDelegateOutputProtocol
+    // MARK: - CCTableViewDelegateOutputProtocol
     
-    func didSelect(indexPath: IndexPath, model: CCModelProtocol?)   { }
+    func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
     
-    //  MARK: CCTemplateViewModelsHandlerProtocol
+    // MARK: - CCTemplateViewModelsHandlerProtocol
     
     func modelDidChage(viewModel: CCViewModelProtocol?) { }
     
-    //  MARK:
+    // MARK: -
     
     func refreshList(in containerView: CCContainerViewInputProtocol) { }
     
@@ -48,7 +48,7 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: C
     
     var pagination: CCPaginationModel = CCPaginationModel<PaginationType>()
     
-    //  MARK: CCTableViewControllerPrefetchOutputProtocol
+    // MARK: - CCTableViewControllerPrefetchOutputProtocol
     
     func numberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
         return manager?.countCells(in: section) ?? 0
@@ -58,7 +58,7 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: C
         
     }
     
-    //  MARK:
+    // MARK: -
     
     override func refreshList(in containerView: CCContainerViewInputProtocol) {
         super.refreshList(in: containerView)

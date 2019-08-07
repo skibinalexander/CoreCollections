@@ -10,19 +10,19 @@ import UIKit
 
 class CCTableViewController: UIViewController {
     
-    //  MARK: IBOutlets
+    // MARK: - IBOutlets
     
     @IBOutlet weak var tableView:   UITableView!
     private let refreshControl:     UIRefreshControl = UIRefreshControl()
     
-    //  MARK: Properties
+    // MARK: - Properties
     
     private weak var refreshOutput:     CCContainerViewRefreshOutputProtocol?
     private weak var prefetchOutput:    CCContainerViewPrefetchOutputProtocol?
     
 }
 
-//  MARK: Lifecycle
+// MARK: - Lifecycle
 
 extension CCTableViewController {
     
@@ -37,7 +37,7 @@ extension CCTableViewController {
     
 }
 
-//  MARK: CCTableViewPresenterViewInputProtocol
+// MARK: - CCTableViewPresenterViewInputProtocol
 
 extension CCTableViewController: CCContainerViewInputProtocol {
 
@@ -85,7 +85,7 @@ extension CCTableViewController: CCContainerViewInputProtocol {
         self.tableView.reloadRows(at: paths, with: .automatic)
     }
     
-    func updateHieghtCell(completion: (()->Void)?) {
+    func updateHieghtCell(completion: (() -> Void)?) {
         if #available(iOS 11.0, *) {
             self.tableView.performBatchUpdates({
                 completion?()
@@ -109,7 +109,7 @@ extension CCTableViewController: CCContainerViewInputProtocol {
     
 }
 
-//  MARK:
+// MARK: -
 
 extension CCTableViewController {
     
@@ -119,7 +119,7 @@ extension CCTableViewController {
     
 }
 
-//  MARK: UITableViewDataSourcePrefetching
+// MARK: - UITableViewDataSourcePrefetching
 
 extension CCTableViewController: UITableViewDataSourcePrefetching {
     

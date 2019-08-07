@@ -20,7 +20,7 @@ protocol CCTemplateViewModelsHandlerProtocol: class {
 }
 
 protocol CCTemplateViewModelsProtocol: class {
-    var viewModels: [CCItemViewModel]   { get set }
+    var viewModels: [CCItemViewModel] { get set }
 }
 
 class CCTemplateViewModels: CCTemplateViewModelsProtocol {
@@ -31,9 +31,9 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     
     var viewModels: [CCItemViewModel] = []
     
-    internal var createHeader: ((_ model: CCModelSectionProtocol?, _ index: Int)    ->CCViewModelProtocol?)?
-    internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int)    ->CCViewModelProtocol?)?
-    internal var createCell: ((_ model: CCModelCellProtocol?, _ index: Int)         ->CCViewModelProtocol)?
+    internal var createHeader: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelProtocol?)?
+    internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelProtocol?)?
+    internal var createCell: ((_ model: CCModelCellProtocol?, _ index: Int) -> CCViewModelProtocol)?
     
     required init(handler: CCTemplateViewModelsHandlerProtocol, output: CCViewModelCellOutputProtocol?, dataSource: CCTemplateViewModelsDataSource) {
         self.handler = handler
@@ -43,7 +43,7 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     
 }
 
-//  MARK: Sections
+// MARK: - Sections
 
 extension CCTemplateViewModels {
     
@@ -66,7 +66,7 @@ extension CCTemplateViewModels {
         self.viewModels.forEach { (item) in
             item.header?.reference(item: item)
             item.footer?.reference(item: item)
-            let _ = item.cells.map({ $0?.reference(item: item)})
+            item.cells.forEach({ $0?.reference(item: item)})
         }
         
         handler?.templateViewModelsDidReloadAll()
@@ -78,7 +78,7 @@ extension CCTemplateViewModels {
     
 }
 
-//  MARK: Cells
+// MARK: - Cells
 
 extension CCTemplateViewModels {
     

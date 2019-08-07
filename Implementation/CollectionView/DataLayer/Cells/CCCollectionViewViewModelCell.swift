@@ -14,7 +14,7 @@ class CCCollectionViewViewModelCell<V: CCCollectionViewCell, M: CCCollectionView
     
 }
 
-//  MARK: Expanded ViewModelCell
+// MARK: - Expanded ViewModelCell
 
 protocol CCCollectionViewViewModelExpandedCellProtocol {
     func changeHeight(with state: CCCollectionViewViewModelExpandedState)
@@ -22,11 +22,11 @@ protocol CCCollectionViewViewModelExpandedCellProtocol {
 
 class CCCollectionViewViewModelExpandedCell<V: CCCollectionViewCell, M: CCCollectionViewModelCell>: CCCollectionViewViewModelCell<V, M>, CCCollectionViewViewModelExpandedCellProtocol {
     
-    //  MARK: Private
+    // MARK: - Private
     
     private var expandedHeight: CCViewModelHeight?
     
-    //  MARK: Lifecycle
+    // MARK: - Lifecycle
     
     convenience init(output: CCViewModelCellOutputProtocol? = nil, nibId: String, nibType: CCViewModelCellViewSourceType, expandedHeight: CCViewModelHeight) {
         self.init(output: output, nibId: nibId, nibType: nibType, height: expandedHeight)
@@ -34,7 +34,7 @@ class CCCollectionViewViewModelExpandedCell<V: CCCollectionViewCell, M: CCCollec
         self.expandedHeight = expandedHeight
     }
     
-    //  MARK: Public
+    // MARK: - Public
     
     public func changeHeight(with state: CCCollectionViewViewModelExpandedState) {
         self.height = (state == .expanded) ? self.expandedHeight ?? .value(.zero) : .value(.zero)

@@ -10,7 +10,7 @@ import Foundation
 
 class CCTableViewModelSection: CCModelSectionProtocol {
     
-    //  MARK: CCModelSectionProtocol
+    // MARK: - CCModelSectionProtocol
     
     var id: String?
     weak var item: CCItemModel?

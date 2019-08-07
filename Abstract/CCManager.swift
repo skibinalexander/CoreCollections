@@ -8,7 +8,7 @@
 
 import Foundation
 
-//  MARK: CCManagerBuilder
+// MARK: - CCManagerBuilder
 
 class CCManagerBuilder {
     
@@ -52,7 +52,7 @@ class CCManagerBuilder {
     
 }
 
-//  MARK: CCManager
+// MARK: - CCManager
 
 enum CCManagerCellsAddType {
     case replace(Bool)  //  Replace and is Bool reload All
@@ -67,24 +67,24 @@ protocol CCManagerCellsProtocol: class {
 }
 
 protocol CCManagerProtocol: CCManagerCellsProtocol {
-    var isRefreshing: Bool  { get set }
+    var isRefreshing: Bool { get set }
     
     func set(containerView: CCContainerViewInputProtocol?)
     
-    func getDataSource()    -> CCDataSourceProtocol?
-    func getDelegate()      -> CCDelegateProtocol?
+    func getDataSource() -> CCDataSourceProtocol?
+    func getDelegate() -> CCDelegateProtocol?
     
-    func item(index: Int)   -> CCItemModel?
-    func item(id: String?)  -> CCItemModel?
+    func item(index: Int) -> CCItemModel?
+    func item(id: String?) -> CCItemModel?
     
     func append(item: CCItemModel)
     func remove(item at: Int)
     
-    func countCells(in index: Int)    -> Int
+    func countCells(in index: Int) -> Int
     
-    func modelCell(at indexPath: IndexPath)     -> CCModelProtocol?
-    func modelHeader(at index: Int)             -> CCModelSectionProtocol?
-    func modelFooter(at index: Int)             -> CCModelSectionProtocol?
+    func modelCell(at indexPath: IndexPath) -> CCModelProtocol?
+    func modelHeader(at index: Int) -> CCModelSectionProtocol?
+    func modelFooter(at index: Int) -> CCModelSectionProtocol?
     
     func beginRefreshing()
     func endRefreshing()
@@ -92,10 +92,10 @@ protocol CCManagerProtocol: CCManagerCellsProtocol {
 
 class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModelsDataSource {
     
-    var containerView:  CCContainerViewInputProtocol?
-    var template:       CCTemplateViewModels?
-    var dataSource:     CCDataSourceProtocol?
-    var delegate:       CCDelegateProtocol?
+    var containerView: CCContainerViewInputProtocol?
+    var template: CCTemplateViewModels?
+    var dataSource: CCDataSourceProtocol?
+    var dataHandler: CCDelegateProtocol?
     
     internal var models: [CCItemModel] = []
     
@@ -114,7 +114,7 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
     }
     
     func getDelegate() -> CCDelegateProtocol? {
-        return delegate
+        return dataHandler
     }
     
 }
@@ -188,18 +188,16 @@ extension CCManager {
         case .append(let isReload):
             item.cells.append(contentsOf: cells)
             if isReload { template?.reloadViewModels() }
-            break;
         case .insert(let index):
             item.cells.insert(contentsOf: cells, at: index)
             template?.insertCells()
-            break;
             
         }
     }
     
 }
 
-//  MARK: CCTemplateViewModelsHandlerProtocol
+// MARK: - CCTemplateViewModelsHandlerProtocol
 
 extension CCManager: CCTemplateViewModelsHandlerProtocol {
     

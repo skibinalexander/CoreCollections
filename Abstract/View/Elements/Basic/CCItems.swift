@@ -13,7 +13,7 @@ class CCItems<U, T> {
     typealias SectionType = U
     typealias CellType = T
     
-    //  MARK: Properties
+    // MARK: - Properties
     
     var id:         String?
     
@@ -21,7 +21,7 @@ class CCItems<U, T> {
     var footer:     U?
     var cells:      [T?]
     
-    //  MARK: Lifecycle
+    // MARK: - Lifecycle
     
     init(id: String? = nil, header: U? = nil, footer: U? = nil, cells: [T?] = []) {
         self.id = id
@@ -32,11 +32,11 @@ class CCItems<U, T> {
     
 }
 
-//  MARK: CCItemModels
+// MARK: - CCItemModels
 
 class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
     
-    enum identifiers: String {
+    enum Identifiers: String {
         case signle = "single"
         case top = "top"
         case middle = "middle"
@@ -46,35 +46,33 @@ class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
     }
     
     static func single() -> CCItemModel {
-        return CCItemModel(id: identifiers.signle.rawValue)
+        return CCItemModel(id: Identifiers.signle.rawValue)
     }
     
     static func top() -> CCItemModel {
-        return CCItemModel(id: identifiers.top.rawValue)
+        return CCItemModel(id: Identifiers.top.rawValue)
     }
     
     static func middle() -> CCItemModel {
-        return CCItemModel(id: identifiers.middle.rawValue)
+        return CCItemModel(id: Identifiers.middle.rawValue)
     }
     
     static func bottom() -> CCItemModel {
-        return CCItemModel(id: identifiers.bottom.rawValue)
+        return CCItemModel(id: Identifiers.bottom.rawValue)
     }
     
     static func list() -> CCItemModel {
-        return CCItemModel(id: identifiers.list.rawValue)
+        return CCItemModel(id: Identifiers.list.rawValue)
     }
     
     static func content() -> CCItemModel {
-        return CCItemModel(id: identifiers.content.rawValue)
+        return CCItemModel(id: Identifiers.content.rawValue)
     }
     
 }
 
-//  MARK: CCItemViewModelsProtocol
+// MARK: - CCItemViewModelsProtocol
 
 class CCItemViewModel: CCItems<CCViewModelProtocol, CCViewModelProtocol> {
     
 }
-
-

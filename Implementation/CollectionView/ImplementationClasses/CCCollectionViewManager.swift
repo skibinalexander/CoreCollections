@@ -17,7 +17,7 @@ class CCCollectionViewManager<T: CCTemplateViewModels>: CCManager<T> {
         
         if let template = self.template {
             self.dataSource = CCCollectionViewDataSource(template: template)
-            self.delegate   = CCCollectionViewDelegate(output: delegateOutput, template: template)
+            self.dataHandler = CCCollectionViewDelegate(output: delegateOutput, template: template)
         } else {
             assertionFailure()
         }

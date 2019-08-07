@@ -14,7 +14,7 @@ protocol CCTableViewDataSourceProtocol: CCDataSourceProtocol {
 
 class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITableViewDataSource {
     
-    //  MARK: UITableViewDataSource
+    // MARK: - UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.template?.viewModels.count ?? 0
@@ -33,8 +33,8 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
         //  Иницализация view для ячейки
         
         switch cell.nibType {
-        case .reusebleId:  cell.inject(view: tableView.dequeueReusableCell(withIdentifier: cell.nibId, for: indexPath) as? CCTableViewCell); break;
-        case .nibName:     cell.inject(view: self.nibCell(nameNib: cell.nibId) as? CCTableViewCell); break;
+        case .reusebleId: cell.inject(view: tableView.dequeueReusableCell(withIdentifier: cell.nibId, for: indexPath) as? CCTableViewCell)
+        case .nibName: cell.inject(view: self.nibCell(nameNib: cell.nibId) as? CCTableViewCell)
         }
         
         guard let viewCell = cell.getView as? UITableViewCell & CCViewCellProtocol else {
@@ -50,8 +50,8 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
 
 extension CCTableViewDataSource {
     
-    func nibCell<T: UIView>(nameNib: String) -> T {
-        return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as! T
+    func nibCell<T: UIView>(nameNib: String) -> T? {
+        return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as? T
     }
     
 }

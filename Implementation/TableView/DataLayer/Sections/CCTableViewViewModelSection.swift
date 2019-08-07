@@ -8,13 +8,13 @@
 
 import Foundation
 
-//  MARK: Base ViewModel
+// MARK: - Base ViewModel
 
 class CCTableViewViewModelSection<V: CCTableViewSection, M: CCTableViewModelSection>: CCViewModelSection<V, M> {
     
 }
 
-//  MARK: Expanded ViewModel
+// MARK: - Expanded ViewModel
 
 public enum CCTableViewViewModelExpandedState {
     case expanded
@@ -46,7 +46,7 @@ class CCTableViewViewModelExpandedSection<V: CCTableViewSection, M: CCTableViewM
         self.state = state
     }
     
-    //  MARK: Public
+    // MARK: - Public
     
     public func changeState() {
         guard let state = self.state else {

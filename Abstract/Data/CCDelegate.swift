@@ -13,7 +13,7 @@ protocol CCDelegateOutputProtocol: class {
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?)
 }
 
-protocol CCDelegateProtocol {
+protocol CCDelegateProtocol: class {
     
 }
 

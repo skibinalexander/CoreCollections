@@ -12,21 +12,21 @@ import UIKit
 
 class CCCollectionViewSection: UIView, CCViewSectionProtocol {
     
-    //  MARK: CCViewCellProtocol
+    // MARK: - CCViewCellProtocol
     
     weak var viewModel: CCViewModelProtocol?
 }
 
-//  MARK: Expanded ViewSection
+// MARK: - Expanded ViewSection
 
 class CCCollectionViewExpandedSection: CCCollectionViewSection {
     
-    //  MARK: IBOutlets
+    // MARK: - IBOutlets
     
     @IBOutlet weak var stateButton: UIButton!
     
-    //  MARK: Actions
-    
+    // MARK: - Actions
+
     @IBAction func actionStateButtonDidTouch(_ sender: UIButton) {
         
         if let viewModel = self.viewModel as? CCCollectionViewViewModelExpandedSectionProtocol {

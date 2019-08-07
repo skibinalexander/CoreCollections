@@ -8,13 +8,13 @@
 
 import UIKit
 
-//  MARK: Base ViewModel
+// MARK: - Base ViewModel
 
 class CCCollectionViewViewModelSection<V: CCCollectionViewSection, M: CCCollectionViewModelSection>: CCViewModelSection<V, M> {
     
 }
 
-//  MARK: Expanded ViewModel
+// MARK: - Expanded ViewModel
 
 public enum CCCollectionViewViewModelExpandedState {
     case expanded
@@ -46,7 +46,7 @@ class CCCollectionViewViewModelExpandedSection<V: CCCollectionViewSection, M: CC
         self.state = state
     }
     
-    //  MARK: Public
+    // MARK: - Public
     
     public func changeState() {
         guard let state = self.state else {

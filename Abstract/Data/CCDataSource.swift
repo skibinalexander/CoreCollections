@@ -8,7 +8,7 @@
 
 import Foundation
 
-//  MARK: DataSource
+// MARK: - DataSource
 
 protocol CCDataSourceProtocol: class {
     
@@ -20,7 +20,7 @@ class CCDataSource: NSObject, CCDataSourceProtocol {
     
     internal weak var template:  CCTemplateViewModelsProtocol?
     
-    //  MARK: Lifecycle
+    //  Lifecycle
     
     init(template: CCTemplateViewModelsProtocol) {
         super.init()

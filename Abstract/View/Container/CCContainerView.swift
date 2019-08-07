@@ -31,5 +31,5 @@ protocol CCContainerViewInputProtocol: class {
     func removeCellsIntoTableView(at paths: [IndexPath])
     func reloadCellsIntoTableView(at paths: [IndexPath])
     
-    func updateHieghtCell(completion: (()->Void)?)
+    func updateHieghtCell(completion: (() -> Void)?)
 }
