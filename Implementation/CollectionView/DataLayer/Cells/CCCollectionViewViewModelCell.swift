@@ -8,7 +8,7 @@
 
 import Foundation
 
-//  MARK: Base ViewModelCell
+// MARK: - Base ViewModelCell
 
 class CCCollectionViewViewModelCell<V: CCCollectionViewCell, M: CCCollectionViewModelCellProtocol>: CCViewModelCell<V, M> {
     

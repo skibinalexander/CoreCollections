@@ -83,6 +83,7 @@ protocol CCManagerProtocol: CCManagerCellsProtocol {
     func countCells(in index: Int) -> Int
     
     func modelCell(at indexPath: IndexPath) -> CCModelProtocol?
+    func modelCell(at id: String, in item: CCItemModel) -> CCModelProtocol?
     func modelHeader(at index: Int) -> CCModelSectionProtocol?
     func modelFooter(at index: Int) -> CCModelSectionProtocol?
     
@@ -147,6 +148,14 @@ extension CCManager {
     
     func modelCell(at indexPath: IndexPath) -> CCModelProtocol? {
         return models[indexPath.section].cells[indexPath.row]
+    }
+    
+    func modelCell(at id: String, in item: CCItemModel) -> CCModelProtocol? {
+        let cell = item.cells.first { (model) -> Bool in
+            return model?.id == id
+        } as? CCModelProtocol
+        
+        return cell
     }
     
     func modelHeader(at index: Int) -> CCModelSectionProtocol? {

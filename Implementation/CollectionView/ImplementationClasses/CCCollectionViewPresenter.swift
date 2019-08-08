@@ -8,7 +8,7 @@
 
 import Foundation
 
-//  MARK: BasicCollectionViewPresenter
+// MARK: - BasicCollectionViewPresenter
 
 protocol CCCollectionViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCCollectionViewDelegateOutputProtocol, CCViewModelCellOutputProtocol {
     

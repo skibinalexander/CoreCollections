@@ -8,7 +8,7 @@
 
 import UIKit
 
-//  MARK: Base ViewSection
+// MARK: - Base ViewSection
 
 class CCCollectionViewSection: UIView, CCViewSectionProtocol {
     
