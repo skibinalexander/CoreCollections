@@ -63,7 +63,9 @@ enum CCManagerCellsAddType {
 protocol CCManagerCellsProtocol: class {
     func refreshCells()
     func reloadCells()
-    func addCells(in item: CCItemModel, type: CCManagerCellsAddType, cells: [CCModelCellProtocol])
+    func addCells(item: CCItemModel, type: CCManagerCellsAddType, cells: [CCModelCellProtocol])
+    func addCells(itemId: String?, type: CCManagerCellsAddType, cells: [CCModelCellProtocol], error: (()->())?)
+    func addCells(itemType: CCItemModel.Identifiers, type: CCManagerCellsAddType, cells: [CCModelCellProtocol], error: (()->())?)
 }
 
 protocol CCManagerProtocol: CCManagerCellsProtocol {
@@ -189,7 +191,7 @@ extension CCManager {
         template?.reloadViewModels()
     }
     
-    func addCells(in item: CCItemModel, type: CCManagerCellsAddType, cells: [CCModelCellProtocol]) {
+    func addCells(item: CCItemModel, type: CCManagerCellsAddType, cells: [CCModelCellProtocol]) {
         switch type {
         case .replace(let isReload):
             item.cells = cells
@@ -201,6 +203,22 @@ extension CCManager {
             item.cells.insert(contentsOf: cells, at: index)
             template?.insertCells()
             
+        }
+    }
+    
+    func addCells(itemId: String?, type: CCManagerCellsAddType, cells: [CCModelCellProtocol], error: (()->())? = nil) {
+        if let item = item(id: itemId) {
+            addCells(item: item, type: type, cells: cells)
+        } else {
+            error?()
+        }
+    }
+    
+    func addCells(itemType: CCItemModel.Identifiers, type: CCManagerCellsAddType, cells: [CCModelCellProtocol], error: (()->())? = nil) {
+        if let item = item(id: itemType.rawValue) {
+            addCells(item: item, type: type, cells: cells)
+        } else {
+            error?()
         }
     }
     

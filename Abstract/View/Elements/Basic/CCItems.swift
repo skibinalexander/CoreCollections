@@ -36,8 +36,8 @@ class CCItems<U, T> {
 
 class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
     
-    enum Identifiers: String {
-        case signle = "single"
+    public enum Identifiers: String {
+        case single = "single"
         case top = "top"
         case middle = "middle"
         case bottom = "bottom"
@@ -46,7 +46,7 @@ class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
     }
     
     static func single() -> CCItemModel {
-        return CCItemModel(id: Identifiers.signle.rawValue)
+        return CCItemModel(id: Identifiers.single.rawValue)
     }
     
     static func top() -> CCItemModel {
