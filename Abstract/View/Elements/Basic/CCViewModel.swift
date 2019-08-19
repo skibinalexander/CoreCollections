@@ -34,6 +34,8 @@ protocol CCModelProtocol: class {
 // MARK: -
 
 protocol CCViewModelProtocol: class {
+    static var typeOf: String { get }
+    
     var item: CCItemViewModel? { get set }
     
     var nibId: String { get set }
@@ -57,6 +59,12 @@ protocol CCViewModelProtocol: class {
     
     func updateView()
     func updateModel()
+}
+
+extension CCViewModelProtocol {
+    static var typeOf: String {
+        return String(describing: type(of: self))
+    }
 }
 
 protocol CCViewModelInitialization: class {

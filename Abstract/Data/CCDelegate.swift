@@ -13,6 +13,11 @@ protocol CCDelegateOutputProtocol: class {
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?)
 }
 
+extension CCDelegateOutputProtocol {
+    func didSelect(indexPath: IndexPath, model: CCModelProtocol?) {}
+    func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) {}
+}
+
 protocol CCDelegateProtocol: class {
     
 }

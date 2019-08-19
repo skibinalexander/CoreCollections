@@ -55,9 +55,9 @@ class CCManagerBuilder {
 // MARK: - CCManager
 
 enum CCManagerCellsAddType {
-    case replace(Bool)  //  Replace and is Bool reload All
-    case append(Bool)   //  Append and is Bool reload All
-    case insert(Int)    //  Insert and reload empty view models
+    case replace(reload: Bool)          //  Replace and is Bool reload All
+    case append(reload: Bool)           //  Append and is Bool reload All
+    case insert(index: Int)     //  Insert and reload empty view models
 }
 
 protocol CCManagerCellsProtocol: class {

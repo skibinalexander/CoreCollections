@@ -12,6 +12,10 @@ protocol CCViewModelCellOutputProtocol: class {
     func modelDidChage(viewModel: CCViewModelProtocol?)
 }
 
+extension CCViewModelCellOutputProtocol {
+    func modelDidChage(viewModel: CCViewModelProtocol?) {}
+}
+
 class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M> {
     
     // MARK: - Private
