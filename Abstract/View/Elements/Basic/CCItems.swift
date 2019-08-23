@@ -37,12 +37,12 @@ class CCItems<U, T> {
 class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
     
     public enum Identifiers: String {
-        case single = "single"
-        case top = "top"
-        case middle = "middle"
-        case bottom = "bottom"
-        case list = "list"
-        case content = "content"
+        case single
+        case top
+        case middle
+        case bottom
+        case list
+        case content
     }
     
     static func single() -> CCItemModel {
