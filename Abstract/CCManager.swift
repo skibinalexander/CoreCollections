@@ -206,7 +206,7 @@ extension CCManager {
         }
     }
     
-    func addCells(itemId: String?, type: CCManagerCellsAddType, cells: [CCModelCellProtocol], error: (()->())? = nil) {
+    func addCells(itemId: String?, type: CCManagerCellsAddType, cells: [CCModelCellProtocol], error: (() -> Void)? = nil) {
         if let item = item(id: itemId) {
             addCells(item: item, type: type, cells: cells)
         } else {
@@ -214,7 +214,7 @@ extension CCManager {
         }
     }
     
-    func addCells(itemType: CCItemModel.Identifiers, type: CCManagerCellsAddType, cells: [CCModelCellProtocol], error: (()->())? = nil) {
+    func addCells(itemType: CCItemModel.Identifiers, type: CCManagerCellsAddType, cells: [CCModelCellProtocol], error: (() -> Void)? = nil) {
         if let item = item(id: itemType.rawValue) {
             addCells(item: item, type: type, cells: cells)
         } else {

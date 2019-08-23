@@ -8,9 +8,13 @@
 
 import UIKit
 
-class CCTableViewCell: UITableViewCell, CCViewCellProtocol {
+protocol CCTableViewCellProtocol: UITableViewCell, CCViewCellProtocol {
+
+}
+
+class CCTableViewCell: UITableViewCell, CCTableViewCellProtocol {
     weak var viewModel: CCViewModelProtocol?
-    weak var output:    CCViewModelCellOutputProtocol?
+    weak var output: CCViewModelCellOutputProtocol?
     
     override func awakeFromNib() {
         super.awakeFromNib()
