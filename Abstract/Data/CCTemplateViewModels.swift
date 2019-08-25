@@ -33,7 +33,7 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     
     internal var createHeader: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelProtocol?)?
     internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelProtocol?)?
-    internal var createCell: ((_ model: CCModelCellProtocol?, _ index: Int) -> CCViewModelProtocol)?
+    internal var createCell: ((_ model: CCModelCellProtocol?) -> CCViewModelProtocol)?
     
     required init(handler: CCTemplateViewModelsHandlerProtocol, output: CCViewModelCellOutputProtocol?, dataSource: CCTemplateViewModelsDataSource) {
         self.handler = handler
@@ -59,7 +59,7 @@ extension CCTemplateViewModels {
         
         dataSource?.models.enumerated().forEach({ (section, element) in
             element.cells.enumerated().forEach({ (row, model) in
-                self.viewModels[section].cells.append(self.createCell?(model, row).inject(with: model))
+                self.viewModels[section].cells.append(self.createCell?(model).inject(with: model))
             })
         })
         
@@ -88,7 +88,7 @@ extension CCTemplateViewModels {
         dataSource?.models.enumerated().forEach({ (position, item) in
             item.cells.enumerated().forEach({ (index, model) in
                 if model?.viewModel == nil {
-                    if let viewModel = self.createCell?(model, index) {
+                    if let viewModel = self.createCell?(model) {
                         viewModel.inject(model: model)
                         viewModel.reference(item: self.viewModels[position])
                         self.viewModels[position].cells.insert(viewModel, at: index)
