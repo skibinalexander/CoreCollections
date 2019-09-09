@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Base ViewModelCell
 
-class CCTableViewViewModelCell<V: CCTableViewCell, M: CCTableViewModelCellProtocol>: CCViewModelCell<V, M> {
+class CCTableViewViewModelCell<V: CCTableViewCellProtocol, M: CCTableViewModelCellProtocol>: CCViewModelCell<V, M> {
     override init(output: CCViewModelCellOutputProtocol? = nil, nibId: String = V.className, nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
         super.init(output: output, nibId: nibId, nibType: nibType, height: height)
     }
@@ -22,7 +22,7 @@ protocol CCTableViewViewModelExpandedCellProtocol {
     func changeHeight(with state: CCTableViewViewModelExpandedState)
 }
 
-class CCTableViewViewModelExpandedCell<V: CCTableViewCell, M: CCTableViewModelCell>: CCTableViewViewModelCell<V, M>, CCTableViewViewModelExpandedCellProtocol {
+class CCTableViewViewModelExpandedCell<V: CCTableViewCellProtocol, M: CCTableViewModelCell>: CCTableViewViewModelCell<V, M>, CCTableViewViewModelExpandedCellProtocol {
     
     // MARK: - Private
     
