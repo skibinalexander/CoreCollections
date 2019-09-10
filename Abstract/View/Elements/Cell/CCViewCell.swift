@@ -9,7 +9,7 @@
 import Foundation
 
 protocol CCViewCellProtocol: CCViewProtocol {
-    var output: CCViewModelCellOutputProtocol? { get set }
+    var output: CCViewModelOutputProtocol? { get set }
 }
 
 protocol CCViewHighlightedCellProtocol {

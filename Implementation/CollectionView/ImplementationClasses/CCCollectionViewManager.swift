@@ -10,7 +10,7 @@ import Foundation
 
 class CCCollectionViewManager<T: CCTemplateViewModels>: CCManager<T> {
     
-    init(delegateOutput: CCCollectionViewDelegateOutputProtocol, cellOutput: CCViewModelCellOutputProtocol?) {
+    init(delegateOutput: CCCollectionViewDelegateOutputProtocol, cellOutput: CCViewModelOutputProtocol?) {
         super.init()
         
         self.template   = T(handler: self, output: cellOutput, dataSource: self)

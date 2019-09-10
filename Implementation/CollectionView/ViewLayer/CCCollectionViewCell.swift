@@ -10,7 +10,7 @@ import UIKit
 
 class CCCollectionViewCell: UICollectionViewCell, CCViewCellProtocol {
     weak var viewModel: CCViewModelProtocol?
-    weak var output:    CCViewModelCellOutputProtocol?
+    weak var output:    CCViewModelOutputProtocol?
     
     override func awakeFromNib() {
         super.awakeFromNib()

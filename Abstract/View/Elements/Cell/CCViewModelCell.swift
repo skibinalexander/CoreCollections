@@ -8,35 +8,13 @@
 
 import Foundation
 
-protocol CCViewModelCellOutputProtocol: class {
-    func modelDidChage(viewModel: CCViewModelProtocol?)
+protocol CCViewModelCellProtocol: CCViewModelProtocol {
+    
 }
 
-extension CCViewModelCellOutputProtocol {
-    func modelDidChage(viewModel: CCViewModelProtocol?) {}
-}
-
-class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M> {
-    
-    // MARK: - Private
-    
-    internal var output: CCViewModelCellOutputProtocol?
-    
-    // MARK: - Lifecycle
-    
-    init(output: CCViewModelCellOutputProtocol? = nil, nibId: String, nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
-        self.output = output
-        super.init(nibId: nibId, nibType: nibType, height: height)
-    }
-    
+class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M>, CCViewModelCellProtocol {
     override func updateView() {
         super.updateView()
-        self.view?.output = self.output
+        view?.output = self.output
     }
-    
-    override func updateModel() {
-        super.updateModel()
-        self.output?.modelDidChage(viewModel: self)
-    }
-    
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CCItems<U, T> {
+class CCItems<U, T>: NSObject {
     
     typealias SectionType = U
     typealias CellType = T

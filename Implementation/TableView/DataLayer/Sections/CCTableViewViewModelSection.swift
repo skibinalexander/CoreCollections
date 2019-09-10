@@ -21,7 +21,7 @@ public enum CCTableViewViewModelExpandedState {
     case collapsed
 }
 
-protocol CCTableViewViewModelExpandedSectionOutputProtocol: class {
+protocol CCTableViewViewModelExpandedSectionOutputProtocol: CCViewModelOutputProtocol {
     func stateDidChange(state: CCTableViewViewModelExpandedState, viewModel: CCViewModelProtocol)
 }
 
@@ -31,8 +31,7 @@ protocol CCTableViewViewModelExpandedSectionProtocol {
 
 class CCTableViewViewModelExpandedSection<V: CCTableViewSection, M: CCTableViewModelSection>: CCTableViewViewModelSection<V, M>, CCTableViewViewModelExpandedSectionProtocol {
     
-    private weak var output:    CCTableViewViewModelExpandedSectionOutputProtocol?
-    internal var state:         CCTableViewViewModelExpandedState?
+    internal var state: CCTableViewViewModelExpandedState?
     
     convenience init(output: CCTableViewViewModelExpandedSectionOutputProtocol? = nil,
                      state: CCTableViewViewModelExpandedState = .expanded,
@@ -41,8 +40,6 @@ class CCTableViewViewModelExpandedSection<V: CCTableViewSection, M: CCTableViewM
                      height: CCViewModelHeight) {
         
         self.init(nibId: nibId, nibType: nibType, height: height)
-        
-        self.output = output
         self.state = state
     }
     
@@ -60,7 +57,7 @@ class CCTableViewViewModelExpandedSection<V: CCTableViewSection, M: CCTableViewM
             self.state = .expanded
         }
         
-        self.output?.stateDidChange(state: (self.state ?? .collapsed), viewModel: self)
+//        self.output?.stateDidChange(state: (self.state ?? .collapsed), viewModel: self)
     }
     
 }

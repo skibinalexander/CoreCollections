@@ -11,8 +11,8 @@ import Foundation
 // MARK: - Base ViewModelCell
 
 class CCTableViewViewModelCell<V: CCTableViewCellProtocol, M: CCTableViewModelCellProtocol>: CCViewModelCell<V, M> {
-    override init(output: CCViewModelCellOutputProtocol? = nil, nibId: String = V.className, nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
-        super.init(output: output, nibId: nibId, nibType: nibType, height: height)
+    override init(nibId: String = V.className, nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
+        super.init(nibId: nibId, nibType: nibType, height: height)
     }
 }
 
@@ -30,8 +30,8 @@ class CCTableViewViewModelExpandedCell<V: CCTableViewCellProtocol, M: CCTableVie
     
     // MARK: - Lifecycle
     
-    convenience init(output: CCViewModelCellOutputProtocol? = nil, nibId: String, nibType: CCViewModelCellViewSourceType, expandedHeight: CCViewModelHeight) {
-        self.init(output: output, nibId: nibId, nibType: nibType, height: expandedHeight)
+    convenience init(output: CCViewModelOutputProtocol? = nil, nibId: String, nibType: CCViewModelCellViewSourceType, expandedHeight: CCViewModelHeight) {
+        self.init(nibId: nibId, nibType: nibType, height: expandedHeight)
         
         self.expandedHeight = expandedHeight
     }

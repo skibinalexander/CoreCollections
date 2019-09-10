@@ -13,6 +13,10 @@ protocol CCContainerViewPrefetchOutputProtocol: class {
     func numberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int
 }
 
+extension CCContainerViewPrefetchOutputProtocol {
+    func batchList(in containerView: CCContainerViewInputProtocol) { }
+}
+
 protocol CCContainerViewRefreshOutputProtocol: class {
     func refreshList(in containerView: CCContainerViewInputProtocol)
 }
@@ -27,9 +31,23 @@ protocol CCContainerViewInputProtocol: class {
     
     func reloadContainer()
     
-    func insertCellsIntoTableView(at paths: [IndexPath])
-    func removeCellsIntoTableView(at paths: [IndexPath])
-    func reloadCellsIntoTableView(at paths: [IndexPath])
+    func insertCells(at paths: [IndexPath])
+    func removeCells(at paths: [IndexPath])
+    func reloadCells(in sections: [Int])
     
     func updateHieghtCell(completion: (() -> Void)?)
+}
+
+extension CCContainerViewInputProtocol {
+    func configurePagination(output: CCContainerViewPrefetchOutputProtocol?) {}
+    func configureRefresh(output: CCContainerViewRefreshOutputProtocol?) {}
+    
+    func beginRefresing() {}
+    func endRefresing() {}
+    
+    func insertCells(at paths: [IndexPath]) {}
+    func removeCells(at paths: [IndexPath]) {}
+    func reloadCells(in sections: [Int]) {}
+    
+    func updateHieghtCell(completion: (() -> Void)?) {}
 }

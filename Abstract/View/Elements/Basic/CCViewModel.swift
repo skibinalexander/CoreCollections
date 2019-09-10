@@ -33,9 +33,14 @@ protocol CCModelProtocol: class {
 
 // MARK: -
 
+protocol CCViewModelOutputProtocol: class {
+    func modelDidChange(viewModel: CCViewModelProtocol)
+}
+
 protocol CCViewModelProtocol: class {
     static var typeOf: String { get }
     
+    var output: CCViewModelOutputProtocol? { get set }
     var item: CCItemViewModel? { get set }
     
     var nibId: String { get set }
@@ -50,13 +55,12 @@ protocol CCViewModelProtocol: class {
     func inject(model: CCModelProtocol?)
     func inject(view: CCViewProtocol?)
     
-    func inject(with model: CCModelProtocol?) -> CCViewModelProtocol?
+    func inject(with model: CCModelProtocol?, output: CCViewModelOutputProtocol?) -> CCViewModelProtocol?
     func inject(with view: CCViewProtocol?) -> CCViewModelProtocol?
     
     func reference(item: CCItemViewModel?)
     
     // MARK: - Update
-    
     func updateView()
     func updateModel()
 }
@@ -84,11 +88,12 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     weak var model: M?
     
     // MARK: - Public
-    weak var                item: CCItemViewModel?
+    weak var output: CCViewModelOutputProtocol?
+    weak var item: CCItemViewModel?
     
-    var nibId:              String
-    var nibType:            CCViewModelCellViewSourceType
-    var height:             CCViewModelHeight
+    var nibId: String
+    var nibType: CCViewModelCellViewSourceType
+    var height: CCViewModelHeight
     
     //  Getters Properties
     
@@ -111,13 +116,21 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     // MARK: - Injections
     
     func inject(view: CCViewProtocol?) {
+//        assert(((model as? V) == nil), "func inject(view: CCViewProtocol?) no inject!")
         self.view = view as? V
         self.view?.viewModel = self
     }
     
     func inject(model: CCModelProtocol?) {
+//        assert(((model as? M) == nil), "func inject(model: CCModelProtocol?) no inject!")
         self.model = model as? M
         self.model?.viewModel = self
+    }
+    
+    func inject(with model: CCModelProtocol?, output: CCViewModelOutputProtocol?) -> CCViewModelProtocol? {
+        self.inject(model: model)
+        self.output = output
+        return self
     }
     
     func inject(with view: CCViewProtocol?) -> CCViewModelProtocol? {
@@ -125,16 +138,9 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
         return self
     }
     
-    func inject(with model: CCModelProtocol?) -> CCViewModelProtocol? {
-        self.inject(model: model)
-        return self
-    }
-    
     func reference(item: CCItemViewModel?) {
         self.item = item
     }
-    
-    // MARK: - Updating
     
     func updateView() { }
     func updateModel() { }

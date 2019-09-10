@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - BasicTableViewPresenter
 
-protocol CCTableViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol, CCViewModelCellOutputProtocol {
+protocol CCTableViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol, CCViewModelOutputProtocol {
     
 }
 
@@ -24,24 +24,20 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     init() {
         self.manager = CCTableViewManager<T>(delegateOutput: self, cellOutput: self)
-        self.initializationModels()
+        self.initializationItems()
     }
     
+    func initializationItems() { }
     func initializationModels() { }
     
     // MARK: - CCTableViewDelegateOutputProtocol
     
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
-    
-    // MARK: - CCTemplateViewModelsHandlerProtocol
-    
-    func modelDidChage(viewModel: CCViewModelProtocol?) { }
+    func modelDidChange(viewModel: CCViewModelProtocol) { }
     
     // MARK: -
-    
     func refreshList(in containerView: CCContainerViewInputProtocol) { }
-    
 }
 
 class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: CCTableViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {

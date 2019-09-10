@@ -28,8 +28,8 @@ class CCCollectionViewViewModelExpandedCell<V: CCCollectionViewCell, M: CCCollec
     
     // MARK: - Lifecycle
     
-    convenience init(output: CCViewModelCellOutputProtocol? = nil, nibId: String, nibType: CCViewModelCellViewSourceType, expandedHeight: CCViewModelHeight) {
-        self.init(output: output, nibId: nibId, nibType: nibType, height: expandedHeight)
+    convenience init(nibId: String, nibType: CCViewModelCellViewSourceType, expandedHeight: CCViewModelHeight) {
+        self.init(nibId: nibId, nibType: nibType, height: expandedHeight)
         
         self.expandedHeight = expandedHeight
     }

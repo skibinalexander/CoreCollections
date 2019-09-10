@@ -25,13 +25,12 @@ protocol CCCollectionViewViewModelExpandedSectionOutputProtocol: class {
     func stateDidChange(state: CCCollectionViewViewModelExpandedState, viewModel: CCViewModelProtocol)
 }
 
-protocol CCCollectionViewViewModelExpandedSectionProtocol {
+protocol CCCollectionViewViewModelExpandedSectionProtocol: CCViewModelSectionProtocol {
     func changeState()
 }
 
 class CCCollectionViewViewModelExpandedSection<V: CCCollectionViewSection, M: CCCollectionViewModelSection>: CCCollectionViewViewModelSection<V, M>, CCCollectionViewViewModelExpandedSectionProtocol {
     
-    private weak var output:    CCCollectionViewViewModelExpandedSectionOutputProtocol?
     internal var state:         CCCollectionViewViewModelExpandedState?
     
     convenience init(output: CCCollectionViewViewModelExpandedSectionOutputProtocol? = nil,
@@ -42,7 +41,6 @@ class CCCollectionViewViewModelExpandedSection<V: CCCollectionViewSection, M: CC
         
         self.init(nibId: nibId, nibType: nibType, height: height)
         
-        self.output = output
         self.state = state
     }
     
@@ -60,7 +58,7 @@ class CCCollectionViewViewModelExpandedSection<V: CCCollectionViewSection, M: CC
             self.state = .expanded
         }
         
-        self.output?.stateDidChange(state: (self.state ?? .collapsed), viewModel: self)
+//        self.output?.modelDidChange(state: (self.state ?? .collapsed), viewModel: self)
     }
     
 }

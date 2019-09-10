@@ -10,40 +10,32 @@ import Foundation
 
 // MARK: - BasicCollectionViewPresenter
 
-protocol CCCollectionViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCCollectionViewDelegateOutputProtocol, CCViewModelCellOutputProtocol {
+protocol CCCollectionViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCCollectionViewDelegateOutputProtocol, CCViewModelOutputProtocol {
     
 }
 
 class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresenterProtocol {
-    
     // MARK: - Properties
-    
     var manager: CCManagerProtocol?
     
     // MARK: - Lifecycle
-    
     init() {
         self.manager = CCCollectionViewManager<T>(delegateOutput: self, cellOutput: self)
         self.initializationModels()
     }
     
+    // MARK: - 
     func initializationModels() { }
     
     // MARK: - CCCollectionViewDelegateOutputProtocol
-    
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
     
     // MARK: - CCTemplateViewModelsHandlerProtocol
-    
-    func modelDidChage(viewModel: CCViewModelProtocol?) { }
+    func modelDidChange(viewModel: CCViewModelProtocol) { }
     
     // MARK: -
-    
-    func refreshList(in containerView: CCContainerViewInputProtocol) {
-        
-    }
-    
+    func refreshList(in containerView: CCContainerViewInputProtocol) { }
 }
 
 class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationType>: CCCollectionViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {

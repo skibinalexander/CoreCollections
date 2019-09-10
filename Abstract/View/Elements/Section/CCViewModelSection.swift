@@ -8,5 +8,10 @@
 
 import Foundation
 
-class CCViewModelSection<V: CCViewSectionProtocol, M: CCModelSectionProtocol>: CCViewModel<V, M> {
+protocol CCViewModelSectionProtocol: CCViewModelProtocol {
+    
+}
+
+class CCViewModelSection<V: CCViewSectionProtocol, M: CCModelSectionProtocol>: CCViewModel<V, M>, CCViewModelSectionProtocol {
+    
 }
