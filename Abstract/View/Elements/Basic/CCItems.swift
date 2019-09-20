@@ -19,15 +19,14 @@ class CCItems<U, T>: NSObject {
     
     var header:     U?
     var footer:     U?
-    var cells:      [T?]
+    var cells:      [T?] = []
     
     // MARK: - Lifecycle
     
-    init(id: String? = nil, header: U? = nil, footer: U? = nil, cells: [T?] = []) {
+    init(id: String? = nil, header: U? = nil, footer: U? = nil) {
         self.id = id
         self.header = header
         self.footer = footer
-        self.cells = cells
     }
     
 }

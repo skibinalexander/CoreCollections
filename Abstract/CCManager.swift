@@ -120,10 +120,7 @@ extension CCManager {
     func remove(item at: Int) { self.models.remove(at: at) }
 
     func item(index: Int) -> CCItemModel? {
-        if models.count > index {
-            return models[index]
-        }
-        
+        if models.count > index { return models[index] }
         return nil
     }
     
