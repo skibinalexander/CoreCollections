@@ -13,8 +13,4 @@ protocol CCViewModelCellProtocol: CCViewModelProtocol {
 }
 
 class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M>, CCViewModelCellProtocol {
-    override func updateView() {
-        super.updateView()
-        view?.output = self.output
-    }
 }
