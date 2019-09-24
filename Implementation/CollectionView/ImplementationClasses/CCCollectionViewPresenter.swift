@@ -29,6 +29,7 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresen
     
     // MARK: - CCCollectionViewDelegateOutputProtocol
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
+    func didDeselect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
     
     // MARK: - CCTemplateViewModelsHandlerProtocol

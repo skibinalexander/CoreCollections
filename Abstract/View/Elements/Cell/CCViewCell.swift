@@ -16,3 +16,8 @@ protocol CCViewHighlightedCellProtocol {
     func highlight()
     func unhiglight()
 }
+
+protocol CCViewSelectedCellProtocol {
+    func selected()
+    func deselected()
+}

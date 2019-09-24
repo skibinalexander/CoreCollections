@@ -29,7 +29,17 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
+            if let cell = cell.getView as? CCViewSelectedCellProtocol { cell.selected() }
             self.output?.didSelect(indexPath: indexPath, model: cell.getModel)
+        } else {
+            assertionFailure("CCTableViewDelegate: undefined cell")
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
+            if let cell = cell.getView as? CCViewSelectedCellProtocol { cell.deselected() }
+            self.output?.didDeselect(indexPath: indexPath, model: cell.getModel)
         } else {
             assertionFailure("CCTableViewDelegate: undefined cell")
         }

@@ -10,11 +10,13 @@ import Foundation
 
 protocol CCDelegateOutputProtocol: class {
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?)
+    func didDeselect(indexPath: IndexPath, model: CCModelProtocol?)
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?)
 }
 
 extension CCDelegateOutputProtocol {
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?) {}
+    func didDeselect(indexPath: IndexPath, model: CCModelProtocol?) {}
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) {}
 }
 

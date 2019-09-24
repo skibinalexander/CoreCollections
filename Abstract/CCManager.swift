@@ -70,8 +70,8 @@ protocol CCManagerCellsProtocol: class {
     func refreshCells()
     func reloadCells()
     func change(item: CCItemModel, type: CCManagerChangeType, cells: [CCModelCellProtocol])
-    func change(itemId: String?, type: CCManagerChangeType, cells: [CCModelCellProtocol], error: (()->())?)
-    func change(itemType: CCItemModel.Identifiers, type: CCManagerChangeType, cells: [CCModelCellProtocol], error: (()->())?)
+    func change(itemId: String?, type: CCManagerChangeType, cells: [CCModelCellProtocol], error: (() -> Void)?)
+    func change(itemType: CCItemModel.Identifiers, type: CCManagerChangeType, cells: [CCModelCellProtocol], error: (() -> Void)?)
 }
 
 protocol CCManagerProtocol: CCManagerCellsProtocol {
