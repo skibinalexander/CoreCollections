@@ -14,7 +14,7 @@ protocol CCTableViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCT
     
 }
 
-class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtocol {
+class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtocol, CCContainerViewRefreshOutputProtocol {
     
     // MARK: - Properties
     
