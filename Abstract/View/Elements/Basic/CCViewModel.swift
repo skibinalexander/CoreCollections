@@ -11,8 +11,9 @@ import Foundation
 // MARK: - Constants
 
 public enum CCViewModelCellViewSourceType {
-    case reusebleId
-    case nibName
+    case reusebleId(String)     // - Reuse from registered identifier
+    case reusebleName(String)   // - Reuse recreate from nib
+    case singleName(String)     // - Use once from nib
 }
 public enum CCViewModelHeight {
     case automatic
@@ -43,7 +44,6 @@ protocol CCViewModelProtocol: class {
     var output: CCViewModelOutputProtocol? { get set }
     var item: CCItemViewModel? { get set }
     
-    var nibId: String { get set }
     var nibType: CCViewModelCellViewSourceType { get set }
     var height: CCViewModelHeight { get set }
     
@@ -91,7 +91,6 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     weak var output: CCViewModelOutputProtocol?
     weak var item: CCItemViewModel?
     
-    var nibId: String
     var nibType: CCViewModelCellViewSourceType
     var height: CCViewModelHeight
     
@@ -107,8 +106,7 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     
     // MARK: - Initialization
     
-    init(nibId: String, nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
-        self.nibId = nibId
+    init(nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
         self.nibType = nibType
         self.height = height
     }

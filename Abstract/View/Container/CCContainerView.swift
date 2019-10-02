@@ -10,11 +10,11 @@ import Foundation
 
 protocol CCContainerViewPrefetchOutputProtocol: class {
     func batchList(in containerView: CCContainerViewInputProtocol)
-    func numberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int
+    func batchNumberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int
 }
 
 extension CCContainerViewPrefetchOutputProtocol {
-    func batchList(in containerView: CCContainerViewInputProtocol) { }
+    func batchList(in containerView: CCContainerViewInputProtocol) {}
 }
 
 protocol CCContainerViewRefreshOutputProtocol: class {

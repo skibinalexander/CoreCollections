@@ -45,8 +45,7 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: C
     var pagination: CCPaginationModel = CCPaginationModel<PaginationType>()
     
     // MARK: - CCTableViewControllerPrefetchOutputProtocol
-    
-    func numberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
+    func batchNumberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
         return manager?.countCells(in: section) ?? 0
     }
     

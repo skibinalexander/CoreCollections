@@ -50,7 +50,8 @@ class CCCollectionViewDelegate: CCDelegate, CCCollectionViewDelegateProtocol, UI
             //  Иницализация view для секции
             
             switch viewModel.nibType {
-            default: viewModel.inject(view: self.nibSection(nameNib: viewModel.nibId) as? CCCollectionViewSection)
+            case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name) as? CCViewProtocol)
+            default: assertionFailure()
             }
             
             viewModel.updateView()
@@ -67,7 +68,8 @@ class CCCollectionViewDelegate: CCDelegate, CCCollectionViewDelegateProtocol, UI
             //  Иницализация view для секции
             
             switch viewModel.nibType {
-            default: viewModel.inject(view: self.nibSection(nameNib: viewModel.nibId) as? CCCollectionViewSection)
+            case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name) as? CCViewProtocol)
+            default: assertionFailure()
             }
             
             viewModel.updateView()
@@ -115,10 +117,8 @@ class CCCollectionViewDelegate: CCDelegate, CCCollectionViewDelegateProtocol, UI
 }
 
 extension CCCollectionViewDelegate {
-    
     func nibSection<T: UIView>(nameNib: String) -> T? {
         return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as? T
     }
-    
 }
 

@@ -43,17 +43,11 @@ class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationTyp
     var pagination: CCPaginationModel = CCPaginationModel<PaginationType>()
     
     // MARK: - CCCollectionViewControllerPrefetchOutputProtocol
-    
-    func batchList(in containerView: CCContainerViewInputProtocol) {
-        
-    }
-    
-    func numberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
+    func batchNumberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
         return manager?.countCells(in: section) ?? 0
     }
     
     // MARK: -
-    
     override func refreshList(in containerView: CCContainerViewInputProtocol) {
         super.refreshList(in: containerView)
         pagination = CCPaginationModel()

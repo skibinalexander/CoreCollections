@@ -52,7 +52,8 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
             //  Иницализация view для секции
             
             switch viewModel.nibType {
-            default: viewModel.inject(view: self.nibSection(nameNib: viewModel.nibId) as? CCTableViewSection)
+            case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name) as? CCTableViewSection)
+            default: break
             }
             
             viewModel.updateView()
@@ -69,7 +70,8 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
             //  Иницализация view для секции
             
             switch viewModel.nibType {
-            default: viewModel.inject(view: self.nibSection(nameNib: viewModel.nibId) as? CCTableViewSection)
+            case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name) as? CCTableViewSection)
+            default: break
             }
             
             viewModel.updateView()
@@ -113,9 +115,7 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
 }
 
 extension CCTableViewDelegate {
-    
     func nibSection<T: UIView>(nameNib: String) -> T? {
         return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as? T
     }
-    
 }
