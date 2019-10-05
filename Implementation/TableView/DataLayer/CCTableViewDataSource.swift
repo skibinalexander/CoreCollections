@@ -30,7 +30,6 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
         }
         
         //  Иницализация view для ячейки
-        
         switch cell.nibType {
         case .reusebleId(let id): cell.inject(view: tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as? CCTableViewCell)
         case .reusebleName(let name): cell.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell)
