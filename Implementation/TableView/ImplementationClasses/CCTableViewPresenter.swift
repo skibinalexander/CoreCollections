@@ -28,7 +28,6 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     }
     
     func initializationItems() { }
-    func initializationModels() { }
     
     // MARK: - CCTableViewDelegateOutputProtocol
     
