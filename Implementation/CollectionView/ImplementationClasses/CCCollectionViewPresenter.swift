@@ -36,7 +36,7 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresen
     func modelDidChange(viewModel: CCViewModelProtocol) { }
     
     // MARK: -
-    func refreshList(in containerView: CCContainerViewInputProtocol) { }
+    func refreshList(in containerView: CCContainerViewInputProtocol?) { }
 }
 
 class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationType>: CCCollectionViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
@@ -55,7 +55,7 @@ class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationTyp
     
     // MARK: -
     
-    override func refreshList(in containerView: CCContainerViewInputProtocol) {
+    override func refreshList(in containerView: CCContainerViewInputProtocol? ) {
         super.refreshList(in: containerView)
         pagination = CCPaginationModel()
     }

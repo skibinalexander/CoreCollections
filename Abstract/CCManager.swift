@@ -75,6 +75,8 @@ protocol CCManagerCellsProtocol: class {
 }
 
 protocol CCManagerProtocol: CCManagerCellsProtocol {
+    var containerView: CCContainerViewInputProtocol? { get set }
+    
     var isRefreshing: Bool { get set }
     
     func set(containerView: CCContainerViewInputProtocol?)
@@ -100,7 +102,6 @@ protocol CCManagerProtocol: CCManagerCellsProtocol {
 }
 
 class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModelsDataSource {
-    
     var containerView: CCContainerViewInputProtocol?
     var template: CCTemplateViewModels?
     var dataSource: CCDataSourceProtocol?

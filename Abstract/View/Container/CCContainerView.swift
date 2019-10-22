@@ -18,7 +18,7 @@ extension CCContainerViewPrefetchOutputProtocol {
 }
 
 protocol CCContainerViewRefreshOutputProtocol: class {
-    func refreshList(in containerView: CCContainerViewInputProtocol)
+    func refreshList(in containerView: CCContainerViewInputProtocol?)
 }
 
 protocol CCContainerViewInputProtocol: class {
