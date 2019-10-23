@@ -112,11 +112,9 @@ extension CCTableViewController: CCContainerViewInputProtocol {
 // MARK: -
 
 extension CCTableViewController {
-    
     @objc func refreshAction() {
-        refreshOutput?.refreshList(in: self)
+        refreshOutput?.refreshList()
     }
-    
 }
 
 // MARK: - UITableViewDataSourcePrefetching

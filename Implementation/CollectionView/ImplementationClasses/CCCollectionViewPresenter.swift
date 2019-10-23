@@ -15,6 +15,7 @@ protocol CCCollectionViewPresenterProtocol: CCContainerViewRefreshOutputProtocol
 }
 
 class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresenterProtocol {
+    
     // MARK: - Properties
     var manager: CCManagerProtocol?
     
@@ -33,9 +34,6 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresen
     
     // MARK: - CCTemplateViewModelsHandlerProtocol
     func modelDidChange(viewModel: CCViewModelProtocol) { }
-    
-    // MARK: -
-    func refreshList(in containerView: CCContainerViewInputProtocol) { }
 }
 
 class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationType>: CCCollectionViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
@@ -44,12 +42,12 @@ class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationTyp
     
     // MARK: - CCCollectionViewControllerPrefetchOutputProtocol
     func batchNumberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
-        return manager?.countCells(in: section) ?? 0
+        return manager?.getContext()?.item(index: section)?.cells.count ?? 0
     }
     
     // MARK: -
-    override func refreshList(in containerView: CCContainerViewInputProtocol) {
-        super.refreshList(in: containerView)
+    func refreshList(in containerView: CCContainerViewInputProtocol?) {
+        super.refreshList()
         pagination = CCPaginationModel()
     }
     

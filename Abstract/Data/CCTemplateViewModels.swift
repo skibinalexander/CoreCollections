@@ -9,7 +9,7 @@
 import Foundation
 
 protocol CCTemplateViewModelsDataSource: class {
-    var models: [CCItemModel] { get set }
+    var items: [CCItemModel] { get set }
 }
 
 protocol CCTemplateViewModelsHandlerProtocol: class {
@@ -50,7 +50,7 @@ extension CCTemplateViewModels {
     final func reloadViewModels() {
         self.viewModels = []
         
-        dataSource?.models.enumerated().forEach { (index, element) in
+        dataSource?.items.enumerated().forEach { (index, element) in
             let header = self.createHeader?(element.header, index)?.inject(with: element.header, output: self.output)
             let footer = self.createFooter?(element.footer, index)?.inject(with: element.footer, output: self.output)
             self.viewModels.append(CCItemViewModel(header: header, footer: footer))
@@ -58,8 +58,8 @@ extension CCTemplateViewModels {
         
         self.viewModels.forEach({$0.cells = []})
         
-        dataSource?.models.enumerated().forEach({ (section, element) in
-            element.cells.enumerated().forEach({ (row, model) in
+        dataSource?.items.enumerated().forEach({ (section, element) in
+            element.cells.enumerated().forEach({ (_, model) in
                 if let viewModel = self.createCell?(model) {
                     viewModel.output = output
                     viewModel.inject(model: model)
@@ -80,7 +80,7 @@ extension CCTemplateViewModels {
     }
     
     final func reloadViewModels(in index: Int) {
-        guard dataSource?.models.count ?? -1 > index, viewModels.count > index else {
+        guard dataSource?.items.count ?? -1 > index, viewModels.count > index else {
             assertionFailure()
             return
         }
@@ -88,7 +88,7 @@ extension CCTemplateViewModels {
         viewModels[index].cells = []
         var paths = [IndexPath]()
         
-        dataSource?.models[index].cells.enumerated().forEach { (position, model) in
+        dataSource?.items[index].cells.enumerated().forEach { (position, model) in
             if let viewModel = self.createCell?(model) {
                 viewModel.output = output
                 viewModel.inject(model: model)
@@ -109,7 +109,7 @@ extension CCTemplateViewModels {
     final func insertCells() {
         var paths = [IndexPath]()
         
-        dataSource?.models.enumerated().forEach({ (position, item) in
+        dataSource?.items.enumerated().forEach({ (position, item) in
             item.cells.enumerated().forEach({ (index, model) in
                 if model?.viewModel == nil {
                     if let viewModel = self.createCell?(model) {
