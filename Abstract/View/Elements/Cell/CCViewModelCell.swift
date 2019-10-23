@@ -8,9 +8,6 @@
 
 import Foundation
 
-protocol CCViewModelCellProtocol: CCViewModelProtocol {
-    
-}
+protocol CCViewModelCellProtocol: CCViewModelProtocol { }
 
-class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M>, CCViewModelCellProtocol {
-}
+class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M>, CCViewModelCellProtocol { }

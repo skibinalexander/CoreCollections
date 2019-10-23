@@ -27,8 +27,9 @@ class CCCollectionViewDataSource: CCDataSource, UICollectionViewDataSource {
         //  Иницализация view для ячейки
         
         switch cell.nibType {
-        case .reusebleId: cell.inject(view: collectionView.dequeueReusableCell(withReuseIdentifier: cell.nibId, for: indexPath) as? CCCollectionViewCell)
-        case .nibName: cell.inject(view: self.nibCell(nameNib: cell.nibId) as? CCCollectionViewCell)
+        case .reusebleId(let id): cell.inject(view: collectionView.dequeueReusableCell(withReuseIdentifier: id, for: indexPath) as? CCCollectionViewCell)
+        case .reusebleName(let name): cell.inject(view: self.nibCell(nameNib: name) as? CCCollectionViewCell)
+        default: assertionFailure()
         }
         
         guard let viewCell = cell.getView as? UICollectionViewCell & CCViewCellProtocol else {

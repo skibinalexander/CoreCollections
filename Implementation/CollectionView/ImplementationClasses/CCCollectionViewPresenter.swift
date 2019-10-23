@@ -29,14 +29,13 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresen
     
     // MARK: - CCCollectionViewDelegateOutputProtocol
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
-    func didDeselect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
     
     // MARK: - CCTemplateViewModelsHandlerProtocol
     func modelDidChange(viewModel: CCViewModelProtocol) { }
     
     // MARK: -
-    func refreshList(in containerView: CCContainerViewInputProtocol?) { }
+    func refreshList(in containerView: CCContainerViewInputProtocol) { }
 }
 
 class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationType>: CCCollectionViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
@@ -44,18 +43,12 @@ class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationTyp
     var pagination: CCPaginationModel = CCPaginationModel<PaginationType>()
     
     // MARK: - CCCollectionViewControllerPrefetchOutputProtocol
-    
-    func batchList(in containerView: CCContainerViewInputProtocol) {
-        
-    }
-    
-    func numberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
+    func batchNumberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
         return manager?.countCells(in: section) ?? 0
     }
     
     // MARK: -
-    
-    override func refreshList(in containerView: CCContainerViewInputProtocol? ) {
+    override func refreshList(in containerView: CCContainerViewInputProtocol) {
         super.refreshList(in: containerView)
         pagination = CCPaginationModel()
     }

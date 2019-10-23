@@ -30,10 +30,10 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
         }
         
         //  Иницализация view для ячейки
-        
         switch cell.nibType {
-        case .reusebleId: cell.inject(view: tableView.dequeueReusableCell(withIdentifier: cell.nibId, for: indexPath) as? CCTableViewCell)
-        case .nibName: cell.inject(view: self.nibCell(nameNib: cell.nibId) as? CCTableViewCell)
+        case .reusebleId(let id): cell.inject(view: tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as? CCTableViewCell)
+        case .reusebleName(let name): cell.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell)
+        case .singleName(let name): if cell.getView == nil { cell.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell) }
         }
         
         guard let viewCell = cell.getView as? UITableViewCell & CCViewCellProtocol else {
@@ -48,9 +48,7 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
 }
 
 extension CCTableViewDataSource {
-    
     func nibCell<T: UIView>(nameNib: String) -> T? {
         return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as? T
     }
-    
 }
