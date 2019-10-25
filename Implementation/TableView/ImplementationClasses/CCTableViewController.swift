@@ -50,8 +50,8 @@ extension CCTableViewController: CCContainerViewInputProtocol {
             return
         }
         
-        self.tableView.dataSource           = dataSource
-        self.tableView.delegate             = delegate
+        self.tableView?.dataSource = dataSource
+        self.tableView?.delegate = delegate
     }
     
     func configurePagination(output: CCContainerViewPrefetchOutputProtocol?) {
@@ -70,7 +70,7 @@ extension CCTableViewController: CCContainerViewInputProtocol {
     }
     
     func reloadContainer() {
-        self.tableView.reloadData()
+        self.tableView?.reloadData()
     }
     
     func insertCellsIntoTableView(at paths: [IndexPath]) {

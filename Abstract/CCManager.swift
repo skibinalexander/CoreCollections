@@ -79,6 +79,7 @@ protocol CCManagerCellsContextProtocol: class {
     func item(index: Int) -> CCItemModel?
     func item(type: CCItemModel.Identifiers) -> CCItemModel?
     
+    func refresh()
     func change(item: CCItemModel?, type: CCManagerChangeType, cells: [CCModelCellProtocol], _ error: (() -> Void)?)
     func change(itemId: String?, type: CCManagerChangeType, cells: [CCModelCellProtocol], error: (() -> Void)?)
     func change(itemType: CCItemModel.Identifiers, type: CCManagerChangeType, cells: [CCModelCellProtocol], error: (() -> Void)?)
@@ -202,6 +203,12 @@ class CCContextCell: CCManagerCellsContextProtocol {
     }
     
     // MARK: - CCManagerCellsContextProtocol
+    func refresh() {
+        containerView?.beginRefresing()
+        items?.forEach({$0.cells = []})
+        template?.reloadViewModels()
+    }
+    
     func change(item: CCItemModel? = nil, type: CCManagerChangeType, cells: [CCModelCellProtocol] = [], _ error: (() -> Void)? = nil) {
         switch type {
         case .replace(let reloadType):

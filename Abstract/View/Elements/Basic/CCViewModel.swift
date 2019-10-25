@@ -35,7 +35,13 @@ protocol CCModelProtocol: class {
 // MARK: -
 
 protocol CCViewModelOutputProtocol: class {
+    func viewDidChange(viewModel: CCViewModelProtocol)
     func modelDidChange(viewModel: CCViewModelProtocol)
+}
+
+extension CCViewModelOutputProtocol {
+    func viewDidChange(viewModel: CCViewModelProtocol) { }
+    func modelDidChange(viewModel: CCViewModelProtocol) { }
 }
 
 protocol CCViewModelProtocol: class {
@@ -140,6 +146,10 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
         self.item = item
     }
     
-    func updateView() { }
-    func updateModel() { }
+    func updateView() {
+        output?.viewDidChange(viewModel: self)
+    }
+    func updateModel() {
+        output?.modelDidChange(viewModel: self)
+    }
 }

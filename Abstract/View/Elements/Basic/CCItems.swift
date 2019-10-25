@@ -48,8 +48,8 @@ class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
         return CCItemModel(id: Identifiers.single.rawValue)
     }
     
-    static func top() -> CCItemModel {
-        return CCItemModel(id: Identifiers.top.rawValue)
+    static func top(header: CCModelSectionProtocol? = nil) -> CCItemModel {
+        return CCItemModel(id: Identifiers.top.rawValue, header: header)
     }
     
     static func middle() -> CCItemModel {
@@ -60,8 +60,8 @@ class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
         return CCItemModel(id: Identifiers.bottom.rawValue)
     }
     
-    static func list() -> CCItemModel {
-        return CCItemModel(id: Identifiers.list.rawValue)
+    static func list(header: CCModelSectionProtocol? = nil) -> CCItemModel {
+        return CCItemModel(id: Identifiers.list.rawValue, header: header)
     }
     
     static func content(header: CCModelSectionProtocol? = nil) -> CCItemModel {

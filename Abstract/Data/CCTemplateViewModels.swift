@@ -46,7 +46,6 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
 // MARK: - Sections
 
 extension CCTemplateViewModels {
-    
     final func reloadViewModels() {
         self.viewModels = []
         

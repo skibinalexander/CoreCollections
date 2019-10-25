@@ -34,10 +34,15 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
     func modelDidChange(viewModel: CCViewModelProtocol) { }
+    func viewDidChange(viewModel: CCViewModelProtocol) { }
     
     // MARK: -
     func refreshList() {
         manager.getContext().change(item: nil, type: .refresh, cells: [], nil)
+    }
+    
+    func reloadList() {
+        manager.getContext().change(item: nil, type: .reload, cells: [], nil)
     }
 }
 

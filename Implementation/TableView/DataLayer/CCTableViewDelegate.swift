@@ -58,11 +58,12 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let viewModel = self.template?.viewModels[section].header {
-            
+
             //  Иницализация view для секции
             
             switch viewModel.nibType {
             case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name))
+            case .singleName(let name): if viewModel.getView == nil { viewModel.inject(view: self.nibSection(nameNib: name)) }
             default: break
             }
             
@@ -103,6 +104,15 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let item = self.template?.viewModels[section].footer
+        switch item?.height {
+        case .automatic?: return UITableView.automaticDimension
+        case .value(let height)?: return CGFloat(height)
+        default: return .zero
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        let item = self.template?.viewModels[section].header
         switch item?.height {
         case .automatic?: return UITableView.automaticDimension
         case .value(let height)?: return CGFloat(height)
