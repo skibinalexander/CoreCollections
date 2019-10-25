@@ -18,7 +18,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     // MARK: - Properties
     
-    var manager: CCManagerProtocol?
+    var manager: CCManagerProtocol!
     
     // MARK: - Lifecycle
     
@@ -37,7 +37,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     // MARK: -
     func refreshList() {
-        manager?.getContext()?.change(item: nil, type: .refresh, cells: [], nil)
+        manager.getContext().change(item: nil, type: .refresh, cells: [], nil)
     }
 }
 
@@ -47,7 +47,7 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: C
     
     // MARK: - CCTableViewControllerPrefetchOutputProtocol
     func batchNumberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
-        return manager?.getContext()?.item(index: section)?.cells.count ?? 0
+        return manager.getContext().item(index: section)?.cells.count ?? 0
     }
     
     func batchList(in containerView: CCContainerViewInputProtocol) {

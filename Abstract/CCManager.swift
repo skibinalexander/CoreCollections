@@ -66,6 +66,8 @@ enum CCManagerChangeType {
     case replace(reload: CCManagerReloadType)   //  Replace and is Bool reload All
     case append(reload: CCManagerReloadType)    //  Append and is Bool reload All
     case insert(index: Int)                     //  Insert and reload empty view items
+    case top
+    case bottom
 }
 
 protocol CCManagerCellsContextProtocol: class {
@@ -88,7 +90,7 @@ protocol CCManagerProtocol: class {
     func set(containerView: CCContainerViewInputProtocol?)
     
     // MARK: - Getters
-    func getContext() -> CCManagerCellsContextProtocol?
+    func getContext() -> CCManagerCellsContextProtocol
     func getDataSource() -> CCDataSourceProtocol?
     func getDelegate() -> CCDelegateProtocol?
     
@@ -102,7 +104,7 @@ protocol CCManagerProtocol: class {
 }
 
 class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModelsDataSource {
-    var context: CCManagerCellsContextProtocol?
+    var context: CCManagerCellsContextProtocol!
     var containerView: CCContainerViewInputProtocol?
     var template: CCTemplateViewModels?
     var dataSource: CCDataSourceProtocol?
@@ -121,7 +123,7 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
         self.context?.set(items: items)
     }
     
-    func getContext() -> CCManagerCellsContextProtocol? { return context }
+    func getContext() -> CCManagerCellsContextProtocol { return context }
     func getDataSource() -> CCDataSourceProtocol? { return dataSource }
     func getDelegate() -> CCDelegateProtocol? { return dataHandler }
 }
@@ -223,6 +225,16 @@ class CCContextCell: CCManagerCellsContextProtocol {
             template?.reloadViewModels()
         case .reload:
             template?.reloadViewModels()
+        case .top:
+            if let item = item {
+                item.cells.insert(contentsOf: cells, at: 0)
+                template?.insertCells()
+            } else { error?() }
+        case .bottom:
+            if let item = item {
+                item.cells.insert(contentsOf: cells, at: item.cells.count)
+                template?.insertCells()
+            } else { error?() }
         }
     }
     
