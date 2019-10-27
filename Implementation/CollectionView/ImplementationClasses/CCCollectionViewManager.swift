@@ -13,11 +13,11 @@ class CCCollectionViewManager<T: CCTemplateViewModels>: CCManager<T> {
     init(delegateOutput: CCCollectionViewDelegateOutputProtocol, cellOutput: CCViewModelOutputProtocol?) {
         super.init()
         
-        self.template   = T(handler: self, output: cellOutput, dataSource: self)
+        self.template = T(output: cellOutput, dataSource: self)
         
         if let template = self.template {
             self.dataSource = CCCollectionViewDataSource(template: template)
-            self.dataHandler = CCCollectionViewDelegate(output: delegateOutput, template: template)
+            self.delegate = CCCollectionViewDelegate(output: delegateOutput, template: template)
         } else {
             assertionFailure()
         }

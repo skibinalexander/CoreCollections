@@ -12,13 +12,6 @@ protocol CCTemplateViewModelsDataSource: class {
     var items: [CCItemModel] { get set }
 }
 
-protocol CCTemplateViewModelsHandlerProtocol: class {
-    func templateViewModelsDidReloadAll()
-    func templateViewModelsDidReload(in sections: [Int])
-    func templateViewModelsDidInserted(paths: [IndexPath])
-    func templateViewModelsDidRemoved(paths: [IndexPath])
-}
-
 protocol CCTemplateViewModelsProtocol: class {
     var viewModels: [CCItemViewModel] { get set }
 }
@@ -26,7 +19,6 @@ protocol CCTemplateViewModelsProtocol: class {
 class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     
     private weak var dataSource:    CCTemplateViewModelsDataSource?
-    private weak var handler:       CCTemplateViewModelsHandlerProtocol?
     internal weak var output:       CCViewModelOutputProtocol?
     
     var viewModels: [CCItemViewModel] = []
@@ -35,8 +27,7 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelSectionProtocol?)?
     internal var createCell: ((_ model: CCModelCellProtocol?) -> CCViewModelCellProtocol)?
     
-    required init(handler: CCTemplateViewModelsHandlerProtocol, output: CCViewModelOutputProtocol?, dataSource: CCTemplateViewModelsDataSource) {
-        self.handler = handler
+    required init(output: CCViewModelOutputProtocol?, dataSource: CCTemplateViewModelsDataSource) {
         self.output = output
         self.dataSource = dataSource
     }
@@ -46,7 +37,7 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
 // MARK: - Sections
 
 extension CCTemplateViewModels {
-    final func reloadViewModels() {
+    final func reloadViewModelsHeaders() {
         self.viewModels = []
         
         dataSource?.items.enumerated().forEach { (index, element) in
@@ -55,6 +46,13 @@ extension CCTemplateViewModels {
             self.viewModels.append(CCItemViewModel(header: header, footer: footer))
         }
         
+        self.viewModels.forEach { (item) in
+            item.header?.reference(item: item)
+            item.footer?.reference(item: item)
+        }
+    }
+    
+    final func reloadViewModelsCells() {
         self.viewModels.forEach({$0.cells = []})
         
         dataSource?.items.enumerated().forEach({ (section, element) in
@@ -70,12 +68,8 @@ extension CCTemplateViewModels {
         })
         
         self.viewModels.forEach { (item) in
-            item.header?.reference(item: item)
-            item.footer?.reference(item: item)
             item.cells.forEach({ $0?.reference(item: item)})
         }
-        
-        handler?.templateViewModelsDidReloadAll()
     }
     
     final func reloadViewModels(in index: Int) {
@@ -97,7 +91,7 @@ extension CCTemplateViewModels {
             }
         }
         
-        handler?.templateViewModelsDidReload(in: [index])
+//        handler?.templateViewModelsDidReload(in: [index])
     }
 }
 
@@ -122,7 +116,7 @@ extension CCTemplateViewModels {
             })
         })
         
-        handler?.templateViewModelsDidInserted(paths: paths)
+//        handler?.templateViewModelsDidInserted(paths: paths)
     }
     
     final func removeCells() {

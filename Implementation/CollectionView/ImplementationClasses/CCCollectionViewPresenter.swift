@@ -42,7 +42,7 @@ class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationTyp
     
     // MARK: - CCCollectionViewControllerPrefetchOutputProtocol
     func batchNumberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
-        return manager.getContext().item(index: section)?.cells.count ?? 0
+        manager.item(index: section).cells.count
     }
     
     // MARK: -

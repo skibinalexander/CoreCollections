@@ -38,11 +38,9 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     // MARK: -
     func refreshList() {
-        manager.getContext().change(item: nil, type: .refresh, cells: [], nil)
-    }
-    
-    func reloadList() {
-        manager.getContext().change(item: nil, type: .reload, cells: [], nil)
+        manager.getData().refreshCellsInAllItems { (view) in
+            view.reloadContainer()
+        }
     }
 }
 
@@ -52,7 +50,7 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: C
     
     // MARK: - CCTableViewControllerPrefetchOutputProtocol
     func batchNumberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
-        return manager.getContext().item(index: section)?.cells.count ?? 0
+        manager.item(index: section).cells.count
     }
     
     func batchList(in containerView: CCContainerViewInputProtocol) {
