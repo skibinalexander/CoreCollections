@@ -16,9 +16,9 @@ class CCManagerBuilder {
         return CCManagerBuilder()
     }
     
-    private weak var manager: CCManagerProtocol?
+    private var manager: CCManagerProtocol?
+    private var containerData: CCManagerContextProtocol?
     private weak var containerView: CCContainerViewInputProtocol?
-    private weak var containerData: CCManagerContextProtocol?
     private weak var prefetchOutput: CCContainerViewPrefetchOutputProtocol?
     private weak var refreshOutput: CCContainerViewRefreshOutputProtocol?
     
@@ -91,19 +91,15 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
     internal var items: [CCItemModel] = []
     
     // MARK: - Setters
-    func set(containerData: CCManagerContextProtocol) {
-        self.containerData = containerData
-        self.containerData.set(containerView: containerView)
-        self.containerData.set(template: template)
-        self.containerData.set(items: items)
-    }
-
     func set(containerView: CCContainerViewInputProtocol?) {
         self.containerView = containerView
     }
     
     func set(containerData: CCManagerContextProtocol?) {
         self.containerData = containerData
+        self.containerData.set(containerView: containerView)
+        self.containerData.set(template: template)
+        self.containerData.set(items: items)
     }
     
     // MARK: - Getters

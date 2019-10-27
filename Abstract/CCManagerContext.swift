@@ -26,8 +26,9 @@ class CCManagerContext: CCManagerContextProtocol {
     
     // MARK: - Properties
     private weak var template: CCTemplateViewModels!
-    private weak var containerView: CCContainerViewInputProtocol!
     private var items: [CCItemModel] = []
+    
+    private weak var containerView: CCContainerViewInputProtocol!
     
     // MARK: - Setters
     func set(template: CCTemplateViewModels?) {
