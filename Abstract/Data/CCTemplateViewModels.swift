@@ -37,7 +37,7 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
 // MARK: - Sections
 
 extension CCTemplateViewModels {
-    final func reloadViewModelsHeaders() {
+    final func reloadViewModelsItems() {
         self.viewModels = []
         
         dataSource?.items.enumerated().forEach { (index, element) in

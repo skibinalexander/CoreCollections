@@ -11,14 +11,13 @@ import UIKit
 class CCTableViewController: UIViewController {
     
     // MARK: - IBOutlets
-    
-    @IBOutlet weak var tableView:   UITableView!
-    private let refreshControl:     UIRefreshControl = UIRefreshControl()
+    @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Properties
+    let refreshControl: UIRefreshControl = UIRefreshControl()
     
-    private weak var refreshOutput:     CCContainerViewRefreshOutputProtocol?
-    private weak var prefetchOutput:    CCContainerViewPrefetchOutputProtocol?
+    private weak var refreshOutput: CCContainerViewRefreshOutputProtocol?
+    private weak var prefetchOutput: CCContainerViewPrefetchOutputProtocol?
     
 }
 
