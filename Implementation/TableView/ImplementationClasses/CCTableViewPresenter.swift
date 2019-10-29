@@ -15,13 +15,10 @@ protocol CCTableViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCT
 }
 
 class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtocol, CCContainerViewRefreshOutputProtocol {
-    
     // MARK: - Properties
-    
     var manager: CCManagerProtocol!
     
     // MARK: - Lifecycle
-    
     init() {
         self.manager = CCTableViewManager<T>(delegateOutput: self, cellOutput: self)
         self.initializationItems()
