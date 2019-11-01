@@ -98,8 +98,7 @@ extension CCTemplateViewModels {
 // MARK: - Cells
 
 extension CCTemplateViewModels {
-    
-    final func insertCells() {
+    final func insertCells() -> [IndexPath] {
         var paths = [IndexPath]()
         
         dataSource?.items.enumerated().forEach({ (position, item) in
@@ -116,11 +115,10 @@ extension CCTemplateViewModels {
             })
         })
         
-//        handler?.templateViewModelsDidInserted(paths: paths)
+        return paths
     }
     
     final func removeCells() {
         
     }
-    
 }

@@ -72,7 +72,7 @@ extension CCTableViewController: CCContainerViewInputProtocol {
         self.tableView?.reloadData()
     }
     
-    func insertCellsIntoTableView(at paths: [IndexPath]) {
+    func insertCells(at paths: [IndexPath]) {
         self.tableView.insertRows(at: paths, with: .automatic)
     }
     
@@ -121,8 +121,10 @@ extension CCTableViewController {
 extension CCTableViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let output = self.prefetchOutput else { return }
-        if indexPaths.contains(where: { $0.row >= output.batchNumberRows(in: $0.section, in: self) }) {
-            self.prefetchOutput?.batchList(in: self)
+        if indexPaths.contains(where: { $0.row >= (output.batchNumberRows(in: $0.section) - 2) }) {
+            self.prefetchOutput?.batchList()
+        } else {
+            print("indexPaths: \(indexPaths) with count: \(output.batchNumberRows(in: 0))")
         }
     }
     

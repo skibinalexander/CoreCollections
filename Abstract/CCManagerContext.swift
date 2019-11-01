@@ -15,7 +15,7 @@ protocol CCManagerContextProtocol: class {
     
     func refreshCellsInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
     func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void)
-    func insertCells(in item: CCItemModel?, by position: Int, viewCallback:(CCContainerViewInputProtocol, IndexPath) -> Void)
+    func insertCells(in item: CCItemModel?, cells:[CCModelCellProtocol], by position: Int, viewCallback:(CCContainerViewInputProtocol, [IndexPath]) -> Void)
 }
 
 class CCManagerContext: CCManagerContextProtocol {
@@ -68,7 +68,8 @@ class CCManagerContext: CCManagerContextProtocol {
         viewCallback(containerView)
     }
     
-    func insertCells(in item: CCItemModel?, by position: Int, viewCallback: (CCContainerViewInputProtocol, IndexPath) -> Void) {
-        
+    func insertCells(in item: CCItemModel?, cells: [CCModelCellProtocol], by position: Int, viewCallback: (CCContainerViewInputProtocol, [IndexPath]) -> Void) {
+        item?.cells.insert(contentsOf: cells, at: position)
+        viewCallback(containerView, template.insertCells())
     }
 }

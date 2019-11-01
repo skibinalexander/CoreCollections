@@ -37,17 +37,20 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresen
 }
 
 class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels, PaginationType>: CCCollectionViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
-    
+    // MARK: - Properties
     var pagination: CCPaginationModel = CCPaginationModel<PaginationType>()
     
     // MARK: - CCCollectionViewControllerPrefetchOutputProtocol
-    func batchNumberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
+    func batchNumberRows(in section: Int) -> Int {
         manager.item(index: section).cells.count
     }
     
+    func batchList() {
+        
+    }
+    
     // MARK: -
-    func refreshList(in containerView: CCContainerViewInputProtocol?) {
-        super.refreshList()
+    func refreshList() {
         pagination = CCPaginationModel()
     }
     

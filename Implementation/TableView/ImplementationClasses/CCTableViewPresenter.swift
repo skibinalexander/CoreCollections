@@ -29,6 +29,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     // MARK: - CCTableViewDelegateOutputProtocol
     
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
+    func didDeselect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
     func modelDidChange(viewModel: CCViewModelProtocol) { }
     func viewDidChange(viewModel: CCViewModelProtocol) { }
@@ -36,29 +37,32 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     // MARK: -
     func refreshList() {
         manager.getData().refreshCellsInAllItems { (view) in
+            view.endRefresing()
             view.reloadContainer()
         }
     }
 }
 
-class CCPaginationTableViewPresenter<T: CCTemplateViewModels, PaginationType>: CCTableViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
-    
-    var pagination: CCPaginationModel = CCPaginationModel<PaginationType>()
-    
+class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
     // MARK: - CCTableViewControllerPrefetchOutputProtocol
-    func batchNumberRows(in section: Int, in containerView: CCContainerViewInputProtocol) -> Int {
+    func batchNumberRows(in section: Int) -> Int {
         manager.item(index: section).cells.count
     }
     
-    func batchList(in containerView: CCContainerViewInputProtocol) {
+    func batchList() {
         
     }
     
-    // MARK: -
-    
-    override func refreshList() {
-        super.refreshList()
-        pagination = CCPaginationModel()
+    func paginationInsertCells(in item: CCItemModel, cells: [CCModelCellProtocol]) {
+        if item.cells.count > 0 {
+            manager.getData().insertCells(in: item, cells: cells, by: item.cells.count - 1) { (view, paths) in
+                view.insertCells(at: paths)
+            }
+        } else {
+            manager.getData().appendCells(in: item, cells: cells) { (view) in
+                view.endRefresing()
+                view.reloadContainer()
+            }
+        }
     }
-
 }
