@@ -52,6 +52,18 @@ extension CCTemplateViewModels {
         }
     }
     
+    final func reloadViewModelSections() {
+        dataSource?.items.enumerated().forEach { (index, element) in
+            self.viewModels[index].header = self.createHeader?(element.header, index)?.inject(with: element.header, output: self.output)
+            self.viewModels[index].footer = self.createFooter?(element.footer, index)?.inject(with: element.footer, output: self.output)
+        }
+        
+        self.viewModels.forEach { (item) in
+            item.header?.reference(item: item)
+            item.footer?.reference(item: item)
+        }
+    }
+    
     final func reloadViewModelsCells() {
         self.viewModels.forEach({$0.cells = []})
         

@@ -13,9 +13,12 @@ protocol CCManagerContextProtocol: class {
     func set(containerView: CCContainerViewInputProtocol?)
     func set(items: [CCItemModel]?)
     
+    func refreshAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
     func refreshCellsInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
+    func refreshSectionAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
     func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void)
     func insertCells(in item: CCItemModel?, cells:[CCModelCellProtocol], by position: Int, viewCallback:(CCContainerViewInputProtocol, [IndexPath]) -> Void)
+    func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol, viewCallback: (CCContainerViewInputProtocol) -> Void)
 }
 
 class CCManagerContext: CCManagerContextProtocol {
@@ -45,15 +48,20 @@ class CCManagerContext: CCManagerContextProtocol {
     
     // MARK: -
     func refreshAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void) {
+        items.forEach({$0.header = nil})
+        items.forEach({$0.footer = nil})
+        template.reloadViewModelSections()
         
+        items.forEach({$0.cells = []})
+        template.reloadViewModelsCells()
+        
+        viewCallback(self.containerView)
     }
     
-    func refreshHeadersInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void) {
-        
-    }
-    
-    func refreshFooterInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void) {
-        
+    func refreshSectionAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void) {
+        items.forEach({$0.cells = []})
+        template.reloadViewModelSections()
+        viewCallback(self.containerView)
     }
     
     func refreshCellsInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void) {
@@ -71,5 +79,11 @@ class CCManagerContext: CCManagerContextProtocol {
     func insertCells(in item: CCItemModel?, cells: [CCModelCellProtocol], by position: Int, viewCallback: (CCContainerViewInputProtocol, [IndexPath]) -> Void) {
         item?.cells.insert(contentsOf: cells, at: position)
         viewCallback(containerView, template.insertCells())
+    }
+    
+    func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol, viewCallback: (CCContainerViewInputProtocol) -> Void) {
+        item.header = header
+        template.reloadViewModelSections()
+        viewCallback(containerView)
     }
 }

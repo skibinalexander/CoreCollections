@@ -124,16 +124,19 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
 extension CCManager {
     func append(item: CCItemModel) {
         items.append(item)
+        containerData?.set(items: items)
         template?.reloadViewModelsItems()
     }
     
     func remove(item at: Int) {
         items.remove(at: at)
+        containerData?.set(items: items)
         template?.reloadViewModelsItems()
     }
     
     func removeAll() {
         items.removeAll()
+        containerData?.set(items: items)
         template?.reloadViewModelsItems()
     }
     
