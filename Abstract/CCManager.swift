@@ -73,6 +73,7 @@ protocol CCManagerProtocol: class {
     
     func append(item: CCItemModel)
     func remove(item at: Int)
+    func removeAll()
     
     func item(id: String?) -> CCItemModel
     func item(index: Int) -> CCItemModel
@@ -125,8 +126,14 @@ extension CCManager {
         items.append(item)
         template?.reloadViewModelsItems()
     }
+    
     func remove(item at: Int) {
         items.remove(at: at)
+        template?.reloadViewModelsItems()
+    }
+    
+    func removeAll() {
+        items.removeAll()
         template?.reloadViewModelsItems()
     }
     
