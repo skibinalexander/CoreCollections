@@ -23,7 +23,7 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     
     var viewModels: [CCItemViewModel] = []
     
-    internal var createHeader: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelSectionProtocol?)?
+    internal var createHeader: ((_ model: CCModelSectionProtocol?) -> CCViewModelSectionProtocol?)?
     internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelSectionProtocol?)?
     internal var createCell: ((_ model: CCModelCellProtocol?) -> CCViewModelCellProtocol)?
     
@@ -39,22 +39,14 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
 extension CCTemplateViewModels {
     final func reloadViewModelsItems() {
         self.viewModels = []
-        
-        dataSource?.items.enumerated().forEach { (index, element) in
-            let header = self.createHeader?(element.header, index)?.inject(with: element.header, output: self.output)
-            let footer = self.createFooter?(element.footer, index)?.inject(with: element.footer, output: self.output)
-            self.viewModels.append(CCItemViewModel(header: header, footer: footer))
-        }
-        
-        self.viewModels.forEach { (item) in
-            item.header?.reference(item: item)
-            item.footer?.reference(item: item)
-        }
+        self.viewModels = dataSource?.items.map { _ in CCItemViewModel() } ?? []
+        reloadViewModelSections()
+        reloadViewModelsCells()
     }
     
     final func reloadViewModelSections() {
         dataSource?.items.enumerated().forEach { (index, element) in
-            self.viewModels[index].header = self.createHeader?(element.header, index)?.inject(with: element.header, output: self.output)
+            self.viewModels[index].header = self.createHeader?(element.header)?.inject(with: element.header, output: self.output)
             self.viewModels[index].footer = self.createFooter?(element.footer, index)?.inject(with: element.footer, output: self.output)
         }
         

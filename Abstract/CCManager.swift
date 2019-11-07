@@ -72,12 +72,15 @@ protocol CCManagerProtocol: class {
     func getData() -> CCManagerContextProtocol
     
     func append(item: CCItemModel)
+    func replace(item: CCItemModel)
     func remove(item at: Int)
     func removeAll()
     
     func item(id: String?) -> CCItemModel
     func item(index: Int) -> CCItemModel
     func item(type: CCItemModel.Identifiers) -> CCItemModel
+    
+    func countItems() -> Int
 }
 
 class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModelsDataSource {
@@ -128,6 +131,18 @@ extension CCManager {
         template?.reloadViewModelsItems()
     }
     
+    func replace(item: CCItemModel) {
+        if let replaceIndex = items.firstIndex(where: { return item.id == $0.id }) {
+            items[replaceIndex].cells = item.cells
+            containerData?.set(items: items)
+            template?.reloadViewModelsCells()
+        } else {
+            items.append(item)
+            containerData?.set(items: items)
+            template?.reloadViewModelsItems()
+        }
+    }
+    
     func remove(item at: Int) {
         items.remove(at: at)
         containerData?.set(items: items)
@@ -150,5 +165,9 @@ extension CCManager {
     
     func item(type: CCItemModel.Identifiers) -> CCItemModel {
         return item(id: type.rawValue)
+    }
+    
+    func countItems() -> Int {
+        return items.count
     }
 }

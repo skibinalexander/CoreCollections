@@ -16,6 +16,7 @@ protocol CCManagerContextProtocol: class {
     func refreshAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
     func refreshCellsInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
     func refreshSectionAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
+    func replaceCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void)
     func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void)
     func insertCells(in item: CCItemModel?, cells:[CCModelCellProtocol], by position: Int, viewCallback:(CCContainerViewInputProtocol, [IndexPath]) -> Void)
     func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol, viewCallback: (CCContainerViewInputProtocol) -> Void)
@@ -68,6 +69,12 @@ class CCManagerContext: CCManagerContextProtocol {
         items.forEach({$0.cells = []})
         template.reloadViewModelsCells()
         viewCallback(self.containerView)
+    }
+    
+    func replaceCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void) {
+        item.cells = cells
+        template.reloadViewModelsCells()
+        viewCallback(containerView)
     }
     
     func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void) {
