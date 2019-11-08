@@ -13,6 +13,7 @@ protocol CCManagerContextProtocol: class {
     func set(containerView: CCContainerViewInputProtocol?)
     func set(items: [CCItemModel]?)
     
+    func reloadAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
     func refreshAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
     func refreshCellsInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
     func refreshSectionAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
@@ -48,6 +49,12 @@ class CCManagerContext: CCManagerContextProtocol {
     }
     
     // MARK: -
+    func reloadAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void) {
+        template.reloadViewModelSections()
+        template.reloadViewModelsCells()
+        viewCallback(self.containerView)
+    }
+    
     func refreshAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void) {
         items.forEach({$0.header = nil})
         items.forEach({$0.footer = nil})

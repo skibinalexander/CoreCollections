@@ -23,10 +23,11 @@ class CCItems<U, T>: NSObject {
     
     // MARK: - Lifecycle
     
-    init(id: String? = nil, header: U? = nil, footer: U? = nil) {
+    init(id: String? = nil, header: U? = nil, footer: U? = nil, cells: [T?] = []) {
         self.id = id
         self.header = header
         self.footer = footer
+        self.cells = cells
     }
     
 }
