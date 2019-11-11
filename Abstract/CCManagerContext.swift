@@ -85,7 +85,7 @@ class CCManagerContext: CCManagerContextProtocol {
     }
     
     func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void) {
-        item.cells = cells
+        item.cells.append(contentsOf: cells)
         template.reloadViewModelsCells()
         viewCallback(containerView)
     }
