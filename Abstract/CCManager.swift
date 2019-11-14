@@ -80,6 +80,8 @@ protocol CCManagerProtocol: class {
     func item(index: Int) -> CCItemModel
     func item(type: CCItemModel.Identifiers) -> CCItemModel
     
+    func modelCell<M: CCModelCellProtocol>(id: String?, in item: CCItemModel) -> M?
+    
     func countItems() -> Int
 }
 
@@ -165,6 +167,10 @@ extension CCManager {
     
     func item(type: CCItemModel.Identifiers) -> CCItemModel {
         return item(id: type.rawValue)
+    }
+    
+    func modelCell<M>(id: String?, in item: CCItemModel) -> M? where M : CCModelCellProtocol {
+        return item.cells.first(where: { $0?.id == id }) as? M
     }
     
     func countItems() -> Int {
