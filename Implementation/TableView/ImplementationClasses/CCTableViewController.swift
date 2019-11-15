@@ -76,7 +76,7 @@ extension CCTableViewController: CCContainerViewInputProtocol {
         self.tableView.insertRows(at: paths, with: .automatic)
     }
     
-    func removeCellsIntoTableView(at paths: [IndexPath]) {
+    func removeCells(at paths: [IndexPath]) {
         self.tableView.deleteRows(at: paths, with: .automatic)
     }
     

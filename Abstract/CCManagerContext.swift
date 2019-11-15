@@ -20,6 +20,7 @@ protocol CCManagerContextProtocol: class {
     func replaceCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void)
     func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void)
     func insertCells(in item: CCItemModel?, cells:[CCModelCellProtocol], by position: Int, viewCallback:(CCContainerViewInputProtocol, [IndexPath]) -> Void)
+    func removeCell(in item: CCItemModel?, by position: Int, viewCallback:(CCContainerViewInputProtocol, [IndexPath]) -> Void)
     func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol, viewCallback: (CCContainerViewInputProtocol) -> Void)
 }
 
@@ -91,8 +92,16 @@ class CCManagerContext: CCManagerContextProtocol {
     }
     
     func insertCells(in item: CCItemModel?, cells: [CCModelCellProtocol], by position: Int, viewCallback: (CCContainerViewInputProtocol, [IndexPath]) -> Void) {
-        item?.cells.insert(contentsOf: cells, at: position)
-        viewCallback(containerView, template.insertCells())
+        if position >= 0 {
+            item?.cells.insert(contentsOf: cells, at: position)
+            viewCallback(containerView, template.insertCells())
+        }
+    }
+    
+    func removeCell(in item: CCItemModel?, by position: Int, viewCallback: (CCContainerViewInputProtocol, [IndexPath]) -> Void) {
+        item?.cells.remove(at: position)
+        viewCallback(containerView, template.removeCells())
+        
     }
     
     func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol, viewCallback: (CCContainerViewInputProtocol) -> Void) {

@@ -122,7 +122,18 @@ extension CCTemplateViewModels {
         return paths
     }
     
-    final func removeCells() {
+    final func removeCells() -> [IndexPath] {
+        var paths = [IndexPath]()
         
+        viewModels.enumerated().forEach { (position, item) in
+            item.cells.enumerated().forEach { (index, viewModel) in
+                if viewModel?.getModel == nil {
+                    paths.append(IndexPath(row: index, section: position))
+                    self.viewModels[position].cells.remove(at: index)
+                }
+            }
+        }
+        
+        return paths
     }
 }
