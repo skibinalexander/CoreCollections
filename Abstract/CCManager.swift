@@ -71,6 +71,9 @@ protocol CCManagerProtocol: class {
     func getView() -> CCContainerViewInputProtocol
     func getData() -> CCManagerContextProtocol
     
+    func beginRefresh()
+    func endRefresh()
+    
     func append(item: CCItemModel)
     func replace(item: CCItemModel)
     func remove(item at: Int)
@@ -81,6 +84,8 @@ protocol CCManagerProtocol: class {
     func item(type: CCItemModel.Identifiers) -> CCItemModel
     
     func modelCell<M: CCModelCellProtocol>(id: String?, in item: CCItemModel) -> M?
+    func modelHeader<M: CCModelSectionProtocol>(in item: CCItemModel) -> M?
+    func modelFooter<M: CCModelSectionProtocol>(in item: CCItemModel) -> M?
     
     func countItems() -> Int
 }
@@ -95,6 +100,8 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
     var containerData: CCManagerContextProtocol!
     
     internal var items: [CCItemModel] = []
+    
+    private var isRefreshing: Bool = false
     
     // MARK: - Setters
     func set(containerView: CCContainerViewInputProtocol?) {
@@ -127,6 +134,19 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
 }
 
 extension CCManager {
+    func beginRefresh() {
+        getView().beginRefresing()
+        isRefreshing = true
+    }
+    
+    func endRefresh() {
+        getData().refreshAllInAllItems { (view) in
+            view.endRefresing()
+            view.reloadContainer()
+            isRefreshing = false
+        }
+    }
+    
     func append(item: CCItemModel) {
         items.append(item)
         containerData?.set(items: items)
@@ -171,6 +191,14 @@ extension CCManager {
     
     func modelCell<M>(id: String?, in item: CCItemModel) -> M? where M : CCModelCellProtocol {
         return item.cells.first(where: { $0?.id == id }) as? M
+    }
+    
+    func modelHeader<M>(in item: CCItemModel) -> M? where M : CCModelSectionProtocol {
+        return item.header as? M
+    }
+    
+    func modelFooter<M>(in item: CCItemModel) -> M? where M : CCModelSectionProtocol {
+        return nil
     }
     
     func countItems() -> Int {

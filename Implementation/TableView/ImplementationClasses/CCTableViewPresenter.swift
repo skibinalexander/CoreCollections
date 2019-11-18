@@ -36,16 +36,11 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     // MARK: -
     func refreshList() {
-        manager.getData().refreshAllInAllItems { (view) in
-            view.beginRefresing()
-        }
+        manager.beginRefresh()
     }
     
     final func endRefreshList() {
-        manager.getData().reloadAllInAllItems { (view) in
-            view.endRefresing()
-            view.reloadContainer()
-        }
+        manager.endRefresh()
     }
 }
 

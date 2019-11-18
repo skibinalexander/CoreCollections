@@ -124,7 +124,9 @@ extension CCTableViewController: UITableViewDataSourcePrefetching {
         if indexPaths.contains(where: { $0.row >= (output.batchNumberRows(in: $0.section) - 2) }) {
             self.prefetchOutput?.batchList()
         } else {
+            #if DEBUG
             print("indexPaths: \(indexPaths) with count: \(output.batchNumberRows(in: 0))")
+            #endif
         }
     }
     

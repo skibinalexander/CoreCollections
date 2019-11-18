@@ -13,6 +13,7 @@ protocol CCTemplateViewModelsDataSource: class {
 }
 
 protocol CCTemplateViewModelsProtocol: class {
+    var isRefreshing: Bool { get set }
     var viewModels: [CCItemViewModel] { get set }
 }
 
@@ -22,6 +23,7 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     internal weak var output:       CCViewModelOutputProtocol?
     
     var viewModels: [CCItemViewModel] = []
+    var isRefreshing: Bool = false
     
     internal var createHeader: ((_ model: CCModelSectionProtocol?) -> CCViewModelSectionProtocol?)?
     internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelSectionProtocol?)?
