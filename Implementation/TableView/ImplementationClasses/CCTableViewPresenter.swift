@@ -26,6 +26,10 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     func initializationItems() { }
     
+    func refreshList() {
+        manager.beginRefresh()
+    }
+    
     // MARK: - CCTableViewDelegateOutputProtocol
     
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
@@ -35,13 +39,6 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     func viewDidChange(viewModel: CCViewModelProtocol) { }
     
     // MARK: -
-    func refreshList() {
-        manager.beginRefresh()
-    }
-    
-    final func endRefreshList() {
-        manager.endRefresh()
-    }
 }
 
 class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
@@ -60,8 +57,8 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
                 view.insertCells(at: paths)
             }
         } else {
-            manager.getData().appendCells(in: item, cells: cells) { (view) in
-                view.endRefresing()
+            manager.getData().replaceCells(in: item, cells: cells) { (view) in
+                manager.endRefresh()
                 view.reloadContainer()
             }
         }

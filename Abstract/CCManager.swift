@@ -135,16 +135,16 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
 
 extension CCManager {
     func beginRefresh() {
-        getView().beginRefresing()
-        isRefreshing = true
+        getData().refreshAllInAllItems { (view) in
+            view.beginRefresing()
+            isRefreshing = true
+            view.reloadContainer()
+        }
     }
     
     func endRefresh() {
-        getData().refreshAllInAllItems { (view) in
-            view.endRefresing()
-            view.reloadContainer()
-            isRefreshing = false
-        }
+        getView().endRefresing()
+        isRefreshing = false
     }
     
     func append(item: CCItemModel) {
