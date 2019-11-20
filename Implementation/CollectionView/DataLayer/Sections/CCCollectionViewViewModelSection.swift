@@ -33,14 +33,11 @@ class CCCollectionViewViewModelExpandedSection<V: CCCollectionViewSection, M: CC
     
     internal var state:         CCCollectionViewViewModelExpandedState?
     
-    convenience init(output: CCCollectionViewViewModelExpandedSectionOutputProtocol? = nil,
-                     state: CCCollectionViewViewModelExpandedState = .expanded,
-                     nibId: String,
+    convenience init(state: CCCollectionViewViewModelExpandedState = .expanded,
                      nibType: CCViewModelCellViewSourceType,
                      height: CCViewModelHeight) {
         
-        self.init(nibId: nibId, nibType: nibType, height: height)
-        
+        self.init(nibType: nibType, height: height)
         self.state = state
     }
     
