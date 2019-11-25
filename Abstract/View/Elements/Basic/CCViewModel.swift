@@ -36,12 +36,12 @@ protocol CCModelProtocol: class {
 
 protocol CCViewModelOutputProtocol: class {
     func viewDidChange(viewModel: CCViewModelProtocol)
-    func modelDidChange(viewModel: CCViewModelProtocol)
+    func modelDidChange(viewModel: CCViewModelProtocol, parameters: [String:Any]?)
 }
 
 extension CCViewModelOutputProtocol {
     func viewDidChange(viewModel: CCViewModelProtocol) { }
-    func modelDidChange(viewModel: CCViewModelProtocol) { }
+    func modelDidChange(viewModel: CCViewModelProtocol, parameters: [String:Any]?) { }
 }
 
 protocol CCViewModelProtocol: class {
@@ -49,6 +49,8 @@ protocol CCViewModelProtocol: class {
     
     var output: CCViewModelOutputProtocol? { get set }
     var item: CCItemViewModel? { get set }
+    
+    var indexInItem: Int? { get set }
     
     var nibType: CCViewModelCellViewSourceType { get set }
     var height: CCViewModelHeight { get set }
@@ -68,13 +70,15 @@ protocol CCViewModelProtocol: class {
     
     // MARK: - Update
     func updateView()
-    func updateModel()
+    func updateModel(parameters: [String:Any]?)
 }
 
 extension CCViewModelProtocol {
     static var typeOf: String {
         return String(describing: type(of: self))
     }
+    
+    func updateModel(parameters: [String:Any]? = nil) { }
 }
 
 protocol CCViewModelInitialization: class {
@@ -96,6 +100,8 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     // MARK: - Public
     weak var output: CCViewModelOutputProtocol?
     weak var item: CCItemViewModel?
+    
+    var indexInItem: Int?
     
     var nibType: CCViewModelCellViewSourceType
     var height: CCViewModelHeight
@@ -149,7 +155,8 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     func updateView() {
         output?.viewDidChange(viewModel: self)
     }
-    func updateModel() {
-        output?.modelDidChange(viewModel: self)
+    
+    func updateModel(parameters: [String:Any]? = nil) {
+        output?.modelDidChange(viewModel: self, parameters: parameters)
     }
 }

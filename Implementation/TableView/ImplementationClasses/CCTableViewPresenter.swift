@@ -35,8 +35,8 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func didDeselect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
-    func modelDidChange(viewModel: CCViewModelProtocol) { }
     func viewDidChange(viewModel: CCViewModelProtocol) { }
+    func modelDidChange(viewModel: CCViewModelProtocol, parameters: [String : Any]?) { }
     
     // MARK: -
 }

@@ -62,8 +62,9 @@ extension CCTemplateViewModels {
         self.viewModels.forEach({$0.cells = []})
         
         dataSource?.items.enumerated().forEach({ (section, element) in
-            element.cells.enumerated().forEach({ (_, model) in
+            element.cells.enumerated().forEach({ (index, model) in
                 if let viewModel = self.createCell?(model) {
+                    viewModel.indexInItem = index
                     viewModel.output = output
                     viewModel.inject(model: model)
                     self.viewModels[section].cells.append(viewModel)
@@ -78,27 +79,25 @@ extension CCTemplateViewModels {
         }
     }
     
-    final func reloadViewModels(in index: Int) {
-        guard dataSource?.items.count ?? -1 > index, viewModels.count > index else {
-            assertionFailure()
-            return
-        }
-        
-        viewModels[index].cells = []
-        var paths = [IndexPath]()
-        
-        dataSource?.items[index].cells.enumerated().forEach { (position, model) in
-            if let viewModel = self.createCell?(model) {
-                viewModel.output = output
-                viewModel.inject(model: model)
-                viewModel.reference(item: self.viewModels[index])
-                self.viewModels[index].cells.append(viewModel)
-                paths.append(IndexPath(row: position, section: index))
-            }
-        }
-        
-//        handler?.templateViewModelsDidReload(in: [index])
-    }
+//    final func reloadViewModels(in index: Int) {
+//        guard dataSource?.items.count ?? -1 > index, viewModels.count > index else {
+//            assertionFailure()
+//            return
+//        }
+//
+//        viewModels[index].cells = []
+//        var paths = [IndexPath]()
+//
+//        dataSource?.items[index].cells.enumerated().forEach { (position, model) in
+//            if let viewModel = self.createCell?(model) {
+//                viewModel.output = output
+//                viewModel.inject(model: model)
+//                viewModel.reference(item: self.viewModels[index])
+//                self.viewModels[index].cells.append(viewModel)
+//                paths.append(IndexPath(row: position, section: index))
+//            }
+//        }
+//    }
 }
 
 // MARK: - Cells
@@ -121,6 +120,12 @@ extension CCTemplateViewModels {
             })
         })
         
+        viewModels.enumerated().forEach { (position, item) in
+            item.cells.enumerated().forEach { (index, viewModel) in
+                viewModel?.indexInItem = index
+            }
+        }
+        
         return paths
     }
     
@@ -133,6 +138,12 @@ extension CCTemplateViewModels {
                     paths.append(IndexPath(row: index, section: position))
                     self.viewModels[position].cells.remove(at: index)
                 }
+            }
+        }
+        
+        viewModels.enumerated().forEach { (position, item) in
+            item.cells.enumerated().forEach { (index, viewModel) in
+                viewModel?.indexInItem = index
             }
         }
         
