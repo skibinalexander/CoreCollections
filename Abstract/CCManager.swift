@@ -84,6 +84,7 @@ protocol CCManagerProtocol: class {
     func item(type: CCItemModel.Identifiers) -> CCItemModel
     
     func modelCell<M: CCModelCellProtocol>(id: String?, in item: CCItemModel) -> M?
+    func modelCell<M: CCModelCellProtocol>(index: Int, in item: CCItemModel) -> M?
     func modelHeader<M: CCModelSectionProtocol>(in item: CCItemModel) -> M?
     func modelFooter<M: CCModelSectionProtocol>(in item: CCItemModel) -> M?
     
@@ -191,6 +192,11 @@ extension CCManager {
     
     func modelCell<M>(id: String?, in item: CCItemModel) -> M? where M : CCModelCellProtocol {
         return item.cells.first(where: { $0?.id == id }) as? M
+    }
+    
+    func modelCell<M>(index: Int, in item: CCItemModel) -> M? where M : CCModelCellProtocol {
+        guard item.cells.count > index else { return nil }
+        return item.cells[index] as? M
     }
     
     func modelHeader<M>(in item: CCItemModel) -> M? where M : CCModelSectionProtocol {
