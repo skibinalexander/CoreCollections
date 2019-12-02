@@ -78,8 +78,6 @@ extension CCViewModelProtocol {
     static var typeOf: String {
         return String(describing: type(of: self))
     }
-    
-    func updateModel(parameters: [String:Any]? = nil) { }
 }
 
 protocol CCViewModelInitialization: class {
