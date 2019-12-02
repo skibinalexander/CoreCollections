@@ -50,7 +50,8 @@ protocol CCViewModelProtocol: class {
     var output: CCViewModelOutputProtocol? { get set }
     var item: CCItemViewModel? { get set }
     
-    var indexInItem: Int? { get set }
+    var indexSection: Int? { get set }
+    var indexRow: Int? { get set }
     
     var nibType: CCViewModelCellViewSourceType { get set }
     var height: CCViewModelHeight { get set }
@@ -101,7 +102,8 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     weak var output: CCViewModelOutputProtocol?
     weak var item: CCItemViewModel?
     
-    var indexInItem: Int?
+    var indexRow: Int?
+    var indexSection: Int?
     
     var nibType: CCViewModelCellViewSourceType
     var height: CCViewModelHeight
@@ -126,13 +128,11 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     // MARK: - Injections
     
     func inject(view: CCViewProtocol?) {
-//        assert(((model as? V) == nil), "func inject(view: CCViewProtocol?) no inject!")
         self.view = view as? V
         self.view?.viewModel = self
     }
     
     func inject(model: CCModelProtocol?) {
-//        assert(((model as? M) == nil), "func inject(model: CCModelProtocol?) no inject!")
         self.model = model as? M
         self.model?.viewModel = self
     }

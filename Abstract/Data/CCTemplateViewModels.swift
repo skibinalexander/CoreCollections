@@ -64,7 +64,8 @@ extension CCTemplateViewModels {
         dataSource?.items.enumerated().forEach({ (section, element) in
             element.cells.enumerated().forEach({ (index, model) in
                 if let viewModel = self.createCell?(model) {
-                    viewModel.indexInItem = index
+                    viewModel.indexSection = section
+                    viewModel.indexRow = index
                     viewModel.output = output
                     viewModel.inject(model: model)
                     self.viewModels[section].cells.append(viewModel)
@@ -78,26 +79,6 @@ extension CCTemplateViewModels {
             item.cells.forEach({ $0?.reference(item: item)})
         }
     }
-    
-//    final func reloadViewModels(in index: Int) {
-//        guard dataSource?.items.count ?? -1 > index, viewModels.count > index else {
-//            assertionFailure()
-//            return
-//        }
-//
-//        viewModels[index].cells = []
-//        var paths = [IndexPath]()
-//
-//        dataSource?.items[index].cells.enumerated().forEach { (position, model) in
-//            if let viewModel = self.createCell?(model) {
-//                viewModel.output = output
-//                viewModel.inject(model: model)
-//                viewModel.reference(item: self.viewModels[index])
-//                self.viewModels[index].cells.append(viewModel)
-//                paths.append(IndexPath(row: position, section: index))
-//            }
-//        }
-//    }
 }
 
 // MARK: - Cells
@@ -122,7 +103,8 @@ extension CCTemplateViewModels {
         
         viewModels.enumerated().forEach { (position, item) in
             item.cells.enumerated().forEach { (index, viewModel) in
-                viewModel?.indexInItem = index
+                viewModel?.indexSection = position
+                viewModel?.indexRow = index
             }
         }
         
@@ -141,9 +123,11 @@ extension CCTemplateViewModels {
             }
         }
         
+        // - Пересчитываем новые индексы
         viewModels.enumerated().forEach { (position, item) in
             item.cells.enumerated().forEach { (index, viewModel) in
-                viewModel?.indexInItem = index
+                viewModel?.indexSection = position
+                viewModel?.indexRow = index
             }
         }
         

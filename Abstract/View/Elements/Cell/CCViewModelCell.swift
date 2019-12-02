@@ -8,6 +8,10 @@
 
 import Foundation
 
-protocol CCViewModelCellProtocol: CCViewModelProtocol { }
+protocol CCViewModelCellProtocol: CCViewModelProtocol {
+    var indexPath: IndexPath? { get set }
+}
 
-class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M>, CCViewModelCellProtocol { }
+class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M>, CCViewModelCellProtocol {
+    var indexPath: IndexPath?
+}

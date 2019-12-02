@@ -25,9 +25,9 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] else {
-            fatalError("Cell is Nil")
-        }
+        guard let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewModelCellProtocol else { fatalError() }
+        
+        cell.indexPath = indexPath
         
         //  Иницализация view для ячейки
         switch cell.nibType {
