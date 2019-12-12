@@ -21,9 +21,7 @@ protocol CCTableViewViewModelExpandedCellProtocol {
 }
 
 class CCTableViewViewModelExpandedCell<V: CCTableViewCellProtocol, M: CCTableViewModelCell>: CCTableViewViewModelCell<V, M>, CCTableViewViewModelExpandedCellProtocol {
-    
     // MARK: - Private
-    
     private var expandedHeight: CCViewModelHeight?
     
     // MARK: - Lifecycle

@@ -89,7 +89,6 @@ protocol CCViewModelInitialization: class {
 }
 
 class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, CCViewModelInitialization {
-    
     typealias View = V
     typealias Model = M
     
