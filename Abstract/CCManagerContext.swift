@@ -13,6 +13,8 @@ protocol CCManagerContextProtocol: class {
     func set(containerView: CCContainerViewInputProtocol?)
     func set(items: [CCItemModel]?)
     
+    func isEmpty() -> Bool
+    
     func reloadAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
     func refreshAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
     func refreshCellsInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
@@ -47,6 +49,10 @@ class CCManagerContext: CCManagerContextProtocol {
     
     func set(items: [CCItemModel]?) {
         self.items = items ?? []
+    }
+    
+    func isEmpty() -> Bool {
+        return self.items.isEmpty
     }
     
     // MARK: -

@@ -89,6 +89,7 @@ protocol CCManagerProtocol: class {
     func modelFooter<M: CCModelSectionProtocol>(in item: CCItemModel) -> M?
     
     func countItems() -> Int
+    func isEmpty(in item: CCItemModel) -> Bool
 }
 
 class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModelsDataSource {
@@ -209,5 +210,9 @@ extension CCManager {
     
     func countItems() -> Int {
         return items.count
+    }
+    
+    func isEmpty(in item: CCItemModel) -> Bool {
+        return item.cells.isEmpty
     }
 }
