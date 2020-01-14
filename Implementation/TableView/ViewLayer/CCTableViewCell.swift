@@ -15,3 +15,7 @@ protocol CCTableViewCellProtocol: UITableViewCell, CCViewCellProtocol {
 class CCTableViewCell: UITableViewCell, CCTableViewCellProtocol {
     weak var viewModel: CCViewModelProtocol?
 }
+
+extension CCTableViewCell {
+    static var reusableName: String { return String(describing: self) }
+}
