@@ -97,12 +97,14 @@ class CCCollectionViewDelegate: CCDelegate, CCCollectionViewDelegateProtocol, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        guard indexPath.section < template?.viewModels.count ?? 0 else { return }
         if let item = template?.viewModels[indexPath.section].cells[indexPath.row]?.getView as? CCViewHighlightedCellProtocol {
             item.highlight()
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        guard indexPath.section < template?.viewModels.count ?? 0 else { return }
         if let item = template?.viewModels[indexPath.section].cells[indexPath.row]?.getView as? CCViewHighlightedCellProtocol {
             item.unhiglight()
         }
