@@ -11,28 +11,19 @@ import UIKit
 // MARK: - Base ViewSection
 
 class CCTableViewSection: UIView, CCViewSectionProtocol {
-    
     // MARK: - CCViewCellProtocol
-    
     weak var viewModel: CCViewModelProtocol?
 }
 
 // MARK: - Expanded ViewSection
-
 class CCTableViewExpandedSection: CCTableViewSection {
-    
     // MARK: - IBOutlets
-    
     @IBOutlet weak var stateButton: UIButton!
     
     // MARK: - Actions
-    
     @IBAction func actionStateButtonDidTouch(_ sender: UIButton) {
-        
         if let viewModel = self.viewModel as? CCTableViewViewModelExpandedSectionProtocol {
             viewModel.changeState()
         }
-        
     }
-    
 }

@@ -23,6 +23,7 @@ protocol CCManagerContextProtocol: class {
     func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void)
     func insertCells(in item: CCItemModel?, cells:[CCModelCellProtocol], by position: Int, viewCallback:(CCContainerViewInputProtocol, [IndexPath]) -> Void)
     func removeCell(in item: CCItemModel?, by position: Int, viewCallback:(CCContainerViewInputProtocol, [IndexPath]) -> Void)
+    func removeAllCell(in item: CCItemModel?, viewCallback: (CCContainerViewInputProtocol, [IndexPath]) -> Void)
     func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol, viewCallback: (CCContainerViewInputProtocol) -> Void)
 }
 
@@ -106,7 +107,13 @@ class CCManagerContext: CCManagerContextProtocol {
     
     func removeCell(in item: CCItemModel?, by position: Int, viewCallback: (CCContainerViewInputProtocol, [IndexPath]) -> Void) {
         item?.cells.remove(at: position)
-        viewCallback(containerView, template.removeCells())
+        viewCallback(containerView, template.removeAllCell())
+        
+    }
+    
+    func removeAllCell(in item: CCItemModel?, viewCallback: (CCContainerViewInputProtocol, [IndexPath]) -> Void) {
+        item?.cells.removeAll()
+        viewCallback(containerView, template.removeAllCell())
         
     }
     

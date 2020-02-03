@@ -111,16 +111,37 @@ extension CCTemplateViewModels {
         return paths
     }
     
-    final func removeCells() -> [IndexPath] {
+    final func removeCell() -> [IndexPath] {
+        var paths = [IndexPath]()
+        
+//        viewModels.enumerated().forEach { (position, item) in
+//            item.cells.enumerated().forEach { (index, viewModel) in
+//                if viewModel?.getModel == nil {
+//                    paths.append(IndexPath(row: index, section: position))
+//                    self.viewModels[position].cells.remove(at: index)
+//                }
+//            }
+//        }
+//        
+//        // - Пересчитываем новые индексы
+//        viewModels.enumerated().forEach { (position, item) in
+//            item.cells.enumerated().forEach { (index, viewModel) in
+//                viewModel?.indexSection = position
+//                viewModel?.indexRow = index
+//            }
+//        }
+        
+        return paths
+    }
+    
+    final func removeAllCell() -> [IndexPath] {
         var paths = [IndexPath]()
         
         viewModels.enumerated().forEach { (position, item) in
             item.cells.enumerated().forEach { (index, viewModel) in
-                if viewModel?.getModel == nil {
-                    paths.append(IndexPath(row: index, section: position))
-                    self.viewModels[position].cells.remove(at: index)
-                }
+                if viewModel?.getModel == nil { paths.append(IndexPath(row: index, section: position)) }
             }
+            self.viewModels[position].cells.removeAll(where: { $0?.getModel == nil })
         }
         
         // - Пересчитываем новые индексы
