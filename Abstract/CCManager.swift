@@ -8,20 +8,23 @@
 
 import Foundation
 
-// MARK: - CCManagerBuilder
+// swiftlint:disable all
 
+// MARK: - CCManagerBuilder
 class CCManagerBuilder {
-    
+    // MARK: - Static
     static func shared() -> CCManagerBuilder {
         return CCManagerBuilder()
     }
     
+    // MARK: - Private Properties
     private var manager: CCManagerProtocol?
     private var containerData: CCManagerContextProtocol?
     private weak var containerView: CCContainerViewInputProtocol?
     private weak var prefetchOutput: CCContainerViewPrefetchOutputProtocol?
     private weak var refreshOutput: CCContainerViewRefreshOutputProtocol?
     
+    // MARK: - Configure
     final func configure(manager: CCManagerProtocol?) -> CCManagerBuilder {
         self.manager = manager
         return self
@@ -47,6 +50,7 @@ class CCManagerBuilder {
         return self
     }
     
+    // MARK: - Build
     final func build() {
         containerView?.configure(dataSource: self.manager?.getDataSource(),
                                  delegate: self.manager?.getDelegate())
@@ -216,3 +220,5 @@ extension CCManager {
         return item.cells.isEmpty
     }
 }
+
+// swiftlint:enable all
