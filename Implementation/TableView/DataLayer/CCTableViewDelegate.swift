@@ -122,6 +122,13 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         guard indexPath.section < template?.viewModels.count ?? 0 else { return }
+        
+        // Highlight for ViewModels
+        if let item = template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewHighlightedCellProtocol {
+            item.highlight()
+        }
+        
+        // Highlight for Views
         if let item = template?.viewModels[indexPath.section].cells[indexPath.row]?.getView as? CCViewHighlightedCellProtocol {
             item.highlight()
         }
@@ -129,6 +136,13 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         guard indexPath.section < template?.viewModels.count ?? 0 else { return }
+        
+        // UnHighlight for ViewModels
+        if let item = template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewHighlightedCellProtocol {
+            item.unhiglight()
+        }
+        
+        // UnHighlight for Views
         if let item = template?.viewModels[indexPath.section].cells[indexPath.row]?.getView as? CCViewHighlightedCellProtocol {
             item.unhiglight()
         }
