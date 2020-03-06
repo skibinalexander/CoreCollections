@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - BasicTableViewPresenter
 
-protocol CCTableViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol, CCViewModelOutputProtocol {
+protocol CCTableViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol {
     
 }
 
@@ -20,7 +20,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     // MARK: - Lifecycle
     init() {
-        self.manager = CCTableViewManager<T>(delegateOutput: self, cellOutput: self)
+        self.manager = CCTableViewManager<T>(delegateOutput: self, viewDelegate: self)
         self.initializationItems()
     }
     
@@ -31,12 +31,9 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     }
     
     // MARK: - CCTableViewDelegateOutputProtocol
-    
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func didDeselect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
-    func viewDidChange(viewModel: CCViewModelProtocol) { }
-    func modelDidChange(viewModel: CCViewModelProtocol, parameters: [String : Any]?) { }
     
     // MARK: -
 }
@@ -53,14 +50,20 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
     
     func paginationInsertCells(in item: CCItemModel, cells: [CCModelCellProtocol]) {
         if item.cells.count > 0 {
-            manager.getData().insertCells(in: item, cells: cells, by: item.cells.count - 1) { (view, paths) in
-                view.insertCells(at: paths)
-            }
+            manager.getData().insertCells(in: item, cells: cells, by: item.cells.count - 1)
         } else {
-            manager.getData().replaceCells(in: item, cells: cells) { (view) in
-                manager.endRefresh()
-                view.reloadContainer()
-            }
+            manager.getData().replaceCells(in: item, cells: cells)
         }
+    }
+}
+
+extension CCTableViewPresenter: CCManagerContextViewCallbackProtocol {
+    func didInsertCells(paths: [IndexPath]) {
+        manager.getView().insertCells(at: paths)
+    }
+    
+    func didReplaceCells() {
+        manager.endRefresh()
+        manager.getView().reloadContainer()
     }
 }

@@ -32,22 +32,10 @@ protocol CCModelProtocol: class {
     var viewModel: CCViewModelProtocol? { get set }
 }
 
-// MARK: -
-
-protocol CCViewModelOutputProtocol: class {
-    func viewDidChange(viewModel: CCViewModelProtocol)
-    func modelDidChange(viewModel: CCViewModelProtocol, parameters: [String:Any]?)
-}
-
-extension CCViewModelOutputProtocol {
-    func viewDidChange(viewModel: CCViewModelProtocol) { }
-    func modelDidChange(viewModel: CCViewModelProtocol, parameters: [String:Any]?) { }
-}
-
 protocol CCViewModelProtocol: class {
+    // MARK: - Static
     static var typeOf: String { get }
     
-    var output: CCViewModelOutputProtocol? { get set }
     var item: CCItemViewModel? { get set }
     
     var indexSection: Int? { get set }
@@ -64,14 +52,10 @@ protocol CCViewModelProtocol: class {
     func inject(model: CCModelProtocol?)
     func inject(view: CCViewProtocol?)
     
-    func inject(with model: CCModelProtocol?, output: CCViewModelOutputProtocol?) -> CCViewModelProtocol?
+    func inject(with model: CCModelProtocol?) -> CCViewModelProtocol?
     func inject(with view: CCViewProtocol?) -> CCViewModelProtocol?
     
     func reference(item: CCItemViewModel?)
-    
-    // MARK: - Update
-    func updateView()
-    func updateModel(parameters: [String:Any]?)
 }
 
 extension CCViewModelProtocol {
@@ -81,8 +65,8 @@ extension CCViewModelProtocol {
 }
 
 protocol CCViewModelInitialization: class {
-    associatedtype Model:   CCModelProtocol
-    associatedtype View:    CCViewProtocol
+    associatedtype Model: CCModelProtocol
+    associatedtype View: CCViewProtocol
     
     var view: View? { get set }
     var model: Model? { get set }
@@ -96,7 +80,6 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     weak var model: M?
     
     // MARK: - Public
-    weak var output: CCViewModelOutputProtocol?
     weak var item: CCItemViewModel?
     
     var indexRow: Int?
@@ -134,9 +117,8 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
         self.model?.viewModel = self
     }
     
-    func inject(with model: CCModelProtocol?, output: CCViewModelOutputProtocol?) -> CCViewModelProtocol? {
+    func inject(with model: CCModelProtocol?) -> CCViewModelProtocol? {
         self.inject(model: model)
-        self.output = output
         return self
     }
     
@@ -147,13 +129,5 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     
     func reference(item: CCItemViewModel?) {
         self.item = item
-    }
-    
-    func updateView() {
-        output?.viewDidChange(viewModel: self)
-    }
-    
-    func updateModel(parameters: [String:Any]? = nil) {
-        output?.modelDidChange(viewModel: self, parameters: parameters)
     }
 }

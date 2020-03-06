@@ -8,23 +8,49 @@
 
 import Foundation
 
+protocol CCManagerContextViewCallbackProtocol: class {
+    func didReloadAllInAllItems()
+    func didRefreshAllInAllItems()
+    func didRefreshCellsInAllItems()
+    func didRefreshSectionAllItems()
+    func didReplaceCells()
+    func didAppendCells()
+    func didInsertCells(paths: [IndexPath])
+    func didRemoveCell()
+    func didRemoveAllCell()
+    func didAppendHeader()
+}
+
+extension CCManagerContextViewCallbackProtocol {
+    func didReloadAllInAllItems() {}
+    func didRefreshAllInAllItems() {}
+    func didRefreshCellsInAllItems() {}
+    func didRefreshSectionAllItems() {}
+    func didReplaceCells() {}
+    func didAppendCells() {}
+    func didInsertCells(paths: [IndexPath]) {}
+    func didRemoveCell() {}
+    func didRemoveAllCell() {}
+    func didAppendHeader() {}
+}
+
 protocol CCManagerContextProtocol: class {
     func set(template: CCTemplateViewModels?)
-    func set(containerView: CCContainerViewInputProtocol?)
     func set(items: [CCItemModel]?)
+    func intert(item: CCItemModel, at index: Int)
     
     func isEmpty() -> Bool
     
-    func reloadAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
-    func refreshAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
-    func refreshCellsInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
-    func refreshSectionAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void)
-    func replaceCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void)
-    func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void)
-    func insertCells(in item: CCItemModel?, cells:[CCModelCellProtocol], by position: Int, viewCallback:(CCContainerViewInputProtocol, [IndexPath]) -> Void)
-    func removeCell(in item: CCItemModel?, by position: Int, viewCallback:(CCContainerViewInputProtocol, [IndexPath]) -> Void)
-    func removeAllCell(in item: CCItemModel?, viewCallback: (CCContainerViewInputProtocol, [IndexPath]) -> Void)
-    func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol, viewCallback: (CCContainerViewInputProtocol) -> Void)
+    func reloadAllInAllItems()
+    func refreshAllInAllItems()
+    func refreshCellsInAllItems()
+    func refreshSectionAllItems()
+    func replaceCells(in item: CCItemModel, cells: [CCModelCellProtocol])
+    func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol])
+    func insertCells(in item: CCItemModel?, cells:[CCModelCellProtocol], by position: Int)
+    func removeCell(in item: CCItemModel?, by position: Int)
+    func removeAllCell(in item: CCItemModel?)
+    func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol)
 }
 
 class CCManagerContext: CCManagerContextProtocol {
@@ -37,19 +63,23 @@ class CCManagerContext: CCManagerContextProtocol {
     private weak var template: CCTemplateViewModels!
     private var items: [CCItemModel] = []
     
-    private weak var containerView: CCContainerViewInputProtocol!
+    private weak var viewDelegate: CCManagerContextViewCallbackProtocol!
     
     // MARK: - Setters
     func set(template: CCTemplateViewModels?) {
         self.template = template
     }
     
-    func set(containerView: CCContainerViewInputProtocol?) {
-        self.containerView = containerView
+    func set(viewDelegate: CCManagerContextViewCallbackProtocol?) {
+        self.viewDelegate = viewDelegate
     }
     
     func set(items: [CCItemModel]?) {
         self.items = items ?? []
+    }
+    
+    func intert(item: CCItemModel, at index: Int) {
+        self.items.insert(item, at: index)
     }
     
     func isEmpty() -> Bool {
@@ -57,13 +87,13 @@ class CCManagerContext: CCManagerContextProtocol {
     }
     
     // MARK: -
-    func reloadAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void) {
+    func reloadAllInAllItems() {
         template.reloadViewModelSections()
         template.reloadViewModelsCells()
-        viewCallback(self.containerView)
+        viewDelegate.didReloadAllInAllItems()
     }
     
-    func refreshAllInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void) {
+    func refreshAllInAllItems() {
         items.forEach({$0.header = nil})
         items.forEach({$0.footer = nil})
         template.reloadViewModelSections()
@@ -71,55 +101,52 @@ class CCManagerContext: CCManagerContextProtocol {
         items.forEach({$0.cells = []})
         template.reloadViewModelsCells()
         
-        viewCallback(self.containerView)
+        viewDelegate.didRefreshAllInAllItems()
     }
     
-    func refreshSectionAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void) {
+    func refreshSectionAllItems() {
         items.forEach({$0.cells = []})
         template.reloadViewModelSections()
-        viewCallback(self.containerView)
+        viewDelegate.didRefreshSectionAllItems()
     }
     
-    func refreshCellsInAllItems(viewCallback: (CCContainerViewInputProtocol) -> Void) {
+    func refreshCellsInAllItems() {
         items.forEach({$0.cells = []})
         template.reloadViewModelsCells()
-        viewCallback(self.containerView)
+        viewDelegate.didRefreshCellsInAllItems()
     }
     
-    func replaceCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void) {
+    func replaceCells(in item: CCItemModel, cells: [CCModelCellProtocol]) {
         item.cells = cells
         template.reloadViewModelsCells()
-        viewCallback(containerView)
+        viewDelegate.didReplaceCells()
     }
     
-    func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback: (CCContainerViewInputProtocol) -> Void) {
+    func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol]) {
         item.cells.append(contentsOf: cells)
         template.reloadViewModelsCells()
-        viewCallback(containerView)
+        viewDelegate.didAppendCells()
     }
     
-    func insertCells(in item: CCItemModel?, cells: [CCModelCellProtocol], by position: Int, viewCallback: (CCContainerViewInputProtocol, [IndexPath]) -> Void) {
+    func insertCells(in item: CCItemModel?, cells: [CCModelCellProtocol], by position: Int) {
         if position >= 0 {
             item?.cells.insert(contentsOf: cells, at: position)
-            viewCallback(containerView, template.insertCells())
+            viewDelegate.didAppendCells()
+            viewDelegate.didInsertCells(paths: template.insertCells())
         }
     }
     
-    func removeCell(in item: CCItemModel?, by position: Int, viewCallback: (CCContainerViewInputProtocol, [IndexPath]) -> Void) {
+    func removeCell(in item: CCItemModel?, by position: Int) {
         item?.cells.remove(at: position)
-        viewCallback(containerView, template.removeAllCell())
-        
     }
     
-    func removeAllCell(in item: CCItemModel?, viewCallback: (CCContainerViewInputProtocol, [IndexPath]) -> Void) {
+    func removeAllCell(in item: CCItemModel?) {
         item?.cells.removeAll()
-        viewCallback(containerView, template.removeAllCell())
-        
     }
     
-    func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol, viewCallback: (CCContainerViewInputProtocol) -> Void) {
+    func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol) {
         item.header = header
         template.reloadViewModelSections()
-        viewCallback(containerView)
+        viewDelegate.didAppendHeader()
     }
 }

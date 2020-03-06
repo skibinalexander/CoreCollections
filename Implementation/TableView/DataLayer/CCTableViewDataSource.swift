@@ -40,11 +40,8 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
             fatalError("CCTableViewDataSource: view for ViewModel \(String(describing: type(of: cell))) not initialization!")
         }
         
-        cell.updateView()
-        
         return viewCell
     }
-    
 }
 
 extension CCTableViewDataSource {

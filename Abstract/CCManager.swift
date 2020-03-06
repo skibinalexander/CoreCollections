@@ -71,7 +71,7 @@ protocol CCManagerProtocol: class {
     
     // MARK: - Getters
     func getDataSource() -> CCDataSourceProtocol?
-    func getDelegate() -> CCDelegateProtocol?
+    func getDelegate() -> CCDelegate
     func getView() -> CCContainerViewInputProtocol
     func getData() -> CCManagerContextProtocol
     
@@ -98,12 +98,13 @@ protocol CCManagerProtocol: class {
 
 class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModelsDataSource {
     // MARK: - Properties
-    var template: CCTemplateViewModels?
-    var dataSource: CCDataSourceProtocol?
-    var delegate: CCDelegateProtocol?
+    var template: CCTemplateViewModels!
+    var dataSource: CCDataSourceProtocol!
+    var delegate: CCDelegate!
     
     var containerView: CCContainerViewInputProtocol!
     var containerData: CCManagerContextProtocol!
+    var viewDelegate: CCManagerContextViewCallbackProtocol!
     
     internal var items: [CCItemModel] = []
     
@@ -116,7 +117,6 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
     
     func set(containerData: CCManagerContextProtocol?) {
         self.containerData = containerData
-        self.containerData.set(containerView: containerView)
         self.containerData.set(template: template)
         self.containerData.set(items: items)
     }
@@ -126,7 +126,7 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
         return dataSource
     }
     
-    func getDelegate() -> CCDelegateProtocol? {
+    func getDelegate() -> CCDelegate {
         return delegate
     }
     
@@ -141,11 +141,9 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
 
 extension CCManager {
     func beginRefresh() {
-        getData().refreshAllInAllItems { (view) in
-            view.beginRefresing()
-            isRefreshing = true
-            view.reloadContainer()
-        }
+        getData().refreshAllInAllItems()
+        getView().beginRefresing()
+        isRefreshing = true
     }
     
     func endRefresh() {
@@ -155,32 +153,36 @@ extension CCManager {
     
     func append(item: CCItemModel) {
         items.append(item)
-        containerData?.set(items: items)
-        template?.reloadViewModelsItems()
+        containerData.set(items: items)
+        template.reloadViewModelsItems()
+    }
+    
+    func insert(item: CCItemModel, at index: Int) {
+        containerData.intert(item: item, at: index)
     }
     
     func replace(item: CCItemModel) {
         if let replaceIndex = items.firstIndex(where: { return item.id == $0.id }) {
             items[replaceIndex].cells = item.cells
-            containerData?.set(items: items)
-            template?.reloadViewModelsCells()
+            containerData.set(items: items)
+            template.reloadViewModelsCells()
         } else {
             items.append(item)
-            containerData?.set(items: items)
-            template?.reloadViewModelsItems()
+            containerData.set(items: items)
+            template.reloadViewModelsItems()
         }
     }
     
     func remove(item at: Int) {
         items.remove(at: at)
-        containerData?.set(items: items)
-        template?.reloadViewModelsItems()
+        containerData.set(items: items)
+        template.reloadViewModelsItems()
     }
     
     func removeAll() {
         items.removeAll()
-        containerData?.set(items: items)
-        template?.reloadViewModelsItems()
+        containerData.set(items: items)
+        template.reloadViewModelsItems()
     }
     
     func item(id: String?) -> CCItemModel {

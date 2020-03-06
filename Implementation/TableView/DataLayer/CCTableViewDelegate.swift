@@ -12,15 +12,10 @@ protocol CCTableViewDelegateOutputProtocol: CCDelegateOutputProtocol {
     
 }
 
-protocol CCTableViewDelegateProtocol: CCDelegateProtocol {
-    
-}
-
-class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewDelegate {
+class CCTableViewDelegate: CCDelegate, UITableViewDelegate {
     
     // MARK: - Properties
-
-    private weak var output:    CCTableViewDelegateOutputProtocol?
+    private weak var output: CCTableViewDelegateOutputProtocol?
     
     init(output: CCTableViewDelegateOutputProtocol?, template: CCTemplateViewModelsProtocol?) {
         self.output = output
@@ -58,16 +53,12 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let viewModel = self.template?.viewModels[section].header {
-
             //  Иницализация view для секции
-            
             switch viewModel.nibType {
             case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name))
             case .singleName(let name): if viewModel.getView == nil { viewModel.inject(view: self.nibSection(nameNib: name)) }
             default: break
             }
-            
-            viewModel.updateView()
             
             return viewModel.getView as? UIView
         }
@@ -77,15 +68,11 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if let viewModel = self.template?.viewModels[section].footer {
-            
             //  Иницализация view для секции
-            
             switch viewModel.nibType {
             case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name))
             default: break
             }
-            
-            viewModel.updateView()
             
             return viewModel.getView as? UIView
         }
@@ -127,11 +114,6 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
         if let item = template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewHighlightedCellProtocol {
             item.highlight()
         }
-        
-        // Highlight for Views
-        if let item = template?.viewModels[indexPath.section].cells[indexPath.row]?.getView as? CCViewHighlightedCellProtocol {
-            item.highlight()
-        }
     }
     
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
@@ -139,11 +121,6 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
         
         // UnHighlight for ViewModels
         if let item = template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewHighlightedCellProtocol {
-            item.unhiglight()
-        }
-        
-        // UnHighlight for Views
-        if let item = template?.viewModels[indexPath.section].cells[indexPath.row]?.getView as? CCViewHighlightedCellProtocol {
             item.unhiglight()
         }
     }

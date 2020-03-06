@@ -20,19 +20,14 @@ extension CCDelegateOutputProtocol {
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) {}
 }
 
-protocol CCDelegateProtocol: class {
+class CCDelegate: NSObject {
+    // MARK: - Properties
+    weak var template: CCTemplateViewModelsProtocol!
     
-}
-
-class CCDelegate: NSObject, CCDelegateProtocol {
-    
-    //  Properties
-    
-    weak var template: CCTemplateViewModelsProtocol?
-    
+    // MARK: - Lifecycle
     init(template: CCTemplateViewModelsProtocol?) {
-        super.init()
         self.template = template
+        super.init()
     }
     
 }

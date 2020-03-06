@@ -18,9 +18,8 @@ protocol CCTemplateViewModelsProtocol: class {
 }
 
 class CCTemplateViewModels: CCTemplateViewModelsProtocol {
-    
-    private weak var dataSource:    CCTemplateViewModelsDataSource?
-    internal weak var output:       CCViewModelOutputProtocol?
+    // MARK: - Private Properties
+    private weak var dataSource: CCTemplateViewModelsDataSource?
     
     var viewModels: [CCItemViewModel] = []
     var isRefreshing: Bool = false
@@ -29,8 +28,7 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelSectionProtocol?)?
     internal var createCell: ((_ model: CCModelCellProtocol?) -> CCViewModelCellProtocol)?
     
-    required init(output: CCViewModelOutputProtocol?, dataSource: CCTemplateViewModelsDataSource) {
-        self.output = output
+    required init(dataSource: CCTemplateViewModelsDataSource) {
         self.dataSource = dataSource
     }
     
@@ -48,8 +46,8 @@ extension CCTemplateViewModels {
     
     final func reloadViewModelSections() {
         dataSource?.items.enumerated().forEach { (index, element) in
-            self.viewModels[index].header = self.createHeader?(element.header)?.inject(with: element.header, output: self.output)
-            self.viewModels[index].footer = self.createFooter?(element.footer, index)?.inject(with: element.footer, output: self.output)
+            self.viewModels[index].header = self.createHeader?(element.header)?.inject(with: element.header)
+            self.viewModels[index].footer = self.createFooter?(element.footer, index)?.inject(with: element.footer)
         }
         
         self.viewModels.forEach { (item) in
@@ -66,7 +64,6 @@ extension CCTemplateViewModels {
                 if let viewModel = self.createCell?(model) {
                     viewModel.indexSection = section
                     viewModel.indexRow = index
-                    viewModel.output = output
                     viewModel.inject(model: model)
                     self.viewModels[section].cells.append(viewModel)
                 } else {
@@ -91,7 +88,6 @@ extension CCTemplateViewModels {
             item.cells.enumerated().forEach({ (index, model) in
                 if model?.viewModel == nil {
                     if let viewModel = self.createCell?(model) {
-                        viewModel.output = output
                         viewModel.inject(model: model)
                         viewModel.reference(item: self.viewModels[position])
                         self.viewModels[position].cells.insert(viewModel, at: index)
