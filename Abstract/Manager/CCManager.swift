@@ -21,6 +21,7 @@ class CCManagerBuilder {
     private var manager: CCManagerProtocol?
     private var containerData: CCManagerContextProtocol?
     private weak var containerView: CCContainerViewInputProtocol?
+    private weak var viewDelegate: CCManagerContextViewCallbackProtocol?
     private weak var prefetchOutput: CCContainerViewPrefetchOutputProtocol?
     private weak var refreshOutput: CCContainerViewRefreshOutputProtocol?
     
@@ -40,6 +41,11 @@ class CCManagerBuilder {
         return self
     }
     
+    final func configure(viewDelegate: CCManagerContextViewCallbackProtocol?) -> CCManagerBuilder {
+        self.viewDelegate = viewDelegate
+        return self
+    }
+    
     final func configure(prefetch output: CCContainerViewPrefetchOutputProtocol?) -> CCManagerBuilder {
         self.prefetchOutput = output
         return self
@@ -52,6 +58,8 @@ class CCManagerBuilder {
     
     // MARK: - Build
     final func build() {
+        containerData?.set(viewDelegate: self.viewDelegate)
+        
         containerView?.configure(dataSource: self.manager?.getDataSource(),
                                  delegate: self.manager?.getDelegate())
         containerView?.configurePagination(output: prefetchOutput)
@@ -109,7 +117,11 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
     var containerData: CCManagerContextProtocol!
     var viewDelegate: CCManagerContextViewCallbackProtocol!
     
-    internal var items: [CCItemModel] = []
+    internal var items: [CCItemModel] = [] {
+        didSet {
+            containerData?.set(items: items)
+        }
+    }
     
     private var isRefreshing: Bool = false
     
@@ -121,7 +133,6 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
     func set(containerData: CCManagerContextProtocol?) {
         self.containerData = containerData
         self.containerData.set(template: template)
-        self.containerData.set(items: items)
     }
     
     // MARK: - Getters
@@ -156,7 +167,6 @@ extension CCManager {
     
     func append(item: CCItemModel) {
         items.append(item)
-        containerData.set(items: items)
         template.reloadViewModelsItems()
     }
     
@@ -167,24 +177,21 @@ extension CCManager {
     func replace(item: CCItemModel) {
         if let replaceIndex = items.firstIndex(where: { return item.id == $0.id }) {
             items[replaceIndex].cells = item.cells
-            containerData.set(items: items)
             template.reloadViewModelsCells()
         } else {
             items.append(item)
-            containerData.set(items: items)
             template.reloadViewModelsItems()
         }
     }
     
     func remove(item at: Int) {
         items.remove(at: at)
-        containerData.set(items: items)
+        
         template.reloadViewModelsItems()
     }
     
     func removeAll() {
         items.removeAll()
-        containerData.set(items: items)
         template.reloadViewModelsItems()
     }
     

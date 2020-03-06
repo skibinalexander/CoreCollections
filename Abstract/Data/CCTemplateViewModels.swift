@@ -19,7 +19,7 @@ protocol CCTemplateViewModelsProtocol: class {
 
 class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     // MARK: - Private Properties
-    private weak var dataSource: CCTemplateViewModelsDataSource?
+    public weak var dataSource: CCTemplateViewModelsDataSource?
     
     var viewModels: [CCItemViewModel] = []
     var isRefreshing: Bool = false
@@ -31,7 +31,6 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     required init(dataSource: CCTemplateViewModelsDataSource) {
         self.dataSource = dataSource
     }
-    
 }
 
 // MARK: - Sections

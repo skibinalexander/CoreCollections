@@ -35,6 +35,7 @@ extension CCManagerContextViewCallbackProtocol {
 }
 
 protocol CCManagerContextProtocol: class {
+    func set(viewDelegate: CCManagerContextViewCallbackProtocol?)
     func set(template: CCTemplateViewModels?)
     func set(items: [CCItemModel]?)
     func intert(item: CCItemModel, at index: Int)

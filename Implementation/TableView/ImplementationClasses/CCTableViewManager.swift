@@ -12,9 +12,10 @@ class CCTableViewManager<T: CCTemplateViewModels>: CCManager<T> {
     init(delegateOutput: CCTableViewDelegateOutputProtocol, viewDelegate: CCManagerContextViewCallbackProtocol) {
         super.init()
         
+        self.template = T(dataSource: self)
         self.dataSource = CCTableViewDataSource(template: template)
         self.delegate = CCTableViewDelegate(output: delegateOutput, template: template)
         self.viewDelegate = viewDelegate
-        self.template = T(dataSource: self)
+        self.template.dataSource = self
     }
 }
