@@ -44,8 +44,8 @@ protocol CCViewModelProtocol: class {
     var nibType: CCViewModelCellViewSourceType { get set }
     var height: CCViewModelHeight { get set }
     
-    var getModel: CCModelProtocol? { get }
-    var getView: CCViewProtocol? { get }
+    var getModel: CCModelProtocol { get }
+    var getView: CCViewProtocol { get }
     
     // MARK: - Inection
     
@@ -68,16 +68,16 @@ protocol CCViewModelInitialization: class {
     associatedtype Model: CCModelProtocol
     associatedtype View: CCViewProtocol
     
-    var view: View? { get set }
-    var model: Model? { get set }
+    var view: View! { get set }
+    var model: Model! { get set }
 }
 
 class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, CCViewModelInitialization {
     typealias View = V
     typealias Model = M
     
-    weak var view: V?
-    weak var model: M?
+    weak var view: V!
+    weak var model: M!
     
     // MARK: - Public
     weak var item: CCItemViewModel?
@@ -90,11 +90,11 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     
     //  Getters Properties
     
-    final var getView: CCViewProtocol? {
+    final var getView: CCViewProtocol {
         return self.view
     }
     
-    final var getModel: CCModelProtocol? {
+    final var getModel: CCModelProtocol {
         return self.model
     }
     
