@@ -92,6 +92,9 @@ protocol CCManagerProtocol: class {
     func modelHeader<M: CCModelSectionProtocol>(in item: CCItemModel) -> M?
     func modelFooter<M: CCModelSectionProtocol>(in item: CCItemModel) -> M?
     
+    func viewModelCell<M: CCViewModelCellProtocol>(id: String?, in item: CCItemModel) -> M?
+    func viewModelCell<M: CCViewModelCellProtocol>(index: Int, in item: CCItemModel) -> M?
+    
     func countItems() -> Int
     func isEmpty(in item: CCItemModel) -> Bool
 }
@@ -212,6 +215,16 @@ extension CCManager {
     
     func modelFooter<M>(in item: CCItemModel) -> M? where M : CCModelSectionProtocol {
         return nil
+    }
+    
+    func viewModelCell<M: CCViewModelCellProtocol>(id: String?, in item: CCItemModel) -> M? {
+        let cells = template.viewModels.first(where: { $0.id == item.id })?.cells
+        return cells?.first(where: { $0?.getModel.id == id }) as? M
+    }
+    
+    func viewModelCell<M: CCViewModelCellProtocol>(index: Int, in item: CCItemModel) -> M? {
+        let cells = template.viewModels.first(where: { $0.id == item.id })?.cells
+        return cells?[index] as? M
     }
     
     func countItems() -> Int {
