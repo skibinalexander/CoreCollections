@@ -12,10 +12,8 @@ protocol CCTableViewDataSourceProtocol: CCDataSourceProtocol {
     
 }
 
+// MARK: - UITableViewDataSource
 class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITableViewDataSource {
-    
-    // MARK: - UITableViewDataSource
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.template?.viewModels.count ?? 0
     }
@@ -35,6 +33,8 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
         case .reusebleName(let name): cell.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell)
         case .singleName(let name): if cell.getView == nil { cell.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell) }
         }
+        
+        cell.initialViewFromNib()
         
         guard let viewCell = cell.getView as? UITableViewCell & CCViewCellProtocol else {
             fatalError("CCTableViewDataSource: view for ViewModel \(String(describing: type(of: cell))) not initialization!")

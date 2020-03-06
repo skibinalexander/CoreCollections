@@ -56,12 +56,16 @@ protocol CCViewModelProtocol: class {
     func inject(with view: CCViewProtocol?) -> CCViewModelProtocol?
     
     func reference(item: CCItemViewModel?)
+    
+    func initialViewFromNib()
 }
 
 extension CCViewModelProtocol {
     static var typeOf: String {
         return String(describing: type(of: self))
     }
+    
+    func initialViewFromNib() { }
 }
 
 protocol CCViewModelInitialization: class {
