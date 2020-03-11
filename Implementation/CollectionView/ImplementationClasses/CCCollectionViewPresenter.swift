@@ -1,5 +1,5 @@
 //
-//  CCTableViewPresenter.swift
+//  CCCollectionViewPresenter.swift
 //  Vezu
 //
 //  Created by Пользователь on 24/04/2019.
@@ -8,18 +8,18 @@
 
 import Foundation
 
-// MARK: - BasicTableViewPresenter
-protocol CCTableViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol {
+// MARK: - BasicCollectionViewPresenter
+protocol CCCollectionViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCCollectionViewDelegateOutputProtocol {
     
 }
 
-class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtocol, CCContainerViewRefreshOutputProtocol {
+class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresenterProtocol, CCContainerViewRefreshOutputProtocol {
     // MARK: - Properties
     var manager: CCManagerProtocol!
     
     // MARK: - Lifecycle
     init() {
-        self.manager = CCTableViewManager<T>(delegateOutput: self, viewDelegate: self)
+        self.manager = CCCollectionViewManager<T>(delegateOutput: self, viewDelegate: self)
         self.initializationItems()
     }
     
@@ -29,14 +29,14 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
         manager.beginRefresh()
     }
     
-    // MARK: - CCTableViewDelegateOutputProtocol
+    // MARK: - CCCollectionViewDelegateOutputProtocol
     func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func didDeselect(indexPath: IndexPath, model: CCModelProtocol?) { }
     func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
 }
 
-class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
-    // MARK: - CCTableViewControllerPrefetchOutputProtocol
+class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
+    // MARK: - CCCollectionViewControllerPrefetchOutputProtocol
     func batchNumberRows(in section: Int) -> Int {
         manager.item(index: section).cells.count
     }
@@ -54,7 +54,7 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
     }
 }
 
-extension CCTableViewPresenter: CCManagerContextViewCallbackProtocol {
+extension CCCollectionViewPresenter: CCManagerContextViewCallbackProtocol {
     func didInsertCells(paths: [IndexPath]) {
         manager.getView().insertCells(at: paths)
     }

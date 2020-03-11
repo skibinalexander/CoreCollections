@@ -9,5 +9,5 @@
 import Foundation
 
 protocol CCViewCellProtocol: CCViewProtocol {
-    
+    static var reusableName: String { get }
 }

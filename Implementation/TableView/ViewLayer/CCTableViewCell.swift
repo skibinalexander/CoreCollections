@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CCTableViewCellProtocol: UITableViewCell, CCViewCellProtocol {
-
+    
 }
 
 class CCTableViewCell: UITableViewCell, CCTableViewCellProtocol {
