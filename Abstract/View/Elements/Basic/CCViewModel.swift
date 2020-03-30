@@ -13,7 +13,6 @@ import Foundation
 public enum CCViewModelCellViewSourceType {
     case reusebleId(String)     // - Reuse from registered identifier
     case reusebleName(String)   // - Reuse recreate from nib
-    case singleName(String)     // - Use once from nib
 }
 public enum CCViewModelHeight {
     case automatic

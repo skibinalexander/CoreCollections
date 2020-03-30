@@ -31,7 +31,6 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
         switch cell.nibType {
         case .reusebleId(let id): cell.inject(view: tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as? CCTableViewCell)
         case .reusebleName(let name): cell.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell)
-        case .singleName(let name): if cell.getView == nil { cell.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell) }
         }
         
         cell.initialViewFromNib()

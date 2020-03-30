@@ -56,7 +56,6 @@ class CCTableViewDelegate: CCDelegate, UITableViewDelegate {
             //  Иницализация view для секции
             switch viewModel.nibType {
             case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name))
-            case .singleName(let name): if viewModel.getView == nil { viewModel.inject(view: self.nibSection(nameNib: name)) }
             default: break
             }
             
