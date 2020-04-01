@@ -10,7 +10,5 @@ import Foundation
 
 // MARK: - Base ViewModelCell
 class CCCollectionViewViewModelCell<V: CCCollectionViewCellProtocol, M: CCCollectionViewModelCellProtocol>: CCViewModelCell<V, M> {
-    convenience init(height: CCViewModelHeight) {
-        self.init(nibType: .reusebleId(V.reusableName), height: height)
-    }
+    
 }

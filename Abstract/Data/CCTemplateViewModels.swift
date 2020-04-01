@@ -61,8 +61,7 @@ extension CCTemplateViewModels {
         dataSource?.items.enumerated().forEach({ (section, element) in
             element.cells.enumerated().forEach({ (index, model) in
                 if let viewModel = self.createCell?(model) {
-                    viewModel.indexSection = section
-                    viewModel.indexRow = index
+                    viewModel.indexPath = IndexPath(row: index, section: section)
                     viewModel.inject(model: model)
                     self.viewModels[section].cells.append(viewModel)
                 } else {
@@ -98,8 +97,7 @@ extension CCTemplateViewModels {
         
         viewModels.enumerated().forEach { (position, item) in
             item.cells.enumerated().forEach { (index, viewModel) in
-                viewModel?.indexSection = position
-                viewModel?.indexRow = index
+                viewModel?.indexPath = IndexPath(row: index, section: position)
             }
         }
         
@@ -142,8 +140,7 @@ extension CCTemplateViewModels {
         // - Пересчитываем новые индексы
         viewModels.enumerated().forEach { (position, item) in
             item.cells.enumerated().forEach { (index, viewModel) in
-                viewModel?.indexSection = position
-                viewModel?.indexRow = index
+                viewModel?.indexPath = IndexPath(row: index, section: position)
             }
         }
         

@@ -24,8 +24,7 @@ class CCCollectionViewDelegate: CCDelegate, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
-            if let cell = cell.getView as? CCViewSelectedCellProtocol { cell.selected() }
-            self.output?.didSelect(indexPath: indexPath, model: cell.getModel)
+            
         } else {
             assertionFailure("CCCollectionViewDelegate: undefined cell")
         }
@@ -33,8 +32,7 @@ class CCCollectionViewDelegate: CCDelegate, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
-            if let cell = cell.getView as? CCViewSelectedCellProtocol { cell.deselected() }
-            self.output?.didDeselect(indexPath: indexPath, model: cell.getModel)
+            
         } else {
             assertionFailure("CCCollectionViewDelegate: undefined cell")
         }
@@ -42,20 +40,10 @@ class CCCollectionViewDelegate: CCDelegate, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         guard indexPath.section < template?.viewModels.count ?? 0 else { return }
-        
-        // Highlight for ViewModels
-        if let item = template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewHighlightedCellProtocol {
-            item.highlight()
-        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         guard indexPath.section < template?.viewModels.count ?? 0 else { return }
-        
-        // UnHighlight for ViewModels
-        if let item = template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewHighlightedCellProtocol {
-            item.unhiglight()
-        }
     }
 }
 

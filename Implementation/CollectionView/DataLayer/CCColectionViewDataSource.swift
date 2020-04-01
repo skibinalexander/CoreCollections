@@ -29,7 +29,6 @@ class CCCollectionViewDataSource: CCDataSource, UICollectionViewDataSource {
         switch cell.nibType {
         case .reusebleId(let id): cell.inject(view: collectionView.dequeueReusableCell(withReuseIdentifier: id, for: indexPath) as? CCCollectionViewCell)
         case .reusebleName(let name): cell.inject(view: self.nibCell(nameNib: name) as? CCCollectionViewCell)
-        case .singleName(let name): if cell.getView == nil { cell.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell) }
         }
         
         cell.initialViewFromNib()

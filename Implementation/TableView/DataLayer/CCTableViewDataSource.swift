@@ -45,6 +45,6 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
 
 extension CCTableViewDataSource {
     func nibCell<T: UIView>(nameNib: String) -> T? {
-        return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as? T
+        return Bundle.main.loadNibNamed(nameNib, owner: nil, options: nil)![0] as? T
     }
 }

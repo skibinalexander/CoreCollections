@@ -22,7 +22,15 @@ public enum CCViewModelHeight {
 // MARK: - Protocols
 
 protocol CCViewProtocol: class {
+    // MARK: - Static
+    static var typeOf: String { get }
+    
+    // MARK: - Public Properties
     var viewModel: CCViewModelProtocol? { get set }
+}
+
+extension CCViewProtocol {
+    static var typeOf: String { return String(describing: Self.self) }
 }
 
 protocol CCModelProtocol: class {
@@ -32,13 +40,10 @@ protocol CCModelProtocol: class {
 }
 
 protocol CCViewModelProtocol: class {
-    // MARK: - Static
-    static var typeOf: String { get }
-    
+    // MARK: - Public Properties
     var item: CCItemViewModel? { get set }
     
-    var indexSection: Int? { get set }
-    var indexRow: Int? { get set }
+    var indexPath: IndexPath? { get set }
     
     var nibType: CCViewModelCellViewSourceType { get set }
     var height: CCViewModelHeight { get set }
@@ -47,7 +52,6 @@ protocol CCViewModelProtocol: class {
     var getView: CCViewProtocol { get }
     
     // MARK: - Inection
-    
     func inject(model: CCModelProtocol?)
     func inject(view: CCViewProtocol?)
     
@@ -56,15 +60,16 @@ protocol CCViewModelProtocol: class {
     
     func reference(item: CCItemViewModel?)
     
+    // MARK: - Implementation
     func initialViewFromNib()
+    func updateViewFromModel()
+    func updateModelFromView()
 }
 
 extension CCViewModelProtocol {
-    static var typeOf: String {
-        return String(describing: type(of: self))
-    }
-    
-    func initialViewFromNib() { }
+//    func initialViewFromNib() {}
+    func updateViewFromModel() {}
+    func updateModelFromView() {}
 }
 
 protocol CCViewModelInitialization: class {
@@ -84,26 +89,20 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     
     // MARK: - Public
     weak var item: CCItemViewModel?
-    
-    var indexRow: Int?
-    var indexSection: Int?
+
+    var indexPath: IndexPath?
     
     var nibType: CCViewModelCellViewSourceType
     var height: CCViewModelHeight
     
     //  Getters Properties
     
-    final var getView: CCViewProtocol {
-        return self.view
-    }
-    
-    final var getModel: CCModelProtocol {
-        return self.model
-    }
+    final var getView: CCViewProtocol { return self.view }
+    final var getModel: CCModelProtocol { return self.model }
     
     // MARK: - Initialization
     
-    init(nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
+    init(nibType: CCViewModelCellViewSourceType = .reusebleName(V.typeOf), height: CCViewModelHeight) {
         self.nibType = nibType
         self.height = height
     }
@@ -133,4 +132,7 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     func reference(item: CCItemViewModel?) {
         self.item = item
     }
+    
+    // MARK: -
+    func initialViewFromNib() { }
 }
