@@ -45,6 +45,8 @@ extension CCTableViewDelegate {
             default: break
             }
             
+            viewModel.initialViewFromNib()
+            
             return viewModel.getView as? UIView
         }
         
@@ -57,6 +59,8 @@ extension CCTableViewDelegate {
             case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name))
             default: break
             }
+            
+            viewModel.initialViewFromNib()
             
             return viewModel.getView as? UIView
         }
