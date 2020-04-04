@@ -16,10 +16,10 @@ protocol CCViewModelCellProtocol: CCViewModelProtocol {
     func willDisplay()
     func didHighlight()
     func didUnHighlight()
-    func shouldHighlight()
+    func shouldHighlight() -> Bool
 }
 
-extension CCViewModelCellProtocol {
+class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M>, CCViewModelCellProtocol {
     func willDisplay() { }
     func willSelect() {}
     func didSelect() {}
@@ -27,9 +27,5 @@ extension CCViewModelCellProtocol {
     func didDeselect() {}
     func didHighlight() {}
     func didUnHighlight() {}
-    func shouldHighlight() {}
-}
-
-class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M>, CCViewModelCellProtocol {
-    
+    func shouldHighlight() -> Bool { return true }
 }

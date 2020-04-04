@@ -60,8 +60,7 @@ class CCManagerBuilder {
     final func build() {
         containerData?.set(viewDelegate: self.viewDelegate)
         
-        containerView?.configure(dataSource: self.manager?.getDataSource(),
-                                 delegate: self.manager?.getDelegate())
+        containerView?.configure(dataSource: self.manager?.getDataSource(), delegate: self.manager?.getDelegate())
         containerView?.configurePagination(output: prefetchOutput)
         containerView?.configureRefresh(output: refreshOutput)
         
@@ -102,6 +101,7 @@ protocol CCManagerProtocol: class {
     
     func viewModelCell<M: CCViewModelCellProtocol>(id: String?, in item: CCItemModel) -> M?
     func viewModelCell<M: CCViewModelCellProtocol>(index: Int, in item: CCItemModel) -> M?
+    func viewModelHeader<M: CCViewModelSectionProtocol>(in item: CCItemModel) -> M?
     
     func countItems() -> Int
     func isEmpty(in item: CCItemModel) -> Bool
@@ -232,6 +232,10 @@ extension CCManager {
     func viewModelCell<M: CCViewModelCellProtocol>(index: Int, in item: CCItemModel) -> M? {
         let cells = template.viewModels.first(where: { $0.id == item.id })?.cells
         return cells?[index] as? M
+    }
+    
+    func viewModelHeader<M: CCViewModelSectionProtocol>(in item: CCItemModel) -> M? {
+        return template.viewModels.first(where: { $0.id == item.id })?.header as? M
     }
     
     func countItems() -> Int {

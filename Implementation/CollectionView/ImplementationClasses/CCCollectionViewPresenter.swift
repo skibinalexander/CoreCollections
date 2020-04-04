@@ -14,6 +14,7 @@ protocol CCCollectionViewPresenterProtocol: CCContainerViewRefreshOutputProtocol
 }
 
 class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresenterProtocol, CCContainerViewRefreshOutputProtocol {
+    
     // MARK: - Properties
     var manager: CCManagerProtocol!
     
@@ -30,9 +31,9 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresen
     }
     
     // MARK: - CCCollectionViewDelegateOutputProtocol
-    func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
-    func didDeselect(indexPath: IndexPath, model: CCModelProtocol?) { }
-    func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
+    func willDisplay(viewModel: CCViewModelProtocol) { }
+    func didSelect(viewModel: CCViewModelProtocol) { }
+    func didDeselect(viewModel: CCViewModelProtocol) { }
 }
 
 class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {

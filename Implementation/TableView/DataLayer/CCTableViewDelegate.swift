@@ -138,10 +138,10 @@ extension CCTableViewDelegate {
 extension CCTableViewDelegate {
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewModelCellProtocol {
-            cell.didDeselect()
+            return cell.shouldHighlight()
         }
         
-        return false
+        return true
     }
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {

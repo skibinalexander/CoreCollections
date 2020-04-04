@@ -25,14 +25,13 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     func initializationItems() { }
     
+    func willDisplay(viewModel: CCViewModelProtocol) { }
+    func didSelect(viewModel: CCViewModelProtocol) { }
+    func didDeselect(viewModel: CCViewModelProtocol) { }
+    
     func refreshList() {
         manager.beginRefresh()
     }
-    
-    // MARK: - CCTableViewDelegateOutputProtocol
-//    func didSelect(indexPath: IndexPath, model: CCModelProtocol?) { }
-//    func didDeselect(indexPath: IndexPath, model: CCModelProtocol?) { }
-//    func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) { }
 }
 
 class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {

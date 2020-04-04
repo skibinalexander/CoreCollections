@@ -18,12 +18,6 @@ protocol CCDelegateOutputProtocol: class {
     
 }
 
-extension CCDelegateOutputProtocol {
-    func willDisplay(viewModel: CCViewModelProtocol) {}
-    func didSelect(viewModel: CCViewModelProtocol) {}
-    func didDeselect(viewModel: CCViewModelProtocol) {}
-}
-
 class CCDelegate: NSObject {
     // MARK: - Properties
     weak var template: CCTemplateViewModelsProtocol!

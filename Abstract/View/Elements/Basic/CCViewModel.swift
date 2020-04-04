@@ -66,12 +66,6 @@ protocol CCViewModelProtocol: class {
     func updateModelFromView()
 }
 
-extension CCViewModelProtocol {
-//    func initialViewFromNib() {}
-    func updateViewFromModel() {}
-    func updateModelFromView() {}
-}
-
 protocol CCViewModelInitialization: class {
     associatedtype Model: CCModelProtocol
     associatedtype View: CCViewProtocol
@@ -135,4 +129,6 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     
     // MARK: -
     func initialViewFromNib() { }
+    func updateViewFromModel() { }
+    func updateModelFromView() { }
 }

@@ -38,7 +38,7 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
 extension CCTemplateViewModels {
     final func reloadViewModelsItems() {
         self.viewModels = []
-        self.viewModels = dataSource?.items.map { _ in CCItemViewModel() } ?? []
+        self.viewModels = dataSource?.items.map { CCItemViewModel(id: $0.id) } ?? []
         reloadViewModelSections()
         reloadViewModelsCells()
     }
