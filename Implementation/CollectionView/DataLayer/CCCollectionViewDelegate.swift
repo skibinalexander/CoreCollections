@@ -23,19 +23,19 @@ class CCCollectionViewDelegate: CCDelegate, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
-            
-        } else {
-            assertionFailure("CCCollectionViewDelegate: undefined cell")
-        }
+//        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
+//
+//        } else {
+//            assertionFailure("CCCollectionViewDelegate: undefined cell")
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
-            
-        } else {
-            assertionFailure("CCCollectionViewDelegate: undefined cell")
-        }
+//        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
+//
+//        } else {
+//            assertionFailure("CCCollectionViewDelegate: undefined cell")
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {

@@ -9,6 +9,8 @@
 import Foundation
 
 protocol CCViewModelCellProtocol: CCViewModelProtocol {
+    var indexPath: IndexPath! { get set }
+    
     func willSelect()
     func didSelect()
     func willDeselect()
@@ -20,6 +22,8 @@ protocol CCViewModelCellProtocol: CCViewModelProtocol {
 }
 
 class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M>, CCViewModelCellProtocol {
+    var indexPath: IndexPath!
+    
     func willDisplay() { }
     func willSelect() {}
     func didSelect() {}

@@ -43,8 +43,6 @@ protocol CCViewModelProtocol: class {
     // MARK: - Public Properties
     var item: CCItemViewModel? { get set }
     
-    var indexPath: IndexPath? { get set }
-    
     var nibType: CCViewModelCellViewSourceType { get set }
     var height: CCViewModelHeight { get set }
     
@@ -83,8 +81,6 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     
     // MARK: - Public
     weak var item: CCItemViewModel?
-
-    var indexPath: IndexPath?
     
     var nibType: CCViewModelCellViewSourceType
     var height: CCViewModelHeight

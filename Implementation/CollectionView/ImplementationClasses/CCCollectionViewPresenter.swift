@@ -31,9 +31,9 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresen
     }
     
     // MARK: - CCCollectionViewDelegateOutputProtocol
-    func willDisplay(viewModel: CCViewModelProtocol) { }
-    func didSelect(viewModel: CCViewModelProtocol) { }
-    func didDeselect(viewModel: CCViewModelProtocol) { }
+    func willDisplay(viewModel: CCViewModelCellProtocol) { }
+    func didSelect(viewModel: CCViewModelCellProtocol) { }
+    func didDeselect(viewModel: CCViewModelCellProtocol) { }
 }
 
 class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {

@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - Abstract
 class CCItems<U, T>: NSObject {
     
     typealias SectionType = U
@@ -72,7 +73,6 @@ class CCItemModel: CCItems<CCModelSectionProtocol, CCModelCellProtocol> {
 }
 
 // MARK: - CCItemViewModelsProtocol
-
-class CCItemViewModel: CCItems<CCViewModelProtocol, CCViewModelProtocol> {
+class CCItemViewModel: CCItems<CCViewModelSectionProtocol, CCViewModelCellProtocol> {
     
 }

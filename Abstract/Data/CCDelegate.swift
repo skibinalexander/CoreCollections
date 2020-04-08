@@ -10,11 +10,11 @@ import Foundation
 
 protocol CCDelegateOutputProtocol: class {
     // - Display
-    func willDisplay(viewModel: CCViewModelProtocol)
+    func willDisplay(viewModel: CCViewModelCellProtocol)
     
     // - Selection
-    func didSelect(viewModel: CCViewModelProtocol)
-    func didDeselect(viewModel: CCViewModelProtocol)
+    func didSelect(viewModel: CCViewModelCellProtocol)
+    func didDeselect(viewModel: CCViewModelCellProtocol)
     
 }
 

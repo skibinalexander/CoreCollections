@@ -25,12 +25,12 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     
     func initializationItems() { }
     
-    func willDisplay(viewModel: CCViewModelProtocol) { }
-    func didSelect(viewModel: CCViewModelProtocol) { }
-    func didDeselect(viewModel: CCViewModelProtocol) { }
+    func willDisplay(viewModel: CCViewModelCellProtocol) { }
+    func didSelect(viewModel: CCViewModelCellProtocol) { }
+    func didDeselect(viewModel: CCViewModelCellProtocol) { }
     
     func refreshList() {
-        manager.beginRefresh()
+        manager.getData().refreshCellsInAllItems()
     }
 }
 
@@ -54,11 +54,20 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
 }
 
 extension CCTableViewPresenter: CCManagerContextViewCallbackProtocol {
+    func didAppendCells() {
+        // - Нужно сообщить view как загрузить контент
+    }
+    
     func didInsertCells(paths: [IndexPath]) {
         manager.getView().insertCells(at: paths)
     }
     
     func didReplaceCells() {
+        manager.endRefresh()
+        manager.getView().reloadContainer()
+    }
+    
+    func didRefreshCellsInAllItems() {
         manager.endRefresh()
         manager.getView().reloadContainer()
     }
