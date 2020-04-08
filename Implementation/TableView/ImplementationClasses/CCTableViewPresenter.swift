@@ -54,6 +54,10 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
 }
 
 extension CCTableViewPresenter: CCManagerContextViewCallbackProtocol {
+    func didAppendCells() {
+        // - Нужно сообщить view как загрузить контент
+    }
+    
     func didInsertCells(paths: [IndexPath]) {
         manager.getView().insertCells(at: paths)
     }
