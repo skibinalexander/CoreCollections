@@ -96,7 +96,7 @@ extension CCTableViewDelegate {
 // MARK: - Selections
 extension CCTableViewDelegate {
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewModelCellProtocol {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
             cell.willSelect()
         } else {
             assertionFailure("CCTableViewDelegate: undefined cell")
@@ -106,7 +106,7 @@ extension CCTableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewModelCellProtocol {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
             cell.didSelect()
             self.output?.didSelect(viewModel: cell)
         } else {
@@ -115,7 +115,7 @@ extension CCTableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
-        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewModelCellProtocol {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
             cell.willDeselect()
         } else {
             assertionFailure("CCTableViewDelegate: undefined cell")
@@ -125,7 +125,7 @@ extension CCTableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewModelCellProtocol {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
             cell.didDeselect()
             self.output?.didDeselect(viewModel: cell)
         } else {
@@ -137,7 +137,7 @@ extension CCTableViewDelegate {
 // MARK: - Highlight
 extension CCTableViewDelegate {
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewModelCellProtocol {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
             return cell.shouldHighlight()
         }
         
@@ -148,7 +148,7 @@ extension CCTableViewDelegate {
         guard indexPath.section < template?.viewModels.count ?? 0 else { return }
         
         // Highlight for ViewModels
-        if let item = template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewModelCellProtocol {
+        if let item = template?.viewModels[indexPath.section].cells[indexPath.row] {
             item.didHighlight()
         }
     }
@@ -157,7 +157,7 @@ extension CCTableViewDelegate {
         guard indexPath.section < template?.viewModels.count ?? 0 else { return }
         
         // UnHighlight for ViewModels
-        if let item = template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewModelCellProtocol {
+        if let item = template?.viewModels[indexPath.section].cells[indexPath.row] {
             item.didUnHighlight()
         }
     }
