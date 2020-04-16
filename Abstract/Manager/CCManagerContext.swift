@@ -35,6 +35,8 @@ extension CCManagerContextViewCallbackProtocol {
 }
 
 protocol CCManagerContextProtocol: class {
+    var items: [CCItemModel] { get set }
+    
     func set(viewDelegate: CCManagerContextViewCallbackProtocol?)
     func set(template: CCTemplateViewModels?)
     func set(items: [CCItemModel]?)
@@ -60,10 +62,11 @@ class CCManagerContext: CCManagerContextProtocol {
         return CCManagerContext()
     }
     
-    // MARK: - Properties
-    private weak var template: CCTemplateViewModels!
-    private var items: [CCItemModel] = []
+    // MARK: - Public Properties
+    public var items: [CCItemModel] = []
     
+    // MARK: - Private Properties
+    private weak var template: CCTemplateViewModels!
     private weak var viewDelegate: CCManagerContextViewCallbackProtocol!
     
     // MARK: - Setters

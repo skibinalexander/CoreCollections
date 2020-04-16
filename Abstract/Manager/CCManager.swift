@@ -24,6 +24,7 @@ class CCManagerBuilder {
     private weak var viewDelegate: CCManagerContextViewCallbackProtocol?
     private weak var prefetchOutput: CCContainerViewPrefetchOutputProtocol?
     private weak var refreshOutput: CCContainerViewRefreshOutputProtocol?
+    private var items: [CCItemModel] = []
     
     // MARK: - Configure
     final func configure(manager: CCManagerProtocol?) -> CCManagerBuilder {
@@ -56,6 +57,11 @@ class CCManagerBuilder {
         return self
     }
     
+    final func configure(items: [CCItemModel]) -> CCManagerBuilder {
+        self.items.append(contentsOf: items)
+        return self
+    }
+    
     // MARK: - Build
     final func build() {
         containerData?.set(viewDelegate: self.viewDelegate)
@@ -66,6 +72,8 @@ class CCManagerBuilder {
         
         manager?.set(containerView: containerView)
         manager?.set(containerData: containerData)
+        
+        manager?.append(items: self.items)
     }
     
 }
@@ -85,6 +93,7 @@ protocol CCManagerProtocol: class {
     func beginRefresh()
     func endRefresh()
     
+    func append(items: [CCItemModel])
     func append(item: CCItemModel)
     func replace(item: CCItemModel)
     func remove(item at: Int)
@@ -117,10 +126,9 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
     var containerData: CCManagerContextProtocol!
     var viewDelegate: CCManagerContextViewCallbackProtocol!
     
-    internal var items: [CCItemModel] = [] {
-        didSet {
-            containerData?.set(items: items)
-        }
+    var items: [CCItemModel] {
+        get { return containerData.items }
+        set { containerData?.items = newValue }
     }
     
     private var isRefreshing: Bool = false
@@ -165,8 +173,13 @@ extension CCManager {
         isRefreshing = false
     }
     
+    func append(items: [CCItemModel]) {
+        self.items.append(contentsOf: items)
+        template.reloadViewModelsItems()
+    }
+    
     func append(item: CCItemModel) {
-        items.append(item)
+        self.items.append(item)
         template.reloadViewModelsItems()
     }
     
@@ -186,7 +199,7 @@ extension CCManager {
     
     func remove(item at: Int) {
         items.remove(at: at)
-        
+        getData().set(items: items)
         template.reloadViewModelsItems()
     }
     

@@ -20,17 +20,14 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     // MARK: - Lifecycle
     init() {
         self.manager = CCTableViewManager<T>(delegateOutput: self, viewDelegate: self)
-        self.initializationItems()
     }
-    
-    func initializationItems() { }
     
     func willDisplay(viewModel: CCViewModelCellProtocol) { }
     func didSelect(viewModel: CCViewModelCellProtocol) { }
     func didDeselect(viewModel: CCViewModelCellProtocol) { }
     
     func refreshList() {
-        manager.getData().refreshCellsInAllItems()
+        manager.beginRefresh()
     }
 }
 
@@ -68,6 +65,11 @@ extension CCTableViewPresenter: CCManagerContextViewCallbackProtocol {
     }
     
     func didRefreshCellsInAllItems() {
+        manager.endRefresh()
+        manager.getView().reloadContainer()
+    }
+    
+    func didRefreshAllInAllItems() {
         manager.endRefresh()
         manager.getView().reloadContainer()
     }

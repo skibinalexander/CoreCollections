@@ -9,7 +9,7 @@
 import Foundation
 
 protocol CCTemplateViewModelsDataSource: class {
-    var items: [CCItemModel] { get set }
+    var items: [CCItemModel] { get }
 }
 
 protocol CCTemplateViewModelsProtocol: class {
