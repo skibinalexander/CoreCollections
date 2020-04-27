@@ -73,4 +73,9 @@ extension CCTableViewPresenter: CCManagerContextViewCallbackProtocol {
         manager.endRefresh()
         manager.getView().reloadContainer()
     }
+    
+    func didReloadAllInAllItems() {
+        manager.endRefresh()
+        manager.getView().reloadContainer()
+    }
 }
