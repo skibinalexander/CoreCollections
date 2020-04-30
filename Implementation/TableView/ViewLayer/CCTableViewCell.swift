@@ -19,3 +19,4 @@ class CCTableViewCell: UITableViewCell, CCTableViewCellProtocol {
 extension CCTableViewCell {
     static var reusableName: String { return String(describing: self) }
 }
+
