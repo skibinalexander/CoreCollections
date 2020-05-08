@@ -44,6 +44,7 @@ protocol CCManagerContextProtocol: class {
     
     func isEmpty() -> Bool
     
+    func refreshAllItems()
     func reloadAllInAllItems()
     func refreshAllInAllItems()
     func refreshCellsInAllItems()
@@ -91,6 +92,13 @@ class CCManagerContext: CCManagerContextProtocol {
     }
     
     // MARK: -
+    func refreshAllItems() {
+        items = []
+        template.reloadViewModelSections()
+        template.reloadViewModelsCells()
+        viewDelegate.didReloadAllInAllItems()
+    }
+    
     func reloadAllInAllItems() {
         template.reloadViewModelSections()
         template.reloadViewModelsCells()
