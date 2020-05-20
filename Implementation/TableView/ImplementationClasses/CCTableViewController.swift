@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CCTableViewController: UIViewController {
+class CCTableViewController: UIViewController, CCContainerViewInputProtocol {
     
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
@@ -19,27 +19,7 @@ class CCTableViewController: UIViewController {
     private weak var refreshOutput: CCContainerViewRefreshOutputProtocol?
     private weak var prefetchOutput: CCContainerViewPrefetchOutputProtocol?
     
-}
-
-// MARK: - Lifecycle
-
-extension CCTableViewController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        refreshControl.endRefreshing()
-    }
-    
-}
-
-// MARK: - CCTableViewPresenterViewInputProtocol
-
-extension CCTableViewController: CCContainerViewInputProtocol {
-
+    // MARK: - CCTableViewPresenterViewInputProtocol
     func configure(dataSource: Any?, delegate: Any?) {
         let dataSource  = (dataSource as? UITableViewDataSource)
         let delegate    = (delegate as? UITableViewDelegate)
@@ -105,11 +85,24 @@ extension CCTableViewController: CCContainerViewInputProtocol {
             self.refreshControl.endRefreshing()
         }
     }
+}
+
+// MARK: - Lifecycle
+
+extension CCTableViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        refreshControl.endRefreshing()
+    }
     
 }
 
 // MARK: -
-
 extension CCTableViewController {
     @objc func refreshAction() {
         refreshOutput?.refreshList()
@@ -117,7 +110,6 @@ extension CCTableViewController {
 }
 
 // MARK: - UITableViewDataSourcePrefetching
-
 extension CCTableViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let output = self.prefetchOutput else { return }
@@ -126,7 +118,5 @@ extension CCTableViewController: UITableViewDataSourcePrefetching {
         }
     }
     
-    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        
-    }
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {}
 }
