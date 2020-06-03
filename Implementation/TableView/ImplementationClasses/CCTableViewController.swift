@@ -117,7 +117,6 @@ extension CCTableViewController {
 }
 
 // MARK: - UITableViewDataSourcePrefetching
-
 extension CCTableViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let output = self.prefetchOutput else { return }

@@ -90,9 +90,11 @@ protocol CCManagerProtocol: class {
     func getView() -> CCContainerViewInputProtocol
     func getData() -> CCManagerContextProtocol
     
+    // - Access to Refresh control flow
     func beginRefresh()
     func endRefresh()
     
+    //  - Access to items
     func append(items: [CCItemModel])
     func append(item: CCItemModel)
     func replace(item: CCItemModel)
@@ -103,11 +105,7 @@ protocol CCManagerProtocol: class {
     func item(index: Int) -> CCItemModel
     func item(type: CCItemModel.Identifiers) -> CCItemModel
     
-    func modelCell<M: CCModelCellProtocol>(id: String?, in item: CCItemModel) -> M?
-    func modelCell<M: CCModelCellProtocol>(index: Int, in item: CCItemModel) -> M?
-    func modelHeader<M: CCModelSectionProtocol>(in item: CCItemModel) -> M?
-    func modelFooter<M: CCModelSectionProtocol>(in item: CCItemModel) -> M?
-    
+    // - Access to ViewModels
     func viewModelCell<M: CCViewModelCellProtocol>(id: String?, in item: CCItemModel) -> M?
     func viewModelCell<M: CCViewModelCellProtocol>(index: Int, in item: CCItemModel) -> M?
     func viewModelHeader<M: CCViewModelSectionProtocol>(in item: CCItemModel) -> M?
@@ -161,6 +159,7 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
     }
 }
 
+// MARK: - Refreshing
 extension CCManager {
     func beginRefresh() {
         getData().refreshAllInAllItems()
@@ -172,6 +171,11 @@ extension CCManager {
         getView().endRefresing()
         isRefreshing = false
     }
+    
+}
+
+// MARK: -
+extension CCManager {
     
     func append(items: [CCItemModel]) {
         self.items.append(contentsOf: items)
@@ -219,24 +223,10 @@ extension CCManager {
     func item(type: CCItemModel.Identifiers) -> CCItemModel {
         return item(id: type.rawValue)
     }
-    
-    func modelCell<M>(id: String?, in item: CCItemModel) -> M? where M : CCModelCellProtocol {
-        return item.cells.first(where: { $0?.id == id }) as? M
-    }
-    
-    func modelCell<M>(index: Int, in item: CCItemModel) -> M? where M : CCModelCellProtocol {
-        guard item.cells.count > index else { return nil }
-        return item.cells[index] as? M
-    }
-    
-    func modelHeader<M>(in item: CCItemModel) -> M? where M : CCModelSectionProtocol {
-        return item.header as? M
-    }
-    
-    func modelFooter<M>(in item: CCItemModel) -> M? where M : CCModelSectionProtocol {
-        return nil
-    }
-    
+}
+
+// MARK: - Access to ViewModels
+extension CCManager {
     func viewModelCell<M: CCViewModelCellProtocol>(id: String?, in item: CCItemModel) -> M? {
         let cells = template.viewModels.first(where: { $0.id == item.id })?.cells
         return cells?.first(where: { $0?.getModel.id == id }) as? M

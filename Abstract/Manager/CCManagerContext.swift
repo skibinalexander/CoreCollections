@@ -8,30 +8,17 @@
 
 import Foundation
 
-protocol CCManagerContextViewCallbackProtocol: class {
-    func didReloadAllInAllItems()
-    func didRefreshAllInAllItems()
-    func didRefreshCellsInAllItems()
-    func didRefreshSectionAllItems()
-    func didReplaceCells()
-    func didAppendCells()
-    func didInsertCells(paths: [IndexPath])
-    func didRemoveCell()
-    func didRemoveAllCell()
-    func didAppendHeader()
+enum CCManagerContextViewCallbackType {
+    case withoutChangeView
+    case reloadCollection
+    case reloadInSection(Int)
+    case insertIntoCollection
+    case removeFromCollection
 }
 
-extension CCManagerContextViewCallbackProtocol {
-    func didReloadAllInAllItems() {}
-    func didRefreshAllInAllItems() {}
-    func didRefreshCellsInAllItems() {}
-    func didRefreshSectionAllItems() {}
-    func didReplaceCells() {}
-    func didAppendCells() {}
-    func didInsertCells(paths: [IndexPath]) {}
-    func didRemoveCell() {}
-    func didRemoveAllCell() {}
-    func didAppendHeader() {}
+protocol CCManagerContextViewCallbackProtocol: class {
+    func didUpdateView(with type: CCManagerContextViewCallbackType)
+    func didUpdateView(with type: CCManagerContextViewCallbackType, for paths: [IndexPath])
 }
 
 protocol CCManagerContextProtocol: class {
@@ -49,7 +36,8 @@ protocol CCManagerContextProtocol: class {
     func refreshAllInAllItems()
     func refreshCellsInAllItems()
     func refreshSectionAllItems()
-    func replaceCells(in item: CCItemModel, cells: [CCModelCellProtocol])
+    func replaceCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback type: CCManagerContextViewCallbackType)
+    func replaceCells(in typeId: CCItemModel.Identifiers, cells: [CCModelCellProtocol], viewCallback type: CCManagerContextViewCallbackType)
     func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol])
     func insertCells(in item: CCItemModel?, cells:[CCModelCellProtocol], by position: Int)
     func removeCell(in item: CCItemModel?, by position: Int)
@@ -94,15 +82,13 @@ class CCManagerContext: CCManagerContextProtocol {
     // MARK: -
     func refreshAllItems() {
         items = []
-        template.reloadViewModelSections()
-        template.reloadViewModelsCells()
-        viewDelegate.didReloadAllInAllItems()
+        template.reloadViewModelsItems()
+        viewDelegate.didUpdateView(with: .reloadCollection)
     }
     
     func reloadAllInAllItems() {
-        template.reloadViewModelSections()
-        template.reloadViewModelsCells()
-        viewDelegate.didReloadAllInAllItems()
+        template.reloadViewModelsItems()
+        viewDelegate.didUpdateView(with: .reloadCollection)
     }
     
     func refreshAllInAllItems() {
@@ -113,52 +99,67 @@ class CCManagerContext: CCManagerContextProtocol {
         items.forEach({$0.cells = []})
         template.reloadViewModelsCells()
         
-        viewDelegate.didRefreshAllInAllItems()
+        viewDelegate.didUpdateView(with: .reloadCollection)
     }
     
     func refreshSectionAllItems() {
-        items.forEach({$0.cells = []})
+        items.forEach({$0.header = nil})
         template.reloadViewModelSections()
-        viewDelegate.didRefreshSectionAllItems()
+        viewDelegate.didUpdateView(with: .reloadCollection)
     }
     
-    func refreshCellsInAllItems() {
-        items.forEach({$0.cells = []})
-        template.reloadViewModelsCells()
-        viewDelegate.didRefreshCellsInAllItems()
-    }
-    
-    func replaceCells(in item: CCItemModel, cells: [CCModelCellProtocol]) {
-        item.cells = cells
-        template.reloadViewModelsCells()
-        viewDelegate.didReplaceCells()
-    }
-    
-    func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol]) {
-        item.cells.append(contentsOf: cells)
-        template.reloadViewModelsCells()
-        viewDelegate.didAppendCells()
-    }
-    
-    func insertCells(in item: CCItemModel?, cells: [CCModelCellProtocol], by position: Int) {
-        if position >= 0 {
-            item?.cells.insert(contentsOf: cells, at: position)
-            viewDelegate.didAppendCells()
-            viewDelegate.didInsertCells(paths: template.insertCells())
-        }
-    }
-    
-    func removeCell(in item: CCItemModel?, by position: Int) {
-        item?.cells.remove(at: position)
-    }
-    
-    func removeAllCell(in item: CCItemModel?) {
-        item?.cells.removeAll()
-    }
     
     func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol) {
         item.header = header
         template.reloadViewModelSections()
-        viewDelegate.didAppendHeader()
+        viewDelegate.didUpdateView(with: .reloadCollection)
+    }
+}
+
+// MARK: - Cells Context
+extension CCManagerContext {
+    func refreshCellsInAllItems() {
+       items.forEach({$0.cells = []})
+       template.reloadViewModelsCells()
+       viewDelegate.didUpdateView(with: .reloadCollection)
+    }
+    
+    func replaceCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback type: CCManagerContextViewCallbackType) {
+        item.cells = cells
+        template.reloadViewModelsCells()
+        viewDelegate.didUpdateView(with: type)
+    }
+    
+    func replaceCells(in typeId: CCItemModel.Identifiers, cells: [CCModelCellProtocol], viewCallback type: CCManagerContextViewCallbackType) {
+        if let item = items.first(where: { $0.id == typeId.rawValue }) {
+            replaceCells(in: item, cells: cells, viewCallback: type)
+        } else {
+            assertionFailure("CCManagerContext: undefined id -> \(typeId.rawValue) of item")
+        }
+    }
+
+    func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol]) {
+       item.cells.append(contentsOf: cells)
+       template.reloadViewModelsCells()
+       viewDelegate.didUpdateView(with: .reloadCollection)
+    }
+
+    func insertCells(in item: CCItemModel?, cells: [CCModelCellProtocol], by position: Int) {
+       if position >= 0 {
+           item?.cells.insert(contentsOf: cells, at: position)
+           viewDelegate.didUpdateView(with: .insertIntoCollection, for: template.insertCells())
+       } else {
+           assertionFailure("CCManagerContext: Wrong index position")
+       }
+    }
+
+    func removeCell(in item: CCItemModel?, by position: Int) {
+       item?.cells.remove(at: position)
+       viewDelegate.didUpdateView(with: .removeFromCollection, for: template.removeCells())
+    }
+
+    func removeAllCell(in item: CCItemModel?) {
+       item?.cells.removeAll()
+       viewDelegate.didUpdateView(with: .removeFromCollection, for: template.removeCells())
     }
 }

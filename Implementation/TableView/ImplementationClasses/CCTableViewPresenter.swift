@@ -45,37 +45,25 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
         if item.cells.count > 0 {
             manager.getData().insertCells(in: item, cells: cells, by: item.cells.count - 1)
         } else {
-            manager.getData().replaceCells(in: item, cells: cells)
+            manager.getData().replaceCells(in: item, cells: cells, viewCallback: .reloadCollection)
         }
     }
 }
 
 extension CCTableViewPresenter: CCManagerContextViewCallbackProtocol {
-    func didAppendCells() {
-        // - Нужно сообщить view как загрузить контент
+    func didUpdateView(with type: CCManagerContextViewCallbackType) {
+        switch type {
+        case .reloadInSection(let index): manager.getView().reloadCells(in: [index])
+        default: manager.getView().reloadContainer()
+        }
     }
     
-    func didInsertCells(paths: [IndexPath]) {
-        manager.getView().insertCells(at: paths)
-    }
-    
-    func didReplaceCells() {
-        manager.endRefresh()
-        manager.getView().reloadContainer()
-    }
-    
-    func didRefreshCellsInAllItems() {
-        manager.endRefresh()
-        manager.getView().reloadContainer()
-    }
-    
-    func didRefreshAllInAllItems() {
-        manager.endRefresh()
-        manager.getView().reloadContainer()
-    }
-    
-    func didReloadAllInAllItems() {
-        manager.endRefresh()
-        manager.getView().reloadContainer()
+    func didUpdateView(with type: CCManagerContextViewCallbackType, for paths: [IndexPath]) {
+        switch type {
+        case .insertIntoCollection: manager.getView().insertCells(at: paths)
+        case .removeFromCollection: manager.getView().removeCells(at: paths)
+        case .reloadInSection(let index): manager.getView().reloadCells(in: [index])
+        default: manager.getView().reloadContainer()
+        }
     }
 }

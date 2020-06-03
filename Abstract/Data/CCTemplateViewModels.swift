@@ -79,6 +79,11 @@ extension CCTemplateViewModels {
 // MARK: - Cells
 
 extension CCTemplateViewModels {
+    /// Метод вставки конкретных моделей
+    ///
+    /// Работает по принципу поиска моделей которые добавлены но ViewModel отсутсвует
+    /// - Алгоритм находит модели, которые уже добавлены без ViewModel  и помещает indexPath в массив
+    /// - После того как собрали ViewModels требуется перестроить индексы в массиве ViewModels
     final func insertCells() -> [IndexPath] {
         var paths = [IndexPath]()
         
@@ -104,30 +109,12 @@ extension CCTemplateViewModels {
         return paths
     }
     
-    final func removeCell() -> [IndexPath] {
-        let paths = [IndexPath]()
-        
-//        viewModels.enumerated().forEach { (position, item) in
-//            item.cells.enumerated().forEach { (index, viewModel) in
-//                if viewModel?.getModel == nil {
-//                    paths.append(IndexPath(row: index, section: position))
-//                    self.viewModels[position].cells.remove(at: index)
-//                }
-//            }
-//        }
-//        
-//        // - Пересчитываем новые индексы
-//        viewModels.enumerated().forEach { (position, item) in
-//            item.cells.enumerated().forEach { (index, viewModel) in
-//                viewModel?.indexSection = position
-//                viewModel?.indexRow = index
-//            }
-//        }
-        
-        return paths
-    }
-    
-    final func removeAllCell() -> [IndexPath] {
+    /// Метод удаления всех ячеек по контексту удаленных моделей
+    ///
+    /// Работает по принципу удаления моделей в текщем контексте ViewModels
+    /// - Алгоритм находит модели, которые уже удалены и помещает indexPath в массив
+    /// - После того как алгоритм нашел удаленные модели и удалил ViewModel из массиа, нужно перестроить массив ViewModels
+    final func removeCells() -> [IndexPath] {
         var paths = [IndexPath]()
         
         viewModels.enumerated().forEach { (position, item) in
