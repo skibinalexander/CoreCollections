@@ -9,7 +9,6 @@
 import Foundation
 
 // swiftlint:disable all
-
 // MARK: - CCManagerBuilder
 class CCManagerBuilder {
     // MARK: - Static

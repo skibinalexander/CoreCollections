@@ -32,17 +32,19 @@ protocol CCManagerContextProtocol: class {
     func isEmpty() -> Bool
     
     func refreshAllItems()
-    func reloadAllInAllItems()
+    func reloadAllInAllItems(viewCallback type: CCManagerContextViewCallbackType)
     func refreshAllInAllItems()
     func refreshCellsInAllItems()
-    func refreshSectionAllItems()
+    func refreshSectionsInAllItems()
+    
     func replaceCells(in item: CCItemModel, cells: [CCModelCellProtocol], viewCallback type: CCManagerContextViewCallbackType)
     func replaceCells(in typeId: CCItemModel.Identifiers, cells: [CCModelCellProtocol], viewCallback type: CCManagerContextViewCallbackType)
+    
     func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol])
     func insertCells(in item: CCItemModel?, cells:[CCModelCellProtocol], by position: Int)
-    func removeCell(in item: CCItemModel?, by position: Int)
-    func removeAllCell(in item: CCItemModel?)
-    func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol)
+    
+    func removeCells(in item: CCItemModel?, by position: Int)
+    func removeCells(in typeId: CCItemModel.Identifiers, by position: Int)
 }
 
 class CCManagerContext: CCManagerContextProtocol {
@@ -86,9 +88,9 @@ class CCManagerContext: CCManagerContextProtocol {
         viewDelegate.didUpdateView(with: .reloadCollection)
     }
     
-    func reloadAllInAllItems() {
+    func reloadAllInAllItems(viewCallback type: CCManagerContextViewCallbackType) {
         template.reloadViewModelsItems()
-        viewDelegate.didUpdateView(with: .reloadCollection)
+        viewDelegate.didUpdateView(with: type)
     }
     
     func refreshAllInAllItems() {
@@ -102,15 +104,8 @@ class CCManagerContext: CCManagerContextProtocol {
         viewDelegate.didUpdateView(with: .reloadCollection)
     }
     
-    func refreshSectionAllItems() {
+    func refreshSectionsInAllItems() {
         items.forEach({$0.header = nil})
-        template.reloadViewModelSections()
-        viewDelegate.didUpdateView(with: .reloadCollection)
-    }
-    
-    
-    func appendHeader(in item: CCItemModel, header: CCModelSectionProtocol) {
-        item.header = header
         template.reloadViewModelSections()
         viewDelegate.didUpdateView(with: .reloadCollection)
     }
@@ -153,13 +148,16 @@ extension CCManagerContext {
        }
     }
 
-    func removeCell(in item: CCItemModel?, by position: Int) {
+    func removeCells(in item: CCItemModel?, by position: Int) {
        item?.cells.remove(at: position)
        viewDelegate.didUpdateView(with: .removeFromCollection, for: template.removeCells())
     }
-
-    func removeAllCell(in item: CCItemModel?) {
-       item?.cells.removeAll()
-       viewDelegate.didUpdateView(with: .removeFromCollection, for: template.removeCells())
+    
+    func removeCells(in typeId: CCItemModel.Identifiers, by position: Int) {
+        if let item = items.first(where: { $0.id == typeId.rawValue }) {
+            removeCells(in: item, by: position)
+        } else {
+            assertionFailure("CCManagerContext: undefined id -> \(typeId.rawValue) of item")
+        }
     }
 }
