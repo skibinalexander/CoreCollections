@@ -166,10 +166,14 @@ extension CCManagerContext {
     }
     
     func removeAllCells(in item: CCItemModel) {
+        guard item.cells.count > 0 else { return }
         removeCells(in: item, by: 0)
     }
     
     func removeAllCells(in typeId: CCItemModel.Identifiers) {
-        removeCells(in: typeId, by: 0)
+        if let item = items.first(where: { $0.id == typeId.rawValue }) {
+            guard item.cells.count > 0 else { return }
+            removeCells(in: item, by: 0)
+        }
     }
 }
