@@ -15,9 +15,12 @@ protocol CCTableViewModelSectionProtocol: CCModelSectionProtocol {
 class CCTableViewModelSection: CCTableViewModelSectionProtocol {
     // MARK: - CCModelSectionProtocol
     var id: String?
+    
+    // MARK: - Injection Properties
     weak var item: CCItemModel?
     weak var viewModel: CCViewModelProtocol?
     
+    // MARK: - Lifecycle
     init(id: String? = nil) {
         self.id = id
     }

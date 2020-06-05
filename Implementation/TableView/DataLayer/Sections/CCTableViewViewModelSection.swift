@@ -43,8 +43,6 @@ class CCTableViewViewModelExpandedSection<V: CCTableViewSection, M: CCTableViewM
     public func changeState() {
         guard let state = self.state else { return }
         self.state = state == .expanded ? .collapsed : .expanded
-        
-//        self.updateModel(parameters: ["state": self.state ?? .expanded, "id": model?.id ?? ""])
     }
     
 }

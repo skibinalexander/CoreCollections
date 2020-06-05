@@ -41,13 +41,17 @@ protocol CCManagerContextProtocol: class {
     func replaceCells(in typeId: CCItemModel.Identifiers, cells: [CCModelCellProtocol], viewCallback type: CCManagerContextViewCallbackType)
     
     func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol])
-    func insertCells(in item: CCItemModel?, cells:[CCModelCellProtocol], by position: Int)
+    func insertCells(in item: CCItemModel, cells:[CCModelCellProtocol], by position: Int)
     
-    func removeCells(in item: CCItemModel?, by position: Int)
+    func removeCells(in item: CCItemModel, by position: Int)
     func removeCells(in typeId: CCItemModel.Identifiers, by position: Int)
+    
+    func removeAllCells(in item: CCItemModel)
+    func removeAllCells(in typeId: CCItemModel.Identifiers)
 }
 
 class CCManagerContext: CCManagerContextProtocol {
+    
     // MARK: - Static
     static func instance() -> CCManagerContextProtocol {
         return CCManagerContext()
@@ -139,17 +143,17 @@ extension CCManagerContext {
        viewDelegate.didUpdateView(with: .reloadCollection)
     }
 
-    func insertCells(in item: CCItemModel?, cells: [CCModelCellProtocol], by position: Int) {
+    func insertCells(in item: CCItemModel, cells: [CCModelCellProtocol], by position: Int) {
        if position >= 0 {
-           item?.cells.insert(contentsOf: cells, at: position)
+           item.cells.insert(contentsOf: cells, at: position)
            viewDelegate.didUpdateView(with: .insertIntoCollection, for: template.insertCells())
        } else {
            assertionFailure("CCManagerContext: Wrong index position")
        }
     }
 
-    func removeCells(in item: CCItemModel?, by position: Int) {
-       item?.cells.remove(at: position)
+    func removeCells(in item: CCItemModel, by position: Int) {
+       item.cells.remove(at: position)
        viewDelegate.didUpdateView(with: .removeFromCollection, for: template.removeCells())
     }
     
@@ -159,5 +163,13 @@ extension CCManagerContext {
         } else {
             assertionFailure("CCManagerContext: undefined id -> \(typeId.rawValue) of item")
         }
+    }
+    
+    func removeAllCells(in item: CCItemModel) {
+        removeCells(in: item, by: 0)
+    }
+    
+    func removeAllCells(in typeId: CCItemModel.Identifiers) {
+        removeCells(in: typeId, by: 0)
     }
 }
