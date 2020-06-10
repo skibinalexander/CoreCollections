@@ -42,6 +42,7 @@ protocol CCManagerContextProtocol: class {
     
     func appendCells(in item: CCItemModel, cells: [CCModelCellProtocol])
     func insertCells(in item: CCItemModel, cells:[CCModelCellProtocol], by position: Int)
+    func insertCells(in typeId: CCItemModel.Identifiers, cells: [CCModelCellProtocol], by position: Int)
     
     func removeCells(in item: CCItemModel, by position: Int)
     func removeCells(in typeId: CCItemModel.Identifiers, by position: Int)
@@ -151,6 +152,14 @@ extension CCManagerContext {
            assertionFailure("CCManagerContext: Wrong index position")
        }
     }
+    
+    func insertCells(in typeId: CCItemModel.Identifiers, cells: [CCModelCellProtocol], by position: Int) {
+        if let item = items.first(where: { $0.id == typeId.rawValue }) {
+            insertCells(in: item, cells: cells, by: position)
+        } else {
+            assertionFailure("CCManagerContext: undefined id -> \(typeId.rawValue) of item")
+        }
+    }
 
     func removeCells(in item: CCItemModel, by position: Int) {
        item.cells.remove(at: position)
@@ -174,6 +183,8 @@ extension CCManagerContext {
         if let item = items.first(where: { $0.id == typeId.rawValue }) {
             guard item.cells.count > 0 else { return }
             removeCells(in: item, by: 0)
+        } else {
+            assertionFailure("CCManagerContext: undefined id -> \(typeId.rawValue) of item")
         }
     }
 }
