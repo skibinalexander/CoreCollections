@@ -46,8 +46,8 @@ protocol CCViewModelProtocol: class {
     var nibType: CCViewModelCellViewSourceType { get set }
     var height: CCViewModelHeight { get set }
     
-    var getModel: CCModelProtocol { get }
-    var getView: CCViewProtocol { get }
+    var getModel: CCModelProtocol? { get }
+    var getView: CCViewProtocol? { get }
     
     // MARK: - Inection
     func inject(model: CCModelProtocol?)
@@ -73,9 +73,11 @@ protocol CCViewModelInitialization: class {
 }
 
 class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, CCViewModelInitialization {
+    // MARK: - Typealias
     typealias View = V
     typealias Model = M
     
+    // MARK: - Weak
     weak var view: V!
     weak var model: M!
     
@@ -86,19 +88,21 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     var height: CCViewModelHeight
     
     //  Getters Properties
+    var getView: CCViewProtocol? {
+        return view
+    }
     
-    final var getView: CCViewProtocol { return self.view }
-    final var getModel: CCModelProtocol { return self.model }
+    var getModel: CCModelProtocol? {
+        return model
+    }
     
     // MARK: - Initialization
-    
     init(nibType: CCViewModelCellViewSourceType = .reusebleName(V.typeOf), height: CCViewModelHeight) {
         self.nibType = nibType
         self.height = height
     }
     
     // MARK: - Injections
-    
     func inject(view: CCViewProtocol?) {
         self.view = view as? V
         self.view?.viewModel = self

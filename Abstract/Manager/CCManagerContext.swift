@@ -162,8 +162,8 @@ extension CCManagerContext {
     }
 
     func removeCells(in item: CCItemModel, by position: Int) {
-       item.cells.remove(at: position)
-       viewDelegate.didUpdateView(with: .removeFromCollection, for: template.removeCells())
+        item.cells.remove(at: position)
+        viewDelegate.didUpdateView(with: .removeFromCollection, for: template.removeCells())
     }
     
     func removeCells(in typeId: CCItemModel.Identifiers, by position: Int) {

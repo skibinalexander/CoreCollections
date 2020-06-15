@@ -228,7 +228,7 @@ extension CCManager {
 extension CCManager {
     func viewModelCell<M: CCViewModelCellProtocol>(id: String?, in item: CCItemModel) -> M? {
         let cells = template.viewModels.first(where: { $0.id == item.id })?.cells
-        return cells?.first(where: { $0?.getModel.id == id }) as? M
+        return cells?.first(where: { $0?.getModel?.id == id }) as? M
     }
     
     func viewModelCell<M: CCViewModelCellProtocol>(index: Int, in item: CCItemModel) -> M? {
