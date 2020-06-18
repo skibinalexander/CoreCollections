@@ -24,7 +24,8 @@ extension CCManagerContext {
     
     func removeAllCells(in item: CCItemModel) {
         guard item.cells.count > 0 else { return }
-        removeCells(in: item, by: 0)
+        item.cells.removeAll()
+        viewDelegate.didUpdateView(with: .removeFromCollection, for: template.removeCells())
     }
     
     func removeAllCells(in typeId: CCItemModel.Identifiers) {
