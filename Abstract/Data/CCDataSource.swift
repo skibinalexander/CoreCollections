@@ -15,7 +15,9 @@ protocol CCDataSourceProtocol: class {
 }
 
 class CCDataSource: NSObject, CCDataSourceProtocol {
-    // MARK: -  Public Properties
+    
+    // MARK: - Public Properties
+    
     internal weak var template: CCTemplateViewModelsProtocol?
     
     // MARK: - Lifecycle
