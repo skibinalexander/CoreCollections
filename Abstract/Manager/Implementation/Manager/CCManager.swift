@@ -121,6 +121,18 @@ extension CCManager {
 
 // MARK: - Access to ViewModels
 extension CCManager {
+    func updateHeightCell(id: String?, in item: CCItemModel, by value: Float) {
+        if let cell = item.cells.first(where: { $0?.id == id }) {
+            containerView.updateHieghtCell { cell?.viewModel?.height = .value(value) }
+        }
+    }
+    
+    func updateHeightCell(id: String?, in type: CCItemModel.Identifiers, by value: Float) {
+        if let item = items.first(where: { $0.id == type.rawValue }) {
+            updateHeightCell(id: id, in: item, by: value)
+        }
+    }
+    
     func countItems() -> Int {
         return items.count
     }

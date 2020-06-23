@@ -47,6 +47,9 @@ protocol CCManagerProtocol: class {
     func viewModelCell<M: CCViewModelCellProtocol>(id: String?, in type: CCItemModel.Identifiers) -> M?
     func viewModelHeader<M: CCViewModelSectionProtocol>(in item: CCItemModel) -> M?
     
+    func updateHeightCell(id: String?, in item: CCItemModel, by value: Float)
+    func updateHeightCell(id: String?, in type: CCItemModel.Identifiers, by value: Float)
+    
     func countItems() -> Int
     func isEmpty(in item: CCItemModel) -> Bool
 }
