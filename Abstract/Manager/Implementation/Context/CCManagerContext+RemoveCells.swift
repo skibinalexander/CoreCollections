@@ -30,8 +30,7 @@ extension CCManagerContext {
     
     func removeAllCells(in typeId: CCItemModel.Identifiers) {
         if let item = items.first(where: { $0.id == typeId.rawValue }) {
-            guard item.cells.count > 0 else { return }
-            removeCells(in: item, by: 0)
+            removeAllCells(in: item)
         } else {
             assertionFailure("CCManagerContext: undefined id -> \(typeId.rawValue) of item")
         }
