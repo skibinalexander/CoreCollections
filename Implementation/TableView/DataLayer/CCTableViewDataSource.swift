@@ -12,10 +12,8 @@ protocol CCTableViewDataSourceProtocol: CCDataSourceProtocol {
     
 }
 
+// MARK: - UITableViewDataSource
 class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITableViewDataSource {
-    
-    // MARK: - UITableViewDataSource
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.template?.viewModels.count ?? 0
     }
@@ -25,7 +23,7 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewModelCellProtocol else { fatalError() }
+        guard let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] else { fatalError() }
         
         cell.indexPath = indexPath
         
@@ -33,22 +31,20 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
         switch cell.nibType {
         case .reusebleId(let id): cell.inject(view: tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as? CCTableViewCell)
         case .reusebleName(let name): cell.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell)
-        case .singleName(let name): if cell.getView == nil { cell.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell) }
         }
+        
+        cell.initialViewFromNib()
         
         guard let viewCell = cell.getView as? UITableViewCell & CCViewCellProtocol else {
             fatalError("CCTableViewDataSource: view for ViewModel \(String(describing: type(of: cell))) not initialization!")
         }
         
-        cell.updateView()
-        
         return viewCell
     }
-    
 }
 
 extension CCTableViewDataSource {
     func nibCell<T: UIView>(nameNib: String) -> T? {
-        return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as? T
+        return Bundle.main.loadNibNamed(nameNib, owner: nil, options: nil)![0] as? T
     }
 }

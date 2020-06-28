@@ -29,14 +29,13 @@ class CCCollectionViewDataSource: CCDataSource, UICollectionViewDataSource {
         switch cell.nibType {
         case .reusebleId(let id): cell.inject(view: collectionView.dequeueReusableCell(withReuseIdentifier: id, for: indexPath) as? CCCollectionViewCell)
         case .reusebleName(let name): cell.inject(view: self.nibCell(nameNib: name) as? CCCollectionViewCell)
-        default: assertionFailure()
         }
+        
+        cell.initialViewFromNib()
         
         guard let viewCell = cell.getView as? UICollectionViewCell & CCViewCellProtocol else {
             fatalError("CCCollectionViewDataSource: view for id ViewModel \(String(describing: type(of: cell))) not initialization!")
         }
-        
-        cell.updateView()
         
         return viewCell
     }

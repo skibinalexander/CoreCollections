@@ -9,9 +9,27 @@
 import Foundation
 
 protocol CCViewModelCellProtocol: CCViewModelProtocol {
-    var indexPath: IndexPath? { get set }
+    var indexPath: IndexPath! { get set }
+    
+    func willSelect()
+    func didSelect()
+    func willDeselect()
+    func didDeselect()
+    func willDisplay()
+    func didHighlight()
+    func didUnHighlight()
+    func shouldHighlight() -> Bool
 }
 
 class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M>, CCViewModelCellProtocol {
-    var indexPath: IndexPath?
+    var indexPath: IndexPath!
+    
+    func willDisplay() { }
+    func willSelect() {}
+    func didSelect() {}
+    func willDeselect() {}
+    func didDeselect() {}
+    func didHighlight() {}
+    func didUnHighlight() {}
+    func shouldHighlight() -> Bool { return true }
 }

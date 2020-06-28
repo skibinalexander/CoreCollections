@@ -9,30 +9,23 @@
 import Foundation
 
 protocol CCDelegateOutputProtocol: class {
-    func didSelect(indexPath: IndexPath, model: CCModelProtocol?)
-    func didDeselect(indexPath: IndexPath, model: CCModelProtocol?)
-    func willDisplay(indexPath: IndexPath, model: CCModelProtocol?)
-}
-
-extension CCDelegateOutputProtocol {
-    func didSelect(indexPath: IndexPath, model: CCModelProtocol?) {}
-    func didDeselect(indexPath: IndexPath, model: CCModelProtocol?) {}
-    func willDisplay(indexPath: IndexPath, model: CCModelProtocol?) {}
-}
-
-protocol CCDelegateProtocol: class {
+    // - Display
+    func willDisplay(viewModel: CCViewModelCellProtocol)
+    
+    // - Selection
+    func didSelect(viewModel: CCViewModelCellProtocol)
+    func didDeselect(viewModel: CCViewModelCellProtocol)
     
 }
 
-class CCDelegate: NSObject, CCDelegateProtocol {
+class CCDelegate: NSObject {
+    // MARK: - Properties
+    weak var template: CCTemplateViewModelsProtocol!
     
-    //  Properties
-    
-    weak var template: CCTemplateViewModelsProtocol?
-    
+    // MARK: - Lifecycle
     init(template: CCTemplateViewModelsProtocol?) {
-        super.init()
         self.template = template
+        super.init()
     }
     
 }

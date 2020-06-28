@@ -13,7 +13,7 @@ struct CCPaginationModel<T> {
     var limit:      Int
     var hasMore:    Bool?
     
-    init(current: T? = nil, limit: Int = 25, hasMore: Bool? = false) {
+    init(current: T? = nil, limit: Int = 25, hasMore: Bool? = true) {
         self.current = current
         self.limit = limit
         self.hasMore = hasMore

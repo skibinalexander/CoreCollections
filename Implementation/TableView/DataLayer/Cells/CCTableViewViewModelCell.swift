@@ -9,7 +9,6 @@
 import Foundation
 
 // MARK: - Base ViewModelCell
-
 class CCTableViewViewModelCell<V: CCTableViewCellProtocol, M: CCTableViewModelCellProtocol>: CCViewModelCell<V, M> {
     
 }

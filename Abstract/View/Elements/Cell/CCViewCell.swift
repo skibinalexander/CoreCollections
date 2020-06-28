@@ -11,13 +11,3 @@ import Foundation
 protocol CCViewCellProtocol: CCViewProtocol {
     
 }
-
-protocol CCViewHighlightedCellProtocol {
-    func highlight()
-    func unhiglight()
-}
-
-protocol CCViewSelectedCellProtocol {
-    func selected()
-    func deselected()
-}

@@ -13,7 +13,6 @@ import Foundation
 public enum CCViewModelCellViewSourceType {
     case reusebleId(String)     // - Reuse from registered identifier
     case reusebleName(String)   // - Reuse recreate from nib
-    case singleName(String)     // - Use once from nib
 }
 public enum CCViewModelHeight {
     case automatic
@@ -23,7 +22,15 @@ public enum CCViewModelHeight {
 // MARK: - Protocols
 
 protocol CCViewProtocol: class {
+    // MARK: - Static
+    static var typeOf: String { get }
+    
+    // MARK: - Public Properties
     var viewModel: CCViewModelProtocol? { get set }
+}
+
+extension CCViewProtocol {
+    static var typeOf: String { return String(describing: Self.self) }
 }
 
 protocol CCModelProtocol: class {
@@ -32,26 +39,9 @@ protocol CCModelProtocol: class {
     var viewModel: CCViewModelProtocol? { get set }
 }
 
-// MARK: -
-
-protocol CCViewModelOutputProtocol: class {
-    func viewDidChange(viewModel: CCViewModelProtocol)
-    func modelDidChange(viewModel: CCViewModelProtocol, parameters: [String:Any]?)
-}
-
-extension CCViewModelOutputProtocol {
-    func viewDidChange(viewModel: CCViewModelProtocol) { }
-    func modelDidChange(viewModel: CCViewModelProtocol, parameters: [String:Any]?) { }
-}
-
 protocol CCViewModelProtocol: class {
-    static var typeOf: String { get }
-    
-    var output: CCViewModelOutputProtocol? { get set }
+    // MARK: - Public Properties
     var item: CCItemViewModel? { get set }
-    
-    var indexSection: Int? { get set }
-    var indexRow: Int? { get set }
     
     var nibType: CCViewModelCellViewSourceType { get set }
     var height: CCViewModelHeight { get set }
@@ -60,70 +50,59 @@ protocol CCViewModelProtocol: class {
     var getView: CCViewProtocol? { get }
     
     // MARK: - Inection
-    
     func inject(model: CCModelProtocol?)
     func inject(view: CCViewProtocol?)
     
-    func inject(with model: CCModelProtocol?, output: CCViewModelOutputProtocol?) -> CCViewModelProtocol?
+    func inject(with model: CCModelProtocol?) -> CCViewModelProtocol?
     func inject(with view: CCViewProtocol?) -> CCViewModelProtocol?
     
     func reference(item: CCItemViewModel?)
     
-    // MARK: - Update
-    func updateView()
-    func updateModel(parameters: [String:Any]?)
-}
-
-extension CCViewModelProtocol {
-    static var typeOf: String {
-        return String(describing: type(of: self))
-    }
+    // MARK: - Implementation
+    func initialViewFromNib()
+    func updateViewFromModel()
+    func updateModelFromView()
 }
 
 protocol CCViewModelInitialization: class {
-    associatedtype Model:   CCModelProtocol
-    associatedtype View:    CCViewProtocol
+    associatedtype Model: CCModelProtocol
+    associatedtype View: CCViewProtocol
     
-    var view: View? { get set }
-    var model: Model? { get set }
+    var view: View! { get set }
+    var model: Model! { get set }
 }
 
 class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, CCViewModelInitialization {
+    // MARK: - Typealias
     typealias View = V
     typealias Model = M
     
-    weak var view: V?
-    weak var model: M?
+    // MARK: - Weak
+    weak var view: V!
+    weak var model: M!
     
     // MARK: - Public
-    weak var output: CCViewModelOutputProtocol?
     weak var item: CCItemViewModel?
-    
-    var indexRow: Int?
-    var indexSection: Int?
     
     var nibType: CCViewModelCellViewSourceType
     var height: CCViewModelHeight
     
     //  Getters Properties
-    
-    final var getView: CCViewProtocol? {
-        return self.view
+    var getView: CCViewProtocol? {
+        return view
     }
     
-    final var getModel: CCModelProtocol? {
-        return self.model
+    var getModel: CCModelProtocol? {
+        return model
     }
     
     // MARK: - Initialization
-    
-    init(nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
+    init(nibType: CCViewModelCellViewSourceType = .reusebleName(V.typeOf), height: CCViewModelHeight) {
         self.nibType = nibType
         self.height = height
     }
     
     // MARK: - Injections
-    
     func inject(view: CCViewProtocol?) {
         self.view = view as? V
         self.view?.viewModel = self
@@ -134,9 +113,8 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
         self.model?.viewModel = self
     }
     
-    func inject(with model: CCModelProtocol?, output: CCViewModelOutputProtocol?) -> CCViewModelProtocol? {
+    func inject(with model: CCModelProtocol?) -> CCViewModelProtocol? {
         self.inject(model: model)
-        self.output = output
         return self
     }
     
@@ -149,11 +127,8 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
         self.item = item
     }
     
-    func updateView() {
-        output?.viewDidChange(viewModel: self)
-    }
-    
-    func updateModel(parameters: [String:Any]? = nil) {
-        output?.modelDidChange(viewModel: self, parameters: parameters)
-    }
+    // MARK: -
+    func initialViewFromNib() { }
+    func updateViewFromModel() { }
+    func updateModelFromView() { }
 }

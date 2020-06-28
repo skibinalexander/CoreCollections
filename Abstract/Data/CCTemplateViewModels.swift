@@ -9,7 +9,7 @@
 import Foundation
 
 protocol CCTemplateViewModelsDataSource: class {
-    var items: [CCItemModel] { get set }
+    var items: [CCItemModel] { get }
 }
 
 protocol CCTemplateViewModelsProtocol: class {
@@ -18,9 +18,8 @@ protocol CCTemplateViewModelsProtocol: class {
 }
 
 class CCTemplateViewModels: CCTemplateViewModelsProtocol {
-    
-    private weak var dataSource:    CCTemplateViewModelsDataSource?
-    internal weak var output:       CCViewModelOutputProtocol?
+    // MARK: - Private Properties
+    public weak var dataSource: CCTemplateViewModelsDataSource?
     
     var viewModels: [CCItemViewModel] = []
     var isRefreshing: Bool = false
@@ -29,11 +28,9 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelSectionProtocol?)?
     internal var createCell: ((_ model: CCModelCellProtocol?) -> CCViewModelCellProtocol)?
     
-    required init(output: CCViewModelOutputProtocol?, dataSource: CCTemplateViewModelsDataSource) {
-        self.output = output
+    required init(dataSource: CCTemplateViewModelsDataSource) {
         self.dataSource = dataSource
     }
-    
 }
 
 // MARK: - Sections
@@ -41,15 +38,15 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
 extension CCTemplateViewModels {
     final func reloadViewModelsItems() {
         self.viewModels = []
-        self.viewModels = dataSource?.items.map { _ in CCItemViewModel() } ?? []
+        self.viewModels = dataSource?.items.map { CCItemViewModel(id: $0.id) } ?? []
         reloadViewModelSections()
         reloadViewModelsCells()
     }
     
     final func reloadViewModelSections() {
         dataSource?.items.enumerated().forEach { (index, element) in
-            self.viewModels[index].header = self.createHeader?(element.header)?.inject(with: element.header, output: self.output)
-            self.viewModels[index].footer = self.createFooter?(element.footer, index)?.inject(with: element.footer, output: self.output)
+            self.viewModels[index].header = self.createHeader?(element.header)?.inject(with: element.header) as? CCViewModelSectionProtocol
+            self.viewModels[index].footer = self.createFooter?(element.footer, index)?.inject(with: element.footer) as? CCViewModelSectionProtocol
         }
         
         self.viewModels.forEach { (item) in
@@ -64,9 +61,7 @@ extension CCTemplateViewModels {
         dataSource?.items.enumerated().forEach({ (section, element) in
             element.cells.enumerated().forEach({ (index, model) in
                 if let viewModel = self.createCell?(model) {
-                    viewModel.indexSection = section
-                    viewModel.indexRow = index
-                    viewModel.output = output
+                    viewModel.indexPath = IndexPath(row: index, section: section)
                     viewModel.inject(model: model)
                     self.viewModels[section].cells.append(viewModel)
                 } else {
@@ -84,6 +79,11 @@ extension CCTemplateViewModels {
 // MARK: - Cells
 
 extension CCTemplateViewModels {
+    /// Метод вставки конкретных моделей
+    ///
+    /// Работает по принципу поиска моделей которые добавлены но ViewModel отсутсвует
+    /// - Алгоритм находит модели, которые уже добавлены без ViewModel  и помещает indexPath в массив
+    /// - После того как собрали ViewModels требуется перестроить индексы в массиве ViewModels
     final func insertCells() -> [IndexPath] {
         var paths = [IndexPath]()
         
@@ -91,7 +91,6 @@ extension CCTemplateViewModels {
             item.cells.enumerated().forEach({ (index, model) in
                 if model?.viewModel == nil {
                     if let viewModel = self.createCell?(model) {
-                        viewModel.output = output
                         viewModel.inject(model: model)
                         viewModel.reference(item: self.viewModels[position])
                         self.viewModels[position].cells.insert(viewModel, at: index)
@@ -103,38 +102,19 @@ extension CCTemplateViewModels {
         
         viewModels.enumerated().forEach { (position, item) in
             item.cells.enumerated().forEach { (index, viewModel) in
-                viewModel?.indexSection = position
-                viewModel?.indexRow = index
+                viewModel?.indexPath = IndexPath(row: index, section: position)
             }
         }
         
         return paths
     }
     
-    final func removeCell() -> [IndexPath] {
-        let paths = [IndexPath]()
-        
-//        viewModels.enumerated().forEach { (position, item) in
-//            item.cells.enumerated().forEach { (index, viewModel) in
-//                if viewModel?.getModel == nil {
-//                    paths.append(IndexPath(row: index, section: position))
-//                    self.viewModels[position].cells.remove(at: index)
-//                }
-//            }
-//        }
-//        
-//        // - Пересчитываем новые индексы
-//        viewModels.enumerated().forEach { (position, item) in
-//            item.cells.enumerated().forEach { (index, viewModel) in
-//                viewModel?.indexSection = position
-//                viewModel?.indexRow = index
-//            }
-//        }
-        
-        return paths
-    }
-    
-    final func removeAllCell() -> [IndexPath] {
+    /// Метод удаления всех ячеек по контексту удаленных моделей
+    ///
+    /// Работает по принципу удаления моделей в текщем контексте ViewModels
+    /// - Алгоритм находит модели, которые уже удалены и помещает indexPath в массив
+    /// - После того как алгоритм нашел удаленные модели и удалил ViewModel из массиа, нужно перестроить массив ViewModels
+    final func removeCells() -> [IndexPath] {
         var paths = [IndexPath]()
         
         viewModels.enumerated().forEach { (position, item) in
@@ -147,8 +127,7 @@ extension CCTemplateViewModels {
         // - Пересчитываем новые индексы
         viewModels.enumerated().forEach { (position, item) in
             item.cells.enumerated().forEach { (index, viewModel) in
-                viewModel?.indexSection = position
-                viewModel?.indexRow = index
+                viewModel?.indexPath = IndexPath(row: index, section: position)
             }
         }
         

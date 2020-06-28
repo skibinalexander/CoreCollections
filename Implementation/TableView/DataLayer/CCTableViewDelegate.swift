@@ -12,39 +12,21 @@ protocol CCTableViewDelegateOutputProtocol: CCDelegateOutputProtocol {
     
 }
 
-protocol CCTableViewDelegateProtocol: CCDelegateProtocol {
-    
-}
-
-class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewDelegate {
+class CCTableViewDelegate: CCDelegate, UITableViewDelegate {
     
     // MARK: - Properties
-
-    private weak var output:    CCTableViewDelegateOutputProtocol?
+    private weak var output: CCTableViewDelegateOutputProtocol?
     
+    // MARK: - Lifecycle
     init(output: CCTableViewDelegateOutputProtocol?, template: CCTemplateViewModelsProtocol?) {
         self.output = output
         super.init(template: template)
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
-            if let cell = cell.getView as? CCViewSelectedCellProtocol { cell.selected() }
-            self.output?.didSelect(indexPath: indexPath, model: cell.getModel)
-        } else {
-            assertionFailure("CCTableViewDelegate: undefined cell")
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
-            if let cell = cell.getView as? CCViewSelectedCellProtocol { cell.deselected() }
-            self.output?.didDeselect(indexPath: indexPath, model: cell.getModel)
-        } else {
-            assertionFailure("CCTableViewDelegate: undefined cell")
-        }
-    }
-    
+}
+
+// MARL: - Heights
+extension CCTableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
             switch cell.height {
@@ -55,44 +37,36 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
         
         return CGFloat.leastNonzeroMagnitude
     }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let viewModel = self.template?.viewModels[section].header {
-
             //  Иницализация view для секции
-            
             switch viewModel.nibType {
             case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name))
-            case .singleName(let name): if viewModel.getView == nil { viewModel.inject(view: self.nibSection(nameNib: name)) }
             default: break
             }
             
-            viewModel.updateView()
+            viewModel.initialViewFromNib()
             
             return viewModel.getView as? UIView
         }
         
         return nil
     }
-    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if let viewModel = self.template?.viewModels[section].footer {
-            
             //  Иницализация view для секции
-            
             switch viewModel.nibType {
             case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name))
             default: break
             }
             
-            viewModel.updateView()
+            viewModel.initialViewFromNib()
             
             return viewModel.getView as? UIView
         }
         
         return nil
     }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let item = self.template?.viewModels[section].header
         switch item?.height {
@@ -101,7 +75,6 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
         default: return .zero
         }
     }
-    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let item = self.template?.viewModels[section].footer
         switch item?.height {
@@ -110,7 +83,6 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
         default: return .zero
         }
     }
-    
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         let item = self.template?.viewModels[section].header
         switch item?.height {
@@ -119,18 +91,65 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
         default: return .zero
         }
     }
+}
+
+// MARK: - Selections
+extension CCTableViewDelegate {
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
+            cell.willSelect()
+        } else {
+            assertionFailure("CCTableViewDelegate: undefined cell")
+        }
+        
+        return indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
+            cell.didSelect()
+            self.output?.didSelect(viewModel: cell)
+        } else {
+            assertionFailure("CCTableViewDelegate: undefined cell")
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
+            cell.willDeselect()
+        } else {
+            assertionFailure("CCTableViewDelegate: undefined cell")
+        }
+        
+        return indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
+            cell.didDeselect()
+            self.output?.didDeselect(viewModel: cell)
+        } else {
+            assertionFailure("CCTableViewDelegate: undefined cell")
+        }
+    }
+}
+
+// MARK: - Highlight
+extension CCTableViewDelegate {
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
+            return cell.shouldHighlight()
+        }
+        
+        return true
+    }
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         guard indexPath.section < template?.viewModels.count ?? 0 else { return }
         
         // Highlight for ViewModels
-        if let item = template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewHighlightedCellProtocol {
-            item.highlight()
-        }
-        
-        // Highlight for Views
-        if let item = template?.viewModels[indexPath.section].cells[indexPath.row]?.getView as? CCViewHighlightedCellProtocol {
-            item.highlight()
+        if let item = template?.viewModels[indexPath.section].cells[indexPath.row] {
+            item.didHighlight()
         }
     }
     
@@ -138,18 +157,13 @@ class CCTableViewDelegate: CCDelegate, CCTableViewDelegateProtocol, UITableViewD
         guard indexPath.section < template?.viewModels.count ?? 0 else { return }
         
         // UnHighlight for ViewModels
-        if let item = template?.viewModels[indexPath.section].cells[indexPath.row] as? CCViewHighlightedCellProtocol {
-            item.unhiglight()
-        }
-        
-        // UnHighlight for Views
-        if let item = template?.viewModels[indexPath.section].cells[indexPath.row]?.getView as? CCViewHighlightedCellProtocol {
-            item.unhiglight()
+        if let item = template?.viewModels[indexPath.section].cells[indexPath.row] {
+            item.didUnHighlight()
         }
     }
-    
 }
 
+// MARK: - Helpers
 extension CCTableViewDelegate {
     func nibSection(nameNib: String) -> CCTableViewSection? {
         return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as? CCTableViewSection

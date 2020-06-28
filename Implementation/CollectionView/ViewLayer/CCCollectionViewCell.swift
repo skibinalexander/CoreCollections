@@ -8,13 +8,14 @@
 
 import UIKit
 
-class CCCollectionViewCell: UICollectionViewCell, CCViewCellProtocol {
+protocol CCCollectionViewCellProtocol: UICollectionViewCell, CCViewCellProtocol {
+
+}
+
+class CCCollectionViewCell: UICollectionViewCell, CCCollectionViewCellProtocol {
     weak var viewModel: CCViewModelProtocol?
-    weak var output:    CCViewModelOutputProtocol?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        self.viewModel?.updateView()
-    }
+}
+
+extension CCCollectionViewCell {
+    static var reusableName: String { return String(describing: self) }
 }
