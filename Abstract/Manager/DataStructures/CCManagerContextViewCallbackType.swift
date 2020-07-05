@@ -8,10 +8,22 @@
 
 import Foundation
 
+/// Список типов обновления UI таблицы
+///
+/// Данный enum представляет список типов обновления UI viewModels
 enum CCManagerContextViewCallbackType {
+    /// Не обновлять UI
     case withoutChangeView
+    
+    /// Перезагрузить полностью UI
     case reloadCollection
+    
+    /// Перезагрузить секцию по индексу
     case reloadInSection(Int)
+    
+    /// Произвести вставку ячеек по indexPaths
     case insertIntoCollection
+    
+    /// Произвести удаление ячеек по  indexPaths
     case removeFromCollection
 }

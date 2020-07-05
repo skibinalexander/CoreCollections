@@ -9,7 +9,10 @@
 import UIKit
 
 extension UITableView {
+    
+    /// Регистрация ячейка по Id для UINib
     func registerReuseble(nibName: String) {
         self.register(UINib(nibName: nibName, bundle: nil), forCellReuseIdentifier: nibName)
     }
+    
 }

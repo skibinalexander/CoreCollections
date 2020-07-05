@@ -55,13 +55,20 @@ protocol CCManagerProtocol: class {
 }
 
 // MARK: - CCManagerContextProtocol
-protocol CCManagerContextProtocol: class {
-    var items: [CCItemModel] { get set }
-    
+protocol CCManagerContextSettersProtocol {
     func set(viewDelegate: CCManagerContextViewCallbackProtocol?)
     func set(template: CCTemplateViewModels?)
     func set(items: [CCItemModel]?)
+}
+
+protocol CCManagerContextItemsProtocol {
+    func append(item: CCItemModel)
     func intert(item: CCItemModel, at index: Int)
+    func remove(item: CCItemModel, at index: Int)
+}
+
+protocol CCManagerContextProtocol: class, CCManagerContextSettersProtocol, CCManagerContextItemsProtocol {
+    var items: [CCItemModel] { get set }
     
     func isEmpty() -> Bool
     
