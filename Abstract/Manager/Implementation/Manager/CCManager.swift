@@ -45,7 +45,7 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
         return delegate
     }
     
-    func getView() -> CCContainerViewInputProtocol {
+    func getView() -> CCContainerViewInputProtocol! {
         return containerView
     }
     
@@ -63,7 +63,7 @@ extension CCManager {
     }
     
     func endRefresh() {
-        getView().endRefresing()
+        getView()?.endRefresing()
         isRefreshing = false
     }
     
