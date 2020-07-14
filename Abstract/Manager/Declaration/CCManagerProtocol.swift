@@ -23,7 +23,7 @@ protocol CCManagerProtocol: class {
     // MARK: - Getters
     func getDataSource() -> CCDataSourceProtocol?
     func getDelegate() -> CCDelegate
-    func getView() -> CCContainerViewInputProtocol
+    func getView() -> CCContainerViewInputProtocol!
     func getData() -> CCManagerContextProtocol
     
     // - Access to Refresh control flow
