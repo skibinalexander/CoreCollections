@@ -12,12 +12,9 @@ protocol CCTableViewModelCellProtocol: CCModelCellProtocol {
     
 }
 
-class CCTableViewModelCell: CCTableViewModelCellProtocol {
-    // MARK: - Properties
-    var id: String?
-    weak var item: CCItemModel?
-    weak var viewModel: CCViewModelProtocol?
+class CCTableViewModelCell: CCModelCell, CCTableViewModelCellProtocol {
     
     // MARK: - Lifecycle
     init(id: String? = nil) { self.id = id }
+    
 }
