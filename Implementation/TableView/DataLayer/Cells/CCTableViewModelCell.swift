@@ -14,7 +14,4 @@ protocol CCTableViewModelCellProtocol: CCModelCellProtocol {
 
 class CCTableViewModelCell: CCModelCell, CCTableViewModelCellProtocol {
     
-    // MARK: - Lifecycle
-    init(id: String? = nil) { self.id = id }
-    
 }

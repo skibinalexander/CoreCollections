@@ -21,4 +21,10 @@ public class CCModelCell: CCModelCellProtocol {
     
     var viewModel: CCViewModelProtocol?
     
+    // MARK: - Lifecycle
+    
+    init(id: String? = nil) {
+        self.id = id
+    }
+    
 }
