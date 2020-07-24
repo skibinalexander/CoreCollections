@@ -87,11 +87,11 @@ class CCTableViewController: UIViewController, CCContainerViewInputProtocol {
         }
     }
     
-    func beginRefresing() {
+    func beginRefreshing() {
         self.refreshControl.beginRefreshing()
     }
     
-    func endRefresing() {
+    func endRefreshing() {
         if self.refreshControl.isRefreshing {
             self.refreshControl.endRefreshing()
         }
