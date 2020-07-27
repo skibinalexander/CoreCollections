@@ -26,8 +26,8 @@ protocol CCContainerViewInputProtocol: class {
     func configurePagination(output: CCContainerViewPrefetchOutputProtocol?)
     func configureRefresh(output: CCContainerViewRefreshOutputProtocol?)
     
-    func beginRefresing()
-    func endRefresing()
+    func beginRefreshing()
+    func endRefreshing()
     
     func reloadContainer()
     
@@ -42,8 +42,8 @@ extension CCContainerViewInputProtocol {
     func configurePagination(output: CCContainerViewPrefetchOutputProtocol?) {}
     func configureRefresh(output: CCContainerViewRefreshOutputProtocol?) {}
     
-    func beginRefresing() {}
-    func endRefresing() {}
+    func beginRefreshing() {}
+    func endRefreshing() {}
     
     func insertCells(at paths: [IndexPath]) {}
     func removeCells(at paths: [IndexPath]) {}

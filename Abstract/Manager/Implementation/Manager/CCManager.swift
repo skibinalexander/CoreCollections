@@ -58,12 +58,12 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
 extension CCManager {
     func beginRefresh() {
         getData().refreshAllInAllItems()
-        getView().beginRefresing()
+        getView()?.beginRefreshing()
         isRefreshing = true
     }
     
     func endRefresh() {
-        getView()?.endRefresing()
+        getView()?.endRefreshing()
         isRefreshing = false
     }
     
