@@ -23,20 +23,23 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] else { fatalError() }
+        guard let viewModel = self.template?.viewModels[indexPath.section].cells[indexPath.row] else { fatalError() }
         
-        cell.indexPath = indexPath
+        viewModel.indexPath = indexPath
         
         //  Иницализация view для ячейки
-        switch cell.nibType {
-        case .reusebleId(let id): cell.inject(view: tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as? CCTableViewCell)
-        case .reusebleName(let name): cell.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell)
+        switch viewModel.nibType {
+        case .reusebleId(let id):
+            let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as? CCTableViewCell
+            viewModel.inject(view: cell)
+        case .reusebleName(let name):
+            viewModel.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell)
         }
         
-        cell.initialViewFromNib()
+        viewModel.initialViewFromNib()
         
-        guard let viewCell = cell.getView as? UITableViewCell & CCViewCellProtocol else {
-            fatalError("CCTableViewDataSource: view for ViewModel \(String(describing: type(of: cell))) not initialization!")
+        guard let viewCell = viewModel.getView as? UITableViewCell & CCViewCellProtocol else {
+            fatalError("CCTableViewDataSource: view for ViewModel \(String(describing: type(of: viewModel))) not initialization!")
         }
         
         return viewCell

@@ -12,7 +12,10 @@ extension UITableView {
     
     /// Регистрация CCTableViewCell
     func register(_ coreCollectionCell: CCTableViewCell.Type) {
-        register(coreCollectionCell, forCellReuseIdentifier: coreCollectionCell.reusebleName)
+        register(
+            UINib(nibName: coreCollectionCell.reusebleName, bundle: nil),
+            forCellReuseIdentifier: coreCollectionCell.reusebleName
+        )
     }
     
 }
