@@ -11,3 +11,24 @@ import Foundation
 protocol CCModelCellProtocol: CCModelProtocol {
     
 }
+
+/// Базовый класс для ячеек в CoreCollection
+public class CCModelCell: CCModelCellProtocol {
+    
+    // MARK: - Stored Properties
+    
+    var id: String?
+    
+    // MARK: - Injection Properties
+    
+    var item: CCItemModel?
+    
+    var viewModel: CCViewModelProtocol?
+    
+    // MARK: - Lifecycle
+    
+    init(id: String? = nil) {
+        self.id = id
+    }
+    
+}

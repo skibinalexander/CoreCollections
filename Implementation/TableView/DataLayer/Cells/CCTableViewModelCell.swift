@@ -13,18 +13,6 @@ protocol CCTableViewModelCellProtocol: CCModelCellProtocol {
 }
 
 /// Базовый класс для моделей для ячеек
-class CCTableViewModelCell: CCTableViewModelCellProtocol {
-    
-    var id: String?
-    
-    var item: CCItemModel?
-    
-    var viewModel: CCViewModelProtocol?
-    
-    // MARK: - Lifecycle
-    
-    init(id: String? = nil) {
-        self.id = id
-    }
+class CCTableViewModelCell: CCModelCell, CCTableViewModelCellProtocol {
     
 }
