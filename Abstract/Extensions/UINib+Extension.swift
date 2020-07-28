@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension UINib {
+extension UINib {
 
     /// Согласно документации, так должен работать оригинальный метод nibWithNibName:bundle
     /// Однако, он возвращает некоторую сущность, несмотря на отсутствие в bundle nib с указанным именем.
