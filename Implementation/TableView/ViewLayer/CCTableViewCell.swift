@@ -12,7 +12,7 @@ protocol CCTableViewCellProtocol: UITableViewCell, CCViewCellProtocol {
     
 }
 
-class CCTableViewCell: UITableViewCell, CCTableViewCellProtocol {
+public class CCTableViewCell: UITableViewCell, CCTableViewCellProtocol {
     weak var viewModel: CCViewModelProtocol?
 }
 

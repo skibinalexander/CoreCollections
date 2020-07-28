@@ -8,14 +8,18 @@
 
 import UIKit
 
-extension UITableView {
+public extension UITableView {
     
     /// Регистрация CCTableViewCell
+    /// Независимо от наличия xib
     func register(_ coreCollectionCell: CCTableViewCell.Type) {
-        register(
-            UINib(nibName: coreCollectionCell.reusebleName, bundle: nil),
-            forCellReuseIdentifier: coreCollectionCell.reusebleName
-        )
+        if UINib.nib(withClass: coreCollectionCell) != nil {
+            register(
+                UINib(nibName: coreCollectionCell.reusebleName, bundle: nil),
+                forCellReuseIdentifier: coreCollectionCell.reusebleName
+            )
+        } else {
+            register(coreCollectionCell, forCellReuseIdentifier: coreCollectionCell.reusebleName)
+        }
     }
-    
 }
