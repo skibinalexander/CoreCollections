@@ -15,9 +15,9 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
     var dataSource: CCDataSourceProtocol!
     var delegate: CCDelegate!
     
-    var containerView: CCContainerViewInputProtocol!
+    weak var containerView: CCContainerViewInputProtocol!
     var containerData: CCManagerContextProtocol!
-    var viewDelegate: CCManagerContextViewCallbackProtocol!
+    weak var viewDelegate: CCManagerContextViewCallbackProtocol!
     
     var items: [CCItemModel] {
         get { return containerData.items }
