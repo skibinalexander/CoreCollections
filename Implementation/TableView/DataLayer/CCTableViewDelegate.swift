@@ -15,9 +15,11 @@ protocol CCTableViewDelegateOutputProtocol: CCDelegateOutputProtocol {
 class CCTableViewDelegate: CCDelegate, UITableViewDelegate {
     
     // MARK: - Properties
+    
     private weak var output: CCTableViewDelegateOutputProtocol?
     
     // MARK: - Lifecycle
+    
     init(output: CCTableViewDelegateOutputProtocol?, template: CCTemplateViewModelsProtocol?) {
         self.output = output
         super.init(template: template)
@@ -25,7 +27,8 @@ class CCTableViewDelegate: CCDelegate, UITableViewDelegate {
     
 }
 
-// MARL: - Heights
+// MARK: - Heights Managment
+
 extension CCTableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
@@ -68,24 +71,43 @@ extension CCTableViewDelegate {
         return nil
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let item = self.template?.viewModels[section].header
-        switch item?.height {
-        case .automatic?: return UITableView.automaticDimension
-        case .value(let height)?: return CGFloat(height)
-        default: return .zero
+        guard self.template.viewModels.count > section else {
+            #if DEBUG
+            print("CoreCollection: heightForHeaderInSection count < section")
+            #endif
+            return .zero
         }
+        
+        let item = self.template?.viewModels[section].header
+        return updateHeight(for: item?.height)
     }
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let item = self.template?.viewModels[section].footer
-        switch item?.height {
-        case .automatic?: return UITableView.automaticDimension
-        case .value(let height)?: return CGFloat(height)
-        default: return .zero
+        guard self.template.viewModels.count > section else {
+            #if DEBUG
+            print("CoreCollection: heightForHeaderInSection count < section")
+            #endif
+            return .zero
         }
+        
+        let item = self.template?.viewModels[section].footer
+        return updateHeight(for: item?.height)
     }
-    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        let item = self.template?.viewModels[section].header
-        switch item?.height {
+
+//    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+//        guard self.template.viewModels.count > section else {
+//            #if DEBUG
+//            print("CoreCollection: estimatedHeightForHeaderInSection count < section")
+//            #endif
+//            return .zero
+//        }
+//        
+//        let item = self.template?.viewModels[section].header
+//        return updateHeight(for: item?.height)
+//    }
+    
+    private func updateHeight(for height: CCViewModelHeight?) -> CGFloat {
+        switch height {
         case .automatic?: return UITableView.automaticDimension
         case .value(let height)?: return CGFloat(height)
         default: return .zero
@@ -94,6 +116,7 @@ extension CCTableViewDelegate {
 }
 
 // MARK: - Selections
+
 extension CCTableViewDelegate {
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
@@ -134,7 +157,8 @@ extension CCTableViewDelegate {
     }
 }
 
-// MARK: - Highlight
+// MARK: -
+
 extension CCTableViewDelegate {
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
@@ -163,9 +187,14 @@ extension CCTableViewDelegate {
     }
 }
 
-// MARK: - Helpers
+// MARK: - Creation
+
 extension CCTableViewDelegate {
     func nibSection(nameNib: String) -> CCTableViewSection? {
-        return Bundle.main.loadNibNamed(String(describing: nameNib), owner: nil, options: nil)![0] as? CCTableViewSection
+        return Bundle.main.loadNibNamed(
+            String(describing: nameNib),
+            owner: nil,
+            options: nil
+        )![0] as? CCTableViewSection
     }
 }

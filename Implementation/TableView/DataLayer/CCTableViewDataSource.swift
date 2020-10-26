@@ -19,6 +19,11 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard self.template?.viewModels.count ?? 0 > section else {
+            print("CCTableViewDataSource: numberOfRowsInSection -> count > section")
+            return .zero
+        }
+        
         return self.template?.viewModels[section].cells.count ?? 0
     }
     
