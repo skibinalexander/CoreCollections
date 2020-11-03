@@ -185,6 +185,15 @@ extension CCTableViewDelegate {
             item.didUnHighlight()
         }
     }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
+            cell.willDisplay()
+            self.output?.willDisplay(viewModel: cell)
+        } else {
+            assertionFailure("CCTableViewDelegate: undefined cell")
+        }
+    }
 }
 
 // MARK: - Creation
