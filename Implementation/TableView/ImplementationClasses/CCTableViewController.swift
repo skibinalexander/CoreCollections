@@ -97,6 +97,10 @@ class CCTableViewController: UIViewController, CCContainerViewInputProtocol {
         }
     }
     
+    func isEditing(_ editing: Bool) {
+        tableView.isEditing = editing
+    }
+    
     // MARK: - Refreshing
     
     @objc func refreshAction() {

@@ -13,16 +13,21 @@ protocol CCTemplateViewModelsDataSource: class {
 }
 
 protocol CCTemplateViewModelsProtocol: class {
-    var isRefreshing: Bool { get set }
     var viewModels: [CCItemViewModel] { get set }
+    
+    func moveRowAt(sourceIndexPath: IndexPath, destinationIndexPath: IndexPath)
 }
 
 class CCTemplateViewModels: CCTemplateViewModelsProtocol {
-    // MARK: - Private Properties
+    
+    // MARK: - Public Properties
+    
     public weak var dataSource: CCTemplateViewModelsDataSource?
     
-    var viewModels: [CCItemViewModel] = []
-    var isRefreshing: Bool = false
+    ///
+    public var viewModels: [CCItemViewModel] = []
+    
+    // MARK: - Private Properties
     
     internal var createHeader: ((_ model: CCModelSectionProtocol?) -> CCViewModelSectionProtocol?)?
     internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelSectionProtocol?)?
@@ -31,11 +36,33 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     required init(dataSource: CCTemplateViewModelsDataSource) {
         self.dataSource = dataSource
     }
+    
+    // MARK: - Private Implementation
+    
+    private func removeViewModelAndModelCell(at indexPath: IndexPath) {
+        guard let dataSource = self.dataSource, dataSource.items.count == viewModels.count else {
+            return
+        }
+        
+        viewModels[indexPath.section].cells.remove(at: indexPath.row)
+        dataSource.items[indexPath.section].cells.remove(at: indexPath.row)
+    }
+    
+    private func insertViewModelAndModelCell(viewModel: CCViewModelCellProtocol, model: CCModelCellProtocol, at indexPath: IndexPath) {
+        guard let dataSource = self.dataSource, dataSource.items.count == viewModels.count else {
+            return
+        }
+        
+        viewModels[indexPath.section].cells.insert(viewModel, at: indexPath.row)
+        dataSource.items[indexPath.section].cells.insert(model, at: indexPath.row)
+    }
+    
 }
 
 // MARK: - Sections
 
 extension CCTemplateViewModels {
+    
     final func reloadViewModelsItems() {
         self.viewModels = []
         self.viewModels = dataSource?.items.map { CCItemViewModel(id: $0.id) } ?? []
@@ -74,6 +101,7 @@ extension CCTemplateViewModels {
             item.cells.forEach({ $0?.reference(item: item)})
         }
     }
+    
 }
 
 // MARK: - Cells
@@ -133,4 +161,20 @@ extension CCTemplateViewModels {
         
         return paths
     }
+}
+
+extension CCTemplateViewModels {
+    
+    func moveRowAt(sourceIndexPath: IndexPath, destinationIndexPath: IndexPath) {
+        if let movedViewModelCell = viewModels[sourceIndexPath.section].cells[sourceIndexPath.row],
+           let movedModel: CCModelCellProtocol = viewModels[sourceIndexPath.section].cells[sourceIndexPath.row]?.typealiasModel() {
+            
+            removeViewModelAndModelCell(at: sourceIndexPath)
+            insertViewModelAndModelCell(viewModel: movedViewModelCell, model: movedModel, at: destinationIndexPath)
+            
+        } else {
+            reloadViewModelsItems()
+        }
+    }
+    
 }

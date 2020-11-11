@@ -40,7 +40,9 @@ protocol CCModelProtocol: class {
 }
 
 protocol CCViewModelProtocol: class {
+    
     // MARK: - Public Properties
+    
     var item: CCItemViewModel? { get set }
     
     var nibType: CCViewModelCellViewSourceType { get set }
@@ -50,6 +52,7 @@ protocol CCViewModelProtocol: class {
     var getView: CCViewProtocol? { get }
     
     // MARK: - Inection
+    
     func inject(model: CCModelProtocol?)
     func inject(view: CCViewProtocol?)
     
@@ -58,7 +61,10 @@ protocol CCViewModelProtocol: class {
     
     func reference(item: CCItemViewModel?)
     
-    // MARK: - Implementation
+    // MARK: - Default Implementation
+    
+    func typealiasModel<T>() -> T?
+    
     func initialViewFromNib()
     func updateViewFromModel()
     func updateModelFromView()
@@ -73,21 +79,26 @@ protocol CCViewModelInitialization: class {
 }
 
 class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, CCViewModelInitialization {
+    
     // MARK: - Typealias
+    
     typealias View = V
     typealias Model = M
     
     // MARK: - Weak
+    
     weak var view: V!
     weak var model: M!
     
     // MARK: - Public
+    
     weak var item: CCItemViewModel?
     
     var nibType: CCViewModelCellViewSourceType
     var height: CCViewModelHeight
     
-    //  Getters Properties
+    // MARK: - Getters Properties
+    
     var getView: CCViewProtocol? {
         return view
     }
@@ -97,12 +108,14 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     }
     
     // MARK: - Initialization
+    
     init(nibType: CCViewModelCellViewSourceType = .reusebleName(V.typeOf), height: CCViewModelHeight) {
         self.nibType = nibType
         self.height = height
     }
     
     // MARK: - Injections
+    
     func inject(view: CCViewProtocol?) {
         self.view = view as? V
         self.view?.viewModel = self
@@ -127,8 +140,20 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
         self.item = item
     }
     
-    // MARK: -
+    // MARK: - Default Implementation
+    
+    /// Default typealias casting model for type
+    func typealiasModel<T>() -> T? {
+        model as? T
+    }
+    
+    /// Default method for use instance view model
     func initialViewFromNib() { }
+    
+    /// Default method for use in updating view from model
     func updateViewFromModel() { }
+    
+    /// Default method for use in updating model from view
     func updateModelFromView() { }
+    
 }

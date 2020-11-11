@@ -155,11 +155,13 @@ extension CCTableViewDelegate {
             assertionFailure("CCTableViewDelegate: undefined cell")
         }
     }
+    
 }
 
 // MARK: -
 
 extension CCTableViewDelegate {
+    
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         if let cell = self.template?.viewModels[indexPath.section].cells[indexPath.row] {
             return cell.shouldHighlight()
@@ -194,6 +196,19 @@ extension CCTableViewDelegate {
             assertionFailure("CCTableViewDelegate: undefined cell")
         }
     }
+    
+}
+
+extension CCTableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
 }
 
 // MARK: - Creation

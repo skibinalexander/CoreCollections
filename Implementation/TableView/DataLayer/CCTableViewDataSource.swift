@@ -13,7 +13,13 @@ protocol CCTableViewDataSourceProtocol: CCDataSourceProtocol {
 }
 
 // MARK: - UITableViewDataSource
+
 class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITableViewDataSource {
+    
+    public var canMoveAtRow: Bool = false
+    
+    // MARK: - UITableViewDataSource
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.template?.viewModels.count ?? 0
     }
@@ -49,6 +55,18 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
         
         return viewCell
     }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        template?.moveRowAt(
+            sourceIndexPath: sourceIndexPath,
+            destinationIndexPath: destinationIndexPath
+        )
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
 }
 
 extension CCTableViewDataSource {

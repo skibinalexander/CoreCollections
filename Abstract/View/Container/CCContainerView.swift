@@ -36,6 +36,8 @@ protocol CCContainerViewInputProtocol: class {
     func reloadCells(in sections: [Int])
     
     func updateHieghtCell(completion: (() -> Void)?)
+    
+    func isEditing(_ editing: Bool)
 }
 
 extension CCContainerViewInputProtocol {
