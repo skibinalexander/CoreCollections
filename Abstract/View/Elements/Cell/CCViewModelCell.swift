@@ -19,6 +19,8 @@ protocol CCViewModelCellProtocol: CCViewModelProtocol {
     func didHighlight()
     func didUnHighlight()
     func shouldHighlight() -> Bool
+    func editingStyle() -> UITableViewCell.EditingStyle
+    func shouldIndentWhileEditing() -> Bool
 }
 
 class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewModel<V, M>, CCViewModelCellProtocol {
@@ -31,5 +33,7 @@ class CCViewModelCell<V: CCViewCellProtocol, M: CCModelCellProtocol>: CCViewMode
     func didDeselect() {}
     func didHighlight() {}
     func didUnHighlight() {}
-    func shouldHighlight() -> Bool { return true }
+    func shouldHighlight() -> Bool { true }
+    func editingStyle() -> UITableViewCell.EditingStyle { .none }
+    func shouldIndentWhileEditing() -> Bool { false }
 }

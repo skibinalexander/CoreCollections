@@ -11,16 +11,21 @@ import Foundation
 // MARK: - DataSource
 
 protocol CCDataSourceProtocol: class {
-    
+    var canMoveAtRow: Bool { get set }
 }
 
 class CCDataSource: NSObject, CCDataSourceProtocol {
     
     // MARK: - Public Properties
     
+    var canMoveAtRow: Bool = false
+    
+    // MARK: - Private Properties7
+    
     internal weak var template: CCTemplateViewModelsProtocol?
     
     // MARK: - Lifecycle
+    
     init(template: CCTemplateViewModelsProtocol) {
         super.init()
         self.template = template

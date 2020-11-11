@@ -16,8 +16,6 @@ protocol CCTableViewDataSourceProtocol: CCDataSourceProtocol {
 
 class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITableViewDataSource {
     
-    public var canMoveAtRow: Bool = false
-    
     // MARK: - UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -64,7 +62,7 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        true
+        canMoveAtRow
     }
     
 }
