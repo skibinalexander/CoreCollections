@@ -6,7 +6,7 @@
 //  Copyright © 2019 com.skibinalexander.ru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol CCViewModelCellProtocol: CCViewModelProtocol {
     var indexPath: IndexPath! { get set }
