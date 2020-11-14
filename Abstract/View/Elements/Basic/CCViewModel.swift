@@ -108,8 +108,7 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     }
     
     // MARK: - Initialization
-    
-    init(nibType: CCViewModelCellViewSourceType = .reusebleName(V.typeOf), height: CCViewModelHeight) {
+    init(nibType: CCViewModelCellViewSourceType = .reusebleName(V.typeOf), height: CCViewModelHeight = .automatic) {
         self.nibType = nibType
         self.height = height
     }
