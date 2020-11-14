@@ -16,7 +16,3 @@ public class CCTableViewCell: UITableViewCell, CCTableViewCellProtocol {
     weak var viewModel: CCViewModelProtocol?
 }
 
-extension CCTableViewCell {
-    static var reusebleName: String { return String(describing: self) }
-}
-

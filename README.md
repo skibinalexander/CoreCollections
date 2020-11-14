@@ -21,3 +21,7 @@ Or add submodule for your project. Need write this in your terminal program at s
 ```
 git submodule add https://github.com/skibinalexander/CoreCollections.git
 ```
+
+### How it's work
+
+

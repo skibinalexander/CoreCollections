@@ -64,12 +64,16 @@ class CCManagerBuilder {
     final func build() {
         containerData?.set(viewDelegate: self.viewDelegate)
         
-        containerView?.configure(dataSource: self.manager?.getDataSource(), delegate: self.manager?.getDelegate())
+        containerView?.configure(
+            dataSource: self.manager?.getDataSource(),
+            delegate: self.manager?.getDelegate()
+        )
+        
         containerView?.configurePagination(output: prefetchOutput)
         containerView?.configureRefresh(output: refreshOutput)
         
         manager?.set(containerView: containerView)
-        manager?.set(containerData: containerData)
+        manager?.set(containerData: containerData ?? CCManagerContext.newContext())
         
         manager?.append(items: self.items)
     }

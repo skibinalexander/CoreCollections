@@ -9,18 +9,33 @@
 import Foundation
 
 // MARK: - Refreshing
+
 extension CCManagerContext {
+    
+    /// Выполнить refresh для всех items
+    ///
+    /// - Очищает все item в колекции слоя моделей
+    /// - Обновляет слой вью моделей
+    /// - Сообщает вью слою коллекции о необходимости обновления
     func refreshAllItems() {
         items = []
         template.reloadViewModelsItems()
         viewDelegate.didUpdateView(with: .reloadCollection)
     }
     
+    /// Выполнить облновление слоя вью моделей в соотвествии со слоем моделей коллекции
+    ///
+    /// - Обновляет слой вью моделей
+    /// - Сообщает вью слою коллекции о необходимости обновления по типу
     func reloadAllInAllItems(viewCallback type: CCManagerContextViewCallbackType) {
         template.reloadViewModelsItems()
         viewDelegate.didUpdateView(with: type)
     }
     
+    /// Выполнить облновление слоя вью моделей в соотвествии со слоем моделей коллекции
+    ///
+    /// - Обновляет слой вью моделей
+    /// - Сообщает вью слою коллекции о необходимости обновления по типу
     func refreshAllInAllItems() {
         items.forEach({$0.header = nil})
         items.forEach({$0.footer = nil})
@@ -43,4 +58,5 @@ extension CCManagerContext {
        template.reloadViewModelsCells()
        viewDelegate.didUpdateView(with: .reloadCollection)
     }
+    
 }

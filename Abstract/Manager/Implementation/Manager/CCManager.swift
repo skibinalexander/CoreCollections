@@ -9,24 +9,40 @@
 import Foundation
 
 // swiftlint:disable all
+
 class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModelsDataSource {
+    
     // MARK: - Properties
+    
+    /// Шаблон конфигурации viewModels ячеек и секций коллекции
     var template: CCTemplateViewModels!
+    
+    /// DataSource закрытый абстрактным протоколом для коллекции конкретной реализации (UITableView / UICollectionView)
     var dataSource: CCDataSourceProtocol!
+    
+    /// Delegate закрытый абстрактным протоколом для коллекции конкретной реализации (UITableView / UICollectionView)
     var delegate: CCDelegate!
     
+    /// View Layer закрытый абстрактным протоколом управлением конкретной реализацией (UITableView / UICollectionView)
     weak var containerView: CCContainerViewInputProtocol!
+    
+    /// Data Layer закрытый абстрактным протоколом управления данными коллекции
     var containerData: CCManagerContextProtocol!
+    
+    /// Delegate для сообщения events управления View Layer
     weak var viewDelegate: CCManagerContextViewCallbackProtocol!
     
+    /// Набор элементов коллекции для слоя model
     var items: [CCItemModel] {
         get { return containerData.items }
         set { containerData?.items = newValue }
     }
     
+    /// Свойство определяющее состояние refresing
     private var isRefreshing: Bool = false
     
     // MARK: - Setters
+    
     func set(containerView: CCContainerViewInputProtocol?) {
         self.containerView = containerView
     }
@@ -37,6 +53,7 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
     }
     
     // MARK: - Getters
+    
     func getDataSource() -> CCDataSourceProtocol? {
         return dataSource
     }
@@ -55,7 +72,9 @@ class CCManager<T: CCTemplateViewModels>: CCManagerProtocol, CCTemplateViewModel
 }
 
 // MARK: - Refreshing
+
 extension CCManager {
+    
     func beginRefresh() {
         getData().refreshAllInAllItems()
         getView()?.beginRefreshing()
@@ -70,7 +89,9 @@ extension CCManager {
 }
 
 // MARK: -
+
 extension CCManager {
+    
     func append(items: [CCItemModel]) {
         self.items.append(contentsOf: items)
         template.reloadViewModelsItems()
@@ -117,10 +138,13 @@ extension CCManager {
     func item(type: CCItemModel.Identifiers) -> CCItemModel {
         return item(id: type.rawValue)
     }
+    
 }
 
 // MARK: - Access to ViewModels
+
 extension CCManager {
+    
     func updateHeightCell(id: String?, in item: CCItemModel, by value: Float) {
         if let cell = item.cells.first(where: { $0?.id == id }) {
             containerView.updateHieghtCell { cell?.viewModel?.height = .value(value) }
@@ -140,6 +164,7 @@ extension CCManager {
     func isEmpty(in item: CCItemModel) -> Bool {
         return item.cells.isEmpty
     }
+    
 }
 
 // swiftlint:enable all

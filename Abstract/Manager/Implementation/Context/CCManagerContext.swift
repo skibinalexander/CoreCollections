@@ -3,11 +3,12 @@
 //  Vezu
 //
 //  Created by Ольга on 26/10/2019.
-//  Copyright © 2019 VezuAppDevTeam. All rights reserved.
+//  Copyright © 2019 SkibinAlexander. All rights reserved.
 //
 
 import Foundation
 
+/// Класс реализации контекста управления данными коллекции
 class CCManagerContext: CCManagerContextProtocol {
     
     // MARK: - Static
@@ -15,21 +16,22 @@ class CCManagerContext: CCManagerContextProtocol {
     /// Создание нового уникального контекста для работы с коллекцией
     ///
     /// Создает экземпляер контекста
-    static func instance() -> CCManagerContextProtocol {
-        return CCManagerContext()
+    static func newContext() -> CCManagerContextProtocol {
+        CCManagerContext()
     }
     
     // MARK: - Public Properties
     
-    /// Список items для коллекции
+    /// Список items слоя моделей для коллекции
+    
     public var items: [CCItemModel] = []
     
     // MARK: - Private Properties
     
-    /// Шаблон с которым работает контекст
+    /// Шаблон с которым работает контекст данных коллекции
     internal weak var template: CCTemplateViewModels!
     
-    /// UI закрытый протоколом который обновляем контекст
+    /// UI закрытый протоколом который обновляем контекст по струтуре данных коллекции
     internal weak var viewDelegate: CCManagerContextViewCallbackProtocol!
     
 }

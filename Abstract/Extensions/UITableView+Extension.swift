@@ -15,11 +15,14 @@ public extension UITableView {
     func register(_ coreCollectionCell: CCTableViewCell.Type) {
         if UINib.nib(withClass: coreCollectionCell) != nil {
             register(
-                UINib(nibName: coreCollectionCell.reusebleName, bundle: nil),
-                forCellReuseIdentifier: coreCollectionCell.reusebleName
+                UINib(nibName: coreCollectionCell.typeOf, bundle: nil),
+                forCellReuseIdentifier: coreCollectionCell.typeOf
             )
         } else {
-            register(coreCollectionCell, forCellReuseIdentifier: coreCollectionCell.reusebleName)
+            register(
+                coreCollectionCell,
+                forCellReuseIdentifier: coreCollectionCell.typeOf
+            )
         }
     }
 }
