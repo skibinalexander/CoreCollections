@@ -43,10 +43,17 @@ protocol CCViewModelProtocol: class {
     
     // MARK: - Public Properties
     
+    /// Item view models таблицы
     var item: CCItemViewModel? { get set }
     
+    /// Тип инициализации view
     var nibType: CCViewModelCellViewSourceType { get set }
+    
+    /// Заданная высота view
     var height: CCViewModelHeight { get set }
+    
+    /// Быстрый доступ к id модели
+    var modelId: String? { get }
     
     var getModel: CCModelProtocol? { get }
     var getView: CCViewProtocol? { get }
@@ -96,6 +103,10 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     
     var nibType: CCViewModelCellViewSourceType
     var height: CCViewModelHeight
+    
+    var modelId: String? {
+        getModel?.id
+    }
     
     // MARK: - Getters Properties
     
