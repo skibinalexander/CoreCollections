@@ -184,7 +184,7 @@ extension CCTableViewDelegate {
         
         // UnHighlight for ViewModels
         if let item = template?.viewModels[indexPath.section].cells[indexPath.row] {
-            item.didUnHighlight()
+            item.didUnhighlight()
         }
     }
 

@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol CCTemplateViewModelsDataSource: class {
+protocol CCTemplateViewModelsDataSource: AnyObject {
     var items: [CCItemModel] { get }
 }
 
-protocol CCTemplateViewModelsProtocol: class {
+protocol CCTemplateViewModelsProtocol: AnyObject {
     var viewModels: [CCItemViewModel] { get set }
     
     func moveRowAt(sourceIndexPath: IndexPath, destinationIndexPath: IndexPath)
@@ -171,7 +171,6 @@ extension CCTemplateViewModels {
             
             removeViewModelAndModelCell(at: sourceIndexPath)
             insertViewModelAndModelCell(viewModel: movedViewModelCell, model: movedModel, at: destinationIndexPath)
-            
         } else {
             reloadViewModelsItems()
         }
