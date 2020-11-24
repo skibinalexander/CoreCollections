@@ -8,22 +8,27 @@
 
 import UIKit
 
-// MARK: - Base ViewSection
+protocol CCTableViewSectionProtocol: UIView, CCViewSectionProtocol {}
 
-class CCTableViewSection: UIView, CCViewSectionProtocol {
-    // MARK: - CCViewCellProtocol
+public class CCTableViewSection: UIView, CCTableViewSectionProtocol {
     weak var viewModel: CCViewModelProtocol?
 }
 
 // MARK: - Expanded ViewSection
+
+/// Базовый функционал раскрывающейся секции
 class CCTableViewExpandedSection: CCTableViewSection {
+    
     // MARK: - IBOutlets
+    
     @IBOutlet weak var stateButton: UIButton!
     
     // MARK: - Actions
+    
     @IBAction func actionStateButtonDidTouch(_ sender: UIButton) {
         if let viewModel = self.viewModel as? CCTableViewViewModelExpandedSectionProtocol {
             viewModel.changeState()
         }
     }
+    
 }

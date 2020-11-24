@@ -10,9 +10,8 @@ import UIKit
 
 public extension UITableView {
     
-    /// Регистрация CCTableViewCell
-    /// Независимо от наличия xib
-    func register<T: CCTableViewCell>(_ coreCollectionCell: T.Type) {
+    /// Регистрация CCTableViewCell for reuseble Identifier
+    func registerCell<T: CCTableViewCell>(_ coreCollectionCell: T.Type) {
         guard UINib.nib(withClass: coreCollectionCell) != nil else {
             fatalError("CoreCollection->UITableView+Extension: cell \(coreCollectionCell) nibLoad is nil!")
         }
@@ -26,4 +25,21 @@ public extension UITableView {
             forCellReuseIdentifier: coreCollectionCell.typeOf
         )
     }
+    
+    /// Регистрация CCTableViewCell
+    func registerSection<U: CCTableViewSection>(_ coreCollectionSection: U.Type) {
+        guard UINib.nib(withClass: coreCollectionSection) != nil else {
+            fatalError("CoreCollection->UITableView+Extension: section \(coreCollectionSection) nibLoad is nil!")
+        }
+
+        #if DEBUG
+        print("CoreCollection->UITableView+Extension: register \(coreCollectionSection.typeOf)")
+        #endif
+
+        register(
+            UINib(nibName: coreCollectionSection.typeOf, bundle: nil),
+            forCellReuseIdentifier: coreCollectionSection.typeOf
+        )
+    }
+    
 }
