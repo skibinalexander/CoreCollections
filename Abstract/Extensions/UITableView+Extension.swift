@@ -12,17 +12,18 @@ public extension UITableView {
     
     /// Регистрация CCTableViewCell
     /// Независимо от наличия xib
-    func register(_ coreCollectionCell: CCTableViewCell.Type) {
-        if UINib.nib(withClass: coreCollectionCell) != nil {
-            register(
-                UINib(nibName: coreCollectionCell.typeOf, bundle: nil),
-                forCellReuseIdentifier: coreCollectionCell.typeOf
-            )
-        } else {
-            register(
-                coreCollectionCell,
-                forCellReuseIdentifier: coreCollectionCell.typeOf
-            )
+    func register<T: CCTableViewCell>(_ coreCollectionCell: T.Type) {
+        guard UINib.nib(withClass: coreCollectionCell) != nil else {
+            fatalError("CoreCollection->UITableView+Extension: cell \(coreCollectionCell) nibLoad is nil!")
         }
+        
+        #if DEBUG
+        print("CoreCollection->UITableView+Extension: register \(coreCollectionCell.typeOf)")
+        #endif
+        
+        register(
+            UINib(nibName: coreCollectionCell.typeOf, bundle: nil),
+            forCellReuseIdentifier: coreCollectionCell.typeOf
+        )
     }
 }
