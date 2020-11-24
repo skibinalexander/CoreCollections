@@ -9,13 +9,11 @@
 import Foundation
 
 // MARK: - CCManagerBuilder
+
 class CCManagerBuilder {
-    // MARK: - Static
-    static func shared() -> CCManagerBuilder {
-        return CCManagerBuilder()
-    }
     
     // MARK: - Private Properties
+    
     private var manager: CCManagerProtocol?
     private var containerData: CCManagerContextProtocol?
     private weak var containerView: CCContainerViewInputProtocol?
@@ -25,6 +23,7 @@ class CCManagerBuilder {
     private var items: [CCItemModel] = []
     
     // MARK: - Configure
+    
     final func configure(manager: CCManagerProtocol?) -> CCManagerBuilder {
         self.manager = manager
         return self
@@ -61,6 +60,7 @@ class CCManagerBuilder {
     }
     
     // MARK: - Build
+    
     final func build() {
         containerData?.set(viewDelegate: self.viewDelegate)
         
@@ -77,4 +77,5 @@ class CCManagerBuilder {
         
         manager?.append(items: self.items)
     }
+    
 }
