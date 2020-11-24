@@ -12,18 +12,18 @@ import Foundation
 
 extension CCManagerContext {
     
-    // - Шаблон
-    func set(template: CCTemplateViewModels?) {
+    /// Шаблон
+    func set(template: CCTemplateViewModels) {
         self.template = template
     }
     
-    //- UI делегат
-    func set(viewDelegate: CCManagerContextViewCallbackProtocol?) {
+    /// UI делегат
+    func set(viewDelegate: CCManagerContextViewCallbackProtocol) {
         self.viewDelegate = viewDelegate
     }
     
-    // - Список items
-    func set(items: [CCItemModel]?) {
-        self.items = items ?? []
+    /// Список items
+    func set(items: [CCItemModel]) {
+        self.items = items
     }
 }

@@ -14,32 +14,38 @@ class CCManagerBuilder {
     
     // MARK: - Private Properties
     
-    private var manager: CCManagerProtocol?
-    private var containerData: CCManagerContextProtocol?
-    private weak var containerView: CCContainerViewInputProtocol?
-    private weak var viewDelegate: CCManagerContextViewCallbackProtocol?
+    private var manager: CCManagerProtocol!
+    private var containerData: CCManagerContextProtocol!
+    private var containerView: CCContainerViewInputProtocol!
+    private var viewDelegate: CCManagerContextViewCallbackProtocol!
     private weak var prefetchOutput: CCContainerViewPrefetchOutputProtocol?
     private weak var refreshOutput: CCContainerViewRefreshOutputProtocol?
     private var items: [CCItemModel] = []
     
+    // MARK: Init
+    
+    init() {
+        self.containerData = CCManagerContext.newContext()
+    }
+    
     // MARK: - Configure
     
-    final func configure(manager: CCManagerProtocol?) -> CCManagerBuilder {
+    final func configure(manager: CCManagerProtocol) -> CCManagerBuilder {
         self.manager = manager
         return self
     }
     
-    final func configure(containerView: CCContainerViewInputProtocol?) -> CCManagerBuilder {
+    final func configure(containerView: CCContainerViewInputProtocol) -> CCManagerBuilder {
         self.containerView = containerView
         return self
     }
     
-    final func configure(containerData: CCManagerContextProtocol?) -> CCManagerBuilder {
+    final func configure(containerData: CCManagerContextProtocol) -> CCManagerBuilder {
         self.containerData = containerData
         return self
     }
     
-    final func configure(viewDelegate: CCManagerContextViewCallbackProtocol?) -> CCManagerBuilder {
+    final func configure(viewDelegate: CCManagerContextViewCallbackProtocol) -> CCManagerBuilder {
         self.viewDelegate = viewDelegate
         return self
     }
@@ -61,8 +67,9 @@ class CCManagerBuilder {
     
     // MARK: - Build
     
+    /// Проставление зависимостей
     final func build() {
-        containerData?.set(viewDelegate: self.viewDelegate)
+        containerData.set(viewDelegate: viewDelegate)
         
         containerView?.configure(
             dataSource: self.manager?.getDataSource(),
