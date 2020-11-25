@@ -9,17 +9,25 @@
 import Foundation
 
 // MARK: - BasicTableViewPresenter
-protocol CCTableViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol {
+
+protocol CCTableViewPresenterProtocol:
+    CCContainerViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol {
     
 }
 
 class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtocol, CCContainerViewRefreshOutputProtocol {
+    
     // MARK: - Properties
+    
     var manager: CCManagerProtocol!
     
     // MARK: - Lifecycle
+    
     init() {
-        self.manager = CCTableViewManager<T>(delegateOutput: self, viewDelegate: self)
+        self.manager = CCTableViewManager<T>(
+            delegateOutput: self,
+            viewDelegate: self
+        )
     }
     
     func willDisplay(viewModel: CCViewModelCellProtocol) { }
@@ -32,7 +40,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
 }
 
 class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
-    // MARK: - CCTableViewControllerPrefetchOutputProtocol
+    
     func batchNumberRows(in section: Int) -> Int {
         manager.item(index: section).cells.count
     }
@@ -51,6 +59,7 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
 }
 
 extension CCTableViewPresenter: CCManagerContextViewCallbackProtocol {
+    
     func didUpdateView(with type: CCManagerContextViewCallbackType) {
         switch type {
         case .reloadInSection(let index): manager.getView().reloadCells(in: [index])
@@ -66,4 +75,5 @@ extension CCTableViewPresenter: CCManagerContextViewCallbackProtocol {
         default: manager.getView().reloadContainer()
         }
     }
+    
 }

@@ -9,18 +9,23 @@
 import Foundation
 
 // MARK: - CCManagerContextViewCallbackProtocol
+
 protocol CCManagerContextViewCallbackProtocol: class {
     func didUpdateView(with type: CCManagerContextViewCallbackType)
     func didUpdateView(with type: CCManagerContextViewCallbackType, for paths: [IndexPath])
 }
 
 // MARK: - CCManagerProtocol
+
 protocol CCManagerProtocol: class {
+    
     // MARK: - Setters
+    
     func set(containerData: CCManagerContextProtocol?)
     func set(containerView: CCContainerViewInputProtocol?)
     
     // MARK: - Getters
+    
     func getDataSource() -> CCDataSourceProtocol?
     func getDelegate() -> CCDelegate
     func getView() -> CCContainerViewInputProtocol!
@@ -55,10 +60,11 @@ protocol CCManagerProtocol: class {
 }
 
 // MARK: - CCManagerContextProtocol
+
 protocol CCManagerContextSettersProtocol {
-    func set(viewDelegate: CCManagerContextViewCallbackProtocol?)
-    func set(template: CCTemplateViewModels?)
-    func set(items: [CCItemModel]?)
+    func set(viewDelegate: CCManagerContextViewCallbackProtocol)
+    func set(template: CCTemplateViewModels)
+    func set(items: [CCItemModel])
 }
 
 protocol CCManagerContextItemsProtocol {

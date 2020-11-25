@@ -8,15 +8,9 @@
 
 import UIKit
 
-protocol CCTableViewCellProtocol: UITableViewCell, CCViewCellProtocol {
-    
-}
+protocol CCTableViewCellProtocol: UITableViewCell, CCViewCellProtocol {}
 
 public class CCTableViewCell: UITableViewCell, CCTableViewCellProtocol {
     weak var viewModel: CCViewModelProtocol?
-}
-
-extension CCTableViewCell {
-    static var reusebleName: String { return String(describing: self) }
 }
 

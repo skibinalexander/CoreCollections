@@ -22,10 +22,13 @@ public enum CCViewModelHeight {
 // MARK: - Protocols
 
 protocol CCViewProtocol: class {
+    
     // MARK: - Static
+    
     static var typeOf: String { get }
     
     // MARK: - Public Properties
+    
     var viewModel: CCViewModelProtocol? { get set }
 }
 
