@@ -33,6 +33,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     func willDisplay(viewModel: CCViewModelCellProtocol) { }
     func didSelect(viewModel: CCViewModelCellProtocol) { }
     func didDeselect(viewModel: CCViewModelCellProtocol) { }
+    func scrollDidChange() {}
     
     func refreshList() {
         manager.beginRefresh()

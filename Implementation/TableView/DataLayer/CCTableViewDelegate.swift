@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CCTableViewDelegateOutputProtocol: CCDelegateOutputProtocol {
-    
+    func scrollDidChange()
 }
 
 class CCTableViewDelegate: CCDelegate, UITableViewDelegate {
@@ -207,6 +207,14 @@ extension CCTableViewDelegate {
 
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return false
+    }
+    
+}
+
+extension CCTableViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        output?.scrollDidChange()
     }
     
 }
