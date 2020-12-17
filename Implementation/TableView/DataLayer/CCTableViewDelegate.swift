@@ -10,6 +10,7 @@ import UIKit
 
 protocol CCTableViewDelegateOutputProtocol: CCDelegateOutputProtocol {
     func scrollDidChange()
+    func scrollViewDidEndScrollingAnimation()
 }
 
 class CCTableViewDelegate: CCDelegate, UITableViewDelegate {
@@ -215,6 +216,10 @@ extension CCTableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         output?.scrollDidChange()
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        output?.scrollViewDidEndScrollingAnimation()
     }
     
 }
