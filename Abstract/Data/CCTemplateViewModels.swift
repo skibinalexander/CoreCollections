@@ -29,7 +29,7 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     
     // MARK: - Private Properties
     
-    internal var createHeader: ((_ model: CCModelSectionProtocol?) -> CCViewModelSectionProtocol?)?
+    internal var createHeader: ((_ model: CCModelSectionProtocol) -> CCViewModelSectionProtocol)?
     internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelSectionProtocol?)?
     internal var createCell: ((_ model: CCModelCellProtocol?) -> CCViewModelCellProtocol)?
     
@@ -72,8 +72,11 @@ extension CCTemplateViewModels {
     
     final func reloadViewModelSections() {
         dataSource?.items.enumerated().forEach { (index, element) in
-            self.viewModels[index].header = self.createHeader?(element.header)?.inject(with: element.header) as? CCViewModelSectionProtocol
-            self.viewModels[index].footer = self.createFooter?(element.footer, index)?.inject(with: element.footer) as? CCViewModelSectionProtocol
+            if let header = element.header {
+                viewModels[index].header = self.createHeader?(header).inject(with: element.header) as? CCViewModelSectionProtocol
+            }
+            
+            viewModels[index].footer = self.createFooter?(element.footer, index)?.inject(with: element.footer) as? CCViewModelSectionProtocol
         }
         
         self.viewModels.forEach { (item) in
