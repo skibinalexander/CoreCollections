@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Базовая модель секции (header / footer)
 protocol CCModelSectionProtocol: CCModelProtocol {
     
 }

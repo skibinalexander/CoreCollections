@@ -10,13 +10,26 @@ import Foundation
 
 // MARK: - Constants
 
+/// Параметр создания View элемента ячейки или секции
 public enum CCViewModelCellViewSourceType {
-    case reusebleId(String)     // - Reuse from registered identifier
-    case reusebleName(String)   // - Reuse recreate from nib
+    
+    /// Reuse from registered identifier
+    case reusebleId(String)
+    
+    /// Reuse recreate from nib
+    case reusebleName(String)
+    
 }
+
+/// Параметр определения высоты UI элемента ячейки или секции
 public enum CCViewModelHeight {
+    
+    /// Автоматическая высота элемнта
     case automatic
+    
+    /// Фиксированное значение высоты
     case value(Float)
+    
 }
 
 // MARK: - Protocols
@@ -25,10 +38,12 @@ protocol CCViewProtocol: class {
     
     // MARK: - Static
     
+    /// Идентификатор создания UI
     static var typeOf: String { get }
     
     // MARK: - Public Properties
     
+    /// ViewModel ячейки или секции
     var viewModel: CCViewModelProtocol? { get set }
 }
 
@@ -36,12 +51,21 @@ extension CCViewProtocol {
     static var typeOf: String { return String(describing: Self.self) }
 }
 
+/// Базова сущность модели для ячеек и секций
 protocol CCModelProtocol: class {
+    
+    /// Идентификатор модели
     var id: String? { get set }
+    
+    /// Item принадлежности коллекции
     var item: CCItemModel? { get set }
+    
+    /// ViewModel ячейки или секции
     var viewModel: CCViewModelProtocol? { get set }
+    
 }
 
+/// Базовая сущность вью-модели для ячеек и секций
 protocol CCViewModelProtocol: class {
     
     // MARK: - Public Properties
@@ -97,16 +121,24 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     
     // MARK: - Weak
     
+    /// View слой
     weak var view: V!
+    
+    /// Model слой
     weak var model: M!
     
     // MARK: - Public
     
+    /// Item коллекции
     weak var item: CCItemViewModel?
     
+    /// Тип View
     var nibType: CCViewModelCellViewSourceType
+    
+    /// Тип и значение высоты View
     var height: CCViewModelHeight
     
+    /// Идентификатор параметра id модели
     var modelId: String? {
         getModel?.id
     }
@@ -122,6 +154,11 @@ class CCViewModel<V: CCViewProtocol, M: CCModelProtocol>: CCViewModelProtocol, C
     }
     
     // MARK: - Initialization
+    
+    /// Базовый инициализатор для ViewModel
+    /// - Parameters:
+    ///   - nibType: Параметр типа View ячейки или секции
+    ///   - height: Параметр высоты View ячейки или секции
     init(nibType: CCViewModelCellViewSourceType = .reusebleName(V.typeOf), height: CCViewModelHeight = .automatic) {
         self.nibType = nibType
         self.height = height

@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Базовая вью секции (header / footer)
 protocol CCViewSectionProtocol: CCViewProtocol {
     
 }
