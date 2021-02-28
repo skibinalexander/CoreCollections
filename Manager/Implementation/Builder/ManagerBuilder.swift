@@ -8,9 +8,8 @@
 
 import Foundation
 
-// MARK: - ManagerBuilder
-
-class ManagerBuilder {
+/// Строитель для менеджера коллекции
+public class ManagerBuilder {
     
     // MARK: - Private Properties
     
@@ -22,7 +21,7 @@ class ManagerBuilder {
     private weak var refreshOutput: ContainerViewRefreshOutputProtocol?
     private var items: [ItemModel] = []
     
-    // MARK: Init
+    // MARK: Initialization
     
     init() {
         self.containerData = ManagerContext.newContext()

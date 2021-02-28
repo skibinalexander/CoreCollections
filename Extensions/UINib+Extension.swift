@@ -8,12 +8,12 @@
 
 import UIKit
 
-extension UINib {
+public extension UINib {
 
     /// Согласно документации, так должен работать оригинальный метод nibWithNibName:bundle
     /// Однако, он возвращает некоторую сущность, несмотря на отсутствие в bundle nib с указанным именем.
     /// Пришлось реализовать обертку.
-    public class func nib(withClass className: AnyClass) -> UINib? {
+    class func nib(withClass className: AnyClass) -> UINib? {
         let bundle = Bundle(for: className)
         let name = String(describing: className)
         guard bundle.path(forResource: name, ofType: "nib") != nil else { return nil }

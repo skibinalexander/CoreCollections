@@ -17,7 +17,7 @@ public protocol ManagerContextViewCallbackProtocol: class {
 
 // MARK: - ManagerProtocol
 
-protocol ManagerProtocol: class {
+public protocol ManagerProtocol: class {
     
     // MARK: - Setters
     
@@ -26,7 +26,7 @@ protocol ManagerProtocol: class {
     
     // MARK: - Getters
     
-    func getDataSource() -> DataSourceProtocol?
+    func getDataSource() -> DataSource?
     func getDelegate() -> Delegate
     func getView() -> ContainerViewInputProtocol!
     func getData() -> ManagerContextProtocol
@@ -98,52 +98,4 @@ protocol ManagerProtocol: class {
     /// Проверка заполненности item ячейками
     /// - Parameter item: Item коллекции
     func isEmpty(in item: ItemModel) -> Bool
-}
-
-// MARK: - ManagerContextProtocol
-
-public protocol ManagerContextSettersProtocol {
-    func set(viewDelegate: ManagerContextViewCallbackProtocol)
-    func set(template: TemplateViewModels)
-    func set(items: [ItemModel])
-}
-
-public protocol ManagerContextItemsProtocol {
-    func append(item: ItemModel)
-    func intert(item: ItemModel, at index: Int)
-    func remove(item: ItemModel, at index: Int)
-}
-
-public protocol ManagerContextProtocol: class, ManagerContextSettersProtocol, ManagerContextItemsProtocol {
-    var items: [ItemModel] { get set }
-    
-    func isEmpty() -> Bool
-    
-    func refreshAllItems()
-    func reloadAllInAllItems(viewCallback type: ManagerContextViewCallbackType)
-    func refreshAllInAllItems()
-    func refreshCellsInAllItems()
-    func refreshSectionsInAllItems()
-    
-    func replaceCells(
-        in item: ItemModel,
-        cells: [ModelCellProtocol],
-        viewCallback type: ManagerContextViewCallbackType
-    )
-    
-    func replaceCells(
-        in typeId: ItemModel.Identifiers,
-        cells: [ModelCellProtocol],
-        viewCallback type: ManagerContextViewCallbackType
-    )
-    
-    func appendCells(in item: ItemModel, cells: [ModelCellProtocol])
-    func insertCells(in item: ItemModel, cells:[ModelCellProtocol], by position: Int)
-    func insertCells(in typeId: ItemModel.Identifiers, cells: [ModelCellProtocol], by position: Int)
-    
-    func removeCells(in item: ItemModel, by position: Int)
-    func removeCells(in typeId: ItemModel.Identifiers, by position: Int)
-    
-    func removeAllCells(in item: ItemModel)
-    func removeAllCells(in typeId: ItemModel.Identifiers)
 }

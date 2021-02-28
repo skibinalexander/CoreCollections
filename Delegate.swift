@@ -9,7 +9,7 @@
 import Foundation
 
 /// Базовый интерфейс для реализации евентов работы делегата данных коллекции
-protocol DelegateOutputProtocol: class {
+public protocol DelegateOutputProtocol: class {
     
     /// Будет показана ячейка в коллекции
     /// - Parameter viewModel: ViewModel ячейки
@@ -29,11 +29,11 @@ protocol DelegateOutputProtocol: class {
 public class Delegate: NSObject {
     
     /// Шаблонизатор для выдачи ViewModel к маппингу Model в коллекции
-    weak var template: TemplateViewModelsProtocol!
+    weak var template: TemplateViewModels!
     
     // MARK: - Initialization
     
-    init(template: TemplateViewModelsProtocol?) {
+    init(template: TemplateViewModels?) {
         self.template = template
         super.init()
     }

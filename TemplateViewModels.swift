@@ -11,21 +11,18 @@ import Foundation
 /// Базовый интерфейс реализации источника данных шаблона коллекции
 ///
 /*
- Данный интерфейс описывает поведение коллекции при обращении стандартных
- DataSource (UITableView / UICollectionView)
+    Данный интерфейс описывает поведение коллекции при обращении стандартных
+    DataSource (UITableView / UICollectionView)
  */
 public protocol TemplateViewModelsDataSource: AnyObject {
+    
     /// Набор item коллекции
     var items: [ItemModel] { get }
-}
-
-public protocol TemplateViewModelsProtocol: AnyObject {
-    var viewModels: [ItemViewModel] { get set }
     
-    func moveRowAt(sourceIndexPath: IndexPath, destinationIndexPath: IndexPath)
 }
 
-public class TemplateViewModels: TemplateViewModelsProtocol {
+/// Базовая реализация шаблона маппинга ViewModel к Model
+public class TemplateViewModels {
     
     // MARK: - Public Properties
     
@@ -36,9 +33,16 @@ public class TemplateViewModels: TemplateViewModelsProtocol {
     
     // MARK: - Private Properties
     
-    internal var createHeader: ((_ model: ModelSectionProtocol?) -> ViewModelSectionProtocol?)?
-    internal var createFooter: ((_ model: ModelSectionProtocol?) -> ViewModelSectionProtocol?)?
-    internal var createCell: ((_ model: ModelCellProtocol?) -> ViewModelCellProtocol)?
+    /// Определение ViewModel по Model для header секции
+    public var createHeader: ((_ model: ModelSectionProtocol?) -> ViewModelSectionProtocol?)?
+    
+    /// Определение ViewModel по Model для footer секции
+    public var createFooter: ((_ model: ModelSectionProtocol?) -> ViewModelSectionProtocol?)?
+    
+    /// Определение ViewModel по Model для ячейки
+    public var createCell: ((_ model: ModelCellProtocol?) -> ViewModelCellProtocol)?
+    
+    // MARK: =  Initialization
     
     required init(dataSource: TemplateViewModelsDataSource) {
         self.dataSource = dataSource

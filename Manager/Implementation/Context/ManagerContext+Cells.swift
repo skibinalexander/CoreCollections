@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Add Cells
 
-extension ManagerContext {
+public extension ManagerContext {
     
     /// Заменить ячейки в item
     ///
@@ -68,7 +68,7 @@ extension ManagerContext {
 
 // MARK: - Remove Cells
 
-extension ManagerContext {
+public extension ManagerContext {
     
     /// Удалить ячейки по индексу
     ///

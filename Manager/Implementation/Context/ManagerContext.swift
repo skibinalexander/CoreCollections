@@ -9,7 +9,7 @@
 import Foundation
 
 /// Класс реализации контекста управления данными коллекции
-class ManagerContext: ManagerContextProtocol {
+public class ManagerContext: ManagerContextProtocol {
     
     // MARK: - Static
     
@@ -34,12 +34,49 @@ class ManagerContext: ManagerContextProtocol {
     /// UI закрытый протоколом который обновляем контекст по струтуре данных коллекции
     internal weak var viewDelegate: ManagerContextViewCallbackProtocol!
     
-}
-
-extension ManagerContext {
+    // MARK: - Setters
+    
+    /// Шаблон
+    public func set(template: TemplateViewModels) {
+        self.template = template
+    }
+    
+    /// UI делегат
+    public func set(viewDelegate: ManagerContextViewCallbackProtocol) {
+        self.viewDelegate = viewDelegate
+    }
+    
+    /// Список items
+    public func set(items: [ItemModel]) {
+        self.items = items
+    }
+    
+    // MARK: - Items managment
+    
+    /// Добавить item в коллекцию
+    /// - Parameter item: Item коллекции
+    public func append(item: ItemModel) {
+        self.items.append(item)
+    }
+    
+    /// Вставить item по индексу
+    /// - Parameters:
+    ///   - item: Item коллекции
+    ///   - index: Индекс вставки
+    public func intert(item: ItemModel, at index: Int) {
+        self.items.insert(item, at: index)
+    }
+    
+    /// Удалить item по индексу
+    /// - Parameters:
+    ///   - item: item коллекции
+    ///   - index: Индекс удаления
+    public func remove(item: ItemModel, at index: Int) {
+        self.items.remove(at: index)
+    }
     
     /// Короткая проверка наличия items
-    func isEmpty() -> Bool {
+    public func isEmpty() -> Bool {
         return self.items.isEmpty
     }
     

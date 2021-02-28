@@ -17,7 +17,7 @@ class CCCollectionViewDelegate: Delegate, UICollectionViewDelegate {
     // MARK: - Properties
     private weak var output: CCCollectionViewDelegateOutputProtocol?
     
-    init(output: CCCollectionViewDelegateOutputProtocol?, template: TemplateViewModelsProtocol?) {
+    init(output: CCCollectionViewDelegateOutputProtocol?, template: TemplateViewModels?) {
         self.output = output
         super.init(template: template)
     }

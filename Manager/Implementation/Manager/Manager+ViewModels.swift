@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Manager {
+public extension Manager {
     
     func viewModelCell<M>(id: String?) -> M? where M : ViewModelCellProtocol {
         let items = template.viewModels.filter({
@@ -46,4 +46,5 @@ extension Manager {
     func viewModelHeader<M: ViewModelSectionProtocol>(in item: ItemModel) -> M? {
         return template.viewModels.first(where: { $0.id == item.id })?.header as? M
     }
+    
 }

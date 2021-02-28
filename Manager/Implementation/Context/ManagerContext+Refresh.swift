@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Refreshing
 
-extension ManagerContext {
+public extension ManagerContext {
     
     /// Выполнить refresh для всех items
     ///

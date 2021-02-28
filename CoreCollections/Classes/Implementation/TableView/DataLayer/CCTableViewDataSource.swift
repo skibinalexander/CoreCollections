@@ -8,13 +8,8 @@
 
 import UIKit
 
-protocol CCTableViewDataSourceProtocol: DataSourceProtocol {
-    
-}
-
-// MARK: - UITableViewDataSource
-
-class CCTableViewDataSource: DataSource, CCTableViewDataSourceProtocol, UITableViewDataSource {
+/// Реализация DataSource для коллекции таблицы
+class CCTableViewDataSource: DataSource, UITableViewDataSource {
     
     // MARK: - UITableViewDataSource
     

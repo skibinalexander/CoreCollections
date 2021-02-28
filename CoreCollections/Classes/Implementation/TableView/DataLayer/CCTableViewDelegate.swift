@@ -21,7 +21,7 @@ class CCTableViewDelegate: Delegate, UITableViewDelegate {
     
     // MARK: - Lifecycle
     
-    init(output: CCTableViewDelegateOutputProtocol?, template: TemplateViewModelsProtocol?) {
+    init(output: CCTableViewDelegateOutputProtocol?, template: TemplateViewModels?) {
         self.output = output
         super.init(template: template)
     }
