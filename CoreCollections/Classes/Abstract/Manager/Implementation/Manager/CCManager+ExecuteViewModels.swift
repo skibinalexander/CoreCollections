@@ -10,6 +10,16 @@ import Foundation
 
 extension CCManager {
     
+    func viewModelCell<M>(id: String?) -> M? where M : CCViewModelCellProtocol {
+        let items = template.viewModels.filter({
+            $0.cells.first(where: { cell in
+                cell?.modelId == id
+            }) != nil
+        })
+        
+        return items.first?.cells.first(where: { $0?.modelId == id }) as? M
+    }
+    
     /// Метод быстрого получаения ViewModel ячейки по id ячейки и конкретному item в коллекции
     func viewModelCell<M: CCViewModelCellProtocol>(id: String?, in item: CCItemModel) -> M? {
         let cells = template.viewModels.first(where: { $0.id == item.id })?.cells

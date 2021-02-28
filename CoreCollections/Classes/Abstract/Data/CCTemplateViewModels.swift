@@ -30,7 +30,7 @@ class CCTemplateViewModels: CCTemplateViewModelsProtocol {
     // MARK: - Private Properties
     
     internal var createHeader: ((_ model: CCModelSectionProtocol?) -> CCViewModelSectionProtocol?)?
-    internal var createFooter: ((_ model: CCModelSectionProtocol?, _ index: Int) -> CCViewModelSectionProtocol?)?
+    internal var createFooter: ((_ model: CCModelSectionProtocol?) -> CCViewModelSectionProtocol?)?
     internal var createCell: ((_ model: CCModelCellProtocol?) -> CCViewModelCellProtocol)?
     
     required init(dataSource: CCTemplateViewModelsDataSource) {
@@ -72,8 +72,9 @@ extension CCTemplateViewModels {
     
     final func reloadViewModelSections() {
         dataSource?.items.enumerated().forEach { (index, element) in
-            self.viewModels[index].header = self.createHeader?(element.header)?.inject(with: element.header) as? CCViewModelSectionProtocol
-            self.viewModels[index].footer = self.createFooter?(element.footer, index)?.inject(with: element.footer) as? CCViewModelSectionProtocol
+            viewModels[index].header = self.createHeader?(element.header)?.inject(with: element.header) as? CCViewModelSectionProtocol
+            
+            viewModels[index].footer = self.createFooter?(element.footer)?.inject(with: element.footer) as? CCViewModelSectionProtocol
         }
         
         self.viewModels.forEach { (item) in
@@ -107,6 +108,7 @@ extension CCTemplateViewModels {
 // MARK: - Cells
 
 extension CCTemplateViewModels {
+    
     /// Метод вставки конкретных моделей
     ///
     /// Работает по принципу поиска моделей которые добавлены но ViewModel отсутсвует

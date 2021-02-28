@@ -47,15 +47,56 @@ protocol CCManagerProtocol: class {
     func item(type: CCItemModel.Identifiers) -> CCItemModel
     
     // - Access to ViewModels
+    
+    /// Найти первую view model ячейки по id во всех items
+    /// - Parameter id: Идентификатор ячейки
+    /// 
+    /// Warning: вернется первая ячейка во всех item найденному по id. Быть внимательными если исполузуются одинаковые id для ячеек
+    func viewModelCell<M: CCViewModelCellProtocol>(id: String?) -> M?
+    
+    /// Найти view model ячейки по id в item
+    /// - Parameters:
+    ///   - id: Идентификатор ячейки
+    ///   - item: item коллекции
     func viewModelCell<M: CCViewModelCellProtocol>(id: String?, in item: CCItemModel) -> M?
+    
+    /// Найти view model ячейки по id в item
+    /// - Parameters:
+    ///   - id: Индекс ячейки
+    ///   - item: item коллекции
     func viewModelCell<M: CCViewModelCellProtocol>(index: Int, in item: CCItemModel) -> M?
+    
+    /// Найти view model ячейки по id в item
+    /// - Parameters:
+    ///   - id: Идентификатор ячейки
+    ///   - item: item по заданному типу
     func viewModelCell<M: CCViewModelCellProtocol>(id: String?, in type: CCItemModel.Identifiers) -> M?
+    
+    /// Найти view model заголовка item
+    /// - Parameter item: item коллекции
     func viewModelHeader<M: CCViewModelSectionProtocol>(in item: CCItemModel) -> M?
     
+    
+    /// Метод обновления высоты ячейки
+    /// - Parameters:
+    ///   - id: Идентификатор ячейки
+    ///   - item: Item коллекции
+    ///   - value: Значение высоты
     func updateHeightCell(id: String?, in item: CCItemModel, by value: Float)
+    
+    /// Метод обновления высоты ячейки
+    /// - Parameters:
+    ///   - id: Идентификатор ячейки
+    ///   - item: Item коллекции по заданному типу
+    ///   - value: Значение высоты
     func updateHeightCell(id: String?, in type: CCItemModel.Identifiers, by value: Float)
     
+    /// Количество items в коллекции
     func countItems() -> Int
+    
+    
+    /// Проверка заполненности item ячейками
+    /// - Parameter item: Item коллекции
     func isEmpty(in item: CCItemModel) -> Bool
 }
 
