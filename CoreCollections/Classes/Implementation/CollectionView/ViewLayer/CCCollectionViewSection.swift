@@ -10,11 +10,11 @@ import UIKit
 
 // MARK: - Base ViewSection
 
-class CCCollectionViewSection: UIView, CCViewSectionProtocol {
+class CCCollectionViewSection: UIView, ViewSectionProtocol {
     
-    // MARK: - CCViewCellProtocol
+    // MARK: - ViewCellProtocol
     
-    weak var viewModel: CCViewModelProtocol?
+    weak var viewModel: ViewModelProtocol?
 }
 
 // MARK: - Expanded ViewSection

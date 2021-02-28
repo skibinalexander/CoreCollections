@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol CCTableViewDataSourceProtocol: CCDataSourceProtocol {
+protocol CCTableViewDataSourceProtocol: DataSourceProtocol {
     
 }
 
 // MARK: - UITableViewDataSource
 
-class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITableViewDataSource {
+class CCTableViewDataSource: DataSource, CCTableViewDataSourceProtocol, UITableViewDataSource {
     
     // MARK: - UITableViewDataSource
     
@@ -39,15 +39,15 @@ class CCTableViewDataSource: CCDataSource, CCTableViewDataSourceProtocol, UITabl
         //  Иницализация view для ячейки
         switch viewModel.nibType {
         case .reusebleId(let id):
-            let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as? CCTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as? TableViewCell
             viewModel.inject(view: cell)
         case .reusebleName(let name):
-            viewModel.inject(view: self.nibCell(nameNib: name) as? CCTableViewCell)
+            viewModel.inject(view: self.nibCell(nameNib: name) as? TableViewCell)
         }
         
         viewModel.initialViewFromNib()
         
-        guard let viewCell = viewModel.getView as? UITableViewCell & CCViewCellProtocol else {
+        guard let viewCell = viewModel.getView as? UITableViewCell & ViewCellProtocol else {
             fatalError("CCTableViewDataSource: view for ViewModel \(String(describing: type(of: viewModel))) not initialization!")
         }
         

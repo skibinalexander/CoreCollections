@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol CCTableViewModelCellProtocol: CCModelCellProtocol {
+protocol CCTableViewModelCellProtocol: ModelCellProtocol {
     
 }
 
 /// Базовый класс для моделей для ячеек
-class CCTableViewModelCell: CCModelCell, CCTableViewModelCellProtocol {
+class CCTableViewModelCell: ModelCell, CCTableViewModelCellProtocol {
     
 }

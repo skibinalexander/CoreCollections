@@ -1,5 +1,5 @@
 //
-//  CCTableViewCell.swift
+//  TableViewCell.swift
 //  Vezu
 //
 //  Created by Пользователь on 24/04/2019.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-protocol CCTableViewCellProtocol: UITableViewCell, CCViewCellProtocol {}
+public protocol TableViewCellProtocol: UITableViewCell, ViewCellProtocol {}
 
-public class CCTableViewCell: UITableViewCell, CCTableViewCellProtocol {
-    weak var viewModel: CCViewModelProtocol?
+public class TableViewCell: UITableViewCell, TableViewCellProtocol {
+    public weak var viewModel: ViewModelProtocol?
 }
 

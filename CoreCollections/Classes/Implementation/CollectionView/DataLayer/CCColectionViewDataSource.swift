@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CCCollectionViewDataSource: CCDataSource, UICollectionViewDataSource {
+class CCCollectionViewDataSource: DataSource, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return self.template?.viewModels.count ?? 0
@@ -33,7 +33,7 @@ class CCCollectionViewDataSource: CCDataSource, UICollectionViewDataSource {
         
         cell.initialViewFromNib()
         
-        guard let viewCell = cell.getView as? UICollectionViewCell & CCViewCellProtocol else {
+        guard let viewCell = cell.getView as? UICollectionViewCell & ViewCellProtocol else {
             fatalError("CCCollectionViewDataSource: view for id ViewModel \(String(describing: type(of: cell))) not initialization!")
         }
         

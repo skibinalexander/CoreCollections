@@ -1,0 +1,6 @@
+framework module CoreCollections {
+  umbrella header "CoreCollections-umbrella.h"
+
+  export *
+  module * { export * }
+}

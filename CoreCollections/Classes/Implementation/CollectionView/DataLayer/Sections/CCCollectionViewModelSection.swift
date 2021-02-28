@@ -8,12 +8,12 @@
 
 import Foundation
 
-class CCCollectionViewModelSection: CCModelSectionProtocol {
+class CCCollectionViewModelSection: ModelSectionProtocol {
     
-    // MARK: - CCModelSectionProtocol
+    // MARK: - ModelSectionProtocol
     
-    weak var item: CCItemModel?
-    weak var viewModel: CCViewModelProtocol?
+    weak var item: ItemModel?
+    weak var viewModel: ViewModelProtocol?
     var id: String?
     
     init(id: String? = nil) {

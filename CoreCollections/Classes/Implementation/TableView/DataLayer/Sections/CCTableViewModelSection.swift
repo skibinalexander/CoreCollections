@@ -8,17 +8,17 @@
 
 import UIKit
 
-protocol CCTableViewModelSectionProtocol: CCModelSectionProtocol {
+protocol CCTableViewModelSectionProtocol: ModelSectionProtocol {
     
 }
 
 class CCTableViewModelSection: CCTableViewModelSectionProtocol {
-    // MARK: - CCModelSectionProtocol
+    // MARK: - ModelSectionProtocol
     var id: String?
     
     // MARK: - Injection Properties
-    weak var item: CCItemModel?
-    weak var viewModel: CCViewModelProtocol?
+    weak var item: ItemModel?
+    weak var viewModel: ViewModelProtocol?
     
     // MARK: - Lifecycle
     init(id: String? = nil) {

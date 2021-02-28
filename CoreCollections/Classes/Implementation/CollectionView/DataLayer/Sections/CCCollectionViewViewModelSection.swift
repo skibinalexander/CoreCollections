@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Base ViewModel
 
-class CCCollectionViewViewModelSection<V: CCCollectionViewSection, M: CCCollectionViewModelSection>: CCViewModelSection<V, M> {
+class CCCollectionViewViewModelSection<V: CCCollectionViewSection, M: CCCollectionViewModelSection>: ViewModelSection<V, M> {
     
 }
 
@@ -22,10 +22,10 @@ public enum CCCollectionViewViewModelExpandedState {
 }
 
 protocol CCCollectionViewViewModelExpandedSectionOutputProtocol: class {
-    func stateDidChange(state: CCCollectionViewViewModelExpandedState, viewModel: CCViewModelProtocol)
+    func stateDidChange(state: CCCollectionViewViewModelExpandedState, viewModel: ViewModelProtocol)
 }
 
-protocol CCCollectionViewViewModelExpandedSectionProtocol: CCViewModelSectionProtocol {
+protocol CCCollectionViewViewModelExpandedSectionProtocol: ViewModelSectionProtocol {
     func changeState()
 }
 
@@ -34,8 +34,8 @@ class CCCollectionViewViewModelExpandedSection<V: CCCollectionViewSection, M: CC
     internal var state:         CCCollectionViewViewModelExpandedState?
     
     convenience init(state: CCCollectionViewViewModelExpandedState = .expanded,
-                     nibType: CCViewModelCellViewSourceType,
-                     height: CCViewModelHeight) {
+                     nibType: ViewModelCellViewSourceType,
+                     height: ViewModelHeight) {
         
         self.init(nibType: nibType, height: height)
         self.state = state

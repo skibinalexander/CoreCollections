@@ -8,10 +8,10 @@
 
 import UIKit
 
-protocol CCTableViewSectionProtocol: UIView, CCViewSectionProtocol {}
+public protocol TableViewSectionProtocol: UIView, ViewSectionProtocol {}
 
-public class CCTableViewSection: UIView, CCTableViewSectionProtocol {
-    weak var viewModel: CCViewModelProtocol?
+public class CCTableViewSection: UIView, TableViewSectionProtocol {
+    public weak var viewModel: ViewModelProtocol?
 }
 
 // MARK: - Expanded ViewSection

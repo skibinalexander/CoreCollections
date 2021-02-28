@@ -8,8 +8,8 @@
 
 import Foundation
 
-class CCTableViewManager<T: CCTemplateViewModels>: CCManager<T> {
-    init(delegateOutput: CCTableViewDelegateOutputProtocol, viewDelegate: CCManagerContextViewCallbackProtocol) {
+class CCTableViewManager<T: TemplateViewModels>: Manager<T> {
+    init(delegateOutput: CCTableViewDelegateOutputProtocol, viewDelegate: ManagerContextViewCallbackProtocol) {
         super.init()
         
         self.template = T(dataSource: self)

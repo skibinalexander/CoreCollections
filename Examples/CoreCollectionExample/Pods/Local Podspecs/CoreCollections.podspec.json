@@ -1,0 +1,24 @@
+{
+  "name": "CoreCollections",
+  "version": "0.1.0",
+  "summary": "Library adapter for Collections (UITableView, CoreCollections) UIKit",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://bitbucket.org/vtb-privacy/corecollections",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Skibin Alexander": "skibinalexander@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/skibinalexander/CoreCollections.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "11.0"
+  },
+  "swift_versions": "5.0",
+  "source_files": "CoreCollections/Classes/**/*",
+  "swift_version": "5.0"
+}

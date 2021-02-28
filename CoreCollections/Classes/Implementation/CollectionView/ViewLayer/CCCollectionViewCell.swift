@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol CCCollectionViewCellProtocol: UICollectionViewCell, CCViewCellProtocol {
+protocol CCCollectionViewCellProtocol: UICollectionViewCell, ViewCellProtocol {
 
 }
 
 class CCCollectionViewCell: UICollectionViewCell, CCCollectionViewCellProtocol {
-    weak var viewModel: CCViewModelProtocol?
+    weak var viewModel: ViewModelProtocol?
 }
 
 extension CCCollectionViewCell {

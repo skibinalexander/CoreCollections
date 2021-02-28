@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol CCTableViewDelegateOutputProtocol: CCDelegateOutputProtocol {
+protocol CCTableViewDelegateOutputProtocol: DelegateOutputProtocol {
     func scrollDidChange()
     func scrollViewDidEndScrollingAnimation()
 }
 
-class CCTableViewDelegate: CCDelegate, UITableViewDelegate {
+class CCTableViewDelegate: Delegate, UITableViewDelegate {
     
     // MARK: - Properties
     
@@ -21,7 +21,7 @@ class CCTableViewDelegate: CCDelegate, UITableViewDelegate {
     
     // MARK: - Lifecycle
     
-    init(output: CCTableViewDelegateOutputProtocol?, template: CCTemplateViewModelsProtocol?) {
+    init(output: CCTableViewDelegateOutputProtocol?, template: TemplateViewModelsProtocol?) {
         self.output = output
         super.init(template: template)
     }
@@ -107,7 +107,7 @@ extension CCTableViewDelegate {
 //        return updateHeight(for: item?.height)
 //    }
     
-    private func updateHeight(for height: CCViewModelHeight?) -> CGFloat {
+    private func updateHeight(for height: ViewModelHeight?) -> CGFloat {
         switch height {
         case .automatic?: return UITableView.automaticDimension
         case .value(let height)?: return CGFloat(height)

@@ -9,14 +9,14 @@
 import Foundation
 
 // MARK: - BasicCollectionViewPresenter
-protocol CCCollectionViewPresenterProtocol: CCContainerViewRefreshOutputProtocol, CCCollectionViewDelegateOutputProtocol {
+protocol CCCollectionViewPresenterProtocol: ContainerViewRefreshOutputProtocol, CCCollectionViewDelegateOutputProtocol {
     
 }
 
-class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresenterProtocol, CCContainerViewRefreshOutputProtocol {
+class CCCollectionViewPresenter<T: TemplateViewModels>: CCCollectionViewPresenterProtocol, ContainerViewRefreshOutputProtocol {
     
     // MARK: - Properties
-    var manager: CCManagerProtocol!
+    var manager: ManagerProtocol!
     
     // MARK: - Lifecycle
     init() {
@@ -31,12 +31,12 @@ class CCCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresen
     }
     
     // MARK: - CCCollectionViewDelegateOutputProtocol
-    func willDisplay(viewModel: CCViewModelCellProtocol) { }
-    func didSelect(viewModel: CCViewModelCellProtocol) { }
-    func didDeselect(viewModel: CCViewModelCellProtocol) { }
+    func willDisplay(viewModel: ViewModelCellProtocol) { }
+    func didSelect(viewModel: ViewModelCellProtocol) { }
+    func didDeselect(viewModel: ViewModelCellProtocol) { }
 }
 
-class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels>: CCCollectionViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
+class CCPaginationCollectionViewPresenter<T: TemplateViewModels>: CCCollectionViewPresenter<T>, ContainerViewPrefetchOutputProtocol {
     // MARK: - CCCollectionViewControllerPrefetchOutputProtocol
     func batchNumberRows(in section: Int) -> Int {
         manager.item(index: section).cells.count
@@ -46,7 +46,7 @@ class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels>: CCCollection
         
     }
     
-    func paginationInsertCells(in item: CCItemModel, cells: [CCModelCellProtocol]) {
+    func paginationInsertCells(in item: ItemModel, cells: [ModelCellProtocol]) {
         if item.cells.count > 0 {
             manager.getData().insertCells(in: item, cells: cells, by: item.cells.count - 1)
         } else {
@@ -55,15 +55,15 @@ class CCPaginationCollectionViewPresenter<T: CCTemplateViewModels>: CCCollection
     }
 }
 
-extension CCCollectionViewPresenter: CCManagerContextViewCallbackProtocol {
-    func didUpdateView(with type: CCManagerContextViewCallbackType) {
+extension CCCollectionViewPresenter: ManagerContextViewCallbackProtocol {
+    func didUpdateView(with type: ManagerContextViewCallbackType) {
         switch type {
         case .reloadInSection(let index): manager.getView().reloadCells(in: [index])
         default: manager.getView().reloadContainer()
         }
     }
     
-    func didUpdateView(with type: CCManagerContextViewCallbackType, for paths: [IndexPath]) {
+    func didUpdateView(with type: ManagerContextViewCallbackType, for paths: [IndexPath]) {
         switch type {
         case .insertIntoCollection: manager.getView().insertCells(at: paths)
         case .removeFromCollection: manager.getView().removeCells(at: paths)

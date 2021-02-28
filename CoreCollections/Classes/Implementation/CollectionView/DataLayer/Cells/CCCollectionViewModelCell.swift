@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol CCCollectionViewModelCellProtocol: CCModelCellProtocol {
+protocol CCCollectionViewModelCellProtocol: ModelCellProtocol {
     
 }
 
 class CCCollectionViewModelCell: CCCollectionViewModelCellProtocol {
-    weak var item:      CCItemModel?
-    weak var viewModel: CCViewModelProtocol?
+    weak var item:      ItemModel?
+    weak var viewModel: ViewModelProtocol?
     var id:             String?
     
     init(id: String? = nil) {

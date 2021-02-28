@@ -11,15 +11,15 @@ import Foundation
 // MARK: - BasicTableViewPresenter
 
 protocol CCTableViewPresenterProtocol:
-    CCContainerViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol {
+    ContainerViewRefreshOutputProtocol, CCTableViewDelegateOutputProtocol {
     
 }
 
-class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtocol, CCContainerViewRefreshOutputProtocol {
+class CCTableViewPresenter<T: TemplateViewModels>: CCTableViewPresenterProtocol, ContainerViewRefreshOutputProtocol {
     
     // MARK: - Properties
     
-    var manager: CCManagerProtocol!
+    var manager: ManagerProtocol!
     
     // MARK: - Lifecycle
     
@@ -30,9 +30,9 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
         )
     }
     
-    func willDisplay(viewModel: CCViewModelCellProtocol) { }
-    func didSelect(viewModel: CCViewModelCellProtocol) { }
-    func didDeselect(viewModel: CCViewModelCellProtocol) { }
+    func willDisplay(viewModel: ViewModelCellProtocol) { }
+    func didSelect(viewModel: ViewModelCellProtocol) { }
+    func didDeselect(viewModel: ViewModelCellProtocol) { }
     func scrollDidChange() { }
     func scrollViewDidEndScrollingAnimation() { }
     
@@ -41,7 +41,7 @@ class CCTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenterProtoco
     }
 }
 
-class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresenter<T>, CCContainerViewPrefetchOutputProtocol {
+class CCPaginationTableViewPresenter<T: TemplateViewModels>: CCTableViewPresenter<T>, ContainerViewPrefetchOutputProtocol {
     
     func batchNumberRows(in section: Int) -> Int {
         manager.item(index: section).cells.count
@@ -51,7 +51,7 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
         
     }
     
-    func paginationInsertCells(in item: CCItemModel, cells: [CCModelCellProtocol]) {
+    func paginationInsertCells(in item: ItemModel, cells: [ModelCellProtocol]) {
         if item.cells.count > 0 {
             manager.getData().insertCells(in: item, cells: cells, by: item.cells.count - 1)
         } else {
@@ -60,16 +60,16 @@ class CCPaginationTableViewPresenter<T: CCTemplateViewModels>: CCTableViewPresen
     }
 }
 
-extension CCTableViewPresenter: CCManagerContextViewCallbackProtocol {
+extension CCTableViewPresenter: ManagerContextViewCallbackProtocol {
     
-    func didUpdateView(with type: CCManagerContextViewCallbackType) {
+    func didUpdateView(with type: ManagerContextViewCallbackType) {
         switch type {
         case .reloadInSection(let index): manager.getView().reloadCells(in: [index])
         default: manager.getView().reloadContainer()
         }
     }
     
-    func didUpdateView(with type: CCManagerContextViewCallbackType, for paths: [IndexPath]) {
+    func didUpdateView(with type: ManagerContextViewCallbackType, for paths: [IndexPath]) {
         switch type {
         case .insertIntoCollection: manager.getView().insertCells(at: paths)
         case .removeFromCollection: manager.getView().removeCells(at: paths)

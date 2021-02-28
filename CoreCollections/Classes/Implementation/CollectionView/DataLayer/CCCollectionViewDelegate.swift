@@ -8,16 +8,16 @@
 
 import UIKit
 
-protocol CCCollectionViewDelegateOutputProtocol: CCDelegateOutputProtocol {
+protocol CCCollectionViewDelegateOutputProtocol: DelegateOutputProtocol {
     
 }
 
-class CCCollectionViewDelegate: CCDelegate, UICollectionViewDelegate {
+class CCCollectionViewDelegate: Delegate, UICollectionViewDelegate {
     
     // MARK: - Properties
     private weak var output: CCCollectionViewDelegateOutputProtocol?
     
-    init(output: CCCollectionViewDelegateOutputProtocol?, template: CCTemplateViewModelsProtocol?) {
+    init(output: CCCollectionViewDelegateOutputProtocol?, template: TemplateViewModelsProtocol?) {
         self.output = output
         super.init(template: template)
     }

@@ -8,8 +8,8 @@
 
 import Foundation
 
-class CCCollectionViewManager<T: CCTemplateViewModels>: CCManager<T> {
-    init(delegateOutput: CCCollectionViewDelegateOutputProtocol, viewDelegate: CCManagerContextViewCallbackProtocol) {
+class CCCollectionViewManager<T: TemplateViewModels>: Manager<T> {
+    init(delegateOutput: CCCollectionViewDelegateOutputProtocol, viewDelegate: ManagerContextViewCallbackProtocol) {
         super.init()
         
         self.template = T(dataSource: self)

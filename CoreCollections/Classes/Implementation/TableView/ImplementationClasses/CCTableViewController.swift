@@ -8,30 +8,31 @@
 
 import UIKit
 
-class CCTableViewController: UIViewController, CCContainerViewInputProtocol {
+open class CCTableViewController: UIViewController, ContainerViewInputProtocol {
     
     // MARK: - IBOutlets
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet
+    public weak var tableView: UITableView!
     
     // MARK: - Properties
-    let refreshControl: UIRefreshControl = UIRefreshControl()
+    public let refreshControl: UIRefreshControl = UIRefreshControl()
     
-    private weak var refreshOutput: CCContainerViewRefreshOutputProtocol?
-    private weak var prefetchOutput: CCContainerViewPrefetchOutputProtocol?
+    private weak var refreshOutput: ContainerViewRefreshOutputProtocol?
+    private weak var prefetchOutput: ContainerViewPrefetchOutputProtocol?
     
     // MARK: - Lifecycle
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         refreshControl.endRefreshing()
     }
     
     // MARK: - CCTableViewPresenterViewInputProtocol
     
-    func configure(dataSource: Any?, delegate: Any?) {
+    public func configure(dataSource: Any?, delegate: Any?) {
         let dataSource  = (dataSource as? UITableViewDataSource)
         let delegate    = (delegate as? UITableViewDelegate)
         
@@ -44,14 +45,14 @@ class CCTableViewController: UIViewController, CCContainerViewInputProtocol {
         self.tableView?.delegate = delegate
     }
     
-    func configurePagination(output: CCContainerViewPrefetchOutputProtocol?) {
+    public func configurePagination(output: ContainerViewPrefetchOutputProtocol?) {
         if output != nil {
             self.tableView.prefetchDataSource = self
             self.prefetchOutput = output
         }
     }
     
-    func configureRefresh(output: CCContainerViewRefreshOutputProtocol?) {
+    public func configureRefresh(output: ContainerViewRefreshOutputProtocol?) {
         if output != nil {
             self.tableView.refreshControl = refreshControl
             self.refreshOutput = output
@@ -59,23 +60,23 @@ class CCTableViewController: UIViewController, CCContainerViewInputProtocol {
         }
     }
     
-    func reloadContainer() {
+    public func reloadContainer() {
         self.tableView?.reloadData()
     }
     
-    func insertCells(at paths: [IndexPath]) {
+    public func insertCells(at paths: [IndexPath]) {
         self.tableView.insertRows(at: paths, with: .automatic)
     }
     
-    func removeCells(at paths: [IndexPath]) {
+    public func removeCells(at paths: [IndexPath]) {
         self.tableView.deleteRows(at: paths, with: .automatic)
     }
     
-    func reloadCellsIntoTableView(at paths: [IndexPath]) {
+    public func reloadCellsIntoTableView(at paths: [IndexPath]) {
         self.tableView.reloadRows(at: paths, with: .automatic)
     }
     
-    func updateHieghtCell(completion: (() -> Void)?) {
+    public func updateHieghtCell(completion: (() -> Void)?) {
         if #available(iOS 11.0, *) {
             self.tableView.performBatchUpdates({
                 completion?()
@@ -87,23 +88,24 @@ class CCTableViewController: UIViewController, CCContainerViewInputProtocol {
         }
     }
     
-    func beginRefreshing() {
+    public func beginRefreshing() {
         self.refreshControl.beginRefreshing()
     }
     
-    func endRefreshing() {
+    public func endRefreshing() {
         if self.refreshControl.isRefreshing {
             self.refreshControl.endRefreshing()
         }
     }
     
-    func isEditing(_ editing: Bool) {
+    public func isEditing(_ editing: Bool) {
         tableView.isEditing = editing
     }
     
     // MARK: - Refreshing
     
-    @objc func refreshAction() {
+    @objc
+    public func refreshAction() {
         refreshOutput?.refreshList()
     }
     
@@ -112,12 +114,14 @@ class CCTableViewController: UIViewController, CCContainerViewInputProtocol {
 // MARK: - UITableViewDataSourcePrefetching
 
 extension CCTableViewController: UITableViewDataSourcePrefetching {
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+    
+    public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let output = self.prefetchOutput else { return }
         if indexPaths.contains(where: { $0.row >= (output.batchNumberRows(in: $0.section) - 2) }) {
             self.prefetchOutput?.batchList()
         }
     }
     
-    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {}
+    public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {}
+    
 }

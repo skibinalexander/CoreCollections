@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Base ViewModel
 
-class CCTableViewViewModelSection<V: CCTableViewSection, M: CCTableViewModelSection>: CCViewModelSection<V, M> {
+class CCTableViewViewModelSection<V: CCTableViewSection, M: CCTableViewModelSection>: ViewModelSection<V, M> {
     
 }
 
@@ -22,7 +22,7 @@ public enum CCTableViewViewModelExpandedState {
 
 // MARK: -
 protocol CCTableViewViewModelExpandedSectionOutputProtocol {
-    func stateDidChange(state: CCTableViewViewModelExpandedState, viewModel: CCViewModelProtocol)
+    func stateDidChange(state: CCTableViewViewModelExpandedState, viewModel: ViewModelProtocol)
 }
 
 protocol CCTableViewViewModelExpandedSectionProtocol {
@@ -34,7 +34,7 @@ class CCTableViewViewModelExpandedSection<V: CCTableViewSection, M: CCTableViewM
     internal var state: CCTableViewViewModelExpandedState?
     
     // MARK: - Lifecycle
-    convenience init(state: CCTableViewViewModelExpandedState = .expanded, nibType: CCViewModelCellViewSourceType, height: CCViewModelHeight) {
+    convenience init(state: CCTableViewViewModelExpandedState = .expanded, nibType: ViewModelCellViewSourceType, height: ViewModelHeight) {
         self.init(nibType: nibType, height: height)
         self.state = state
     }
