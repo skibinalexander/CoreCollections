@@ -21,7 +21,7 @@ open class TableViewModelSection: ModelSectionProtocol {
     
     // MARK: - Lifecycle
     
-    init(id: String? = nil) {
+    public init(id: String? = nil) {
         self.id = id
     }
     
