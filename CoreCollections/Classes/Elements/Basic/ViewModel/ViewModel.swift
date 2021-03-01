@@ -13,16 +13,16 @@ open class ViewModel<V: ViewProtocol, M: ModelProtocol>:
     
     // MARK: - Typealias
     
-    typealias View = V
-    typealias Model = M
+    public typealias View = V
+    public typealias Model = M
     
     // MARK: - Weak
     
     /// View слой
-    weak var view: V!
+    public weak var view: V!
     
     /// Model слой
-    weak var model: M!
+    public weak var model: M!
     
     // MARK: - Public
     
@@ -56,7 +56,10 @@ open class ViewModel<V: ViewProtocol, M: ModelProtocol>:
     /// - Parameters:
     ///   - nibType: Параметр типа View ячейки или секции
     ///   - height: Параметр высоты View ячейки или секции
-    init(nibType: ViewModelCellViewSourceType = .reusebleName(V.typeOf), height: ViewModelHeight = .automatic) {
+    public init(
+        nibType: ViewModelCellViewSourceType = .reusebleName(V.typeOf),
+        height: ViewModelHeight = .automatic
+    ) {
         self.nibType = nibType
         self.height = height
     }
@@ -95,12 +98,12 @@ open class ViewModel<V: ViewProtocol, M: ModelProtocol>:
     }
     
     /// Default method for use instance view model
-    public func initialViewFromNib() { }
+    open func initialViewFromNib() { }
     
     /// Default method for use in updating view from model
-    public func updateViewFromModel() { }
+    open func updateViewFromModel() { }
     
     /// Default method for use in updating model from view
-    public func updateModelFromView() { }
+    open func updateModelFromView() { }
     
 }

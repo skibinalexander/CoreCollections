@@ -17,39 +17,39 @@ open class TableViewPresenter<T: TemplateViewModelsProtocol>:
     
     // MARK: - Properties
     
-    var manager: ManagerProtocol!
+    public var manager: ManagerProtocol!
     
     // MARK: - Lifecycle
     
-    init() {
-        self.manager = TableViewManager(
+    public init() {
+        manager = TableViewManager(
             delegateOutput: self,
             viewDelegate: self,
             template: T.newTemplate()
         )
+        
+        manager.configuration()
     }
     
-    public func willDisplay(viewModel: ViewModelCellProtocol) { }
-    public func didSelect(viewModel: ViewModelCellProtocol) { }
-    public func didDeselect(viewModel: ViewModelCellProtocol) { }
-    public func scrollDidChange() { }
-    public func scrollViewDidEndScrollingAnimation() { }
+    open func willDisplay(viewModel: ViewModelCellProtocol) { }
+    open func didSelect(viewModel: ViewModelCellProtocol) { }
+    open func didDeselect(viewModel: ViewModelCellProtocol) { }
+    open func scrollDidChange() { }
+    open func scrollViewDidEndScrollingAnimation() { }
     
-    public func refreshList() {
+    open func refreshList() {
         manager.beginRefresh()
     }
 }
 
-class CCPaginationTableViewPresenter<T: TemplateViewModelsProtocol>:
+open class CCPaginationTableViewPresenter<T: TemplateViewModelsProtocol>:
     TableViewPresenter<T>, ContainerViewPrefetchOutputProtocol {
     
-    func batchNumberRows(in section: Int) -> Int {
+    open func batchNumberRows(in section: Int) -> Int {
         manager.item(index: section).cells.count
     }
     
-    func batchList() {
-        
-    }
+    open func batchList() {}
     
     func paginationInsertCells(in item: ItemModel, cells: [ModelCellProtocol]) {
         if item.cells.count > 0 {

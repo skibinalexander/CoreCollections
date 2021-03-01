@@ -1,5 +1,5 @@
 //
-//  ListExampleTemplate.swift
+//  ExampleTemplateViewModels.swift
 //  CoreCollectionExample
 //
 //  Created by Скибин Александр on 01.03.2021.
@@ -7,7 +7,7 @@
 
 import CoreCollections
 
-class ListExampleTemplate: TemplateViewModelsProtocol {
+final class ExampleTemplateViewModels: TemplateViewModelsProtocol {
     
     var createHeader: ((ModelSectionProtocol?) -> ViewModelSectionProtocol?)? {
         nil
@@ -17,12 +17,13 @@ class ListExampleTemplate: TemplateViewModelsProtocol {
         nil
     }
     
-    var createCell: ((ModelCellProtocol?) -> ViewModelCellProtocol)? {
-        nil
+    var createCell: ((ModelCellProtocol?) -> ViewModelCellProtocol)? = {
+        if $0 is ExampleViewModelCell.Model { return ExampleViewModelCell() }
+        fatalError()
     }
     
     static func newTemplate() -> TemplateViewModelsProtocol {
-        ListExampleTemplate()
+        ExampleTemplateViewModels()
     }
     
 }

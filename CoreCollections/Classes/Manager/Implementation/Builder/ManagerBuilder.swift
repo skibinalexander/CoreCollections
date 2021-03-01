@@ -23,43 +23,43 @@ public class ManagerBuilder {
     
     // MARK: Initialization
     
-    init() {
+    public init() {
         self.containerData = ManagerContext.newContext()
     }
     
     // MARK: - Configure
     
-    final func configure(manager: ManagerProtocol) -> ManagerBuilder {
+    public final func configure(manager: ManagerProtocol) -> ManagerBuilder {
         self.manager = manager
         return self
     }
     
-    final func configure(containerView: ContainerViewInputProtocol) -> ManagerBuilder {
+    public final func configure(containerView: ContainerViewInputProtocol) -> ManagerBuilder {
         self.containerView = containerView
         return self
     }
     
-    final func configure(containerData: ManagerContextProtocol) -> ManagerBuilder {
+    public final func configure(containerData: ManagerContextProtocol) -> ManagerBuilder {
         self.containerData = containerData
         return self
     }
     
-    final func configure(viewDelegate: ManagerContextViewCallbackProtocol) -> ManagerBuilder {
+    public final func configure(viewDelegate: ManagerContextViewCallbackProtocol) -> ManagerBuilder {
         self.viewDelegate = viewDelegate
         return self
     }
     
-    final func configure(prefetch output: ContainerViewPrefetchOutputProtocol?) -> ManagerBuilder {
+    public final func configure(prefetch output: ContainerViewPrefetchOutputProtocol?) -> ManagerBuilder {
         self.prefetchOutput = output
         return self
     }
     
-    final func configure(refresh output: ContainerViewRefreshOutputProtocol?) -> ManagerBuilder {
+    public final func configure(refresh output: ContainerViewRefreshOutputProtocol?) -> ManagerBuilder {
         self.refreshOutput = output
         return self
     }
     
-    final func configure(items: [ItemModel]) -> ManagerBuilder {
+    public final func configure(items: [ItemModel]) -> ManagerBuilder {
         self.items.append(contentsOf: items)
         return self
     }
@@ -67,7 +67,7 @@ public class ManagerBuilder {
     // MARK: - Build
     
     /// Проставление зависимостей
-    final func build() {
+    public final func build() {
         containerData.set(viewDelegate: viewDelegate)
         
         containerView?.configure(

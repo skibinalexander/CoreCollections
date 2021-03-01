@@ -10,15 +10,11 @@ import UIKit
 
 final class ListExampleView: TableViewController {
     
+    var presenter: ListExamplePresenter!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        installTableView()
-    }
-    
-    // MARK: - TableView
-    
-    func installTableView() {
-        
+        presenter = ListExamplePresenter(view: self)
     }
     
 }

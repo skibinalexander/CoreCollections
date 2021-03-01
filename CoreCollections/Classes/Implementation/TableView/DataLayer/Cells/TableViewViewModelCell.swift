@@ -8,5 +8,4 @@
 
 import Foundation
 
-open class TableViewViewModelCell<V: TableViewCell, M: TableViewModelCell>:
-    ViewModelCell<V, M> {}
+open class TableViewViewModelCell<V: TableViewCell, M: TableViewModelCell>: ViewModelCell<V, M> {}

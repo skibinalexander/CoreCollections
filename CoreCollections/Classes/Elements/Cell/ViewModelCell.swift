@@ -28,14 +28,14 @@ open class ViewModelCell<V: ViewCellProtocol, M: ModelCellProtocol>:
         
     public var indexPath: IndexPath!
     
-    public func willDisplay() { }
-    public func willSelect() {}
-    public func didSelect() {}
-    public func willDeselect() {}
-    public func didDeselect() {}
-    public func didHighlight() {}
-    public func didUnhighlight() {}
-    public func shouldHighlight() -> Bool { true }
-    public func editingStyle() -> UITableViewCell.EditingStyle { .none }
-    public func shouldIndentWhileEditing() -> Bool { false }
+    open func willDisplay() { }
+    open func willSelect() {}
+    open func didSelect() {}
+    open func willDeselect() {}
+    open func didDeselect() {}
+    open func didHighlight() {}
+    open func didUnhighlight() {}
+    open func shouldHighlight() -> Bool { true }
+    open func editingStyle() -> UITableViewCell.EditingStyle { .none }
+    open func shouldIndentWhileEditing() -> Bool { false }
 }
