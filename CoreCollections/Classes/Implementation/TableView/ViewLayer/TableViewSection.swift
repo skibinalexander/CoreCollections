@@ -9,14 +9,14 @@
 import UIKit
 
 /// Базовая реализация View header или footer ячейки
-public class TableViewSection: UIView, ViewSectionProtocol {
+open class TableViewSection: UIView, ViewSectionProtocol {
     public weak var viewModel: ViewModelProtocol?
 }
 
 // MARK: - Expanded ViewSection
 
 /// Базовый функционал раскрывающейся секции
-class TableViewExpandedSection: TableViewSection {
+open class TableViewExpandedSection: TableViewSection {
     
     // MARK: - IBOutlets
     
