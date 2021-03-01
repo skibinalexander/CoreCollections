@@ -15,10 +15,16 @@ public class Items<U, T>: NSObject {
     
     // MARK: - Properties
     
+    /// Идектификатор Item
     public var id: String?
     
+    /// Header item
     public var header: U?
+    
+    /// Footer item
     public var footer: U?
+    
+    /// Набор ячеек в item
     public var cells: [T?] = []
     
     // MARK: - Lifecycle

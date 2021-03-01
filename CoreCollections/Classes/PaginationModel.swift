@@ -12,17 +12,17 @@ import Foundation
 public struct PaginationModel<T> {
     
     /// Текущий элемент
-    var current: T?
+    public var current: T?
     
     /// Лимит вывода списка пагинации
-    var limit: Int
+    public var limit: Int
     
     /// Флаг подгрузки новых данных в таблице
-    var hasMore: Bool?
+    public var hasMore: Bool?
     
     // MARK: - Initialization
     
-    init(current: T? = nil, limit: Int = 25, hasMore: Bool? = true) {
+    public init(current: T? = nil, limit: Int = 25, hasMore: Bool? = true) {
         self.current = current
         self.limit = limit
         self.hasMore = hasMore
