@@ -25,7 +25,7 @@ open class TableViewExpandedSection: TableViewSection {
     // MARK: - Actions
     
     @IBAction func actionStateButtonDidTouch(_ sender: UIButton) {
-        if let viewModel = self.viewModel as? TableViewViewModelExpandedSectionProtocol {
+        if let viewModel = self.viewModel as? TableViewViewModelExpandedSection {
             viewModel.changeState()
         }
     }

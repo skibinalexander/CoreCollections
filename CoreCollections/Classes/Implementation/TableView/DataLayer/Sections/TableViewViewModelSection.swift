@@ -16,25 +16,14 @@ open class TableViewViewModelSection<V: TableViewSection, M: TableViewModelSecti
 }
 
 // MARK: - Expanded ViewModel
+
 public enum TableViewViewModelExpandedState {
     case expanded
     case collapsed
 }
 
-// MARK: -
-public protocol TableViewViewModelExpandedSectionOutputProtocol {
-    func stateDidChange(
-        state: TableViewViewModelExpandedState,
-        viewModel: ViewModelProtocol
-    )
-}
-
-protocol TableViewViewModelExpandedSectionProtocol {
-    func changeState()
-}
-
-class CCTableViewViewModelExpandedSection<V: TableViewSection, M: TableViewModelSection>:
-    TableViewViewModelSection<V, M>, TableViewViewModelExpandedSectionProtocol {
+open class TableViewViewModelExpandedSection<V: TableViewSection, M: TableViewModelSection>:
+    TableViewViewModelSection<V, M> {
     
     // MARK: - Properties
     
