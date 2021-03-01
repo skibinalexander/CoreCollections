@@ -10,36 +10,48 @@ import Foundation
 
 // MARK: - Base ViewModel
 
-class CCTableViewViewModelSection<V: CCTableViewSection, M: CCTableViewModelSection>: ViewModelSection<V, M> {
+class TableViewViewModelSection<V: TableViewSection, M: TableViewModelSection>:
+    ViewModelSection<V, M> {
     
 }
 
 // MARK: - Expanded ViewModel
-public enum CCTableViewViewModelExpandedState {
+public enum TableViewViewModelExpandedState {
     case expanded
     case collapsed
 }
 
 // MARK: -
-protocol CCTableViewViewModelExpandedSectionOutputProtocol {
-    func stateDidChange(state: CCTableViewViewModelExpandedState, viewModel: ViewModelProtocol)
+protocol TableViewViewModelExpandedSectionOutputProtocol {
+    func stateDidChange(
+        state: TableViewViewModelExpandedState,
+        viewModel: ViewModelProtocol
+    )
 }
 
-protocol CCTableViewViewModelExpandedSectionProtocol {
+protocol TableViewViewModelExpandedSectionProtocol {
     func changeState()
 }
 
-class CCTableViewViewModelExpandedSection<V: CCTableViewSection, M: CCTableViewModelSection>: CCTableViewViewModelSection<V, M>, CCTableViewViewModelExpandedSectionProtocol {
+class CCTableViewViewModelExpandedSection<V: TableViewSection, M: TableViewModelSection>:
+    TableViewViewModelSection<V, M>, TableViewViewModelExpandedSectionProtocol {
+    
     // MARK: - Properties
-    internal var state: CCTableViewViewModelExpandedState?
+    
+    internal var state: TableViewViewModelExpandedState?
     
     // MARK: - Lifecycle
-    convenience init(state: CCTableViewViewModelExpandedState = .expanded, nibType: ViewModelCellViewSourceType, height: ViewModelHeight) {
+    
+    convenience init(
+        state: TableViewViewModelExpandedState = .expanded,
+        nibType: ViewModelCellViewSourceType, height: ViewModelHeight
+    ) {
         self.init(nibType: nibType, height: height)
         self.state = state
     }
     
     // MARK: - Public Implementation
+    
     public func changeState() {
         guard let state = self.state else { return }
         self.state = state == .expanded ? .collapsed : .expanded

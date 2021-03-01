@@ -8,16 +8,15 @@
 
 import UIKit
 
-public protocol TableViewSectionProtocol: UIView, ViewSectionProtocol {}
-
-public class CCTableViewSection: UIView, TableViewSectionProtocol {
+/// Базовая реализация View header или footer ячейки
+public class TableViewSection: UIView, ViewSectionProtocol {
     public weak var viewModel: ViewModelProtocol?
 }
 
 // MARK: - Expanded ViewSection
 
 /// Базовый функционал раскрывающейся секции
-class CCTableViewExpandedSection: CCTableViewSection {
+class TableViewExpandedSection: TableViewSection {
     
     // MARK: - IBOutlets
     
@@ -26,7 +25,7 @@ class CCTableViewExpandedSection: CCTableViewSection {
     // MARK: - Actions
     
     @IBAction func actionStateButtonDidTouch(_ sender: UIButton) {
-        if let viewModel = self.viewModel as? CCTableViewViewModelExpandedSectionProtocol {
+        if let viewModel = self.viewModel as? TableViewViewModelExpandedSectionProtocol {
             viewModel.changeState()
         }
     }

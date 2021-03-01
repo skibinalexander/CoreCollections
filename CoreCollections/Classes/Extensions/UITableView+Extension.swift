@@ -23,7 +23,7 @@ public extension UITableView {
     }
     
     /// Регистрация TableViewCell
-    func registerSection<U: CCTableViewSection>(_ coreCollectionSection: U.Type) {
+    func registerSection<U: TableViewSection>(_ coreCollectionSection: U.Type) {
         guard UINib.nib(withClass: coreCollectionSection) != nil else {
             fatalError("CoreCollection->UITableView+Extension: section \(coreCollectionSection) nibLoad is nil!")
         }

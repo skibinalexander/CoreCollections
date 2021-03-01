@@ -8,9 +8,8 @@
 
 import UIKit
 
-public protocol TableViewCellProtocol: UITableViewCell, ViewCellProtocol {}
-
-public class TableViewCell: UITableViewCell, TableViewCellProtocol {
+/// Базовая реализация View ячейки таблицы
+public class TableViewCell: UITableViewCell, ViewCellProtocol {
     public weak var viewModel: ViewModelProtocol?
 }
 

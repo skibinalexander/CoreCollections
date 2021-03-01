@@ -227,11 +227,11 @@ extension TableViewDelegate {
 // MARK: - Creation
 
 extension TableViewDelegate {
-    func nibSection(nameNib: String) -> CCTableViewSection? {
+    func nibSection(nameNib: String) -> TableViewSection? {
         return Bundle.main.loadNibNamed(
             String(describing: nameNib),
             owner: nil,
             options: nil
-        )![0] as? CCTableViewSection
+        )![0] as? TableViewSection
     }
 }
