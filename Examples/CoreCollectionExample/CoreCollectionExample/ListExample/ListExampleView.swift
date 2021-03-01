@@ -8,11 +8,17 @@
 import CoreCollections
 import UIKit
 
-final class ListExampleView: CCTableViewController {
+final class ListExampleView: TableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        installTableView()
+    }
+    
+    // MARK: - TableView
+    
+    func installTableView() {
+        
     }
     
 }
