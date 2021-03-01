@@ -42,7 +42,7 @@ open class TableViewPresenter<T: TemplateViewModelsProtocol>:
     }
 }
 
-open class CCPaginationTableViewPresenter<T: TemplateViewModelsProtocol>:
+open class PaginationTableViewPresenter<T: TemplateViewModelsProtocol>:
     TableViewPresenter<T>, ContainerViewPrefetchOutputProtocol {
     
     open func batchNumberRows(in section: Int) -> Int {
@@ -51,7 +51,7 @@ open class CCPaginationTableViewPresenter<T: TemplateViewModelsProtocol>:
     
     open func batchList() {}
     
-    func paginationInsertCells(in item: ItemModel, cells: [ModelCellProtocol]) {
+    public func paginationInsertCells(in item: ItemModel, cells: [ModelCellProtocol]) {
         if item.cells.count > 0 {
             manager.getData().insertCells(in: item, cells: cells, by: item.cells.count - 1)
         } else {
