@@ -15,15 +15,20 @@ public class Items<U, T>: NSObject {
     
     // MARK: - Properties
     
-    var id:         String?
+    public var id: String?
     
-    var header:     U?
-    var footer:     U?
-    var cells:      [T?] = []
+    public var header: U?
+    public var footer: U?
+    public var cells: [T?] = []
     
     // MARK: - Lifecycle
     
-    init(id: String? = nil, header: U? = nil, footer: U? = nil, cells: [T?] = []) {
+    public init(
+        id: String? = nil,
+        header: U? = nil,
+        footer: U? = nil,
+        cells: [T?] = []
+    ) {
         self.id = id
         self.header = header
         self.footer = footer
