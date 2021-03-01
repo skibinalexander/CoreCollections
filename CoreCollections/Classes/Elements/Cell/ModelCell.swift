@@ -12,7 +12,7 @@ import Foundation
 public protocol ModelCellProtocol: ModelProtocol {}
 
 /// Базовый класс для ячеек в CoreCollection
-public class ModelCell: ModelCellProtocol {
+open class ModelCell: ModelCellProtocol {
     
     // MARK: - Stored Properties
     

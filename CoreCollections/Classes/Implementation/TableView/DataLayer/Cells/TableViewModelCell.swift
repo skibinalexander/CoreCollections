@@ -9,4 +9,4 @@
 import UIKit
 
 /// Базовый класс для моделей для ячеек
-class TableViewModelCell: ModelCell {}
+open class TableViewModelCell: ModelCell {}

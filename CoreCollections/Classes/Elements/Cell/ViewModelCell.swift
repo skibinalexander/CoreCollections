@@ -23,7 +23,7 @@ public protocol ViewModelCellProtocol: ViewModelProtocol {
     func shouldIndentWhileEditing() -> Bool
 }
 
-public class ViewModelCell<V: ViewCellProtocol, M: ModelCellProtocol>:
+open class ViewModelCell<V: ViewCellProtocol, M: ModelCellProtocol>:
     ViewModel<V, M>, ViewModelCellProtocol {
         
     public var indexPath: IndexPath!

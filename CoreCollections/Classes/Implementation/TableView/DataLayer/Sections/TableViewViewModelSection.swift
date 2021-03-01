@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Base ViewModel
 
-class TableViewViewModelSection<V: TableViewSection, M: TableViewModelSection>:
+open class TableViewViewModelSection<V: TableViewSection, M: TableViewModelSection>:
     ViewModelSection<V, M> {
     
 }
@@ -22,7 +22,7 @@ public enum TableViewViewModelExpandedState {
 }
 
 // MARK: -
-protocol TableViewViewModelExpandedSectionOutputProtocol {
+public protocol TableViewViewModelExpandedSectionOutputProtocol {
     func stateDidChange(
         state: TableViewViewModelExpandedState,
         viewModel: ViewModelProtocol
@@ -38,7 +38,7 @@ class CCTableViewViewModelExpandedSection<V: TableViewSection, M: TableViewModel
     
     // MARK: - Properties
     
-    internal var state: TableViewViewModelExpandedState?
+    public var state: TableViewViewModelExpandedState?
     
     // MARK: - Lifecycle
     

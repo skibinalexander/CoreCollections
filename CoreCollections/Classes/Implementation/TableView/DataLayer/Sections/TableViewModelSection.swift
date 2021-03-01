@@ -8,16 +8,16 @@
 
 import UIKit
 
-class TableViewModelSection: ModelSectionProtocol {
+open class TableViewModelSection: ModelSectionProtocol {
     
     // MARK: - ModelSectionProtocol
     
-    var id: String?
+    public var id: String?
     
     // MARK: - Injection Properties
     
-    weak var item: ItemModel?
-    weak var viewModel: ViewModelProtocol?
+    public weak var item: ItemModel?
+    public weak var viewModel: ViewModelProtocol?
     
     // MARK: - Lifecycle
     

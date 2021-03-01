@@ -9,7 +9,7 @@
 import UIKit
 
 /// Базовая реализация View ячейки таблицы
-public class TableViewCell: UITableViewCell, ViewCellProtocol {
+open class TableViewCell: UITableViewCell, ViewCellProtocol {
     public weak var viewModel: ViewModelProtocol?
 }
 

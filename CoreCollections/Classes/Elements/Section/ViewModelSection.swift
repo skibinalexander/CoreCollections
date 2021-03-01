@@ -12,5 +12,5 @@ import Foundation
 public protocol ViewModelSectionProtocol: ViewModelProtocol {}
 
 /// 
-class ViewModelSection<V: ViewSectionProtocol, M: ModelSectionProtocol>:
+open class ViewModelSection<V: ViewSectionProtocol, M: ModelSectionProtocol>:
     ViewModel<V, M>, ViewModelSectionProtocol {}
