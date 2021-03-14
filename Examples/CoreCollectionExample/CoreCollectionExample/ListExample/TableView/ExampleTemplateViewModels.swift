@@ -22,8 +22,4 @@ final class ExampleTemplateViewModels: TemplateViewModelsProtocol {
         fatalError()
     }
     
-    static func newTemplate() -> TemplateViewModelsProtocol {
-        ExampleTemplateViewModels()
-    }
-    
 }
