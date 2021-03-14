@@ -96,9 +96,9 @@
 		12ABF239579424B426EEBCB8B7D38A1C /* TableViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		167BEC859EE6389C64DCAFB97D0E5A06 /* TableViewSection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TableViewSection.swift; sourceTree = "<group>"; };
 		16DB3F05E1EAD3F87449E619E38D9585 /* TableViewDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TableViewDelegate.swift; sourceTree = "<group>"; };
-		1AD9F080F12121C9939D03750DB2F45F /* CoreCollections.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = CoreCollections.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		1B910B38125FD337816B007FA79C6671 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
-		1BE80B892C2E3B5282485D58DF4FC915 /* Pods_CoreCollectionExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_CoreCollectionExample.framework; path = "Pods-CoreCollectionExample.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AD9F080F12121C9939D03750DB2F45F /* CoreCollections.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = CoreCollections.podspec; sourceTree = "<group>"; tabWidth = 2; };
+		1B910B38125FD337816B007FA79C6671 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		1BE80B892C2E3B5282485D58DF4FC915 /* Pods_CoreCollectionExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoreCollectionExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D6395F5F56A17A729DA372E3EE9AF5E /* CoreCollections.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CoreCollections.release.xcconfig; sourceTree = "<group>"; };
 		1FD8AB2E7C34F5F042C7870E5C852C07 /* ContainerViewRefreshOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ContainerViewRefreshOutput.swift; sourceTree = "<group>"; };
 		22B7D12C4E38A95FFF69B81EA993697B /* ContainerViewPrefetchOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ContainerViewPrefetchOutput.swift; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 		2FF2128D8932E2E88089F771A62BCDFB /* Pods-CoreCollectionExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CoreCollectionExample.debug.xcconfig"; sourceTree = "<group>"; };
 		30D914A975DE51B041E8F274533480FC /* ViewModelHeight.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewModelHeight.swift; sourceTree = "<group>"; };
 		32BEE3FFE8F1A9EABB9BBA960FFD10CF /* ViewProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewProtocol.swift; sourceTree = "<group>"; };
-		349508029823357BED7F087A98F15D08 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		349508029823357BED7F087A98F15D08 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3590DDDC4D6FD8560D96C766451EBE24 /* CollectionViewManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CollectionViewManager.swift; sourceTree = "<group>"; };
 		3607C7DCED9964EC9ECACC923EDFE304 /* CoreCollections.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CoreCollections.debug.xcconfig; sourceTree = "<group>"; };
 		3A1F1FE5222DBC509195E2F8AD45C256 /* DataSource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DataSource.swift; path = CoreCollections/Classes/DataSource.swift; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 		93F6313B77B6C12B5DAE1AAB18E1D866 /* TableViewModelSection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TableViewModelSection.swift; sourceTree = "<group>"; };
 		9851166B6D78E83467917A662BABC851 /* Pods-CoreCollectionExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CoreCollectionExample.release.xcconfig"; sourceTree = "<group>"; };
 		99D9B2CB259AA4F9FC9AAAA7F1A79F28 /* ViewModelSection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewModelSection.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E938E4C32953DA507E558DB66C488A4 /* CollectionViewSection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CollectionViewSection.swift; sourceTree = "<group>"; };
 		9F5ED58D0B853D13D7B14B3CF7486C65 /* TableViewManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TableViewManager.swift; sourceTree = "<group>"; };
 		A08AC8EA40B5C21AB16F121E69CE4522 /* Item.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 		F0E21857A1144EFD33E028F2EC7CAF19 /* PaginationModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PaginationModel.swift; path = CoreCollections/Classes/PaginationModel.swift; sourceTree = "<group>"; };
 		F64D5B1AA97360BD35A41B470AAA8C31 /* ColectionViewDataSource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ColectionViewDataSource.swift; sourceTree = "<group>"; };
 		F6E7CFEE0DA0DF95DF80E0A3FD84DA99 /* ManagerContext+Refresh.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ManagerContext+Refresh.swift"; sourceTree = "<group>"; };
-		FC5439B2825D1157F449DFDBAAA94628 /* CoreCollections.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CoreCollections.framework; path = CoreCollections.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC5439B2825D1157F449DFDBAAA94628 /* CoreCollections.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoreCollections.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD006781F1FAB47AA46019A5D2C2319 /* Manager+ViewModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Manager+ViewModels.swift"; sourceTree = "<group>"; };
 		FF879DC357D0D39DB71DDC08959C02C0 /* MapperViewModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MapperViewModels.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -216,7 +216,6 @@
 				F395C732D3D66E55129EDFD6DF4CBEC6 /* ImplementationClasses */,
 				527E0AF3AE4D17FB940E559AF7539FCC /* ViewLayer */,
 			);
-			name = CollectionView;
 			path = CollectionView;
 			sourceTree = "<group>";
 		};
@@ -229,7 +228,6 @@
 				71390B1301AC3BD49ACE0E50170BD71D /* ManagerContextViewCallbackType.swift */,
 				7945A0931438C8D9AD4AEC1D50FE70F5 /* ManagerProtocol.swift */,
 			);
-			name = Declarations;
 			path = Declarations;
 			sourceTree = "<group>";
 		};
@@ -240,7 +238,6 @@
 				55B8B4B5290AEEB9CCB4B6F0DAE592F7 /* ItemModel.swift */,
 				0755AD0C0F1F7B80E48D6852FA23679B /* ItemViewModel.swift */,
 			);
-			name = Items;
 			path = Items;
 			sourceTree = "<group>";
 		};
@@ -253,7 +250,6 @@
 				D3090BAD7EE166218A84B45AF52A86EC /* Manager+Refreshing.swift */,
 				FCD006781F1FAB47AA46019A5D2C2319 /* Manager+ViewModels.swift */,
 			);
-			name = Manager;
 			path = Manager;
 			sourceTree = "<group>";
 		};
@@ -272,7 +268,6 @@
 			children = (
 				32BEE3FFE8F1A9EABB9BBA960FFD10CF /* ViewProtocol.swift */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
@@ -294,7 +289,6 @@
 				35586050BA43B7382D4CB746EFF41746 /* View */,
 				CC1425768B8FF015C221F996F3204542 /* ViewModel */,
 			);
-			name = Basic;
 			path = Basic;
 			sourceTree = "<group>";
 		};
@@ -323,7 +317,6 @@
 			children = (
 				E2DF74DA7CA26705A714085EA16BFE21 /* ModelProtocol.swift */,
 			);
-			name = Model;
 			path = Model;
 			sourceTree = "<group>";
 		};
@@ -333,7 +326,6 @@
 				AAD3E993570E1193430ED440E5B439D6 /* CollectionViewCell.swift */,
 				9E938E4C32953DA507E558DB66C488A4 /* CollectionViewSection.swift */,
 			);
-			name = ViewLayer;
 			path = ViewLayer;
 			sourceTree = "<group>";
 		};
@@ -352,7 +344,6 @@
 				FCF6A1AD25E229D24BE5BD41AEF278B0 /* Context */,
 				2794BD36320B0EC52C1F024D8469DF35 /* Manager */,
 			);
-			name = Implementation;
 			path = Implementation;
 			sourceTree = "<group>";
 		};
@@ -362,7 +353,6 @@
 				C7E50A30E8ECA2B9E5C4E0944B956EEA /* CollectionViewModelCell.swift */,
 				53CD04E195261FE33D6823FC2C0DBA8E /* CollectionViewViewModelCell.swift */,
 			);
-			name = Cells;
 			path = Cells;
 			sourceTree = "<group>";
 		};
@@ -373,7 +363,6 @@
 				9F5ED58D0B853D13D7B14B3CF7486C65 /* TableViewManager.swift */,
 				556F711CEB60ACB03EE666B49A6942E7 /* TableViewPresenter.swift */,
 			);
-			name = ImplementationClasses;
 			path = ImplementationClasses;
 			sourceTree = "<group>";
 		};
@@ -410,7 +399,6 @@
 				7C2A29FBCF141C51C69F65200FF778F9 /* CollectionViewModelSection.swift */,
 				C5E401568E953FE28905460573E8C251 /* CollectionViewViewModelSection.swift */,
 			);
-			name = Sections;
 			path = Sections;
 			sourceTree = "<group>";
 		};
@@ -420,7 +408,6 @@
 				D99542A774EEC87496C18405B71E277A /* TableViewModelCell.swift */,
 				790A16A65CB03E5D7E392EF86F042DEC /* TableViewViewModelCell.swift */,
 			);
-			name = Cells;
 			path = Cells;
 			sourceTree = "<group>";
 		};
@@ -439,7 +426,6 @@
 				99D9B2CB259AA4F9FC9AAAA7F1A79F28 /* ViewModelSection.swift */,
 				D0F445754377C041816BABC2814CE0A9 /* ViewSection.swift */,
 			);
-			name = Section;
 			path = Section;
 			sourceTree = "<group>";
 		};
@@ -449,7 +435,6 @@
 				93F6313B77B6C12B5DAE1AAB18E1D866 /* TableViewModelSection.swift */,
 				E2A1CDC731B8E227F81DDEC32C6B68D0 /* TableViewViewModelSection.swift */,
 			);
-			name = Sections;
 			path = Sections;
 			sourceTree = "<group>";
 		};
@@ -481,7 +466,6 @@
 			children = (
 				C57EDAA7BC5D0CAE0BE46BDE8430E15B /* ManagerBuilder.swift */,
 			);
-			name = Builder;
 			path = Builder;
 			sourceTree = "<group>";
 		};
@@ -492,7 +476,6 @@
 				167BEC859EE6389C64DCAFB97D0E5A06 /* TableViewSection.swift */,
 				5F968ACF5395069E126666379CCB04D3 /* TableViewSwipeCell.swift */,
 			);
-			name = ViewLayer;
 			path = ViewLayer;
 			sourceTree = "<group>";
 		};
@@ -504,7 +487,6 @@
 				62A537D80CCFB43CE58D97DF23194882 /* Cells */,
 				89F37BD2E927D09822D73D3D91A25751 /* Sections */,
 			);
-			name = DataLayer;
 			path = DataLayer;
 			sourceTree = "<group>";
 		};
@@ -517,7 +499,6 @@
 				54B4442751FF0D602ED15E6E518587E2 /* ViewModelInitialization.swift */,
 				D3C5F2DF6F299623054EDB6C33D8BB7D /* ViewModelProtocol.swift */,
 			);
-			name = ViewModel;
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
@@ -576,7 +557,6 @@
 				670FBBC6FB3846111E53E63017DF382A /* ImplementationClasses */,
 				C7A14EDE10BFADCC8282AB7B303054BD /* ViewLayer */,
 			);
-			name = TableView;
 			path = TableView;
 			sourceTree = "<group>";
 		};
@@ -608,7 +588,6 @@
 				A86B1EF1463942FF4D9A3D74B5BE3F80 /* ViewCell.swift */,
 				3EB4945C50D702A3D79016A66FC8000B /* ViewModelCell.swift */,
 			);
-			name = Cell;
 			path = Cell;
 			sourceTree = "<group>";
 		};
@@ -620,7 +599,6 @@
 				950526DE75542ACC4D00ACFB2E3FC8EC /* Cells */,
 				9FEB9428152D4746311D76C7925B764B /* Sections */,
 			);
-			name = DataLayer;
 			path = DataLayer;
 			sourceTree = "<group>";
 		};
@@ -631,7 +609,6 @@
 				3590DDDC4D6FD8560D96C766451EBE24 /* CollectionViewManager.swift */,
 				B05248501B97DE5F91FFC8BA2C6D21C8 /* CollectionViewPresenter.swift */,
 			);
-			name = ImplementationClasses;
 			path = ImplementationClasses;
 			sourceTree = "<group>";
 		};
@@ -642,7 +619,6 @@
 				56255C489CD11F10F81E51809710015E /* ManagerContext+Cells.swift */,
 				F6E7CFEE0DA0DF95DF80E0A3FD84DA99 /* ManagerContext+Refresh.swift */,
 			);
-			name = Context;
 			path = Context;
 			sourceTree = "<group>";
 		};

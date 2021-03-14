@@ -14,6 +14,7 @@ public class ManagerBuilder<T: TemplateViewModelsProtocol> {
     // MARK: - Private Properties
     
     private var manager: ManagerProtocol!
+    private var template: TemplateViewModelsProtocol!
     private var containerData: ManagerContextProtocol!
     private var containerView: ContainerViewInputProtocol!
     private var viewDelegate: ManagerContextViewCallbackProtocol!
@@ -31,6 +32,11 @@ public class ManagerBuilder<T: TemplateViewModelsProtocol> {
     
     public final func configure(manager: ManagerProtocol) -> ManagerBuilder {
         self.manager = manager
+        return self
+    }
+    
+    public final func configure(template: TemplateViewModelsProtocol) -> ManagerBuilder {
+        self.template = template
         return self
     }
     
@@ -68,10 +74,6 @@ public class ManagerBuilder<T: TemplateViewModelsProtocol> {
     
     /// Проставление зависимостей
     public final func build() {
-        manager.set(template: T())
-        
-        manager.configuration()
-        
         containerData.set(viewDelegate: viewDelegate)
         
         containerView?.configure(
@@ -82,10 +84,13 @@ public class ManagerBuilder<T: TemplateViewModelsProtocol> {
         containerView?.configurePagination(output: prefetchOutput)
         containerView?.configureRefresh(output: refreshOutput)
         
-        manager?.set(containerView: containerView)
-        manager?.set(containerData: containerData ?? ManagerContext.newContext())
+        manager.set(template: template)
+        manager.set(containerView: containerView)
+        manager.set(containerData: containerData ?? ManagerContext.newContext())
         
-        manager?.append(items: self.items)
+        manager.configuration()
+        
+        manager.append(items: self.items)
     }
     
 }

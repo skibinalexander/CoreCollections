@@ -20,8 +20,4 @@ public protocol TemplateViewModelsProtocol {
     /// Определение ViewModel по Model для ячейки
     var createCell: ((_ model: ModelCellProtocol?) -> ViewModelCellProtocol)? { get }
     
-    // MARK: - Init
-    
-    init()
-    
 }
