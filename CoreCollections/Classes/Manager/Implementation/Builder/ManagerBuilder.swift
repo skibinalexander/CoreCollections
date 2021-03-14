@@ -85,10 +85,11 @@ public class ManagerBuilder {
         containerView?.configureRefresh(output: refreshOutput)
         
         manager.set(template: template)
-        manager.set(containerView: containerView)
-        manager.set(containerData: containerData ?? ManagerContext.newContext())
         
         manager.configuration()
+        
+        manager.set(containerView: containerView)
+        manager.set(containerData: containerData ?? ManagerContext.newContext())
         
         manager.append(items: self.items)
     }
