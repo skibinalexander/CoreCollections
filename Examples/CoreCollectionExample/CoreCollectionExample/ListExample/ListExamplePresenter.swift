@@ -17,7 +17,7 @@ final class ListExamplePresenter: TableViewPresenter {
         self.view = view
         super.init()
         
-        ManagerBuilder<ExampleTemplateViewModels>()
+        ManagerBuilder()
             .configure(manager: self.manager)
             .configure(template: ExampleTemplateViewModels())
             .configure(containerView: self.view)

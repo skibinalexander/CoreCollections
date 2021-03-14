@@ -9,7 +9,7 @@
 import Foundation
 
 /// Строитель для менеджера коллекции
-public class ManagerBuilder<T: TemplateViewModelsProtocol> {
+public class ManagerBuilder {
     
     // MARK: - Private Properties
     
