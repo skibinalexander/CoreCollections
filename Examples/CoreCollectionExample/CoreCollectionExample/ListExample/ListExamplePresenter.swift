@@ -19,6 +19,7 @@ final class ListExamplePresenter: TableViewPresenter<ExampleTemplateViewModels> 
         
         ManagerBuilder()
             .configure(manager: self.manager)
+            .configure(template: ExampleTemplateViewModels())
             .configure(containerView: self.view)
             .configure(viewDelegate: self)
             .configure(items: [.list()])
