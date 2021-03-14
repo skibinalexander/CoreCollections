@@ -26,8 +26,6 @@ open class TableViewPresenter<T: TemplateViewModelsProtocol>:
             delegateOutput: self,
             viewDelegate: self
         )
-        
-        manager.configuration()
     }
     
     open func willDisplay(viewModel: ViewModelCellProtocol) { }
