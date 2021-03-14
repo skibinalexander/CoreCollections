@@ -24,8 +24,7 @@ open class TableViewPresenter<T: TemplateViewModelsProtocol>:
     public init() {
         manager = TableViewManager(
             delegateOutput: self,
-            viewDelegate: self,
-            template: T.newTemplate()
+            viewDelegate: self
         )
         
         manager.configuration()

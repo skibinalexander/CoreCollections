@@ -34,6 +34,11 @@ public class ManagerBuilder {
         return self
     }
     
+    public final func configure(template: TemplateViewModelsProtocol) -> ManagerBuilder {
+        self.manager.set(template: template)
+        return self
+    }
+    
     public final func configure(containerView: ContainerViewInputProtocol) -> ManagerBuilder {
         self.containerView = containerView
         return self
@@ -68,6 +73,8 @@ public class ManagerBuilder {
     
     /// Проставление зависимостей
     public final func build() {
+        manager.configuration()
+        
         containerData.set(viewDelegate: viewDelegate)
         
         containerView?.configure(

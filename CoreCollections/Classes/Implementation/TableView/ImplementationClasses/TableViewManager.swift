@@ -11,13 +11,11 @@ import Foundation
 class TableViewManager: Manager {
     init(
         delegateOutput: TableViewDelegateOutputProtocol,
-        viewDelegate: ManagerContextViewCallbackProtocol,
-        template: TemplateViewModelsProtocol
+        viewDelegate: ManagerContextViewCallbackProtocol
     ) {
         super.init(
             dataSource: TableViewDataSource(),
             delegate: TableViewDelegate(output: delegateOutput),
-            template: template,
             viewDelegate: viewDelegate
         )
     }

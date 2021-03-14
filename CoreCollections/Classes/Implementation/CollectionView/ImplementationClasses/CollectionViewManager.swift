@@ -11,13 +11,11 @@ import Foundation
 public class CollectionViewManager: Manager {
     init(
         delegateOutput: CollectionViewDelegateOutputProtocol,
-        viewDelegate: ManagerContextViewCallbackProtocol,
-        template: TemplateViewModelsProtocol
+        viewDelegate: ManagerContextViewCallbackProtocol
     ) {
         super.init(
             dataSource: CollectionViewDataSource(),
             delegate: CollectionViewDelegate(output: delegateOutput),
-            template: template,
             viewDelegate: viewDelegate
         )
     }

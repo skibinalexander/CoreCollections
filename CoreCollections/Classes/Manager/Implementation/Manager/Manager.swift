@@ -15,7 +15,10 @@ open class Manager: ManagerProtocol, MapperViewModelsDataSource {
     // MARK: - Properties
     
     /// Шаблон конфигурации viewModels ячеек и секций коллекции
-    internal var mapper: MapperViewModels
+    internal var template: TemplateViewModelsProtocol!
+    
+    /// Маппер конфигурации viewModels ячеек и секций коллекции
+    internal var mapper: MapperViewModels!
     
     /// DataSource закрытый абстрактным протоколом для коллекции конкретной реализации (UITableView / UICollectionView)
     private var dataSource: DataSource
@@ -48,22 +51,25 @@ open class Manager: ManagerProtocol, MapperViewModelsDataSource {
     init(
         dataSource: DataSource,
         delegate: Delegate,
-        template: TemplateViewModelsProtocol,
         viewDelegate: ManagerContextViewCallbackProtocol
     ) {
-        self.mapper = MapperViewModels(template: template)
         self.dataSource = dataSource
         self.delegate = delegate
         self.viewDelegate = viewDelegate
     }
     
     public func configuration() {
+        self.mapper = MapperViewModels(template: self.template)
         mapper.dataSource = self
         dataSource.mapper = mapper
         delegate.mapper = mapper
     }
     
     // MARK: - Setters
+    
+    public func set(template: TemplateViewModelsProtocol) {
+        self.template = template
+    }
     
     public func set(containerView: ContainerViewInputProtocol?) {
         self.containerView = containerView

@@ -24,6 +24,7 @@ public protocol ManagerProtocol: class {
     
     // MARK: - Setters
     
+    func set(template: TemplateViewModelsProtocol)
     func set(containerData: ManagerContextProtocol?)
     func set(containerView: ContainerViewInputProtocol?)
     

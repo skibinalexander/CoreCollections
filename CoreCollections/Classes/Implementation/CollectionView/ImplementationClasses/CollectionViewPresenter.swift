@@ -22,8 +22,7 @@ class CollectionViewPresenter<T: TemplateViewModelsProtocol>:
     init() {
         self.manager = CollectionViewManager(
             delegateOutput: self,
-            viewDelegate: self,
-            template: T.newTemplate()
+            viewDelegate: self
         )
         self.initializationItems()
     }
