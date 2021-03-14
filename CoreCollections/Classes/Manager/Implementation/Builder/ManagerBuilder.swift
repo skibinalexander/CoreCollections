@@ -9,7 +9,7 @@
 import Foundation
 
 /// Строитель для менеджера коллекции
-public class ManagerBuilder {
+public class ManagerBuilder<T: TemplateViewModelsProtocol> {
     
     // MARK: - Private Properties
     
@@ -31,11 +31,6 @@ public class ManagerBuilder {
     
     public final func configure(manager: ManagerProtocol) -> ManagerBuilder {
         self.manager = manager
-        return self
-    }
-    
-    public final func configure(template: TemplateViewModelsProtocol) -> ManagerBuilder {
-        self.manager.set(template: template)
         return self
     }
     
@@ -73,6 +68,8 @@ public class ManagerBuilder {
     
     /// Проставление зависимостей
     public final func build() {
+        manager.set(template: T())
+        
         manager.configuration()
         
         containerData.set(viewDelegate: viewDelegate)

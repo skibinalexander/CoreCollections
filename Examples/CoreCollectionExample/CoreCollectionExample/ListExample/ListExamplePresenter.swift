@@ -7,7 +7,7 @@
 
 import CoreCollections
 
-final class ListExamplePresenter: TableViewPresenter<ExampleTemplateViewModels> {
+final class ListExamplePresenter: TableViewPresenter {
     
     weak var view: ListExampleView!
     
@@ -17,7 +17,7 @@ final class ListExamplePresenter: TableViewPresenter<ExampleTemplateViewModels> 
         self.view = view
         super.init()
         
-        ManagerBuilder()
+        ManagerBuilder<ExampleTemplateViewModels>()
             .configure(manager: self.manager)
             .configure(template: ExampleTemplateViewModels())
             .configure(containerView: self.view)

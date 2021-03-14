@@ -9,6 +9,8 @@ import Foundation
 
 public protocol TemplateViewModelsProtocol {
     
+    // MARK: - Properties
+    
     /// Определение ViewModel по Model для header секции
     var createHeader: ((_ model: ModelSectionProtocol?) -> ViewModelSectionProtocol?)? { get }
     
@@ -17,5 +19,9 @@ public protocol TemplateViewModelsProtocol {
     
     /// Определение ViewModel по Model для ячейки
     var createCell: ((_ model: ModelCellProtocol?) -> ViewModelCellProtocol)? { get }
+    
+    // MARK: - Init
+    
+    init()
     
 }

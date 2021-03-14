@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - BasicTableViewPresenter
 
-open class TableViewPresenter<T: TemplateViewModelsProtocol>:
+open class TableViewPresenter:
     TableViewDelegateOutputProtocol,
     ContainerViewRefreshOutputProtocol,
     ManagerContextViewCallbackProtocol{
@@ -40,7 +40,7 @@ open class TableViewPresenter<T: TemplateViewModelsProtocol>:
 }
 
 open class PaginationTableViewPresenter<T: TemplateViewModelsProtocol>:
-    TableViewPresenter<T>, ContainerViewPrefetchOutputProtocol {
+    TableViewPresenter, ContainerViewPrefetchOutputProtocol {
     
     open func batchNumberRows(in section: Int) -> Int {
         manager.item(index: section).cells.count

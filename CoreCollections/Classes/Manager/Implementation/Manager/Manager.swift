@@ -59,7 +59,7 @@ open class Manager: ManagerProtocol, MapperViewModelsDataSource {
     }
     
     public func configuration() {
-        self.mapper = MapperViewModels(template: self.template)
+        self.mapper = MapperViewModels(template: template)
         mapper.dataSource = self
         dataSource.mapper = mapper
         delegate.mapper = mapper
