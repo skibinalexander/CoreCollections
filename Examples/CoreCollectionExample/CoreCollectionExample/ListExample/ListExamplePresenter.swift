@@ -25,6 +25,8 @@ final class ListExamplePresenter: TableViewPresenter {
             .configure(items: [.list()])
             .build()
         
+        trailingSwipeConfig = UISwipeActionsConfiguration(actions: configurationActions())
+        
         manager
             .getData()
             .replaceCells(
@@ -45,6 +47,21 @@ final class ListExamplePresenter: TableViewPresenter {
     override func didSelect(viewModel: ViewModelCellProtocol) {
         super.didSelect(viewModel: viewModel)
         print(viewModel)
+    }
+    
+    func configurationActions() -> [UIContextualAction] {
+        let action = UIContextualAction(
+            style: .normal,
+            title: "Favourite",
+            handler: { [weak self] (action, view, completionHandler) in
+                print("test")
+                completionHandler(true)
+            }
+        )
+        
+        action.backgroundColor = .systemBlue
+        
+        return [action]
     }
     
 }

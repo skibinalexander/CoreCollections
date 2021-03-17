@@ -11,7 +11,7 @@ import Foundation
 // MARK: - BasicTableViewPresenter
 
 open class TableViewPresenter:
-    DelegateOutputProtocol,
+    TableViewDelegateProtocol,
     ContainerViewRefreshOutputProtocol,
     ManagerContextViewCallbackProtocol{
     
@@ -19,11 +19,21 @@ open class TableViewPresenter:
     
     public var manager: ManagerProtocol!
     
+    // MARK: - TableViewDelegateProtocol Properties
+    
+    public var editingStyle: UITableViewCell.EditingStyle = .none
+    public var shouldIndentWhileEditingRowAt: Bool = false
+    public var leadingSwipeConfig: UISwipeActionsConfiguration? = nil
+    public var trailingSwipeConfig: UISwipeActionsConfiguration? = nil
+    
     // MARK: - Lifecycle
     
     public init() {
-        manager = TableViewManager(
-            delegateOutput: self,
+        self.manager = Manager(
+            dataSource: TableViewDataSource(),
+            delegate: TableViewDelegate(
+                output: self
+            ),
             viewDelegate: self
         )
     }

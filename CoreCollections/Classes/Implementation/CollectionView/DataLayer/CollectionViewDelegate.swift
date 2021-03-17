@@ -8,19 +8,19 @@
 
 import UIKit
 
-protocol CollectionViewDelegateOutputProtocol: DelegateOutputProtocol {
-    
-}
-
 class CollectionViewDelegate: Delegate, UICollectionViewDelegate {
     
-    // MARK: - Properties
-    private weak var output: CollectionViewDelegateOutputProtocol?
+    // MARK: - Private Properties
     
-    init(output: CollectionViewDelegateOutputProtocol?) {
-        super.init()
+    private weak var output: DelegateOutputProtocol?
+    
+    // MARK: - Init
+    
+    init(output: DelegateOutputProtocol?) {
         self.output = output
     }
+    
+    // MARK: - UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        if let cell = self.mapper?.viewModels[indexPath.section].cells[indexPath.row] {

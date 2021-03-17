@@ -10,7 +10,7 @@ import Foundation
 
 public class CollectionViewManager: Manager {
     init(
-        delegateOutput: CollectionViewDelegateOutputProtocol,
+        delegateOutput: DelegateOutputProtocol,
         viewDelegate: ManagerContextViewCallbackProtocol
     ) {
         super.init(

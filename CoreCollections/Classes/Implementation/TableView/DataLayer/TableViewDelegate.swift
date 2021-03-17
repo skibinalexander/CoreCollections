@@ -8,27 +8,21 @@
 
 import UIKit
 
+public protocol TableViewDelegateProtocol: DelegateOutputProtocol {
+    var editingStyle: UITableViewCell.EditingStyle { get set }
+    var leadingSwipeConfig: UISwipeActionsConfiguration? { get set }
+    var trailingSwipeConfig: UISwipeActionsConfiguration? { get set }
+    var shouldIndentWhileEditingRowAt: Bool { get set }
+}
+
 class TableViewDelegate: Delegate, UITableViewDelegate {
     
-    // MARK: - Public Properties
-    
-    public var editingStyle: UITableViewCell.EditingStyle
-    public var shouldIndentWhileEditingRowAt: Bool
-    
-    // MARK: - Private Properties
-    
-    private weak var output: DelegateOutputProtocol?
+    private weak var output: TableViewDelegateProtocol?
     
     // MARK: - Lifecycle
     
-    init(
-        output: DelegateOutputProtocol?,
-        editingStyle: UITableViewCell.EditingStyle = .none,
-        shouldIndentWhileEditingRowAt: Bool = false
-    ) {
-        self.editingStyle = editingStyle
+    init(output: TableViewDelegateProtocol?) {
         self.output = output
-        self.shouldIndentWhileEditingRowAt = shouldIndentWhileEditingRowAt
         super.init()
     }
     
@@ -118,6 +112,7 @@ extension TableViewDelegate {
 // MARK: - Selections
 
 extension TableViewDelegate {
+    
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if let cell = self.mapper?.viewModels[indexPath.section].cells[indexPath.row] {
             cell.willSelect()
@@ -202,11 +197,11 @@ extension TableViewDelegate {
 extension TableViewDelegate {
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        self.editingStyle
+        self.output?.editingStyle ?? .none
     }
 
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        self.shouldIndentWhileEditingRowAt
+        self.output?.shouldIndentWhileEditingRowAt ?? false
     }
     
 }
@@ -219,6 +214,24 @@ extension TableViewDelegate {
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         output?.scrollViewDidEndScrollingAnimation()
+    }
+    
+}
+
+extension TableViewDelegate {
+    
+    func tableView(
+        _ tableView: UITableView,
+        leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        self.output?.leadingSwipeConfig ?? nil
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        self.output?.trailingSwipeConfig ?? nil
     }
     
 }
