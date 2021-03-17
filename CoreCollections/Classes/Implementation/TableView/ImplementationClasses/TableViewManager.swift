@@ -10,7 +10,7 @@ import Foundation
 
 class TableViewManager: Manager {
     init(
-        delegateOutput: TableViewDelegateOutputProtocol,
+        delegateOutput: DelegateOutputProtocol,
         viewDelegate: ManagerContextViewCallbackProtocol
     ) {
         super.init(

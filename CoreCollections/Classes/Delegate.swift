@@ -25,6 +25,16 @@ public protocol DelegateOutputProtocol: class {
     
 }
 
+extension DelegateOutputProtocol {
+    
+    /// Срабатывания евента скроллинга
+    func scrollDidChange() {}
+    
+    /// Завершение аниации скроллинга
+    func scrollViewDidEndScrollingAnimation() {}
+    
+}
+
 /// Базовая реализация делегата коллекции
 public class Delegate: NSObject {
     

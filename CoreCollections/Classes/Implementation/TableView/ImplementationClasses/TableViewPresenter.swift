@@ -11,7 +11,7 @@ import Foundation
 // MARK: - BasicTableViewPresenter
 
 open class TableViewPresenter:
-    TableViewDelegateOutputProtocol,
+    DelegateOutputProtocol,
     ContainerViewRefreshOutputProtocol,
     ManagerContextViewCallbackProtocol{
     

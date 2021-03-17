@@ -8,22 +8,28 @@
 
 import UIKit
 
-protocol TableViewDelegateOutputProtocol: DelegateOutputProtocol {
-    func scrollDidChange()
-    func scrollViewDidEndScrollingAnimation()
-}
-
 class TableViewDelegate: Delegate, UITableViewDelegate {
     
-    // MARK: - Properties
+    // MARK: - Public Properties
     
-    private weak var output: TableViewDelegateOutputProtocol?
+    public var editingStyle: UITableViewCell.EditingStyle
+    public var shouldIndentWhileEditingRowAt: Bool
+    
+    // MARK: - Private Properties
+    
+    private weak var output: DelegateOutputProtocol?
     
     // MARK: - Lifecycle
     
-    init(output: TableViewDelegateOutputProtocol?) {
-        super.init()
+    init(
+        output: DelegateOutputProtocol?,
+        editingStyle: UITableViewCell.EditingStyle = .none,
+        shouldIndentWhileEditingRowAt: Bool = false
+    ) {
+        self.editingStyle = editingStyle
         self.output = output
+        self.shouldIndentWhileEditingRowAt = shouldIndentWhileEditingRowAt
+        super.init()
     }
     
 }
@@ -31,6 +37,7 @@ class TableViewDelegate: Delegate, UITableViewDelegate {
 // MARK: - Heights Managment
 
 extension TableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let cell = self.mapper?.viewModels[indexPath.section].cells[indexPath.row] {
             switch cell.height {
@@ -41,6 +48,7 @@ extension TableViewDelegate {
         
         return CGFloat.leastNonzeroMagnitude
     }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let viewModel = self.mapper?.viewModels[section].header {
             //  Иницализация view для секции
@@ -56,6 +64,7 @@ extension TableViewDelegate {
         
         return nil
     }
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if let viewModel = self.mapper?.viewModels[section].footer {
             //  Иницализация view для секции
@@ -71,6 +80,7 @@ extension TableViewDelegate {
         
         return nil
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard self.mapper.viewModels.count > section else {
             #if DEBUG
@@ -94,26 +104,15 @@ extension TableViewDelegate {
         let item = self.mapper?.viewModels[section].footer
         return updateHeight(for: item?.height)
     }
-
-//    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-//        guard self.mapper.viewModels.count > section else {
-//            #if DEBUG
-//            print("CoreCollection: estimatedHeightForHeaderInSection count < section")
-//            #endif
-//            return .zero
-//        }
-//        
-//        let item = self.mapper?.viewModels[section].header
-//        return updateHeight(for: item?.height)
-//    }
     
-    private func updateHeight(for height: ViewModelHeight?) -> CGFloat {
+    func updateHeight(for height: ViewModelHeight?) -> CGFloat {
         switch height {
         case .automatic?: return UITableView.automaticDimension
         case .value(let height)?: return CGFloat(height)
         default: return .zero
         }
     }
+    
 }
 
 // MARK: - Selections
@@ -203,11 +202,11 @@ extension TableViewDelegate {
 extension TableViewDelegate {
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .none
+        self.editingStyle
     }
 
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
+        self.shouldIndentWhileEditingRowAt
     }
     
 }
