@@ -25,7 +25,12 @@ final class ListExamplePresenter: TableViewPresenter {
             .configure(items: [.list()])
             .build()
         
-        trailingSwipeConfig = UISwipeActionsConfiguration(actions: configurationActions())
+        trailingSwipeConfig = { [unowned self] indexPath in
+            print(indexPath)
+            return UISwipeActionsConfiguration(
+                actions: self.configurationActions()
+            )
+        }
         
         manager
             .getData()

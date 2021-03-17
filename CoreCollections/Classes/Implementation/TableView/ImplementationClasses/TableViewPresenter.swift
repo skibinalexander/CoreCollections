@@ -23,8 +23,8 @@ open class TableViewPresenter:
     
     public var editingStyle: UITableViewCell.EditingStyle = .none
     public var shouldIndentWhileEditingRowAt: Bool = false
-    public var leadingSwipeConfig: UISwipeActionsConfiguration? = nil
-    public var trailingSwipeConfig: UISwipeActionsConfiguration? = nil
+    public var leadingSwipeConfig: ((IndexPath) -> UISwipeActionsConfiguration?)? = nil
+    public var trailingSwipeConfig: ((IndexPath) -> UISwipeActionsConfiguration?)? = nil
     
     // MARK: - Lifecycle
     

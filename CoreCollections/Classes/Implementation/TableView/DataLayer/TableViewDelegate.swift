@@ -10,8 +10,8 @@ import UIKit
 
 public protocol TableViewDelegateProtocol: DelegateOutputProtocol {
     var editingStyle: UITableViewCell.EditingStyle { get set }
-    var leadingSwipeConfig: UISwipeActionsConfiguration? { get set }
-    var trailingSwipeConfig: UISwipeActionsConfiguration? { get set }
+    var leadingSwipeConfig: ((IndexPath) -> UISwipeActionsConfiguration?)? { get set }
+    var trailingSwipeConfig: ((IndexPath) -> UISwipeActionsConfiguration?)? { get set }
     var shouldIndentWhileEditingRowAt: Bool { get set }
 }
 
@@ -224,14 +224,14 @@ extension TableViewDelegate {
         _ tableView: UITableView,
         leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
-        self.output?.leadingSwipeConfig ?? nil
+        self.output?.leadingSwipeConfig?(indexPath) ?? nil
     }
     
     func tableView(
         _ tableView: UITableView,
         trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
-        self.output?.trailingSwipeConfig ?? nil
+        self.output?.trailingSwipeConfig?(indexPath) ?? nil
     }
     
 }
