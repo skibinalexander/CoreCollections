@@ -51,15 +51,13 @@ final class ListExamplePresenter: TableViewPresenter {
     
     func configurationActions() -> [UIContextualAction] {
         let action = UIContextualAction(
-            style: .normal,
-            title: "Favourite",
-            handler: { [weak self] (action, view, completionHandler) in
-                print("test")
+            style: .destructive,
+            title: "Remove",
+            handler: { (action, view, completionHandler) in
+                print("Handle actions")
                 completionHandler(true)
             }
         )
-        
-        action.backgroundColor = .systemBlue
         
         return [action]
     }
