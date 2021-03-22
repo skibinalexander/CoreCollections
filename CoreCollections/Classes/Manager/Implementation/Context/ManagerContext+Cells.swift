@@ -45,9 +45,15 @@ public extension ManagerContext {
     ///
     /// Метод добавляет ячейка в item по индексу
     func insertCells(in item: ItemModel, cells: [ModelCellProtocol], by position: Int) {
-       if position >= 0 {
-           item.cells.insert(contentsOf: cells, at: position)
-           viewDelegate.didUpdateView(with: .insertIntoCollection, for: mapper.insertCells())
+        if position >= 0 {
+            item.cells.insert(contentsOf: cells, at: position)
+            
+            mapper.reloadViewModelsCells()
+            
+            viewDelegate.didUpdateView(
+                with: .insertIntoCollection,
+                for: mapper.insertAllCellsWhereViewModelIsEmpty()
+            )
        } else {
            assertionFailure("ManagerContext: Wrong index position")
        }
@@ -73,9 +79,15 @@ public extension ManagerContext {
     /// Удалить ячейки по индексу
     ///
     /// Удаляет ячейки из item по индексу. Обновление UI стандартное
-    func removeCells(in item: ItemModel, by position: Int) {
+    func removeCells(in item: ItemModel, at position: Int) {
         item.cells.remove(at: position)
-        viewDelegate.didUpdateView(with: .removeFromCollection, for: mapper.removeCells())
+        
+        mapper.reloadViewModelsCells()
+        
+        viewDelegate.didUpdateView(
+            with: .removeFromCollection,
+            for: mapper.removeAllCellsWhereModelIsEmpty()
+        )
     }
     
     /// Удалить ячейки по индексу
@@ -83,7 +95,7 @@ public extension ManagerContext {
     /// Удаляет ячейки из item по индексу. Обновление UI стандартное. Item используется по стандартному id
     func removeCells(in typeId: ItemModel.Identifiers, by position: Int) {
         if let item = items.first(where: { $0.id == typeId.rawValue }) {
-            removeCells(in: item, by: position)
+            removeCells(in: item, at: position)
         } else {
             assertionFailure("ManagerContext: undefined id -> \(typeId.rawValue) of item")
         }
@@ -94,8 +106,15 @@ public extension ManagerContext {
     /// Удаляет все ячейки из item по индексу. Обновление UI стандартное
     func removeAllCells(in item: ItemModel) {
         guard item.cells.count > 0 else { return }
+        
         item.cells.removeAll()
-        viewDelegate.didUpdateView(with: .removeFromCollection, for: mapper.removeCells())
+        
+        mapper.reloadViewModelsCells()
+        
+        viewDelegate.didUpdateView(
+            with: .removeFromCollection,
+            for: mapper.removeAllCellsWhereModelIsEmpty()
+        )
     }
     
     /// Удалить все ячейки

@@ -108,7 +108,7 @@ extension MapperViewModels {
     /// Работает по принципу поиска моделей которые добавлены но ViewModel отсутсвует
     /// - Алгоритм находит модели, которые уже добавлены без ViewModel  и помещает indexPath в массив
     /// - После того как собрали ViewModels требуется перестроить индексы в массиве ViewModels
-    final func insertCells() -> [IndexPath] {
+    final func insertAllCellsWhereViewModelIsEmpty() -> [IndexPath] {
         var paths = [IndexPath]()
         
         dataSource?.items.enumerated().forEach({ (position, item) in
@@ -138,12 +138,14 @@ extension MapperViewModels {
     /// Работает по принципу удаления моделей в текщем контексте ViewModels
     /// - Алгоритм находит модели, которые уже удалены и помещает indexPath в массив
     /// - После того как алгоритм нашел удаленные модели и удалил ViewModel из массиа, нужно перестроить массив ViewModels
-    final func removeCells() -> [IndexPath] {
+    final func removeAllCellsWhereModelIsEmpty() -> [IndexPath] {
         var paths = [IndexPath]()
         
         viewModels.enumerated().forEach { (position, item) in
             item.cells.enumerated().forEach { (index, viewModel) in
-                if viewModel?.getModel == nil { paths.append(IndexPath(row: index, section: position)) }
+                if viewModel?.getModel == nil {
+                    paths.append(IndexPath(row: index, section: position))
+                }
             }
             self.viewModels[position].cells.removeAll(where: { $0?.getModel == nil })
         }

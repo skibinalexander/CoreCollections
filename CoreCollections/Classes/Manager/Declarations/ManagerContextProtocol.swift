@@ -34,7 +34,7 @@ public protocol ManagerContextProtocol: class, ManagerContextSettersProtocol, Ma
     func insertCells(in item: ItemModel, cells:[ModelCellProtocol], by position: Int)
     func insertCells(in typeId: ItemModel.Identifiers, cells: [ModelCellProtocol], by position: Int)
     
-    func removeCells(in item: ItemModel, by position: Int)
+    func removeCells(in item: ItemModel, at position: Int)
     func removeCells(in typeId: ItemModel.Identifiers, by position: Int)
     
     func removeAllCells(in item: ItemModel)
