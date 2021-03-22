@@ -48,8 +48,6 @@ public extension ManagerContext {
         if position >= 0 {
             item.cells.insert(contentsOf: cells, at: position)
             
-            mapper.reloadViewModelsCells()
-            
             viewDelegate.didUpdateView(
                 with: .insertIntoCollection,
                 for: mapper.insertAllCellsWhereViewModelIsEmpty()
@@ -82,8 +80,6 @@ public extension ManagerContext {
     func removeCells(in item: ItemModel, at position: Int) {
         item.cells.remove(at: position)
         
-        mapper.reloadViewModelsCells()
-        
         viewDelegate.didUpdateView(
             with: .removeFromCollection,
             for: mapper.removeAllCellsWhereModelIsEmpty()
@@ -108,8 +104,6 @@ public extension ManagerContext {
         guard item.cells.count > 0 else { return }
         
         item.cells.removeAll()
-        
-        mapper.reloadViewModelsCells()
         
         viewDelegate.didUpdateView(
             with: .removeFromCollection,
