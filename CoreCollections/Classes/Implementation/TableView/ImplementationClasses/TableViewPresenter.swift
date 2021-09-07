@@ -49,8 +49,9 @@ open class TableViewPresenter:
     }
 }
 
-open class PaginationTableViewPresenter<T: TemplateViewModelsProtocol>:
-    TableViewPresenter, ContainerViewPrefetchOutputProtocol {
+open class PaginationTableViewPresenter:
+    TableViewPresenter,
+    ContainerViewPrefetchOutputProtocol {
     
     open func batchNumberRows(in section: Int) -> Int {
         manager.item(index: section).cells.count
