@@ -216,6 +216,14 @@ extension TableViewDelegate {
         output?.scrollViewDidEndScrollingAnimation()
     }
     
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        output?.scrollViewDidEndDecelerating()
+    }
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        output?.scrollViewWillBeginDecelerating()
+    }
+    
 }
 
 extension TableViewDelegate {

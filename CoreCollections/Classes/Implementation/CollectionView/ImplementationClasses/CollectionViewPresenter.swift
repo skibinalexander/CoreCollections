@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - BasicCollectionViewPresenter
 
-class CollectionViewPresenter<T: TemplateViewModelsProtocol>:
+open class CollectionViewPresenter<T: TemplateViewModelsProtocol>:
     DelegateOutputProtocol,
     ContainerViewRefreshOutputProtocol,
     ManagerContextViewCallbackProtocol {
@@ -35,11 +35,13 @@ class CollectionViewPresenter<T: TemplateViewModelsProtocol>:
     
     // MARK: - CCCollectionViewDelegateOutputProtocol
     
-    func willDisplay(viewModel: ViewModelCellProtocol) { }
-    func didSelect(viewModel: ViewModelCellProtocol) { }
-    func didDeselect(viewModel: ViewModelCellProtocol) { }
-    func scrollDidChange() { }
-    func scrollViewDidEndScrollingAnimation() { }
+    open func willDisplay(viewModel: ViewModelCellProtocol) { }
+    open func didSelect(viewModel: ViewModelCellProtocol) { }
+    open func didDeselect(viewModel: ViewModelCellProtocol) { }
+    open func scrollDidChange() { }
+    open func scrollViewDidEndScrollingAnimation() { }
+    open func scrollViewDidEndDecelerating() {}
+    open func scrollViewWillBeginDecelerating() {}
 }
 
 class PaginationCollectionViewPresenter<T: TemplateViewModelsProtocol>:

@@ -16,4 +16,10 @@ public protocol DelegateScrollOutputProtocol {
     /// Завершение аниации скроллинга
     func scrollViewDidEndScrollingAnimation()
     
+    /// Called on finger up as we are moving
+    func scrollViewWillBeginDecelerating()
+
+    /// called when scroll view grinds to a halt
+    func scrollViewDidEndDecelerating()
+    
 }

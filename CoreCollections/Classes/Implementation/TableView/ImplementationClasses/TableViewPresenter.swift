@@ -43,6 +43,8 @@ open class TableViewPresenter:
     open func didDeselect(viewModel: ViewModelCellProtocol) { }
     open func scrollDidChange() { }
     open func scrollViewDidEndScrollingAnimation() { }
+    open func scrollViewDidEndDecelerating() {}
+    open func scrollViewWillBeginDecelerating() {}
     
     open func refreshList() {
         manager.beginRefresh()
