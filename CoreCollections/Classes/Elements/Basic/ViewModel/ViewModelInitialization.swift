@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ViewModelInitialization: class {
+protocol ViewModelInitialization: AnyObject {
     associatedtype Model: ModelProtocol
     associatedtype View: ViewProtocol
     

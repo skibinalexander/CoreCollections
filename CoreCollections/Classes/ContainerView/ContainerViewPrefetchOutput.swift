@@ -8,13 +8,10 @@
 
 import Foundation
 
-public protocol ContainerViewPrefetchOutputProtocol: class {
-    
-    /// Подгузить новые данные при прокрутке
-    func batchList()
+public protocol ContainerViewPrefetchOutputProtocol: AnyObject {
     
     /// Количество подгруженных ячеек
     /// - Parameter section: Номер секция коллекция
-    func batchNumberRows(in section: Int) -> Int
+    func batchOfPaths(paths: [IndexPath])
     
 }

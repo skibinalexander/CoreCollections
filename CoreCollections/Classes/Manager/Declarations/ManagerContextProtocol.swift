@@ -7,7 +7,11 @@
 
 import Foundation
 
-public protocol ManagerContextProtocol: class, ManagerContextSettersProtocol, ManagerContextItemsProtocol {
+public protocol ManagerContextProtocol:
+    AnyObject,
+    ManagerContextSettersProtocol,
+    ManagerContextItemsProtocol {
+    
     var items: [ItemModel] { get set }
     
     func isEmpty() -> Bool

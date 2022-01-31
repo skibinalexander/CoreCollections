@@ -8,7 +8,7 @@
 import Foundation
 
 /// Базова сущность модели для ячеек и секций
-public protocol ModelProtocol: class {
+public protocol ModelProtocol: AnyObject {
     
     /// Идентификатор модели
     var id: String? { get set }

@@ -10,14 +10,14 @@ import Foundation
 
 // MARK: - ManagerContextViewCallbackProtocol
 
-public protocol ManagerContextViewCallbackProtocol: class {
+public protocol ManagerContextViewCallbackProtocol: AnyObject {
     func didUpdateView(with type: ManagerContextViewCallbackType)
     func didUpdateView(with type: ManagerContextViewCallbackType, for paths: [IndexPath])
 }
 
 // MARK: - ManagerProtocol
 
-public protocol ManagerProtocol: class {
+public protocol ManagerProtocol: AnyObject {
     
     /// Конфигурация менеджера
     func configuration()

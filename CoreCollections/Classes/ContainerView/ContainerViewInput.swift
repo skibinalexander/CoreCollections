@@ -9,7 +9,7 @@
 import Foundation
 
 /// Интерфес View слоя для работы коллекции
-public protocol ContainerViewInputProtocol: class {
+public protocol ContainerViewInputProtocol: AnyObject {
     
     /// Конфигурация параметров данных и отображения
     /// - Parameters:

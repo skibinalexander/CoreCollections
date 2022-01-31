@@ -55,11 +55,15 @@ open class PaginationTableViewPresenter:
     TableViewPresenter,
     ContainerViewPrefetchOutputProtocol {
     
-    open func batchNumberRows(in section: Int) -> Int {
-        manager.item(index: section).cells.count
-    }
+    public var prefetchCallback: (() -> Void)? = nil
     
-    open func batchList() {}
+    // MARK: - Implementation
+    
+    public func batchOfPaths(paths: [IndexPath]) {
+        if paths.contains(where: { $0.row == (manager.item(index: $0.section).cells.count - 2) }) {
+            prefetchCallback?()
+        }
+    }
     
     public func paginationInsertCells(in item: ItemModel, cells: [ModelCellProtocol]) {
         if item.cells.count > 0 {

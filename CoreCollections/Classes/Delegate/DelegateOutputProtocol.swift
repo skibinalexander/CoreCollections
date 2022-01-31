@@ -8,7 +8,9 @@
 import Foundation
 
 /// Базовый интерфейс для реализации евентов работы делегата данных коллекции
-public protocol DelegateOutputProtocol: class, DelegateScrollOutputProtocol {
+public protocol DelegateOutputProtocol:
+    AnyObject,
+    DelegateScrollOutputProtocol {
     
     /// Будет показана ячейка в коллекции
     /// - Parameter viewModel: ViewModel ячейки

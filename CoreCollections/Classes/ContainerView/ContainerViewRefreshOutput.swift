@@ -9,7 +9,7 @@
 import Foundation
 
 /// Output отожражения коллекции для обновления данных pullToRefresh
-public protocol ContainerViewRefreshOutputProtocol: class {
+public protocol ContainerViewRefreshOutputProtocol: AnyObject {
 
     /// Сделать Refresh коллекции
     func refreshList()

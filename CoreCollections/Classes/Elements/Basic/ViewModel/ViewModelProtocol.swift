@@ -8,7 +8,7 @@
 import Foundation
 
 /// Базовая сущность вью-модели для ячеек и секций
-public protocol ViewModelProtocol: class {
+public protocol ViewModelProtocol: AnyObject {
     
     // MARK: - Public Properties
     

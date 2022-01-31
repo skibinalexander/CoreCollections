@@ -1,9 +1,9 @@
 //
-//  CCTableViewController.swift
-//  Vezu
+//  TableViewController.swift
+//  OpenSource
 //
 //  Created by Пользователь on 24/04/2019.
-//  Copyright © 2019 VezuAppDevTeam. All rights reserved.
+//  Copyright © 2019 SkibinAlexander. All rights reserved.
 //
 
 import UIKit
@@ -105,7 +105,7 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
     // MARK: - Refreshing
     
     @objc
-    public func refreshAction() {
+    open func refreshAction() {
         refreshOutput?.refreshList()
     }
     
@@ -115,11 +115,9 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
 
 extension TableViewController: UITableViewDataSourcePrefetching {
     
-    public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+    open func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let output = self.prefetchOutput else { return }
-        if indexPaths.contains(where: { $0.row >= (output.batchNumberRows(in: $0.section) - 2) }) {
-            self.prefetchOutput?.batchList()
-        }
+        output.batchOfPaths(paths: indexPaths)
     }
     
     public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {}

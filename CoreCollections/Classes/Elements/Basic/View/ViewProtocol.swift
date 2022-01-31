@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol ViewProtocol: class {
+public protocol ViewProtocol: AnyObject {
     
     // MARK: - Static
     
