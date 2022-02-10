@@ -60,7 +60,15 @@ open class PaginationTableViewPresenter:
     // MARK: - Implementation
     
     public func batchOfPaths(paths: [IndexPath]) {
-        if paths.contains(where: { $0.row == (manager.item(index: $0.section).cells.count - 2) }) {
+        guard let maxSection = paths.map { $0.section }.max() else {
+            return
+        }
+        
+        guard maxSection == (manager.countItems() - 1) else {
+            return
+        }
+        
+        if paths.contains(where: { $0.row == (manager.item(index: maxSection).cells.count - 2) }) {
             prefetchCallback?()
         }
     }
