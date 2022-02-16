@@ -54,7 +54,6 @@ open class Manager: ManagerProtocol {
     
     public func configuration() {
         self.mapper = MapperViewModels(template: template)
-        self.mapper.dataSource = containerData
         self.dataSource.mapper = mapper
         self.delegate.mapper = mapper
     }
@@ -72,6 +71,7 @@ open class Manager: ManagerProtocol {
     public func set(containerData: ManagerContextProtocol?) {
         self.containerData = containerData
         self.containerData.set(mapper: mapper)
+        self.mapper.dataSource = containerData
     }
     
     // MARK: - Getters

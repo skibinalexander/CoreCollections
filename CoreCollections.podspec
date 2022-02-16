@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'CoreCollections'
-  s.version          = '0.9.2'
+  s.version          = '0.9.3'
   s.summary          = 'Library adapter for Collections (UITableView) UIKit'
   s.description      = <<-DESC
 TODO: Add long description of the pod here.
