@@ -18,6 +18,9 @@ public protocol ViewModelProtocol: AnyObject {
     /// Item view models таблицы
     var item: ItemViewModel? { get set }
     
+    /// Идентификатор для иницализации View
+    var nibIdentifier: String? { get }
+    
     /// Тип инициализации view
     var nibType: ViewModelCellViewSourceType { get set }
     

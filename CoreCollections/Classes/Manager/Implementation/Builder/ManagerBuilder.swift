@@ -92,6 +92,8 @@ public class ManagerBuilder {
         manager.set(containerData: containerData ?? ManagerContext.newContext())
         
         manager.getData().items = self.items
+        
+        manager.getMapper()?.reloadViewModelsItems()
     }
     
 }

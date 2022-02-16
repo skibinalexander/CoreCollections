@@ -34,6 +34,7 @@ public protocol ManagerProtocol: AnyObject {
     func getDelegate() -> Delegate
     func getView() -> ContainerViewInputProtocol!
     func getData() -> ManagerContextProtocol
+    func getMapper() -> MapperViewModels?
     
     // - Access to Refresh control flow
     func beginRefresh()

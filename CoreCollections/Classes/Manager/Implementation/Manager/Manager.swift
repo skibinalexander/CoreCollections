@@ -92,6 +92,10 @@ open class Manager: ManagerProtocol {
         return containerData
     }
     
+    public func getMapper() -> MapperViewModels? {
+        return mapper
+    }
+    
 }
 
 // swiftlint:enable all

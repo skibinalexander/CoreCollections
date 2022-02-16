@@ -36,6 +36,11 @@ open class ViewModel<V: ViewProtocol, M: ModelProtocol>:
     /// Тип View
     public var nibType: ViewModelCellViewSourceType
     
+    /// Идентификатор View
+    public var nibIdentifier: String? {
+        View.identifier
+    }
+    
     /// Тип и значение высоты View
     public var height: ViewModelHeight
     
@@ -93,6 +98,11 @@ open class ViewModel<V: ViewProtocol, M: ModelProtocol>:
     /// Default typealias casting model for type
     public func typealiasModel<T>() -> T? {
         model as? T
+    }
+    
+    /// Default typealias casting model for type
+    public func viewIdentifier() -> String? {
+        return View.identifier
     }
     
     /// Default method for use instance view model

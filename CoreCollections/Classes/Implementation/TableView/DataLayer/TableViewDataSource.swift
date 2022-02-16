@@ -31,7 +31,7 @@ class TableViewDataSource: DataSource, UITableViewDataSource {
         
         viewModel.indexPath = indexPath
         
-        guard let viewId = viewModel.getView?.identifier else {
+        guard let viewIdentifier = viewModel.nibIdentifier else {
             assertionFailure()
             return .init()
         }
@@ -40,10 +40,10 @@ class TableViewDataSource: DataSource, UITableViewDataSource {
         switch viewModel.nibType {
         case .reusebleId:
             viewModel
-                .inject(view: tableView.dequeueReusableCell(withIdentifier: viewId, for: indexPath) as? TableViewCell)
+                .inject(view: tableView.dequeueReusableCell(withIdentifier: viewIdentifier, for: indexPath) as? TableViewCell)
         case .reusebleName:
             viewModel
-                .inject(view: self.nibCell(nameNib: viewId) as? TableViewCell)
+                .inject(view: self.nibCell(nameNib: viewIdentifier) as? TableViewCell)
         }
         
         viewModel.initialViewFromNib()

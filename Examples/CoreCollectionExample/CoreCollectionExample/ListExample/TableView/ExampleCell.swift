@@ -20,10 +20,6 @@ class ExampleCell: TableViewCell {
 
 class ExampleViewModelCell: TableViewViewModelCell<ExampleCell, ExampleModelCell> {
     
-    convenience init() {
-        self.init(nibType: .reusebleId(ExampleCell.typeOf), height: .value(44))
-    }
-    
     override func initialViewFromNib() {
         view.label.text = model.label
     }
