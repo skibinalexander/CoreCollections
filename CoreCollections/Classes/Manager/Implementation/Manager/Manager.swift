@@ -54,9 +54,9 @@ open class Manager: ManagerProtocol {
     
     public func configuration() {
         self.mapper = MapperViewModels(template: template)
-        mapper.dataSource = containerData
-        dataSource.mapper = mapper
-        delegate.mapper = mapper
+        self.mapper.dataSource = containerData
+        self.dataSource.mapper = mapper
+        self.delegate.mapper = mapper
     }
     
     // MARK: - Setters
