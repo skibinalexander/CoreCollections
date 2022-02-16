@@ -13,7 +13,8 @@ import Foundation
 open class TableViewPresenter:
     TableViewDelegateProtocol,
     ContainerViewRefreshOutputProtocol,
-    ManagerContextViewCallbackProtocol{
+    ContainerViewPrefetchOutputProtocol,
+    ManagerContextViewCallbackProtocol {
     
     // MARK: - Properties
     

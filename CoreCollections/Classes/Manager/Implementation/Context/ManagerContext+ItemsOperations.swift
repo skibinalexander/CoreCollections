@@ -8,7 +8,7 @@
 
 import Foundation
 
-// MARK: - Refreshing
+// MARK: - Items Operations
 
 public extension ManagerContext {
     

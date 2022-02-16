@@ -34,7 +34,7 @@
 		611EEBD234A453751172C886D7FFB2BD /* CoreCollections-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A383A437A139CF7B817FA5EC62936DD /* CoreCollections-dummy.m */; };
 		63E4201BADC351438267F1339BB7338D /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C5F2DF6F299623054EDB6C33D8BB7D /* ViewModelProtocol.swift */; };
 		65ABBBF31BDD4A1B8F71421D36D72004 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93FC91ED3D10DF6B9D7D67E8B24B29 /* TableViewController.swift */; };
-		66E85F589DE28C32AAF03510C794CAFD /* ManagerContext+Refresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E7CFEE0DA0DF95DF80E0A3FD84DA99 /* ManagerContext+Refresh.swift */; };
+		66E85F589DE28C32AAF03510C794CAFD /* ManagerContext+ItemsOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E7CFEE0DA0DF95DF80E0A3FD84DA99 /* ManagerContext+ItemsOperations.swift */; };
 		6DEAEAE6AC04344B888F00369319D69C /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8B4B5290AEEB9CCB4B6F0DAE592F7 /* ItemModel.swift */; };
 		6F798A669966E346AFDDDE85E4380E20 /* ManagerContextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F38AE7C25902D90ADB306718173709D /* ManagerContextProtocol.swift */; };
 		7293D4DA738D85B73A9B265BAFB3CB31 /* ModelSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED5E71E78F4BA1C5F79881C8FCE38FF /* ModelSection.swift */; };
@@ -149,7 +149,7 @@
 		E7B0B303E205A2AFFFD290F80CE267CD /* ManagerContext.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManagerContext.swift; sourceTree = "<group>"; };
 		ED08D72FE1E920818A834684176F6E5D /* Pods-CoreCollectionExample-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CoreCollectionExample-umbrella.h"; sourceTree = "<group>"; };
 		F0E21857A1144EFD33E028F2EC7CAF19 /* PaginationModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaginationModel.swift; sourceTree = "<group>"; };
-		F6E7CFEE0DA0DF95DF80E0A3FD84DA99 /* ManagerContext+Refresh.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ManagerContext+Refresh.swift"; sourceTree = "<group>"; };
+		F6E7CFEE0DA0DF95DF80E0A3FD84DA99 /* ManagerContext+ItemsOperations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ManagerContext+ItemsOperations.swift"; sourceTree = "<group>"; };
 		FC5439B2825D1157F449DFDBAAA94628 /* CoreCollections.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoreCollections.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD006781F1FAB47AA46019A5D2C2319 /* Manager+ViewModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Manager+ViewModels.swift"; sourceTree = "<group>"; };
 		FF879DC357D0D39DB71DDC08959C02C0 /* MapperViewModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MapperViewModels.swift; sourceTree = "<group>"; };
@@ -559,7 +559,7 @@
 			children = (
 				E7B0B303E205A2AFFFD290F80CE267CD /* ManagerContext.swift */,
 				56255C489CD11F10F81E51809710015E /* ManagerContext+Cells.swift */,
-				F6E7CFEE0DA0DF95DF80E0A3FD84DA99 /* ManagerContext+Refresh.swift */,
+				F6E7CFEE0DA0DF95DF80E0A3FD84DA99 /* ManagerContext+ItemsOperations.swift */,
 			);
 			path = Context;
 			sourceTree = "<group>";
@@ -689,7 +689,7 @@
 				544A25D65A08257F35A42FAD84D270C4 /* Manager.swift in Sources */,
 				A94A81890591700F7AEF92E308E26CA7 /* ManagerBuilder.swift in Sources */,
 				5D2281CD14A1BAE8FB0DD7AF4924BBDD /* ManagerContext+Cells.swift in Sources */,
-				66E85F589DE28C32AAF03510C794CAFD /* ManagerContext+Refresh.swift in Sources */,
+				66E85F589DE28C32AAF03510C794CAFD /* ManagerContext+ItemsOperations.swift in Sources */,
 				5338251D47170363B6762BA37B143236 /* ManagerContext.swift in Sources */,
 				6F798A669966E346AFDDDE85E4380E20 /* ManagerContextProtocol.swift in Sources */,
 				5424DD64ED48497A3FDE4CA2A8F925A8 /* ManagerContextSettersProtocol.swift in Sources */,
