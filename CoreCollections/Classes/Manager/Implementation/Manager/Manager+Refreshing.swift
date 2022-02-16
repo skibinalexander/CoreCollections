@@ -10,7 +10,7 @@ import Foundation
 public extension Manager {
     
     func beginRefresh() {
-        getData().refreshAllInAllItems()
+        getData().operationAllItems(type: .refresh, viewCallback: .reloadCollection)
         getView()?.beginRefreshing()
         isRefreshing = true
     }

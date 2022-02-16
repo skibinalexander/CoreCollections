@@ -25,15 +25,14 @@ open class TableViewPresenter:
     public var shouldIndentWhileEditingRowAt: Bool = false
     public var leadingSwipeConfig: ((IndexPath) -> UISwipeActionsConfiguration?)? = nil
     public var trailingSwipeConfig: ((IndexPath) -> UISwipeActionsConfiguration?)? = nil
+    public var prefetchCallback: (() -> Void)? = nil
     
     // MARK: - Lifecycle
     
     public init() {
         self.manager = Manager(
             dataSource: TableViewDataSource(),
-            delegate: TableViewDelegate(
-                output: self
-            ),
+            delegate: TableViewDelegate(output: self),
             viewDelegate: self
         )
     }
@@ -49,22 +48,13 @@ open class TableViewPresenter:
     open func refreshList() {
         manager.beginRefresh()
     }
-}
-
-open class PaginationTableViewPresenter:
-    TableViewPresenter,
-    ContainerViewPrefetchOutputProtocol {
     
-    public var prefetchCallback: (() -> Void)? = nil
-    
-    // MARK: - Implementation
-    
-    public func batchOfPaths(paths: [IndexPath]) {
-        guard let maxSection = paths.map { $0.section }.max() else {
+    open func batchOfPaths(paths: [IndexPath]) {
+        guard let maxSection = paths.map({ $0.section }).max() else {
             return
         }
         
-        guard maxSection == (manager.countItems() - 1) else {
+        guard maxSection == (manager.getData().items.count - 1) else {
             return
         }
         
@@ -73,7 +63,7 @@ open class PaginationTableViewPresenter:
         }
     }
     
-    public func paginationInsertCells(in item: ItemModel, cells: [ModelCellProtocol]) {
+    open func paginationInsertCells(in item: ItemModel, cells: [ModelCellProtocol]) {
         if item.cells.count > 0 {
             manager.getData().insertCells(in: item, cells: cells, by: item.cells.count - 1)
         } else {

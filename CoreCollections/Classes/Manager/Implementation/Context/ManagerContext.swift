@@ -51,33 +51,4 @@ public class ManagerContext: ManagerContextProtocol {
         self.items = items
     }
     
-    // MARK: - Items managment
-    
-    /// Добавить item в коллекцию
-    /// - Parameter item: Item коллекции
-    public func append(item: ItemModel) {
-        self.items.append(item)
-    }
-    
-    /// Вставить item по индексу
-    /// - Parameters:
-    ///   - item: Item коллекции
-    ///   - index: Индекс вставки
-    public func intert(item: ItemModel, at index: Int) {
-        self.items.insert(item, at: index)
-    }
-    
-    /// Удалить item по индексу
-    /// - Parameters:
-    ///   - item: item коллекции
-    ///   - index: Индекс удаления
-    public func remove(item: ItemModel, at index: Int) {
-        self.items.remove(at: index)
-    }
-    
-    /// Короткая проверка наличия items
-    public func isEmpty() -> Bool {
-        return self.items.isEmpty
-    }
-    
 }

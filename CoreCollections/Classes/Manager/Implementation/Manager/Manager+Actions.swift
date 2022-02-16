@@ -16,17 +16,9 @@ public extension Manager {
     }
     
     func updateHeightCell(id: String?, in type: ItemModel.Identifiers, by value: Float) {
-        if let item = items.first(where: { $0.id == type.rawValue }) {
+        if let item = containerData.items.first(where: { $0.id == type.rawValue }) {
             updateHeightCell(id: id, in: item, by: value)
         }
-    }
-    
-    func countItems() -> Int {
-        items.count
-    }
-    
-    func isEmpty(in item: ItemModel) -> Bool {
-        item.cells.isEmpty
     }
     
 }

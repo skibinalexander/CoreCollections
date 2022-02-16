@@ -31,13 +31,19 @@ class TableViewDataSource: DataSource, UITableViewDataSource {
         
         viewModel.indexPath = indexPath
         
+        guard let viewId = viewModel.getView?.identifier else {
+            assertionFailure()
+            return .init()
+        }
+        
         //  Иницализация view для ячейки
         switch viewModel.nibType {
-        case .reusebleId(let id):
-            let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as? TableViewCell
-            viewModel.inject(view: cell)
-        case .reusebleName(let name):
-            viewModel.inject(view: self.nibCell(nameNib: name) as? TableViewCell)
+        case .reusebleId:
+            viewModel
+                .inject(view: tableView.dequeueReusableCell(withIdentifier: viewId, for: indexPath) as? TableViewCell)
+        case .reusebleName:
+            viewModel
+                .inject(view: self.nibCell(nameNib: viewId) as? TableViewCell)
         }
         
         viewModel.initialViewFromNib()

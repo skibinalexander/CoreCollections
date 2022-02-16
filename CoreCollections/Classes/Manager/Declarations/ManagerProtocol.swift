@@ -39,13 +39,7 @@ public protocol ManagerProtocol: AnyObject {
     func beginRefresh()
     func endRefresh()
     
-    //  - Access to items
-    func append(items: [ItemModel])
-    func append(item: ItemModel)
-    func replace(item: ItemModel)
-    func remove(item at: Int)
-    func removeAll()
-    
+    /// - Items
     func item(id: String?) -> ItemModel
     func item(index: Int) -> ItemModel
     func item(type: ItemModel.Identifiers) -> ItemModel
@@ -95,11 +89,4 @@ public protocol ManagerProtocol: AnyObject {
     ///   - value: Значение высоты
     func updateHeightCell(id: String?, in type: ItemModel.Identifiers, by value: Float)
     
-    /// Количество items в коллекции
-    func countItems() -> Int
-    
-    
-    /// Проверка заполненности item ячейками
-    /// - Parameter item: Item коллекции
-    func isEmpty(in item: ItemModel) -> Bool
 }

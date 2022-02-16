@@ -11,9 +11,9 @@ import Foundation
 public enum ViewModelCellViewSourceType {
     
     /// Reuse from registered identifier
-    case reusebleId(String)
+    case reusebleId
     
     /// Reuse recreate from nib
-    case reusebleName(String)
+    case reusebleName
     
 }

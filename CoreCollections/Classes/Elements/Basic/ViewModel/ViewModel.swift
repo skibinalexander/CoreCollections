@@ -26,6 +26,10 @@ open class ViewModel<V: ViewProtocol, M: ModelProtocol>:
     
     // MARK: - Public
     
+    public var id: String? {
+        getModel?.id
+    }
+    
     /// Item коллекции
     public weak var item: ItemViewModel?
     
@@ -34,11 +38,6 @@ open class ViewModel<V: ViewProtocol, M: ModelProtocol>:
     
     /// Тип и значение высоты View
     public var height: ViewModelHeight
-    
-    /// Идентификатор параметра id модели
-    public var modelId: String? {
-        getModel?.id
-    }
     
     // MARK: - Getters Properties
     
@@ -57,7 +56,7 @@ open class ViewModel<V: ViewProtocol, M: ModelProtocol>:
     ///   - nibType: Параметр типа View ячейки или секции
     ///   - height: Параметр высоты View ячейки или секции
     public init(
-        nibType: ViewModelCellViewSourceType = .reusebleName(V.typeOf),
+        nibType: ViewModelCellViewSourceType = .reusebleId,
         height: ViewModelHeight = .automatic
     ) {
         self.nibType = nibType
@@ -68,7 +67,6 @@ open class ViewModel<V: ViewProtocol, M: ModelProtocol>:
     
     public func inject(view: ViewProtocol?) {
         self.view = view as? V
-        self.view?.viewModel = self
     }
     
     public func inject(model: ModelProtocol?) {

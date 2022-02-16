@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol ManagerContextSettersProtocol {
+public protocol ManagerContextSettersProtocol: AnyObject {
     func set(viewDelegate: ManagerContextViewCallbackProtocol)
     func set(mapper: MapperViewModels)
     func set(items: [ItemModel])

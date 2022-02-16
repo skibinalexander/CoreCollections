@@ -16,6 +16,6 @@ import Foundation
 public protocol MapperViewModelsDataSource: AnyObject {
     
     /// Набор item коллекции
-    var items: [ItemModel] { get }
+    var items: [ItemModel] { get set }
     
 }

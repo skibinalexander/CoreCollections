@@ -12,6 +12,7 @@ import Foundation
 ///
 /// Данный enum представляет список типов обновления UI viewModels
 public enum ManagerContextViewCallbackType {
+    
     /// Не обновлять UI
     case withoutChangeView
     
@@ -26,4 +27,5 @@ public enum ManagerContextViewCallbackType {
     
     /// Произвести удаление ячеек по  indexPaths
     case removeFromCollection
+    
 }

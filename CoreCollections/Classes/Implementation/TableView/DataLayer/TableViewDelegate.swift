@@ -44,10 +44,10 @@ extension TableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let viewModel = self.mapper?.viewModels[section].header {
+        if let viewModel = self.mapper?.viewModels[section].header, let id = viewModel.getView?.identifier {
             //  Иницализация view для секции
             switch viewModel.nibType {
-            case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name))
+            case .reusebleName: viewModel.inject(view: self.nibSection(nameNib: id))
             default: break
             }
             
@@ -60,10 +60,10 @@ extension TableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if let viewModel = self.mapper?.viewModels[section].footer {
+        if let viewModel = self.mapper?.viewModels[section].footer, let id = viewModel.getView?.identifier {
             //  Иницализация view для секции
             switch viewModel.nibType {
-            case .reusebleName(let name): viewModel.inject(view: self.nibSection(nameNib: name))
+            case .reusebleName: viewModel.inject(view: self.nibSection(nameNib: id))
             default: break
             }
             

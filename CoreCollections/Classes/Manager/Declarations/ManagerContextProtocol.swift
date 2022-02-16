@@ -7,20 +7,43 @@
 
 import Foundation
 
-public protocol ManagerContextProtocol:
-    AnyObject,
-    ManagerContextSettersProtocol,
-    ManagerContextItemsProtocol {
+/// Тип операции
+public enum ManagerContenxtOperationType {
     
+    /// Очистить
+    case refresh
+    
+    /// Перезагрузить
+    case reload
+    
+    /// Заменить
+    case replace
+    
+    /// Вставить
+    case insert
+    
+    /// Добавить
+    case append
+    
+    /// Удалить
+    case remove
+    
+}
+
+public protocol ManagerContextProtocol: ManagerContextSettersProtocol, MapperViewModelsDataSource {
+    
+    /// Набор Item в текущем контексте коллекции
     var items: [ItemModel] { get set }
     
-    func isEmpty() -> Bool
+    // MARK: - Items Operations
     
-    func refreshAllItems()
-    func reloadAllInAllItems(viewCallback type: ManagerContextViewCallbackType)
-    func refreshAllInAllItems()
-    func refreshCellsInAllItems()
+    func operationAllItems(type: ManagerContenxtOperationType, viewCallback: ManagerContextViewCallbackType)
+    
+    // MARK: - Section Operations
+    
     func refreshSectionsInAllItems()
+    
+    // MARK: - Cells Operations
     
     func replaceCells(
         in item: ItemModel,
@@ -34,6 +57,7 @@ public protocol ManagerContextProtocol:
         viewCallback type: ManagerContextViewCallbackType
     )
     
+    func refreshCellsInAllItems()
     func appendCells(in item: ItemModel, cells: [ModelCellProtocol])
     func insertCells(in item: ItemModel, cells:[ModelCellProtocol], by position: Int)
     func insertCells(in typeId: ItemModel.Identifiers, cells: [ModelCellProtocol], by position: Int)

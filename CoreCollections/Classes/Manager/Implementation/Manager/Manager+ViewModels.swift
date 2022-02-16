@@ -13,11 +13,11 @@ public extension Manager {
     func viewModelCell<M>(id: String?) -> M? where M : ViewModelCellProtocol {
         let items = mapper.viewModels.filter({
             $0.cells.first(where: { cell in
-                cell?.modelId == id
+                cell?.id == id
             }) != nil
         })
         
-        return items.first?.cells.first(where: { $0?.modelId == id }) as? M
+        return items.first?.cells.first(where: { $0?.id == id }) as? M
     }
     
     /// Метод быстрого получаения ViewModel ячейки по id ячейки и конкретному item в коллекции
@@ -34,7 +34,7 @@ public extension Manager {
 
     /// Метод быстрого получаения ViewModel ячейки по индексу ячейки в конкретном item коллекции найденному по готовому id коллекции
     func viewModelCell<M: ViewModelCellProtocol>(id: String?, in type: ItemModel.Identifiers) -> M? {
-        if let item = items.first(where: { $0.id == type.rawValue }) {
+        if let item = containerData.items.first(where: { $0.id == type.rawValue }) {
             let cells = mapper.viewModels.first(where: { $0.id == item.id })?.cells
             return cells?.first(where: { $0?.getModel?.id == id }) as? M
         }

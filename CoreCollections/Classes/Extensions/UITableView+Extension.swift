@@ -17,8 +17,8 @@ public extension UITableView {
         }
         
         register(
-            UINib(nibName: coreCollectionCell.typeOf, bundle: nil),
-            forCellReuseIdentifier: coreCollectionCell.typeOf
+            UINib(nibName: coreCollectionCell.identifier, bundle: nil),
+            forCellReuseIdentifier: coreCollectionCell.identifier
         )
     }
     
@@ -29,8 +29,8 @@ public extension UITableView {
         }
 
         register(
-            UINib(nibName: coreCollectionSection.typeOf, bundle: nil),
-            forCellReuseIdentifier: coreCollectionSection.typeOf
+            UINib(nibName: coreCollectionSection.identifier, bundle: nil),
+            forCellReuseIdentifier: coreCollectionSection.identifier
         )
     }
     

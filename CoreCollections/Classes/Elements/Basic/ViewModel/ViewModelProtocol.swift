@@ -12,6 +12,9 @@ public protocol ViewModelProtocol: AnyObject {
     
     // MARK: - Public Properties
     
+    /// Быстрый доступ к id модели
+    var id: String? { get }
+    
     /// Item view models таблицы
     var item: ItemViewModel? { get set }
     
@@ -20,9 +23,6 @@ public protocol ViewModelProtocol: AnyObject {
     
     /// Заданная высота view
     var height: ViewModelHeight { get set }
-    
-    /// Быстрый доступ к id модели
-    var modelId: String? { get }
     
     var getModel: ModelProtocol? { get }
     var getView: ViewProtocol? { get }

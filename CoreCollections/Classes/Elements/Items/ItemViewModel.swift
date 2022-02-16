@@ -8,6 +8,4 @@
 import Foundation
 
 /// Базовая реализация ViewModel для Item коллекции
-public class ItemViewModel: Items<ViewModelSectionProtocol, ViewModelCellProtocol> {
-    
-}
+public class ItemViewModel: Items<ViewModelSectionProtocol, ViewModelCellProtocol> {}

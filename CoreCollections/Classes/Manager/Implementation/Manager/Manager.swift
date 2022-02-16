@@ -10,7 +10,7 @@ import Foundation
 
 // swiftlint:disable all
 
-open class Manager: ManagerProtocol, MapperViewModelsDataSource {
+open class Manager: ManagerProtocol {
     
     // MARK: - Properties
     
@@ -37,12 +37,6 @@ open class Manager: ManagerProtocol, MapperViewModelsDataSource {
     /// Data Layer закрытый абстрактным протоколом управления данными коллекции
     public var containerData: ManagerContextProtocol!
     
-    /// Набор элементов коллекции для слоя model
-    public var items: [ItemModel] {
-        get { return containerData.items }
-        set { containerData?.items = newValue }
-    }
-    
     /// Свойство определяющее состояние refresing
     internal var isRefreshing: Bool = false
     
@@ -60,7 +54,7 @@ open class Manager: ManagerProtocol, MapperViewModelsDataSource {
     
     public func configuration() {
         self.mapper = MapperViewModels(template: template)
-        mapper.dataSource = self
+        mapper.dataSource = containerData
         dataSource.mapper = mapper
         delegate.mapper = mapper
     }

@@ -12,15 +12,14 @@ public protocol ViewProtocol: AnyObject {
     // MARK: - Static
     
     /// Идентификатор создания UI
-    static var typeOf: String { get }
+    static var identifier: String { get }
     
-    // MARK: - Public Properties
-    
-    /// ViewModel ячейки или секции
-    var viewModel: ViewModelProtocol? { get set }
+    /// Идентификатор создания UI
+    var identifier: String { get }
     
 }
 
 extension ViewProtocol {
-    public static var typeOf: String { return String(describing: Self.self) }
+    public static var identifier: String { return String(describing: Self.self) }
+    public var identifier: String { return String(describing: Self.self) }
 }

@@ -91,7 +91,7 @@ public class ManagerBuilder {
         manager.set(containerView: containerView)
         manager.set(containerData: containerData ?? ManagerContext.newContext())
         
-        manager.append(items: self.items)
+        manager.getData().items = self.items
     }
     
 }
