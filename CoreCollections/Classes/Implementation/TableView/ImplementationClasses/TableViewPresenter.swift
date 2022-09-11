@@ -59,7 +59,10 @@ open class TableViewPresenter:
             return
         }
         
-        if paths.contains(where: { $0.row == (manager.item(index: maxSection).cells.count - 2) }) {
+        if paths.contains(where: {
+            $0.row == (manager.item(index: maxSection).cells.count - 2) &&
+            $0.section == maxSection
+        }) {
             prefetchCallback?()
         }
     }
