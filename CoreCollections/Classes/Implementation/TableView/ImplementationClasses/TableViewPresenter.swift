@@ -38,41 +38,19 @@ open class TableViewPresenter:
         )
     }
     
-    open func willDisplay(viewModel: ViewModelCellProtocol) { }
-    open func didSelect(viewModel: ViewModelCellProtocol) { }
-    open func didDeselect(viewModel: ViewModelCellProtocol) { }
-    open func scrollDidChange() { }
-    open func scrollViewDidEndScrollingAnimation() { }
+    open func willDisplay(viewModel: ViewModelCellProtocol) {}
+    open func didSelect(viewModel: ViewModelCellProtocol) {}
+    open func didDeselect(viewModel: ViewModelCellProtocol) {}
+    open func scrollDidChange() {}
+    open func scrollViewDidEndScrollingAnimation() {}
     open func scrollViewDidEndDecelerating() {}
     open func scrollViewWillBeginDecelerating() {}
+    open func batchOfPaths(paths: [IndexPath]) {}
     
     open func refreshList() {
         manager.beginRefresh()
     }
-    
-    open func batchOfPaths(paths: [IndexPath]) {
-        guard let maxSection = paths.map({ $0.section }).max() else {
-            return
-        }
-        
-        guard maxSection == (manager.getData().items.count - 1) else {
-            return
-        }
-        
-        if paths.contains(where: {
-            $0.row == (manager.item(index: maxSection).cells.count - 2)
-        }) {
-            prefetchCallback?()
-        }
-    }
-    
-    open func paginationInsertCells(in item: ItemModel, cells: [ModelCellProtocol]) {
-        if item.cells.count > 0 {
-            manager.getData().insertCells(in: item, cells: cells, by: item.cells.count - 1)
-        } else {
-            manager.getData().replaceCells(in: item, cells: cells, viewCallback: .reloadCollection)
-        }
-    }
+
 }
 
 // MARK: - ManagerContextViewCallbackProtocol
