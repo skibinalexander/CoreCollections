@@ -6,7 +6,7 @@
 //  Copyright © 2019 VezuAppDevTeam. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // MARK: - BasicTableViewPresenter
 
