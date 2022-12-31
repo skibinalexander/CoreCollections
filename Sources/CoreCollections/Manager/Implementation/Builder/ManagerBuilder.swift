@@ -14,18 +14,15 @@ public class ManagerBuilder {
     // MARK: - Private Properties
     
     private var manager: ManagerProtocol!
-    private var template: TemplateViewModelsProtocol!
-    private var containerData: ManagerContextProtocol!
-    private var containerView: ContainerViewInputProtocol!
+    private var containerData: ContainerDataProtocol!
+    private var containerViewInput: ContainerViewInputProtocol!
+    private weak var containerViewOutput: ContainerViewOutputProtocol?
     private var viewDelegate: ManagerContextViewCallbackProtocol!
-    private weak var prefetchOutput: ContainerViewPrefetchOutputProtocol?
-    private weak var refreshOutput: ContainerViewRefreshOutputProtocol?
-    private var items: [ItemModel] = []
     
     // MARK: Initialization
     
     public init() {
-        self.containerData = ManagerContext.newContext()
+
     }
     
     // MARK: - Configure
@@ -35,17 +32,17 @@ public class ManagerBuilder {
         return self
     }
     
-    public final func configure(template: TemplateViewModelsProtocol) -> ManagerBuilder {
-        self.template = template
+    public final func configure(containerView input: ContainerViewInputProtocol) -> ManagerBuilder {
+        self.containerViewInput = input
         return self
     }
     
-    public final func configure(containerView: ContainerViewInputProtocol) -> ManagerBuilder {
-        self.containerView = containerView
+    public final func configure(containerView output: ContainerViewOutputProtocol?) -> ManagerBuilder {
+        self.containerViewOutput = output
         return self
     }
     
-    public final func configure(containerData: ManagerContextProtocol) -> ManagerBuilder {
+    public final func configure(containerData: ContainerDataProtocol) -> ManagerBuilder {
         self.containerData = containerData
         return self
     }
@@ -55,18 +52,8 @@ public class ManagerBuilder {
         return self
     }
     
-    public final func configure(prefetch output: ContainerViewPrefetchOutputProtocol?) -> ManagerBuilder {
-        self.prefetchOutput = output
-        return self
-    }
-    
-    public final func configure(refresh output: ContainerViewRefreshOutputProtocol?) -> ManagerBuilder {
-        self.refreshOutput = output
-        return self
-    }
-    
-    public final func configure(items: [ItemModel]) -> ManagerBuilder {
-        self.items.append(contentsOf: items)
+    public final func configure(items: [ItemViewModel]) -> ManagerBuilder {
+        self.containerData.items = items
         return self
     }
     
@@ -74,26 +61,7 @@ public class ManagerBuilder {
     
     /// Проставление зависимостей
     public final func build() {
-        containerData.set(viewDelegate: viewDelegate)
         
-        containerView?.configure(
-            dataSource: self.manager?.getDataSource(),
-            delegate: self.manager?.getDelegate()
-        )
-        
-        containerView?.configurePagination(output: prefetchOutput)
-        containerView?.configureRefresh(output: refreshOutput)
-        
-        manager.set(template: template)
-        
-        manager.configuration()
-        
-        manager.set(containerView: containerView)
-        manager.set(containerData: containerData ?? ManagerContext.newContext())
-        
-        manager.getData().items = self.items
-        
-        manager.getMapper()?.reloadViewModelsItems()
     }
     
 }

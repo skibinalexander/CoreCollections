@@ -9,67 +9,52 @@
 import UIKit
 
 /// Реализация DataSource для коллекции таблицы
-class TableViewDataSource: DataSource, UITableViewDataSource {
+public final class TableViewDataSource: NSObject, DataSourceProtocol, UITableViewDataSource {
+    
+    // MARK: - Properties
+    
+    /// Chain data source
+    public var chain: DataSourceProtocol?
+    
+    /// Контейнер данных для
+    public var containerData: ContainerDataProtocol
+    
+    // MARK: - Init
+    
+    public init( _ chain: DataSourceProtocol?, containerData: ContainerDataProtocol) {
+        self.chain = chain
+        self.containerData = containerData
+    }
+    
+    deinit {
+        print("TableViewDataSource -> deinit")
+    }
     
     // MARK: - UITableViewDataSource
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return self.mapper?.viewModels.count ?? 0
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return chain?.containerData.items.count ?? containerData.items.count
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard self.mapper?.viewModels.count ?? 0 > section else {
-            print("CCTableViewDataSource: numberOfRowsInSection -> count > section")
-            return .zero
-        }
-        
-        return self.mapper?.viewModels[section].cells.count ?? 0
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return chain?.containerData.items[section].cells.count ?? containerData.items[section].cells.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let viewModel = self.mapper?.viewModels[indexPath.section].cells[indexPath.row] else { fatalError() }
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let viewModel =
+                chain?.containerData.items[indexPath.section].cells[indexPath.row] ??
+                containerData.items[indexPath.section].cells[indexPath.row]
         
-        viewModel.indexPath = indexPath
-        
-        guard let viewIdentifier = viewModel.nibIdentifier else {
-            assertionFailure()
-            return .init()
-        }
-        
-        //  Иницализация view для ячейки
-        switch viewModel.nibType {
-        case .reusebleId:
-            viewModel
-                .inject(view: tableView.dequeueReusableCell(withIdentifier: viewIdentifier, for: indexPath) as? TableViewCell)
-        case .reusebleName:
-            viewModel
-                .inject(view: self.nibCell(nameNib: viewIdentifier) as? TableViewCell)
-        }
-        
-        viewModel.initialViewFromNib()
-        
-        guard let viewCell = viewModel.getView as? UITableViewCell & ViewCellProtocol else {
-            fatalError("CCTableViewDataSource: view for ViewModel \(String(describing: type(of: viewModel))) not initialization!")
-        }
-        
-        return viewCell
-    }
-    
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        mapper?.moveRowAt(
-            sourceIndexPath: sourceIndexPath,
-            destinationIndexPath: destinationIndexPath
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: viewModel.cellIdentifier,
+            for: indexPath
         )
+        
+        viewModel.eraseTo(cell: cell)
+        viewModel.injectTo(indexPath: indexPath)
+        viewModel.view.prepareForData()
+        
+        return cell
     }
     
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        canMoveAtRow
-    }
-    
-}
-
-extension TableViewDataSource {
-    func nibCell<T: UIView>(nameNib: String) -> T? {
-        return Bundle.main.loadNibNamed(nameNib, owner: nil, options: nil)![0] as? T
-    }
 }

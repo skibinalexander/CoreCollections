@@ -15,15 +15,14 @@ public protocol ContainerViewInputProtocol: AnyObject {
     /// - Parameters:
     ///   - dataSource: Источник данных коллекции
     ///   - delegate: Конфигуратор отображения коллекции
-    func configure(dataSource: Any?, delegate: Any?)
+    func configure(
+        dataSource: UITableViewDataSource,
+        delegate: UITableViewDelegate
+    )
     
     /// Конфигурация коллекции для пагинации
     /// - Parameter output: Обработчик подгрузки данных
-    func configurePagination(output: ContainerViewPrefetchOutputProtocol?)
-    
-    /// Конфигурация коллекции для pullToRefresh
-    /// - Parameter output: Обработчик обновления данных
-    func configureRefresh(output: ContainerViewRefreshOutputProtocol?)
+    func configure(output: ContainerViewOutputProtocol?)
     
     /// Начать визуальное обновление коллекции
     func beginRefreshing()
@@ -56,15 +55,12 @@ public protocol ContainerViewInputProtocol: AnyObject {
 }
 
 extension ContainerViewInputProtocol {
-    func configurePagination(output: ContainerViewPrefetchOutputProtocol?) {}
-    func configureRefresh(output: ContainerViewRefreshOutputProtocol?) {}
+    public func beginRefreshing() {}
+    public func endRefreshing() {}
     
-    func beginRefreshing() {}
-    func endRefreshing() {}
-    
-    func insertCells(at paths: [IndexPath]) {}
-    func removeCells(at paths: [IndexPath]) {}
+    public func insertCells(at paths: [IndexPath]) {}
+    public func removeCells(at paths: [IndexPath]) {}
     public func reloadCells(in sections: [Int]) {}
     
-    func updateHieghtCell(completion: (() -> Void)?) {}
+    public func updateHieghtCell(completion: (() -> Void)?) {}
 }

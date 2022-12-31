@@ -10,31 +10,45 @@ import CoreCollections
 
 // MARK: - View Layer
 
-class ExampleCell: TableViewCell {
-    
-    @IBOutlet weak var label: UILabel!
-    
-}
+public final class ExampleCell: TableViewCell<ExampleView> {}
 
 // MARK: - ViewModel Layer
 
-class ExampleViewModelCell: TableViewViewModelCell<ExampleCell, ExampleModelCell> {
+public final class ExampleViewModelCell: ViewModelProtocol {
     
-    override func initialViewFromNib() {
-        view.label.text = model.label
+    // MARK: - ViewModelProtocol
+    
+    public typealias View = ExampleView
+    public typealias Model = ExampleModel
+    
+    public var cellIdentifier: String { ExampleCell.className }
+    public var indexPath:  IndexPath!
+    public var height:     ViewModelHeight { .automatic }
+    
+    public func eraseTo(cell: UITableViewCell) {
+        self.view = (cell as? TableViewCell<View>)?.view as? View
+        self.view.viewModel = self
+    }
+    
+    public func injectTo(indexPath: IndexPath) {
+        self.indexPath = indexPath
+    }
+    
+    public weak var view: ExampleView!
+    public var model: ExampleModel!
+    
+    // MARK: - Init
+    
+    public init(model: ExampleModel) {
+        self.model = model
     }
 
 }
 
 // MARK: - Model Layer
 
-class ExampleModelCell: TableViewModelCell {
+public struct ExampleModel: ModelProtocol {
     
-    let label: String
-    
-    init(label: String, id: String?) {
-        self.label = label
-        super.init(id: id)
-    }
+    let text: String = "text"
     
 }

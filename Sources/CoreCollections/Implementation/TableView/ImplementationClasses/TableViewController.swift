@@ -12,13 +12,12 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
     
     // MARK: - IBOutlets
     @IBOutlet
-    public weak var tableView: UITableView!
+    public var tableView: UITableView!
     
     // MARK: - Properties
     public let refreshControl: UIRefreshControl = UIRefreshControl()
     
-    private weak var refreshOutput: ContainerViewRefreshOutputProtocol?
-    private weak var prefetchOutput: ContainerViewPrefetchOutputProtocol?
+    private weak var output: ContainerViewOutputProtocol?
     
     // MARK: - Lifecycle
     open override func viewDidLoad() {
@@ -32,30 +31,17 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
     
     // MARK: - CCTableViewPresenterViewInputProtocol
     
-    public func configure(dataSource: Any?, delegate: Any?) {
-        let dataSource  = (dataSource as? UITableViewDataSource)
-        let delegate    = (delegate as? UITableViewDelegate)
-        
-        guard dataSource != nil && delegate != nil else {
-            assertionFailure("CCTableViewController: dataSourse \(String(describing: dataSource)) or delegate \(String(describing: delegate))")
-            return
-        }
-        
+    public func configure(dataSource: UITableViewDataSource, delegate: UITableViewDelegate) {
         self.tableView?.dataSource = dataSource
         self.tableView?.delegate = delegate
     }
     
-    public func configurePagination(output: ContainerViewPrefetchOutputProtocol?) {
+    public func configure(output: ContainerViewOutputProtocol?) {
         if output != nil {
+            self.output = output
+            
             self.tableView.prefetchDataSource = self
-            self.prefetchOutput = output
-        }
-    }
-    
-    public func configureRefresh(output: ContainerViewRefreshOutputProtocol?) {
-        if output != nil {
             self.tableView.refreshControl = refreshControl
-            self.refreshOutput = output
             self.refreshControl.addTarget(self, action: #selector(refreshAction), for: .valueChanged)
         }
     }
@@ -106,7 +92,7 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
     
     @objc
     open func refreshAction() {
-        refreshOutput?.refreshList()
+        output?.refreshList()
     }
     
 }
@@ -116,7 +102,7 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
 extension TableViewController: UITableViewDataSourcePrefetching {
     
     open func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        guard let output = self.prefetchOutput else { return }
+        guard let output = self.output else { return }
         output.batchOfPaths(paths: indexPaths)
     }
     

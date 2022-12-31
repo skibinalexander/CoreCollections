@@ -8,15 +8,14 @@
 
 import Foundation
 
-public class Items<U, T>: NSObject {
+public class Item<U, T>: NSObject, Identifiable {
     
     typealias SectionType = U
     typealias CellType = T
     
     // MARK: - Properties
     
-    /// Идектификатор Item
-    public var id: String?
+    public var id: ObjectIdentifier
     
     /// Header item
     public var header: U?
@@ -25,15 +24,15 @@ public class Items<U, T>: NSObject {
     public var footer: U?
     
     /// Набор ячеек в item
-    public var cells: [T?] = []
+    public var cells: [T] = []
     
     // MARK: - Lifecycle
     
     public init(
-        id: String? = nil,
+        id: ObjectIdentifier,
         header: U? = nil,
         footer: U? = nil,
-        cells: [T?] = []
+        cells: [T] = []
     ) {
         self.id = id
         self.header = header

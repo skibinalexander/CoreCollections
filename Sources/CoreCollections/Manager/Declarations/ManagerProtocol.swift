@@ -17,33 +17,26 @@ public protocol ManagerContextViewCallbackProtocol: AnyObject {
 
 // MARK: - ManagerProtocol
 
-public protocol ManagerProtocol: AnyObject {
+public protocol ManagerProtocol {
+    
+    /// Набор Item в текущем контексте коллекции
+    var items: [ItemViewModel] { get set }
+    
+    /// Refreshing state
+    var isRefreshing: Bool { get set }
+    
+    /// Containers Data & View
+    var containerData: ContainerDataProtocol! { get set }
+    var containerView: ContainerViewInputProtocol! { get set }
+    
+    // MARK: - Implementation
     
     /// Конфигурация менеджера
     func configuration()
     
-    // MARK: - Setters
-    
-    func set(template: TemplateViewModelsProtocol)
-    func set(containerData: ManagerContextProtocol?)
-    func set(containerView: ContainerViewInputProtocol?)
-    
-    // MARK: - Getters
-    
-    func getDataSource() -> DataSource?
-    func getDelegate() -> Delegate
-    func getView() -> ContainerViewInputProtocol!
-    func getData() -> ManagerContextProtocol
-    func getMapper() -> MapperViewModels?
-    
     // - Access to Refresh control flow
     func beginRefresh()
     func endRefresh()
-    
-    /// - Items
-    func item(id: String?) -> ItemModel
-    func item(index: Int) -> ItemModel
-    func item(type: ItemModel.Identifiers) -> ItemModel
     
     // - Access to ViewModels
     
@@ -51,43 +44,24 @@ public protocol ManagerProtocol: AnyObject {
     /// - Parameter id: Идентификатор ячейки
     /// 
     /// Warning: вернется первая ячейка во всех item найденному по id. Быть внимательными если исполузуются одинаковые id для ячеек
-    func viewModelCell<M: ViewModelCellProtocol>(id: String?) -> M?
+    func resolveCell<V: ViewModelProtocol>(viewModel type: V.Type, by id: any Identifiable, at index: Int) throws -> V?
     
-    /// Найти view model ячейки по id в item
-    /// - Parameters:
-    ///   - id: Идентификатор ячейки
-    ///   - item: item коллекции
-    func viewModelCell<M: ViewModelCellProtocol>(id: String?, in item: ItemModel) -> M?
+}
+
+extension ManagerProtocol {
     
-    /// Найти view model ячейки по id в item
-    /// - Parameters:
-    ///   - id: Индекс ячейки
-    ///   - item: item коллекции
-    func viewModelCell<M: ViewModelCellProtocol>(index: Int, in item: ItemModel) -> M?
+    public mutating func beginRefresh() {
+        guard !isRefreshing else {
+            return
+        }
+        
+        containerView.beginRefreshing()
+        isRefreshing = true
+    }
     
-    /// Найти view model ячейки по id в item
-    /// - Parameters:
-    ///   - id: Идентификатор ячейки
-    ///   - item: item по заданному типу
-    func viewModelCell<M: ViewModelCellProtocol>(id: String?, in type: ItemModel.Identifiers) -> M?
-    
-    /// Найти view model заголовка item
-    /// - Parameter item: item коллекции
-    func viewModelHeader<M: ViewModelSectionProtocol>(in item: ItemModel) -> M?
-    
-    
-    /// Метод обновления высоты ячейки
-    /// - Parameters:
-    ///   - id: Идентификатор ячейки
-    ///   - item: Item коллекции
-    ///   - value: Значение высоты
-    func updateHeightCell(id: String?, in item: ItemModel, by value: Float)
-    
-    /// Метод обновления высоты ячейки
-    /// - Parameters:
-    ///   - id: Идентификатор ячейки
-    ///   - item: Item коллекции по заданному типу
-    ///   - value: Значение высоты
-    func updateHeightCell(id: String?, in type: ItemModel.Identifiers, by value: Float)
+    mutating func endRefresh() {
+        containerView.endRefreshing()
+        isRefreshing = false
+    }
     
 }

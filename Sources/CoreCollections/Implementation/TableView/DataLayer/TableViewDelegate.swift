@@ -8,22 +8,26 @@
 
 import UIKit
 
-public protocol TableViewDelegateProtocol: DelegateOutputProtocol {
-    var editingStyle: UITableViewCell.EditingStyle { get set }
-    var leadingSwipeConfig: ((IndexPath) -> UISwipeActionsConfiguration?)? { get set }
-    var trailingSwipeConfig: ((IndexPath) -> UISwipeActionsConfiguration?)? { get set }
-    var shouldIndentWhileEditingRowAt: Bool { get set }
-}
-
-class TableViewDelegate: Delegate, UITableViewDelegate {
+public final class TableViewDelegate: NSObject, DelegateProtocol, UITableViewDelegate {
     
-    private weak var output: TableViewDelegateProtocol?
+    public var chain: DelegateProtocol?
+    public var containerData: ContainerDataProtocol
+    public weak var delegate: DelegateOutputProtocol?
     
-    // MARK: - Lifecycle
+    // MARK: - Init
     
-    init(output: TableViewDelegateProtocol?) {
-        self.output = output
-        super.init()
+    public init(
+        _ chain: DelegateProtocol?,
+        containerData: ContainerDataProtocol,
+        delegate: DelegateOutputProtocol?
+    ) {
+        self.chain = chain
+        self.containerData = containerData
+        self.delegate = delegate
+    }
+    
+    deinit {
+        print("TableViewDelegate -> deinit")
     }
     
 }
@@ -32,74 +36,27 @@ class TableViewDelegate: Delegate, UITableViewDelegate {
 
 extension TableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let cell = self.mapper?.viewModels[indexPath.section].cells[indexPath.row] {
-            switch cell.height {
-            case .automatic: return UITableView.automaticDimension
-            case .value(let height): return CGFloat(height)
-            }
-        }
-        
-        return CGFloat.leastNonzeroMagnitude
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return updateHeight(for: containerData.items[indexPath.section].cells[indexPath.row].height)
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let viewModel = self.mapper?.viewModels[section].header, let id = viewModel.nibIdentifier {
-            //  Иницализация view для секции
-            switch viewModel.nibType {
-            case .reusebleName: viewModel.inject(view: self.nibSection(nameNib: id))
-            default: break
-            }
-            
-            viewModel.initialViewFromNib()
-            
-            return viewModel.getView as? UIView
-        }
-        
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return nil
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if let viewModel = self.mapper?.viewModels[section].footer, let id = viewModel.nibIdentifier {
-            //  Иницализация view для секции
-            switch viewModel.nibType {
-            case .reusebleName: viewModel.inject(view: self.nibSection(nameNib: id))
-            default: break
-            }
-            
-            viewModel.initialViewFromNib()
-            
-            return viewModel.getView as? UIView
-        }
-        
+    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return nil
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard self.mapper.viewModels.count > section else {
-            #if DEBUG
-            print("CoreCollection: heightForHeaderInSection count < section")
-            #endif
-            return .zero
-        }
-        
-        let item = self.mapper?.viewModels[section].header
-        return updateHeight(for: item?.height)
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return updateHeight(for: containerData.items[section].header?.height)
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        guard self.mapper.viewModels.count > section else {
-            #if DEBUG
-            print("CoreCollection: heightForHeaderInSection count < section")
-            #endif
-            return .zero
-        }
-        
-        let item = self.mapper?.viewModels[section].footer
-        return updateHeight(for: item?.height)
+    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return updateHeight(for: containerData.items[section].footer?.height)
     }
     
-    func updateHeight(for height: ViewModelHeight?) -> CGFloat {
+    private func updateHeight(for height: ViewModelHeight?) -> CGFloat {
         switch height {
         case .automatic?: return UITableView.automaticDimension
         case .value(let height)?: return CGFloat(height)
@@ -113,42 +70,22 @@ extension TableViewDelegate {
 
 extension TableViewDelegate {
     
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if let cell = self.mapper?.viewModels[indexPath.section].cells[indexPath.row] {
-            cell.willSelect()
-        } else {
-            assertionFailure("CCTableViewDelegate: undefined cell")
-        }
-        
+    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        delegate?.willSelect(viewModel: self.containerData.items[indexPath.section].cells[indexPath.row])
         return indexPath
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = self.mapper?.viewModels[indexPath.section].cells[indexPath.row] {
-            cell.didSelect()
-            self.output?.didSelect(viewModel: cell)
-        } else {
-            assertionFailure("CCTableViewDelegate: undefined cell")
-        }
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.didSelect(viewModel: self.containerData.items[indexPath.section].cells[indexPath.row])
     }
     
-    func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
-        if let cell = self.mapper?.viewModels[indexPath.section].cells[indexPath.row] {
-            cell.willDeselect()
-        } else {
-            assertionFailure("CCTableViewDelegate: undefined cell")
-        }
-        
+    public func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
+        delegate?.willDeselect(viewModel: self.containerData.items[indexPath.section].cells[indexPath.row])
         return indexPath
     }
     
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if let cell = self.mapper?.viewModels[indexPath.section].cells[indexPath.row] {
-            cell.didDeselect()
-            self.output?.didDeselect(viewModel: cell)
-        } else {
-            assertionFailure("CCTableViewDelegate: undefined cell")
-        }
+    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        delegate?.didDeselect(viewModel: self.containerData.items[indexPath.section].cells[indexPath.row])
     }
     
 }
@@ -157,101 +94,70 @@ extension TableViewDelegate {
 
 extension TableViewDelegate {
     
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        if let cell = self.mapper?.viewModels[indexPath.section].cells[indexPath.row] {
-            return cell.shouldHighlight()
-        }
-        
+    public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-        guard indexPath.section < mapper?.viewModels.count ?? 0 else { return }
+    public func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         
-        // Highlight for ViewModels
-        if let item = mapper?.viewModels[indexPath.section].cells[indexPath.row] {
-            item.didHighlight()
-        }
     }
     
-    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-        guard indexPath.section < mapper?.viewModels.count ?? 0 else { return }
+    public func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         
-        // UnHighlight for ViewModels
-        if let item = mapper?.viewModels[indexPath.section].cells[indexPath.row] {
-            item.didUnhighlight()
-        }
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = self.mapper?.viewModels[indexPath.section].cells[indexPath.row] {
-            cell.willDisplay()
-            self.output?.willDisplay(viewModel: cell)
-        } else {
-            assertionFailure("CCTableViewDelegate: undefined cell")
-        }
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
     }
     
 }
 
 extension TableViewDelegate {
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        self.output?.editingStyle ?? .none
+    public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        .none
     }
 
-    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        self.output?.shouldIndentWhileEditingRowAt ?? false
+    public func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        false
     }
     
 }
 
 extension TableViewDelegate {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        output?.scrollDidChange()
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
     }
     
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        output?.scrollViewDidEndScrollingAnimation()
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        output?.scrollViewDidEndDecelerating()
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
     }
     
-    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        output?.scrollViewWillBeginDecelerating()
+    public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        
     }
     
 }
 
 extension TableViewDelegate {
     
-    func tableView(
+    public func tableView(
         _ tableView: UITableView,
         leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
-        self.output?.leadingSwipeConfig?(indexPath) ?? nil
+        return nil
     }
     
-    func tableView(
+    public func tableView(
         _ tableView: UITableView,
         trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
-        self.output?.trailingSwipeConfig?(indexPath) ?? nil
+        return nil
     }
     
-}
-
-// MARK: - Creation
-
-extension TableViewDelegate {
-    func nibSection(nameNib: String) -> TableViewSection? {
-        return Bundle.main.loadNibNamed(
-            String(describing: nameNib),
-            owner: nil,
-            options: nil
-        )![0] as? TableViewSection
-    }
 }

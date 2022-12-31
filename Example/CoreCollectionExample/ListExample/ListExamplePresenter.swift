@@ -7,6 +7,19 @@
 
 import CoreCollections
 
+public struct ListExampleUseCase: ContainerDataProtocol {
+    
+    public var items: [ItemViewModel] = [
+        .init(
+            id: .init(NSString(string: "test")),
+            cells: [
+                ExampleViewModelCell(model: .init())
+            ]
+        )
+    ]
+    
+}
+
 final class ListExamplePresenter: TableViewPresenter {
     
     weak var view: ListExampleView!
@@ -17,54 +30,15 @@ final class ListExamplePresenter: TableViewPresenter {
         self.view = view
         super.init()
         
-        ManagerBuilder()
-            .configure(manager: self.manager)
-            .configure(template: ExampleTemplateViewModels())
-            .configure(containerView: self.view)
-            .configure(viewDelegate: self)
-            .configure(items: [.list()])
-            .build()
+        self.containerView = view
+        self.containerData = ListExampleUseCase()
         
-        trailingSwipeConfig = { [unowned self] indexPath in
-            print(indexPath)
-            return UISwipeActionsConfiguration(
-                actions: self.configurationActions()
-            )
-        }
-        
-        manager
-            .getData()
-            .replaceCells(
-                in: .list,
-                cells: [
-                    ExampleModelCell(
-                        label: "Тест москва -> питер",
-                        id: "id"
-                    )
-                ],
-                viewCallback: .reloadCollection
-            )
-        
+        self.configuration()
+        self.containerView.reloadContainer()
     }
     
-    // MARK: - TableView
-    
-    override func didSelect(viewModel: ViewModelCellProtocol) {
-        super.didSelect(viewModel: viewModel)
-        print(viewModel)
-    }
-    
-    func configurationActions() -> [UIContextualAction] {
-        let action = UIContextualAction(
-            style: .destructive,
-            title: "Remove",
-            handler: { (action, view, completionHandler) in
-                print("Handle actions")
-                completionHandler(true)
-            }
-        )
-        
-        return [action]
+    override func refreshList() {
+        self.containerView.reloadContainer()
     }
     
 }

@@ -11,15 +11,20 @@ import UIKit
 // MARK: - BasicTableViewPresenter
 
 open class TableViewPresenter:
-    TableViewDelegateProtocol,
-    ContainerViewRefreshOutputProtocol,
-    ContainerViewPrefetchOutputProtocol,
+    ManagerProtocol,
+    DelegateOutputProtocol,
+    ContainerViewOutputProtocol,
     ManagerContextViewCallbackProtocol {
     
-    // MARK: - Properties
+    // MARK: - ManagerProtocol
     
-    public var manager: ManagerProtocol!
-    
+    public var items: [ItemViewModel] = []
+    public var isRefreshing: Bool = false
+    public var dataSource: TableViewDataSource!
+    public var delegate: TableViewDelegate!
+    public var containerData: ContainerDataProtocol!
+    public var containerView: ContainerViewInputProtocol!
+
     // MARK: - TableViewDelegateProtocol Properties
     
     public var editingStyle: UITableViewCell.EditingStyle = .none
@@ -31,25 +36,28 @@ open class TableViewPresenter:
     // MARK: - Lifecycle
     
     public init() {
-        self.manager = Manager(
-            dataSource: TableViewDataSource(),
-            delegate: TableViewDelegate(output: self),
-            viewDelegate: self
-        )
+        
     }
     
-    open func willDisplay(viewModel: ViewModelCellProtocol) {}
-    open func didSelect(viewModel: ViewModelCellProtocol) {}
-    open func didDeselect(viewModel: ViewModelCellProtocol) {}
-    open func scrollDidChange() {}
-    open func scrollViewDidEndScrollingAnimation() {}
-    open func scrollViewDidEndDecelerating() {}
-    open func scrollViewWillBeginDecelerating() {}
-    open func batchOfPaths(paths: [IndexPath]) {}
+    public func configuration() {
+        self.dataSource = .init(nil, containerData: containerData)
+        self.delegate = .init(nil, containerData: containerData, delegate: self)
+        
+        containerView.configure(
+            dataSource: dataSource,
+            delegate: delegate
+        )
+        
+        containerView.configure(output: self)
+    }
     
     open func refreshList() {
-        manager.beginRefresh()
+        self.beginRefresh()
     }
+    
+    public func beginRefresh() {}
+    public func endRefresh() {}
+    public func batchOfPaths(paths: [IndexPath]) {}
 
 }
 
@@ -59,18 +67,30 @@ public extension TableViewPresenter {
     
     func didUpdateView(with type: ManagerContextViewCallbackType) {
         switch type {
-        case .reloadInSection(let index): manager.getView().reloadCells(in: [index])
-        default: manager.getView().reloadContainer()
+        case .reloadInSection(let index): containerView.reloadCells(in: [index])
+        default: containerView.reloadContainer()
         }
     }
     
     func didUpdateView(with type: ManagerContextViewCallbackType, for paths: [IndexPath]) {
         switch type {
-        case .insertIntoCollection: manager.getView().insertCells(at: paths)
-        case .removeFromCollection: manager.getView().removeCells(at: paths)
-        case .reloadInSection(let index): manager.getView().reloadCells(in: [index])
-        default: manager.getView().reloadContainer()
+        case .insertIntoCollection: containerView.insertCells(at: paths)
+        case .removeFromCollection: containerView.removeCells(at: paths)
+        case .reloadInSection(let index): containerView.reloadCells(in: [index])
+        default: containerView.reloadContainer()
         }
     }
+    
+}
+
+extension TableViewPresenter {
+    
+    public func resolveCell<V: ViewModelProtocol>(viewModel type: V.Type, by id: any Identifiable, at index: Int) throws -> V? {
+        return nil
+    }
+    
+}
+
+extension DelegateOutputProtocol {
     
 }

@@ -8,7 +8,10 @@
 
 import Foundation
 
-public protocol ContainerViewPrefetchOutputProtocol: AnyObject {
+public protocol ContainerViewOutputProtocol: AnyObject {
+    
+    /// Сделать Refresh коллекции
+    func refreshList()
     
     /// Количество подгруженных ячеек
     /// - Parameter section: Номер секция коллекция
