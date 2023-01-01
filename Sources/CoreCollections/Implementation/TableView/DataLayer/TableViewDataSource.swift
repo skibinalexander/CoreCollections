@@ -26,10 +26,6 @@ public final class TableViewDataSource: NSObject, DataSourceProtocol, UITableVie
         self.containerData = containerData
     }
     
-    deinit {
-        print("TableViewDataSource -> deinit")
-    }
-    
     // MARK: - UITableViewDataSource
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -46,12 +42,11 @@ public final class TableViewDataSource: NSObject, DataSourceProtocol, UITableVie
                 containerData.items[indexPath.section].cells[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: viewModel.cellIdentifier,
+            withIdentifier: viewModel.reuseIdentifier,
             for: indexPath
         )
         
-        viewModel.eraseTo(cell: cell)
-        viewModel.injectTo(indexPath: indexPath)
+        viewModel.eraseTo(cell: cell, at: indexPath)
         viewModel.view.prepareForData()
         
         return cell

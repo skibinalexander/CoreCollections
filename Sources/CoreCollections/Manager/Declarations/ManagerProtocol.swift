@@ -19,9 +19,6 @@ public protocol ManagerContextViewCallbackProtocol: AnyObject {
 
 public protocol ManagerProtocol {
     
-    /// Набор Item в текущем контексте коллекции
-    var items: [ItemViewModel] { get set }
-    
     /// Refreshing state
     var isRefreshing: Bool { get set }
     
@@ -37,14 +34,6 @@ public protocol ManagerProtocol {
     // - Access to Refresh control flow
     func beginRefresh()
     func endRefresh()
-    
-    // - Access to ViewModels
-    
-    /// Найти первую view model ячейки по id во всех items
-    /// - Parameter id: Идентификатор ячейки
-    /// 
-    /// Warning: вернется первая ячейка во всех item найденному по id. Быть внимательными если исполузуются одинаковые id для ячеек
-    func resolveCell<V: ViewModelProtocol>(viewModel type: V.Type, by id: any Identifiable, at index: Int) throws -> V?
     
 }
 

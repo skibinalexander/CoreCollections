@@ -17,6 +17,7 @@
 		2D94A1D7295F8D9E00B92F62 /* DataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D94A1D6295F8D9E00B92F62 /* DataSourceProtocol.swift */; };
 		2D94A1D9295F971B00B92F62 /* DelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D94A1D8295F971B00B92F62 /* DelegateProtocol.swift */; };
 		2DCE7AEE29609F5F00044D4A /* ModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCE7AED29609F5F00044D4A /* ModelProtocol.swift */; };
+		2DCE7AF229619E6E00044D4A /* TableViewModelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCE7AF129619E6E00044D4A /* TableViewModelCell.swift */; };
 		36E26B9AA43566981FCC5236C034EC18 /* Pods-CoreCollectionExample-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = ED08D72FE1E920818A834684176F6E5D /* Pods-CoreCollectionExample-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C1AA17AA1B4B2F87E7EF36152FBDD4E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		40CB03D18A9EBA7D6EE34A47D37720A4 /* CoreCollections-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 710514EC69605620856E3D758927AB2C /* CoreCollections-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -56,6 +57,7 @@
 		2D94A1D6295F8D9E00B92F62 /* DataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceProtocol.swift; sourceTree = "<group>"; };
 		2D94A1D8295F971B00B92F62 /* DelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateProtocol.swift; sourceTree = "<group>"; };
 		2DCE7AED29609F5F00044D4A /* ModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelProtocol.swift; sourceTree = "<group>"; };
+		2DCE7AF129619E6E00044D4A /* TableViewModelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModelCell.swift; sourceTree = "<group>"; };
 		2E7F65E635A012819164FB3951F3F5C2 /* TableViewDataSource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		2FF2128D8932E2E88089F771A62BCDFB /* Pods-CoreCollectionExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CoreCollectionExample.debug.xcconfig"; sourceTree = "<group>"; };
 		3FBB46A48CE4A99DDC28A6B1D83A6303 /* CoreCollections-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "CoreCollections-Info.plist"; sourceTree = "<group>"; };
@@ -221,8 +223,9 @@
 		9B76888921647D8FE5776D74297A2AB4 /* TableView */ = {
 			isa = PBXGroup;
 			children = (
+				548CF78394EB0125A99D1FD6CDE8B9FC /* TableViewController.swift */,
+				40078DB39DF986486E6C7618654FDEFA /* TableViewPresenter.swift */,
 				EF9494E2D9A9AD11571A8BC93D4A2B5F /* DataLayer */,
-				D7E453B56E09119050A308FAE4B6297C /* ImplementationClasses */,
 				E9491932E1DA7CBC95251AD3585D775B /* ViewLayer */,
 			);
 			path = TableView;
@@ -233,10 +236,10 @@
 			children = (
 				B5BFE1D1103C951220F43B5E5297BBAB /* Item.swift */,
 				747E5BBB1A0E015C456B52B1FB624D7F /* ItemModel.swift */,
+				2DCE7AED29609F5F00044D4A /* ModelProtocol.swift */,
 				4179045578786E7EAC2884032A16B3FE /* ViewModelHeight.swift */,
 				7E24C19AB42981314522EF1EC4D375F7 /* ViewModelProtocol.swift */,
 				D6CA7FDFC20BDC7F0D35FF347BBD7F22 /* ViewProtocol.swift */,
-				2DCE7AED29609F5F00044D4A /* ModelProtocol.swift */,
 			);
 			name = Elements;
 			path = Sources/CoreCollections/Elements;
@@ -245,7 +248,7 @@
 		9F1109B9481A00EADC2F965C77BB9DB9 /* Implementation */ = {
 			isa = PBXGroup;
 			children = (
-				BD35AE923F625A9E763C2AD1D77DF953 /* Builder */,
+				D1371A8968CDC588A3694F6A9B7CCCA7 /* ManagerBuilder.swift */,
 			);
 			path = Implementation;
 			sourceTree = "<group>";
@@ -259,14 +262,6 @@
 			);
 			name = ContainerView;
 			path = Sources/CoreCollections/ContainerView;
-			sourceTree = "<group>";
-		};
-		A87C607896F9C36099508C77B62CCEB3 /* Mapper */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Mapper;
-			path = Sources/CoreCollections/Mapper;
 			sourceTree = "<group>";
 		};
 		AD643A69E405964D2D1EE707121D5C9D /* Targets Support Files */ = {
@@ -286,20 +281,11 @@
 				8EC029DDAA863E4948F3373B26E6B3A9 /* Extensions */,
 				2B4A05371B4CB263FA1B2277AAE385BD /* Implementation */,
 				5A68574ECC3D6CDDA337282F7A5E4A69 /* Manager */,
-				A87C607896F9C36099508C77B62CCEB3 /* Mapper */,
 				891F93512E2C5486FF5E88D2726D3740 /* Pod */,
 				3899F4DD9C45E55568190FF81E6F74A6 /* Support Files */,
 			);
 			name = CoreCollections;
 			path = ../..;
-			sourceTree = "<group>";
-		};
-		BD35AE923F625A9E763C2AD1D77DF953 /* Builder */ = {
-			isa = PBXGroup;
-			children = (
-				D1371A8968CDC588A3694F6A9B7CCCA7 /* ManagerBuilder.swift */,
-			);
-			path = Builder;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -321,15 +307,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D7E453B56E09119050A308FAE4B6297C /* ImplementationClasses */ = {
-			isa = PBXGroup;
-			children = (
-				548CF78394EB0125A99D1FD6CDE8B9FC /* TableViewController.swift */,
-				40078DB39DF986486E6C7618654FDEFA /* TableViewPresenter.swift */,
-			);
-			path = ImplementationClasses;
-			sourceTree = "<group>";
-		};
 		DEA7C5D8E3695D19B4C61B56878630EB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -343,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				22F88CE1AFE3989074643BFFB7D75D73 /* TableViewCell.swift */,
+				2DCE7AF129619E6E00044D4A /* TableViewModelCell.swift */,
 			);
 			path = ViewLayer;
 			sourceTree = "<group>";
@@ -480,6 +458,7 @@
 				A2280E99A16BE1D8E6483D1C1C94D56B /* TableViewController.swift in Sources */,
 				E78625FFAC7BC605D71FA9171B4A1A80 /* TableViewDataSource.swift in Sources */,
 				4976FB57BAFEF9F36A4D69353EE7C0D2 /* TableViewDelegate.swift in Sources */,
+				2DCE7AF229619E6E00044D4A /* TableViewModelCell.swift in Sources */,
 				2DCE7AEE29609F5F00044D4A /* ModelProtocol.swift in Sources */,
 				EA9FCE97C8E0A0D3776DA19A9E09DD04 /* TableViewPresenter.swift in Sources */,
 				067B3FCE94118F56CE370D888DDD5B72 /* UINib+Extension.swift in Sources */,

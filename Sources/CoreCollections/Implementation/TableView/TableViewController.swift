@@ -11,17 +11,23 @@ import UIKit
 open class TableViewController: UIViewController, ContainerViewInputProtocol {
     
     // MARK: - IBOutlets
+    
     @IBOutlet
     public var tableView: UITableView!
     
-    // MARK: - Properties
+    // MARK: - Public Properties
+    
     public let refreshControl: UIRefreshControl = UIRefreshControl()
+    
+    // MARK: - Private Properties
     
     private weak var output: ContainerViewOutputProtocol?
     
     // MARK: - Lifecycle
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
+        configuration()
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
@@ -29,7 +35,18 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
         refreshControl.endRefreshing()
     }
     
-    // MARK: - CCTableViewPresenterViewInputProtocol
+    // MARK: - Configurations
+    
+    open func configuration() {
+        tableView.tableFooterView = UIView(frame: .zero)
+        tableView.separatorStyle = .none
+        tableView.estimatedRowHeight = 44
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.estimatedSectionHeaderHeight = 44
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+    }
+    
+    // MARK: - TableViewPresenterViewInputProtocol
     
     public func configure(dataSource: UITableViewDataSource, delegate: UITableViewDelegate) {
         self.tableView?.dataSource = dataSource
@@ -45,6 +62,39 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
             self.refreshControl.addTarget(self, action: #selector(refreshAction), for: .valueChanged)
         }
     }
+    
+    public func updateHieghtCell(_ completion: (() -> Void)?) {
+        self.tableView.beginUpdates()
+        completion?()
+        self.tableView.endUpdates()
+    }
+    
+    public func isEditing(_ editing: Bool) {
+        tableView.isEditing = editing
+    }
+    
+    // MARK: - Refreshing
+    
+    public func beginRefreshing() {
+        self.refreshControl.beginRefreshing()
+    }
+    
+    public func endRefreshing() {
+        if self.refreshControl.isRefreshing {
+            self.refreshControl.endRefreshing()
+        }
+    }
+    
+    @objc
+    open func refreshAction() {
+        output?.refreshList()
+    }
+    
+}
+
+// MARK: - CollectionFlow
+
+extension TableViewController {
     
     public func reloadContainer() {
         self.tableView?.reloadData()
@@ -62,39 +112,6 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
         self.tableView.reloadRows(at: paths, with: .automatic)
     }
     
-    public func updateHieghtCell(completion: (() -> Void)?) {
-        if #available(iOS 11.0, *) {
-            self.tableView.performBatchUpdates({
-                completion?()
-            }, completion: nil)
-        } else {
-            self.tableView.beginUpdates()
-            completion?()
-            self.tableView.endUpdates()
-        }
-    }
-    
-    public func beginRefreshing() {
-        self.refreshControl.beginRefreshing()
-    }
-    
-    public func endRefreshing() {
-        if self.refreshControl.isRefreshing {
-            self.refreshControl.endRefreshing()
-        }
-    }
-    
-    public func isEditing(_ editing: Bool) {
-        tableView.isEditing = editing
-    }
-    
-    // MARK: - Refreshing
-    
-    @objc
-    open func refreshAction() {
-        output?.refreshList()
-    }
-    
 }
 
 // MARK: - UITableViewDataSourcePrefetching
@@ -106,6 +123,6 @@ extension TableViewController: UITableViewDataSourcePrefetching {
         output.batchOfPaths(paths: indexPaths)
     }
     
-    public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {}
+    open func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {}
     
 }

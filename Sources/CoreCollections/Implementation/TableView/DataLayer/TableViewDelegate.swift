@@ -26,10 +26,6 @@ public final class TableViewDelegate: NSObject, DelegateProtocol, UITableViewDel
         self.delegate = delegate
     }
     
-    deinit {
-        print("TableViewDelegate -> deinit")
-    }
-    
 }
 
 // MARK: - Heights Managment
@@ -41,11 +37,43 @@ extension TableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return nil
+        guard let viewModel =
+                chain?.containerData.items[section].header ??
+                containerData.items[section].header
+        else {
+            return nil
+        }
+        
+        guard let view = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: viewModel.reuseIdentifier
+        ) else {
+            return nil
+        }
+        
+        viewModel.eraseTo(view: view, at: section)
+        viewModel.view.prepareForData()
+        
+        return view
     }
     
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return nil
+        guard let viewModel =
+                chain?.containerData.items[section].footer ??
+                containerData.items[section].footer
+        else {
+            return nil
+        }
+        
+        guard let view = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: viewModel.reuseIdentifier
+        ) else {
+            return nil
+        }
+        
+        viewModel.eraseTo(view: view, at: section)
+        viewModel.view.prepareForData()
+        
+        return view
     }
     
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -95,19 +123,35 @@ extension TableViewDelegate {
 extension TableViewDelegate {
     
     public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return true
+        let viewModel =
+                chain?.containerData.items[indexPath.section].cells[indexPath.row] ??
+                containerData.items[indexPath.section].cells[indexPath.row]
+        
+        return viewModel.shouldHighlight?() ?? true
     }
     
     public func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let viewModel =
+                chain?.containerData.items[indexPath.section].cells[indexPath.row] ??
+                containerData.items[indexPath.section].cells[indexPath.row]
         
+        viewModel.didHighlight?()
     }
     
     public func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let viewModel =
+                chain?.containerData.items[indexPath.section].cells[indexPath.row] ??
+                containerData.items[indexPath.section].cells[indexPath.row]
         
+        viewModel.didUnhighlight?()
     }
 
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let viewModel =
+                chain?.containerData.items[indexPath.section].cells[indexPath.row] ??
+                containerData.items[indexPath.section].cells[indexPath.row]
         
+        delegate?.willDisplay(viewModel: viewModel)
     }
     
 }
@@ -127,19 +171,19 @@ extension TableViewDelegate {
 extension TableViewDelegate {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+        delegate?.scrollDidChange()
     }
     
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-    
+        delegate?.scrollViewDidEndScrollingAnimation()
     }
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
+        delegate?.scrollViewDidEndDecelerating()
     }
     
     public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        
+        delegate?.scrollViewWillBeginDecelerating()
     }
     
 }

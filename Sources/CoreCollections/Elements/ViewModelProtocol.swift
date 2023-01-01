@@ -15,16 +15,16 @@ public protocol ViewModelProtocol {
     
     // MARK: - Collection Properties
     
-    ///
-    var cellIdentifier: String { get}
+    /// Идентификатор для переиспользования UI
+    var reuseIdentifier: String { get}
     
-    ///
+    /// Связанный UI
     var view: View! { get }
     
-    ///
+    /// Модель данных
     var model: Model! { get }
     
-    ///
+    /// Индекс
     var indexPath: IndexPath! { get }
     
     /// Заданная высота view
@@ -32,11 +32,32 @@ public protocol ViewModelProtocol {
     
     // MARK: - Public Implemetation
     
-    func eraseTo(cell: UITableViewCell)
-    func injectTo(indexPath: IndexPath)
-    
     // MARK: - Init
     
     init(model: Model)
+    
+}
+
+public protocol CellViewModelProtocol: AnyObject, ViewModelProtocol {
+    
+    var shouldHighlight: (() -> Bool)? { get set }
+    var didHighlight: (() -> Void)? { get set }
+    var didUnhighlight: (() -> Void)? { get set }
+    
+    /// Восстановить связи модели ячейки и UI ячейки
+    /// - Parameters:
+    ///   - cell: UI ячейки
+    ///   - indexPath: Позиция ячейки
+    func eraseTo(cell: UITableViewCell, at indexPath: IndexPath)
+    
+}
+
+public protocol SectionViewModelProtocol: ViewModelProtocol {
+    
+    /// Восстановить связи модели ячейки и UI ячейки
+    /// - Parameters:
+    ///   - cell: UI ячейки
+    ///   - indexPath: Позиция ячейки
+    func eraseTo(view: UITableViewHeaderFooterView, at index: Int)
     
 }

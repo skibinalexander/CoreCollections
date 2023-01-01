@@ -5,6 +5,7 @@
 //  Created by Скибин Александр on 01.03.2021.
 //
 
+import Combine
 import CoreCollections
 
 public struct ListExampleUseCase: ContainerDataProtocol {
@@ -13,7 +14,7 @@ public struct ListExampleUseCase: ContainerDataProtocol {
         .init(
             id: .init(NSString(string: "test")),
             cells: [
-                ExampleViewModelCell(model: .init())
+                TableViewModelCell<ExampleView, ExampleModel>(model: .init())
             ]
         )
     ]
@@ -23,6 +24,9 @@ public struct ListExampleUseCase: ContainerDataProtocol {
 final class ListExamplePresenter: TableViewPresenter {
     
     weak var view: ListExampleView!
+    
+    let publisher = PassthroughSubject<any CellViewModelProtocol, Never>()
+    var subcriptions: [AnyCancellable] = []
     
     // MARK: - Initialization
     
@@ -34,6 +38,16 @@ final class ListExamplePresenter: TableViewPresenter {
         self.containerData = ListExampleUseCase()
         
         self.configuration()
+        
+        self.containerData.items.first?.cells.append(TableViewModelCell<ExampleView, ExampleModel>(model: .init()))
+        self.containerData.items.first?.cells.append(TableViewModelCell<ExampleView, ExampleModel>(model: .init()))
+        
+        publisher.sink { cell in
+            print(cell)
+        }
+        
+        publisher.send(TableViewModelCell<ExampleView, ExampleModel>(model: .init()))
+        
         self.containerView.reloadContainer()
     }
     

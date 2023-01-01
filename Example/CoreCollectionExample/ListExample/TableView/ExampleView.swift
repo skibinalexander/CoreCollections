@@ -10,9 +10,25 @@ import CoreCollections
 
 public final class ExampleView: UIView, WrappedViewProtocol {
     
-    public typealias ViewModel = ExampleViewModelCell
+    // MARK: - WrappedViewProtocol
     
-    public var viewModel: ExampleViewModelCell?
+    public typealias ViewModel = TableViewModelCell<ExampleView, ExampleModel>
+    
+    public var viewModel: TableViewModelCell<ExampleView, ExampleModel>?
+    
+    public static func instanceView() -> Self {
+        return ExampleView(frame: .zero) as! Self
+    }
+    
+    public func prepareForData() {
+        label.text = viewModel?.model.text
+    }
+    
+    public func prepareForReuse() {
+        label.text = nil
+    }
+    
+    // MARK: - Properties
     
     public lazy var label: UILabel = {
         let lbl = UILabel()
@@ -20,6 +36,8 @@ public final class ExampleView: UIView, WrappedViewProtocol {
         lbl.textColor = .white
         return lbl
     }()
+    
+    // MARK: - Lifecycle
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,18 +53,6 @@ public final class ExampleView: UIView, WrappedViewProtocol {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    public static func instanceView() -> Self {
-        return ExampleView(frame: .zero) as! Self
-    }
-    
-    public func prepareForData() {
-        label.text = viewModel?.model.text
-    }
-    
-    public func prepareForReuse() {
-        label.text = nil
     }
     
 }

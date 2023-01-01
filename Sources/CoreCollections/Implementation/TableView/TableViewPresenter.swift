@@ -18,7 +18,6 @@ open class TableViewPresenter:
     
     // MARK: - ManagerProtocol
     
-    public var items: [ItemViewModel] = []
     public var isRefreshing: Bool = false
     public var dataSource: TableViewDataSource!
     public var delegate: TableViewDelegate!
@@ -80,17 +79,5 @@ public extension TableViewPresenter {
         default: containerView.reloadContainer()
         }
     }
-    
-}
-
-extension TableViewPresenter {
-    
-    public func resolveCell<V: ViewModelProtocol>(viewModel type: V.Type, by id: any Identifiable, at index: Int) throws -> V? {
-        return nil
-    }
-    
-}
-
-extension DelegateOutputProtocol {
     
 }

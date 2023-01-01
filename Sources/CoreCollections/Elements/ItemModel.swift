@@ -7,13 +7,13 @@
 
 import Foundation
 
-public class ItemViewModel: Item<ViewModelProtocol, ViewModelProtocol> {
+public class ItemViewModel: Item<SectionViewModelProtocol, CellViewModelProtocol> {
     
     public enum Identifiers: String, Identifiable {
         
-        public typealias ID = Item<ViewModelProtocol, ViewModelProtocol>.ID
+        public typealias ID = Item<SectionViewModelProtocol, CellViewModelProtocol>.ID
         
-        public var id: Item<ViewModelProtocol, ViewModelProtocol>.ID {
+        public var id: Item<SectionViewModelProtocol, CellViewModelProtocol>.ID {
             return .init(NSString(string: self.rawValue))
         }
         
@@ -29,7 +29,7 @@ public class ItemViewModel: Item<ViewModelProtocol, ViewModelProtocol> {
         return ItemViewModel(id: Identifiers.single.id)
     }
     
-    public static func top<H: ViewModelProtocol>(header: H? = nil) -> ItemViewModel {
+    public static func top<H: SectionViewModelProtocol>(header: H? = nil) -> ItemViewModel {
         return ItemViewModel(id: Identifiers.top.id, header: header)
     }
     
@@ -37,15 +37,15 @@ public class ItemViewModel: Item<ViewModelProtocol, ViewModelProtocol> {
         return ItemViewModel(id: Identifiers.middle.id)
     }
     
-    public static func bottom<H: ViewModelProtocol, C: ViewModelProtocol>(header: H? = nil, cells: [C] = []) -> ItemViewModel {
+    public static func bottom<H: SectionViewModelProtocol, C: CellViewModelProtocol>(header: H? = nil, cells: [C] = []) -> ItemViewModel {
         return ItemViewModel(id: Identifiers.bottom.id, header: header, cells: cells)
     }
     
-    public static func list<H: ViewModelProtocol>(header: H? = nil) -> ItemViewModel {
+    public static func list<H: SectionViewModelProtocol>(header: H? = nil) -> ItemViewModel {
         return ItemViewModel(id: Identifiers.list.id, header: header)
     }
     
-    public static func content<H: ViewModelProtocol, C: ViewModelProtocol>(header: H? = nil, cells: [C] = []) -> ItemViewModel {
+    public static func content<H: SectionViewModelProtocol, C: CellViewModelProtocol>(header: H? = nil, cells: [C] = []) -> ItemViewModel {
         return ItemViewModel(id: Identifiers.content.id, header: header, cells: cells)
     }
     

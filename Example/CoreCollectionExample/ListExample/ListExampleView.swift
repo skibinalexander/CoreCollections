@@ -14,16 +14,7 @@ final class ListExampleView: TableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.tableFooterView = UIView(frame: .zero)
-        tableView.separatorStyle = .none
-        tableView.estimatedRowHeight = 44
-        tableView.sectionHeaderHeight = UITableView.automaticDimension
-        tableView.estimatedSectionHeaderHeight = 44
-        tableView.sectionHeaderHeight = UITableView.automaticDimension
-        
-        tableView.register(ExampleCell.self, forCellReuseIdentifier: ExampleCell.className)
-        
+        tableView.registerCell(view: ExampleView.self, model: ExampleModel.self)
         presenter = ListExamplePresenter(view: self)
     }
     

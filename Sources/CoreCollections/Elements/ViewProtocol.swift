@@ -26,23 +26,3 @@ public protocol WrappedViewProtocol: UIView, Identifiable {
     func prepareForReuse()
     
 }
-
-
-//static func instanceView() -> Self {
-//    Self.instanceFromNib()
-//}
-//
-//private static var nib: UINib {
-//    UINib(nibName: className, bundle: Bundle(for: self))
-//}
-//
-///// Загружаем вьюху из .xib файла и кастим к нужному типу
-//private static func instanceFromNib() -> Self {
-//    let results: [Any] = nib.instantiate(withOwner: self, options: nil)
-//    for result in results {
-//        if let view = result as? Self {
-//            return view
-//        }
-//    }
-//    fatalError("\(self) not found")
-//}
