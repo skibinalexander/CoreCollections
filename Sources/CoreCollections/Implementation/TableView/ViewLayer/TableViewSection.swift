@@ -1,15 +1,14 @@
 //
-//  TableViewCell.swift
-//  Vezu
+//  TableViewSection.swift
+//  CoreCollections
 //
-//  Created by Пользователь on 24/04/2019.
-//  Copyright © 2019 VezuAppDevTeam. All rights reserved.
+//  Created by skibinalexander on 03.01.2023.
 //
 
 import UIKit
 
 /// Базовая реализация View ячейки таблицы
-open class TableViewCell<View: WrappedViewProtocol>: UITableViewCell {
+open class TableViewSection<View: WrappedViewProtocol>: UITableViewHeaderFooterView {
     
     // MARK: - Private Implementation
     
@@ -17,8 +16,8 @@ open class TableViewCell<View: WrappedViewProtocol>: UITableViewCell {
     
     // MARK: - Init
     
-    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    public override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         self.view = View.instanceView()
         self.setupUI()
     }
@@ -48,4 +47,3 @@ open class TableViewCell<View: WrappedViewProtocol>: UITableViewCell {
     }
     
 }
-

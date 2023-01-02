@@ -19,7 +19,7 @@ open class TableViewModelSection<View: WrappedViewProtocol, Model: ModelProtocol
     public var height:              ViewModelHeight     { .automatic }
     
     public func eraseTo<Section>(view: Section, at index: Int) {
-        self.view = view as? View
+        self.view = (view as? TableViewSection<View>)?.view as? View
         self.view.viewModel = self as? View.ViewModel
     }
     
