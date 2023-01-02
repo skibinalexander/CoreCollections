@@ -9,9 +9,6 @@ import Foundation
 
 public protocol DelegateProtocol {
     
-    /// Chain data source
-    var chain: DelegateProtocol? { get set }
-    
     /// Контейнер данных
     var containerData: ContainerDataProtocol { get set }
     
@@ -20,7 +17,10 @@ public protocol DelegateProtocol {
     
     // MARK: - Init
     
-    init(_ chain: DelegateProtocol?, containerData: ContainerDataProtocol, delegate: DelegateOutputProtocol?)
+    init(
+        containerData: ContainerDataProtocol,
+        delegate: DelegateOutputProtocol?
+    )
     
 }
 

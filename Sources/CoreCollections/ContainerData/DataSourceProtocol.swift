@@ -9,14 +9,16 @@ import Foundation
 
 public protocol DataSourceProtocol {
     
-    /// Chain data source
-    var chain: DataSourceProtocol? { get set }
+    associatedtype CollectionView: UIView
     
     /// Контейнер данных
     var containerData: ContainerDataProtocol { get set }
     
     // MARK: - Init
     
-    init(_ chain: DataSourceProtocol?, containerData: ContainerDataProtocol)
+    init(
+        collectionView: CollectionView,
+        containerData: ContainerDataProtocol
+    )
     
 }

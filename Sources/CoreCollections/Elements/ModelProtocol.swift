@@ -7,4 +7,4 @@
 
 import Foundation
 
-public protocol ModelProtocol {}
+public protocol ModelProtocol: Identifiable where ID == String {}

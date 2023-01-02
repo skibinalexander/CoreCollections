@@ -48,6 +48,10 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
     
     // MARK: - TableViewPresenterViewInputProtocol
     
+    public func resolveCollectionView<V>() -> V {
+        tableView as! V
+    }
+    
     public func configure(dataSource: UITableViewDataSource, delegate: UITableViewDelegate) {
         self.tableView?.dataSource = dataSource
         self.tableView?.delegate = delegate
@@ -88,28 +92,6 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
     @objc
     open func refreshAction() {
         output?.refreshList()
-    }
-    
-}
-
-// MARK: - CollectionFlow
-
-extension TableViewController {
-    
-    public func reloadContainer() {
-        self.tableView?.reloadData()
-    }
-    
-    public func insertCells(at paths: [IndexPath]) {
-        self.tableView.insertRows(at: paths, with: .automatic)
-    }
-    
-    public func removeCells(at paths: [IndexPath]) {
-        self.tableView.deleteRows(at: paths, with: .automatic)
-    }
-    
-    public func reloadCellsIntoTableView(at paths: [IndexPath]) {
-        self.tableView.reloadRows(at: paths, with: .automatic)
     }
     
 }

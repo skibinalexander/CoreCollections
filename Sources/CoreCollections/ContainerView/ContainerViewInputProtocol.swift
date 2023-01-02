@@ -20,6 +20,9 @@ public protocol ContainerViewInputProtocol: AnyObject {
         delegate: UITableViewDelegate
     )
     
+    /// Получить CollectionView
+    func resolveCollectionView<V>() -> V
+    
     /// Конфигурация коллекции для пагинации
     /// - Parameter output: Обработчик подгрузки данных
     func configure(output: ContainerViewOutputProtocol?)
@@ -29,21 +32,6 @@ public protocol ContainerViewInputProtocol: AnyObject {
     
     /// Закончить визуальное обновления коллекции
     func endRefreshing()
-    
-    /// Полная перезагрузка View слоя коллекции
-    func reloadContainer()
-    
-    /// Вставка ячеек без перезагрузки всей коллекции
-    /// - Parameter paths: Paths ячеек
-    func insertCells(at paths: [IndexPath])
-    
-    /// Удаление ячеек без перезагрузки всей коллекции
-    /// - Parameter paths: Paths ячеек
-    func removeCells(at paths: [IndexPath])
-    
-    /// Перезагрузить список ячеек без перезагрузки всей коллекции
-    /// - Parameter sections: Paths ячеек
-    func reloadCells(in sections: [Int])
     
     /// Обновить высоту ячейки
     /// - Parameter completion: Completion завершения анимации

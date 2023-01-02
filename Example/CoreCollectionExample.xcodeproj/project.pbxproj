@@ -134,6 +134,8 @@
 			dependencies = (
 			);
 			name = CoreCollectionExample;
+			packageProductDependencies = (
+			);
 			productName = CoreCollectionExample;
 			productReference = 2D88C1CB25EBDDB8000EA53F /* CoreCollectionExample.app */;
 			productType = "com.apple.product-type.application";
@@ -161,6 +163,8 @@
 				Base,
 			);
 			mainGroup = 2D88C1C225EBDDB8000EA53F;
+			packageReferences = (
+			);
 			productRefGroup = 2D88C1CC25EBDDB8000EA53F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

@@ -8,48 +8,31 @@
 
 import UIKit
 
-/// Реализация DataSource для коллекции таблицы
-public final class TableViewDataSource: NSObject, DataSourceProtocol, UITableViewDataSource {
-    
-    // MARK: - Properties
-    
-    /// Chain data source
-    public var chain: DataSourceProtocol?
+public final class TableViewDataSource: UITableViewDiffableDataSource<ObjectIdentifier, ObjectIdentifier>, DataSourceProtocol {
+
+    public typealias CollectionView = UITableView
     
     /// Контейнер данных для
     public var containerData: ContainerDataProtocol
     
     // MARK: - Init
     
-    public init( _ chain: DataSourceProtocol?, containerData: ContainerDataProtocol) {
-        self.chain = chain
+    public init(collectionView: UITableView, containerData: ContainerDataProtocol) {
         self.containerData = containerData
-    }
-    
-    // MARK: - UITableViewDataSource
-    
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        return chain?.containerData.items.count ?? containerData.items.count
-    }
-    
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chain?.containerData.items[section].cells.count ?? containerData.items[section].cells.count
-    }
-    
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let viewModel =
-                chain?.containerData.items[indexPath.section].cells[indexPath.row] ??
-                containerData.items[indexPath.section].cells[indexPath.row]
         
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: viewModel.reuseIdentifier,
-            for: indexPath
-        )
-        
-        viewModel.eraseTo(cell: cell, at: indexPath)
-        viewModel.view.prepareForData()
-        
-        return cell
+        super.init(tableView: collectionView, cellProvider: { (tableView, indexPath, id) in
+            let viewModel = containerData.items[indexPath.section].cells[indexPath.row]
+         
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: viewModel.reuseIdentifier,
+                for: indexPath
+            )
+         
+            viewModel.eraseTo(cell: cell, at: indexPath)
+            viewModel.view.prepareForData()
+         
+            return cell
+         })
     }
     
 }

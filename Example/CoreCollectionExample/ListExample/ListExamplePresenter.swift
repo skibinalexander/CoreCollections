@@ -8,51 +8,59 @@
 import Combine
 import CoreCollections
 
-public struct ListExampleUseCase: ContainerDataProtocol {
+public struct ListExampleUseCase {
     
     public var items: [ItemViewModel] = [
         .init(
-            id: .init(NSString(string: "test")),
+            id: "test".objIdentifiable,
+            header: TableViewModelSection<ExampleView, ExampleModel>(model: .init(id: "section")),
             cells: [
-                TableViewModelCell<ExampleView, ExampleModel>(model: .init())
+                TableViewModelCell<ExampleView, ExampleModel>(model: .init(id: "test"))
             ]
         )
     ]
     
 }
 
-final class ListExamplePresenter: TableViewPresenter {
+final class ListExamplePresenter: DelegateOutputProtocol {
     
     weak var view: ListExampleView!
     
-    let publisher = PassthroughSubject<any CellViewModelProtocol, Never>()
-    var subcriptions: [AnyCancellable] = []
+    lazy var context: TableCollectionContext = {
+        TableCollectionContext(
+            containerView: view,
+            items: ListExampleUseCase().items,
+            delegateOutput: self
+        )
+    }()
     
     // MARK: - Initialization
     
     init(view: ListExampleView) {
         self.view = view
-        super.init()
         
-        self.containerView = view
-        self.containerData = ListExampleUseCase()
+        self.context.configure()
         
-        self.configuration()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.context.items.first?.cells.append(TableViewModelCell<ExampleView, ExampleModel>(model: .init(id: "test 1")))
+        })
         
-        self.containerData.items.first?.cells.append(TableViewModelCell<ExampleView, ExampleModel>(model: .init()))
-        self.containerData.items.first?.cells.append(TableViewModelCell<ExampleView, ExampleModel>(model: .init()))
-        
-        publisher.sink { cell in
-            print(cell)
-        }
-        
-        publisher.send(TableViewModelCell<ExampleView, ExampleModel>(model: .init()))
-        
-        self.containerView.reloadContainer()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
+            self.context.items.first?.cells = []
+//            self.context.items.first?.cells = [
+//                TableViewModelCell<ExampleView, ExampleModel>(model: .init(id: "test 1")),
+//                TableViewModelCell<ExampleView, ExampleModel>(model: .init(id: "test 2")),
+//                TableViewModelCell<ExampleView, ExampleModel>(model: .init(id: "test 3"))
+//            ]
+        })
     }
     
-    override func refreshList() {
-        self.containerView.reloadContainer()
+}
+
+extension String {
+    
+    var objIdentifiable: ObjectIdentifier {
+        return .init(NSString(string: self))
     }
     
 }

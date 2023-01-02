@@ -1,13 +1,13 @@
 //
-//  TableViewModelCell.swift
+//  TableViewModelSection.swift
 //  CoreCollections
 //
-//  Created by skibinalexander on 01.01.2023.
+//  Created by skibinalexander on 02.01.2023.
 //
 
 import Foundation
 
-open class TableViewModelCell<View: WrappedViewProtocol, Model: ModelProtocol>: CellViewModelProtocol {
+open class TableViewModelSection<View: WrappedViewProtocol, Model: ModelProtocol>: SectionViewModelProtocol {
     
     // MARK: - ViewModelProtocol
     
@@ -18,12 +18,8 @@ open class TableViewModelCell<View: WrappedViewProtocol, Model: ModelProtocol>: 
     public var indexPath:           IndexPath!
     public var height:              ViewModelHeight     { .automatic }
     
-    public var shouldHighlight:     (() -> Bool)?
-    public var didHighlight:        (() -> Void)?
-    public var didUnhighlight:      (() -> Void)?
-    
-    public func eraseTo<Cell>(cell: Cell, at indexPath: IndexPath) {
-        self.view = (cell as? TableViewCell<View>)?.view as? View
+    public func eraseTo<Section>(view: Section, at index: Int) {
+        self.view = view as? View
         self.view.viewModel = self as? View.ViewModel
     }
     

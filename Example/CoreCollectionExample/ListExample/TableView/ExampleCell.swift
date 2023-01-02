@@ -12,6 +12,8 @@ import CoreCollections
 
 public struct ExampleModel: ModelProtocol {
     
-    let text: String = "text"
+    public var id: String
+    
+    let text: String = "skibin alexander"
     
 }

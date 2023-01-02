@@ -30,8 +30,6 @@ public protocol ViewModelProtocol {
     /// Заданная высота view
     var height: ViewModelHeight { get }
     
-    // MARK: - Public Implemetation
-    
     // MARK: - Init
     
     init(model: Model)
@@ -48,16 +46,16 @@ public protocol CellViewModelProtocol: AnyObject, ViewModelProtocol {
     /// - Parameters:
     ///   - cell: UI ячейки
     ///   - indexPath: Позиция ячейки
-    func eraseTo(cell: UITableViewCell, at indexPath: IndexPath)
+    func eraseTo<Cell>(cell: Cell, at indexPath: IndexPath)
     
 }
 
-public protocol SectionViewModelProtocol: ViewModelProtocol {
+public protocol SectionViewModelProtocol: AnyObject, ViewModelProtocol {
     
     /// Восстановить связи модели ячейки и UI ячейки
     /// - Parameters:
     ///   - cell: UI ячейки
     ///   - indexPath: Позиция ячейки
-    func eraseTo(view: UITableViewHeaderFooterView, at index: Int)
+    func eraseTo<Section>(view: Section, at index: Int)
     
 }

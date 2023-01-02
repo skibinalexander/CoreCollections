@@ -10,18 +10,17 @@ import UIKit
 
 public final class TableViewDelegate: NSObject, DelegateProtocol, UITableViewDelegate {
     
-    public var chain: DelegateProtocol?
+    // MARK: - Properties
+    
     public var containerData: ContainerDataProtocol
     public weak var delegate: DelegateOutputProtocol?
     
     // MARK: - Init
     
     public init(
-        _ chain: DelegateProtocol?,
         containerData: ContainerDataProtocol,
-        delegate: DelegateOutputProtocol?
+        delegate: DelegateOutputProtocol? = nil
     ) {
-        self.chain = chain
         self.containerData = containerData
         self.delegate = delegate
     }
@@ -37,10 +36,7 @@ extension TableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let viewModel =
-                chain?.containerData.items[section].header ??
-                containerData.items[section].header
-        else {
+        guard let viewModel = containerData.items[section].header else {
             return nil
         }
         
@@ -57,10 +53,7 @@ extension TableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard let viewModel =
-                chain?.containerData.items[section].footer ??
-                containerData.items[section].footer
-        else {
+        guard let viewModel = containerData.items[section].footer else {
             return nil
         }
         
@@ -123,34 +116,22 @@ extension TableViewDelegate {
 extension TableViewDelegate {
     
     public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        let viewModel =
-                chain?.containerData.items[indexPath.section].cells[indexPath.row] ??
-                containerData.items[indexPath.section].cells[indexPath.row]
-        
+        let viewModel = containerData.items[indexPath.section].cells[indexPath.row]
         return viewModel.shouldHighlight?() ?? true
     }
     
     public func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-        let viewModel =
-                chain?.containerData.items[indexPath.section].cells[indexPath.row] ??
-                containerData.items[indexPath.section].cells[indexPath.row]
-        
+        let viewModel = containerData.items[indexPath.section].cells[indexPath.row]
         viewModel.didHighlight?()
     }
     
     public func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-        let viewModel =
-                chain?.containerData.items[indexPath.section].cells[indexPath.row] ??
-                containerData.items[indexPath.section].cells[indexPath.row]
-        
+        let viewModel = containerData.items[indexPath.section].cells[indexPath.row]
         viewModel.didUnhighlight?()
     }
 
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let viewModel =
-                chain?.containerData.items[indexPath.section].cells[indexPath.row] ??
-                containerData.items[indexPath.section].cells[indexPath.row]
-        
+        let viewModel = containerData.items[indexPath.section].cells[indexPath.row]
         delegate?.willDisplay(viewModel: viewModel)
     }
     

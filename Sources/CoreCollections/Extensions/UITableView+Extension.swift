@@ -17,17 +17,5 @@ public extension UITableView {
             forCellReuseIdentifier: View.reuseIdentifier
         )
     }
-//    
-//    /// Регистрация TableViewCell
-//    func registerSection<U: TableViewSection>(_ coreCollectionSection: U.Type) {
-//        guard UINib.nib(withClass: coreCollectionSection) != nil else {
-//            fatalError("CoreCollection->UITableView+Extension: section \(coreCollectionSection) nibLoad is nil!")
-//        }
-//
-//        register(
-//            UINib(nibName: coreCollectionSection.identifier, bundle: nil),
-//            forCellReuseIdentifier: coreCollectionSection.identifier
-//        )
-//    }
     
 }

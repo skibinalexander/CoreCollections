@@ -1,14 +1,11 @@
 //
 //  Item.swift
-//  Vezu
-//
-//  Created by Ольга on 18/05/2019.
-//  Copyright © 2019 VezuAppDevTeam. All rights reserved.
 //
 
+import Combine
 import Foundation
 
-public class Item<U, T>: NSObject, Identifiable {
+public class Item<U, T>: NSObject, Identifiable, ObservableObject {
     
     typealias SectionType = U
     typealias CellType = T
@@ -18,13 +15,13 @@ public class Item<U, T>: NSObject, Identifiable {
     public var id: ObjectIdentifier
     
     /// Header item
-    public var header: U?
+    @Published public var header: U?
     
     /// Footer item
-    public var footer: U?
+    @Published public var footer: U?
     
     /// Набор ячеек в item
-    public var cells: [T] = []
+    @Published public var cells: [T] = []
     
     // MARK: - Lifecycle
     
@@ -38,6 +35,14 @@ public class Item<U, T>: NSObject, Identifiable {
         self.header = header
         self.footer = footer
         self.cells = cells
+    }
+    
+    // MARK: -
+    
+    public var itemDidChange: AnyPublisher<Void, Never> {
+        self.objectWillChange
+            .receive(on: RunLoop.main) // basically converts this to a an `objectDidChange` publisher!
+            .eraseToAnyPublisher()
     }
     
 }
