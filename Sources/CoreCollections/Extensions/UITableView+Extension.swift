@@ -21,8 +21,8 @@ public extension UITableView {
     /// Регистрация TableViewCell for reuseble Identifier
     func registerSection<View: WrappedViewProtocol, Model: ModelProtocol>(view: View.Type, model: Model.Type) {
         self.register(
-            TableViewCell<TableViewModelCell<View, Model>.View>.self,
-            forCellReuseIdentifier: View.reuseIdentifier
+            View.self,
+            forHeaderFooterViewReuseIdentifier: View.reuseIdentifier
         )
     }
     

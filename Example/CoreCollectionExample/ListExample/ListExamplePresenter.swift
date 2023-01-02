@@ -12,10 +12,16 @@ public struct ListExampleUseCase {
     
     public var items: [ItemViewModel] = [
         .init(
-            id: "test".objIdentifiable,
-            header: TableViewModelSection<ExampleView, ExampleModel>(model: .init(id: "section")),
+            id: "item_1".objIdentifiable,
+            header: TableViewModelSection<ExampleSectionView, ExampleSectionView.Model>(model: .init(id: "section")),
             cells: [
-                TableViewModelCell<ExampleView, ExampleModel>(model: .init(id: "test"))
+                TableViewModelCell<ExampleCellView, ExampleCellView.Model>(model: .init(id: "cell"))
+            ]
+        ),
+        .init(
+            id: "item_2".objIdentifiable,
+            cells: [
+                TableViewModelCell<ExampleCellView, ExampleCellView.Model>(model: .init(id: "cell"))
             ]
         )
     ]
@@ -38,21 +44,7 @@ final class ListExamplePresenter: DelegateOutputProtocol {
     
     init(view: ListExampleView) {
         self.view = view
-        
         self.context.configure()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.context.items.first?.cells.append(TableViewModelCell<ExampleView, ExampleModel>(model: .init(id: "test 1")))
-        })
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
-            self.context.items.first?.cells = []
-//            self.context.items.first?.cells = [
-//                TableViewModelCell<ExampleView, ExampleModel>(model: .init(id: "test 1")),
-//                TableViewModelCell<ExampleView, ExampleModel>(model: .init(id: "test 2")),
-//                TableViewModelCell<ExampleView, ExampleModel>(model: .init(id: "test 3"))
-//            ]
-        })
     }
     
 }

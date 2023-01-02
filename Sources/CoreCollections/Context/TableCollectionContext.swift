@@ -65,6 +65,10 @@ public final class TableCollectionContext: ObservableObject, ContainerDataProtoc
     
     // MARK: - Public Implementation
     
+    public func find(item id: ObjectIdentifier) -> ItemViewModel? {
+        return items.first(where: { $0.id == id })
+    }
+    
     public func reload() {
         self.reloadSnapshot(with: items)
     }

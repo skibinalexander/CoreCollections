@@ -14,7 +14,8 @@ final class ListExampleView: TableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.registerCell(view: ExampleView.self, model: ExampleModel.self)
+        tableView.registerCell(view: ExampleCellView.self, model: ExampleCellView.Model.self)
+        tableView.registerSection(view: ExampleSectionView.self, model: ExampleSectionView.Model.self)
         presenter = ListExamplePresenter(view: self)
     }
     

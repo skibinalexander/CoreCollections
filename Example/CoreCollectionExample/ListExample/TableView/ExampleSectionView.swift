@@ -1,30 +1,30 @@
 //
-//  ExampleView.swift
+//  ExampleSectionView.swift
 //  CoreCollectionExample
 //
-//  Created by skibinalexander on 31.12.2022.
+//  Created by skibinalexander on 03.01.2023.
 //
 
 import UIKit
 import CoreCollections
 
-public final class ExampleView: UIView, WrappedViewProtocol {
+public final class ExampleSectionView: UITableViewHeaderFooterView, WrappedViewProtocol {
     
     // MARK: - WrappedViewProtocol
     
-    public typealias ViewModel = TableViewModelCell<ExampleView, ExampleModel>
+    public typealias ViewModel = TableViewModelSection<ExampleSectionView, Model>
     
-    public var viewModel: TableViewModelCell<ExampleView, ExampleModel>?
+    public var viewModel: TableViewModelSection<ExampleSectionView, Model>?
     
     public static func instanceView() -> Self {
-        return ExampleView(frame: .zero) as! Self
+        return ExampleSectionView(frame: .zero) as! Self
     }
     
     public func prepareForData() {
         label.text = viewModel?.model.text
     }
     
-    public func prepareForReuse() {
+    public override func prepareForReuse() {
         label.text = nil
     }
     
@@ -39,8 +39,8 @@ public final class ExampleView: UIView, WrappedViewProtocol {
     
     // MARK: - Lifecycle
     
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    public override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         
         self.addSubview(label)
         
@@ -56,3 +56,16 @@ public final class ExampleView: UIView, WrappedViewProtocol {
     }
     
 }
+
+extension ExampleSectionView {
+    
+    public struct Model: ModelProtocol {
+        
+        public var id: String
+        
+        let text: String = "header of section"
+        
+    }
+    
+}
+
