@@ -41,7 +41,7 @@ public class ItemViewModel: Item<SectionViewModelProtocol, CellViewModelProtocol
         return ItemViewModel(id: Identifiers.bottom.id, header: header, cells: cells)
     }
     
-    public static func list<H: SectionViewModelProtocol>(header: H? = nil) -> ItemViewModel {
+    public static func list(header: (any SectionViewModelProtocol)? = nil) -> ItemViewModel {
         return ItemViewModel(id: Identifiers.list.id, header: header)
     }
     

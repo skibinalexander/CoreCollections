@@ -9,7 +9,7 @@ import Foundation
 
 extension String {
     
-    var objIdentifiable: ObjectIdentifier {
+    public var objIdentifiable: ObjectIdentifier {
         return .init(NSString(string: self))
     }
     

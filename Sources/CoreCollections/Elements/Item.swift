@@ -41,7 +41,7 @@ public class Item<U, T>: NSObject, Identifiable, ObservableObject {
     
     public var itemDidChange: AnyPublisher<Void, Never> {
         self.objectWillChange
-            .receive(on: RunLoop.main) // basically converts this to a an `objectDidChange` publisher!
+            .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
     

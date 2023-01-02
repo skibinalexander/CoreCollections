@@ -5,7 +5,7 @@
 //  Created by Скибин Александр on 01.03.2021.
 //
 
-import Foundation
+import UIKit
 
 public protocol WrappedViewProtocol: UIView, Identifiable {
     

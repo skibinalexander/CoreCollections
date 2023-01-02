@@ -30,6 +30,9 @@ open class TableViewCell<View: WrappedViewProtocol>: UITableViewCell {
     // MARK: - Implementation
     
     private func setupUI() {
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        
         contentView.addSubview(view)
         
         view.translatesAutoresizingMaskIntoConstraints = false

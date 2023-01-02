@@ -23,7 +23,7 @@ public final class TableCollectionContext: ObservableObject, ContainerDataProtoc
     
     private var itemsDidChange: AnyPublisher<Void, Never> {
         self.objectWillChange
-            .receive(on: RunLoop.main) // basically converts this to a an `objectDidChange` publisher!
+            .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
     
@@ -63,6 +63,12 @@ public final class TableCollectionContext: ObservableObject, ContainerDataProtoc
         self.reloadSnapshot(with: self.items)
     }
     
+    // MARK: - Public Implementation
+    
+    public func reload() {
+        self.reloadSnapshot(with: items)
+    }
+    
     // MARK: - Private Implementation
     
     private func subscribeItemsDidChange() {
@@ -78,7 +84,7 @@ public final class TableCollectionContext: ObservableObject, ContainerDataProtoc
         self.items.forEach { item in
             item.itemDidChange
                 .sink(receiveValue: { [weak self] _ in
-                    self?.reloadSnapshot(item: item)
+                    self?.reloadSnapshot(with: self?.items ?? [])
                     return
                 })
                 .store(in: &cancellables)
@@ -99,7 +105,7 @@ public final class TableCollectionContext: ObservableObject, ContainerDataProtoc
         }
     }
     
-    private func reloadSnapshot(item: ItemViewModel) {
+    private func reloadSnapshot(in item: ItemViewModel) {
         var snapshot = dataSource.snapshot()
         snapshot.deleteItems(snapshot.itemIdentifiers(inSection: item.id))
         snapshot.appendItems(item.cells.map { .init(NSString(string: $0.model.id)) })
