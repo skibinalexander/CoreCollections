@@ -139,18 +139,6 @@ extension TableViewDelegate {
 
 extension TableViewDelegate {
     
-    public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        .none
-    }
-
-    public func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        false
-    }
-    
-}
-
-extension TableViewDelegate {
-    
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         delegate?.scrollDidChange()
     }
@@ -165,24 +153,6 @@ extension TableViewDelegate {
     
     public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         delegate?.scrollViewWillBeginDecelerating()
-    }
-    
-}
-
-extension TableViewDelegate {
-    
-    public func tableView(
-        _ tableView: UITableView,
-        leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath
-    ) -> UISwipeActionsConfiguration? {
-        return nil
-    }
-    
-    public func tableView(
-        _ tableView: UITableView,
-        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
-    ) -> UISwipeActionsConfiguration? {
-        return nil
     }
     
 }

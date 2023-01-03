@@ -9,7 +9,7 @@ import Foundation
 
 public class ItemViewModel: Item<SectionViewModelProtocol, CellViewModelProtocol> {
     
-    public enum Identifiers: String, Identifiable {
+    public enum Identifiers: String {
         
         public typealias ID = Item<SectionViewModelProtocol, CellViewModelProtocol>.ID
         

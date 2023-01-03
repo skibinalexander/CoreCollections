@@ -65,7 +65,7 @@ public final class TableCollectionContext: ObservableObject, ContainerDataProtoc
     
     // MARK: - Public Implementation
     
-    public func find(item id: ObjectIdentifier) -> ItemViewModel? {
+    public func find(item id: String) -> ItemViewModel? {
         return items.first(where: { $0.id == id })
     }
     

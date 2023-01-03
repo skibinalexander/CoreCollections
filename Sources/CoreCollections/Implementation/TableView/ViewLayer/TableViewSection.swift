@@ -29,16 +29,14 @@ open class TableViewSection<View: WrappedViewProtocol>: UITableViewHeaderFooterV
     // MARK: - Implementation
     
     private func setupUI() {
-        backgroundColor = .clear
-        contentView.backgroundColor = .clear
-        
-        contentView.addSubview(view)
+        self.addSubview(view)
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        view.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        
+        view.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        view.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     
     open override func prepareForReuse() {

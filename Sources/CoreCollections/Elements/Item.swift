@@ -7,12 +7,13 @@ import Foundation
 
 public class Item<U, T>: NSObject, Identifiable, ObservableObject {
     
-    typealias SectionType = U
-    typealias CellType = T
+    public typealias ID = String
+    public typealias SectionType = U
+    public typealias CellType = T
     
     // MARK: - Properties
     
-    public var id: ObjectIdentifier
+    public var id: String
     
     /// Header item
     @Published public var header: U?
@@ -26,7 +27,7 @@ public class Item<U, T>: NSObject, Identifiable, ObservableObject {
     // MARK: - Lifecycle
     
     public init(
-        id: ObjectIdentifier,
+        id: String,
         header: U? = nil,
         footer: U? = nil,
         cells: [T] = []
