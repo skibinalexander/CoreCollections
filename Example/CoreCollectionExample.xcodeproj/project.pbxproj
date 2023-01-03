@@ -16,6 +16,7 @@
 		2DB5EBE025EBDFE300733C51 /* ListExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB5EBDF25EBDFE300733C51 /* ListExampleView.swift */; };
 		2DB5EC3F25ECC09D00733C51 /* ListExamplePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB5EC3E25ECC09D00733C51 /* ListExamplePresenter.swift */; };
 		2DCE7B0429637EDB00044D4A /* ExampleSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCE7B0329637EDB00044D4A /* ExampleSectionView.swift */; };
+		2DCE7B0B2964D15900044D4A /* SpacingSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCE7B0A2964D15900044D4A /* SpacingSectionView.swift */; };
 		4CCDEBC256A39F1712DE339C /* Pods_CoreCollectionExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE266EF0270E0EC76A614B7 /* Pods_CoreCollectionExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		2DB5EBDF25EBDFE300733C51 /* ListExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExampleView.swift; sourceTree = "<group>"; };
 		2DB5EC3E25ECC09D00733C51 /* ListExamplePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExamplePresenter.swift; sourceTree = "<group>"; };
 		2DCE7B0329637EDB00044D4A /* ExampleSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleSectionView.swift; sourceTree = "<group>"; };
+		2DCE7B0A2964D15900044D4A /* SpacingSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacingSectionView.swift; sourceTree = "<group>"; };
 		801DD9A1D4CCD1B342953837 /* Pods-CoreCollectionExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreCollectionExample.release.xcconfig"; path = "Target Support Files/Pods-CoreCollectionExample/Pods-CoreCollectionExample.release.xcconfig"; sourceTree = "<group>"; };
 		BCE266EF0270E0EC76A614B7 /* Pods_CoreCollectionExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoreCollectionExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -53,6 +55,7 @@
 			children = (
 				2D94A1DA2960317C00B92F62 /* ExampleCellView.swift */,
 				2DCE7B0329637EDB00044D4A /* ExampleSectionView.swift */,
+				2DCE7B0A2964D15900044D4A /* SpacingSectionView.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				2D88C1CF25EBDDB8000EA53F /* AppDelegate.swift in Sources */,
 				2DB5EC3F25ECC09D00733C51 /* ListExamplePresenter.swift in Sources */,
 				2D88C1D125EBDDB8000EA53F /* SceneDelegate.swift in Sources */,
+				2DCE7B0B2964D15900044D4A /* SpacingSectionView.swift in Sources */,
 				2DB5EBE025EBDFE300733C51 /* ListExampleView.swift in Sources */,
 				2D94A1DB2960317C00B92F62 /* ExampleCellView.swift in Sources */,
 				2DCE7B0429637EDB00044D4A /* ExampleSectionView.swift in Sources */,

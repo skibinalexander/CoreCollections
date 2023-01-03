@@ -12,16 +12,16 @@ public struct ListExampleUseCase {
     
     public var items: [ItemViewModel] = [
         .init(
-            id: "item_1".objIdentifiable,
+            id: "item_1",
             header: TableViewModelSection<ExampleSectionView, ExampleSectionView.Model>(model: .init(id: "section")),
             cells: [
-                TableViewModelCell<ExampleCellView, ExampleCellView.Model>(model: .init(id: "cell"))
+                TableViewModelCell<ExampleCellView, ExampleCellView.Model>(model: .init(id: "cell_1"))
             ]
         ),
         .init(
-            id: "item_2".objIdentifiable,
+            id: "item_2",
             cells: [
-                TableViewModelCell<ExampleCellView, ExampleCellView.Model>(model: .init(id: "cell"))
+                TableViewModelCell<ExampleCellView, ExampleCellView.Model>(model: .init(id: "cell_2"))
             ]
         )
     ]

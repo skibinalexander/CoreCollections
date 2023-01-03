@@ -40,10 +40,15 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
     open func configuration() {
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.separatorStyle = .none
-        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderHeight = UITableView.automaticDimension
-        tableView.estimatedSectionHeaderHeight = 44
-        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.sectionFooterHeight = UITableView.automaticDimension
+        
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     // MARK: - TableViewPresenterViewInputProtocol

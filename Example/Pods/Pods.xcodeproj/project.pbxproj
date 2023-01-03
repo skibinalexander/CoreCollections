@@ -115,15 +115,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		079D35908189B8ABAA2CBFDC0C864E14 /* DataLayer */ = {
-			isa = PBXGroup;
-			children = (
-				4A1420204C9E9C8F3A072AD43D98E0E6 /* TableViewDataSource.swift */,
-				4CA0EE22F104711559DEF6C86D6CA7CF /* TableViewDelegate.swift */,
-			);
-			path = DataLayer;
-			sourceTree = "<group>";
-		};
 		0F73FF79DB43EBBEA8F401D2CE0D9A3E /* ContainerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,8 +153,12 @@
 			isa = PBXGroup;
 			children = (
 				688EE3E7D71E1019739452DCB41E9F87 /* TableViewController.swift */,
-				079D35908189B8ABAA2CBFDC0C864E14 /* DataLayer */,
-				58A5E2CA31EA2CC7942EF0BAACA8D606 /* ViewLayer */,
+				4A1420204C9E9C8F3A072AD43D98E0E6 /* TableViewDataSource.swift */,
+				4CA0EE22F104711559DEF6C86D6CA7CF /* TableViewDelegate.swift */,
+				89C3EB29F2A059267DEC84994F03D525 /* TableViewCell.swift */,
+				2DCE7B05296383D100044D4A /* TableViewSection.swift */,
+				0B8464319CFB12A750B6D76E10CE12AA /* TableViewModelCell.swift */,
+				2DCE7B012962E17500044D4A /* TableViewModelSection.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -185,17 +180,6 @@
 				73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */,
 			);
 			name = iOS;
-			sourceTree = "<group>";
-		};
-		58A5E2CA31EA2CC7942EF0BAACA8D606 /* ViewLayer */ = {
-			isa = PBXGroup;
-			children = (
-				89C3EB29F2A059267DEC84994F03D525 /* TableViewCell.swift */,
-				2DCE7B05296383D100044D4A /* TableViewSection.swift */,
-				0B8464319CFB12A750B6D76E10CE12AA /* TableViewModelCell.swift */,
-				2DCE7B012962E17500044D4A /* TableViewModelSection.swift */,
-			);
-			path = ViewLayer;
 			sourceTree = "<group>";
 		};
 		6143FDB1BA4BEC2AF511BC1D8FEBA2F8 /* Context */ = {

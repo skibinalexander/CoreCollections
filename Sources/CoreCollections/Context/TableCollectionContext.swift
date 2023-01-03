@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-public final class TableCollectionContext: ObservableObject, ContainerDataProtocol {
+public final class TableCollectionContext: ContainerDataProtocol {
     
     // MARK: - ContainerDataProtocol
     
@@ -16,16 +16,6 @@ public final class TableCollectionContext: ObservableObject, ContainerDataProtoc
     
     public weak var containerView: ContainerViewInputProtocol!
     public weak var delegateOutput: DelegateOutputProtocol?
-    
-    // MARK: - Private Properties
-    
-    private var cancellables = Set<AnyCancellable>()
-    
-    private var itemsDidChange: AnyPublisher<Void, Never> {
-        self.objectWillChange
-            .receive(on: RunLoop.main)
-            .eraseToAnyPublisher()
-    }
     
     // MARK: - Properties
     
@@ -53,7 +43,6 @@ public final class TableCollectionContext: ObservableObject, ContainerDataProtoc
         self.containerView = containerView
         self.items = items
         self.delegateOutput = delegateOutput
-        self.subscribeItemsDidChange()
     }
     
     // MARK: - Configure
@@ -75,26 +64,6 @@ public final class TableCollectionContext: ObservableObject, ContainerDataProtoc
     
     // MARK: - Private Implementation
     
-    private func subscribeItemsDidChange() {
-        self.itemsDidChange
-            .sink(receiveValue: { [weak self] _ in
-                self?.reloadSnapshot(with: self?.items ?? [])
-                return
-            })
-            .store(in: &cancellables)
-    }
-    
-    private func subscribeCellsDidChange() {
-        self.items.forEach { item in
-            item.itemDidChange
-                .sink(receiveValue: { [weak self] _ in
-                    self?.reloadSnapshot(with: self?.items ?? [])
-                    return
-                })
-                .store(in: &cancellables)
-        }
-    }
-    
     private func reloadSnapshot(with items: [ItemViewModel]) {
         var snapshot = dataSource.snapshot()
         snapshot.deleteAllItems()
@@ -104,9 +73,7 @@ public final class TableCollectionContext: ObservableObject, ContainerDataProtoc
             snapshot.appendItems(item.cells.map { .init(NSString(string: $0.model.id)) }, toSection: item.id)
         }
         
-        dataSource.apply(snapshot, animatingDifferences: false) {
-            self.subscribeCellsDidChange()
-        }
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
     
     private func reloadSnapshot(in item: ItemViewModel) {

@@ -5,7 +5,7 @@
 import Combine
 import Foundation
 
-public class Item<U, T>: NSObject, Identifiable, ObservableObject {
+public class Item<U, T>: NSObject, Identifiable {
     
     public typealias ID = String
     public typealias SectionType = U
@@ -36,14 +36,6 @@ public class Item<U, T>: NSObject, Identifiable, ObservableObject {
         self.header = header
         self.footer = footer
         self.cells = cells
-    }
-    
-    // MARK: -
-    
-    public var itemDidChange: AnyPublisher<Void, Never> {
-        self.objectWillChange
-            .receive(on: RunLoop.main)
-            .eraseToAnyPublisher()
     }
     
 }

@@ -68,7 +68,7 @@ extension TableViewDelegate {
         
         return view
     }
-    
+
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return updateHeight(for: containerData.items[section].header?.height)
     }
@@ -81,7 +81,7 @@ extension TableViewDelegate {
         switch height {
         case .automatic?: return UITableView.automaticDimension
         case .value(let height)?: return CGFloat(height)
-        default: return .zero
+        default: return .leastNormalMagnitude
         }
     }
     

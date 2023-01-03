@@ -8,7 +8,7 @@
 import UIKit
 import CoreCollections
 
-public final class ExampleSectionView: UITableViewHeaderFooterView, WrappedViewProtocol {
+public final class ExampleSectionView: UIView, WrappedViewProtocol {
     
     // MARK: - WrappedViewProtocol
     
@@ -24,7 +24,7 @@ public final class ExampleSectionView: UITableViewHeaderFooterView, WrappedViewP
         label.text = viewModel?.model.text
     }
     
-    public override func prepareForReuse() {
+    public func prepareForReuse() {
         label.text = nil
     }
     
@@ -37,22 +37,26 @@ public final class ExampleSectionView: UITableViewHeaderFooterView, WrappedViewP
         return lbl
     }()
     
-    // MARK: - Lifecycle
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setupUI()
+    }
     
-    public override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
+    public required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    private func setupUI() {
+        self.backgroundColor = .red
         
         self.addSubview(label)
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        label.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        label.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        
+        label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16).isActive = true
+        label.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
+        label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16).isActive = true
+        label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -12).isActive = true
     }
     
 }
