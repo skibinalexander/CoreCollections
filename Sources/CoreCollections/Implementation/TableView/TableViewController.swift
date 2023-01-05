@@ -43,6 +43,7 @@ open class TableViewController: UIViewController, ContainerViewInputProtocol {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.sectionFooterHeight = UITableView.automaticDimension
+        tableView.estimatedSectionHeaderHeight = 64
         
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0

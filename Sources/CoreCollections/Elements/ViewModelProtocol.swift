@@ -25,7 +25,7 @@ public protocol ViewModelProtocol {
     var model: Model! { get }
     
     /// Индекс
-    var indexPath: IndexPath! { get }
+    var indexPath: IndexPath! { get set }
     
     /// Заданная высота view
     var height: ViewModelHeight { get }

@@ -49,7 +49,7 @@ public final class TableCollectionContext: ContainerDataProtocol {
     
     public func configure(_ completion: (() -> Void)? = nil) {
         self.containerView.configure(dataSource: self.dataSource, delegate: self.delegate)
-        self.reloadSnapshot(with: self.items)
+        self.reloadSnapshot(with: self.items, completion)
     }
     
     // MARK: - Public Implementation
@@ -58,22 +58,30 @@ public final class TableCollectionContext: ContainerDataProtocol {
         return items.first(where: { $0.id == id })
     }
     
-    public func reload() {
-        self.reloadSnapshot(with: items)
+    public func reload(completion: (() -> Void)? = nil) {
+        self.reloadSnapshot(with: items, completion)
+    }
+    
+    public func refresh(_ completion: (() -> Void)? = nil) {
+        self.items = []
+        self.reloadSnapshot(with: [], completion)
     }
     
     // MARK: - Private Implementation
     
-    private func reloadSnapshot(with items: [ItemViewModel]) {
+    private func reloadSnapshot(with items: [ItemViewModel], _ completion: (() -> Void)? = nil) {
         var snapshot = dataSource.snapshot()
         snapshot.deleteAllItems()
-        snapshot.appendSections(items.map { $0.id })
         
-        for item in items {
-            snapshot.appendItems(item.cells.map { .init(NSString(string: $0.model.id)) }, toSection: item.id)
+        if !items.isEmpty {
+            snapshot.appendSections(items.map { $0.id })
+            
+            for item in items {
+                snapshot.appendItems(item.cells.map { .init(NSString(string: $0.model.id)) }, toSection: item.id)
+            }
         }
         
-        dataSource.apply(snapshot, animatingDifferences: false)
+        dataSource.apply(snapshot, animatingDifferences: false, completion: completion)
     }
     
     private func reloadSnapshot(in item: ItemViewModel) {
