@@ -13,7 +13,7 @@ public protocol WrappedViewProtocol: UIView, Identifiable {
     
     // MARK: - Public Properties
     
-    var viewModel: ViewModel? { get set }
+    var viewModel: ViewModel! { get set }
     
     // MARK: - Cell Implementation
     
