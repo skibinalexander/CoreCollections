@@ -5,8 +5,8 @@
 //  Created by skibinalexander on 01.01.2023.
 //
 
-import Combine
 import Foundation
+import UIKit
 
 public final class TableCollectionContext: ContainerDataProtocol {
     
@@ -77,7 +77,7 @@ public final class TableCollectionContext: ContainerDataProtocol {
             snapshot.appendSections(items.map { $0.id })
             
             for item in items {
-                snapshot.appendItems(item.cells.map { .init(NSString(string: $0.model.id)) }, toSection: item.id)
+                snapshot.appendItems(item.cells.map { $0.model.id }, toSection: item.id)
             }
         }
         

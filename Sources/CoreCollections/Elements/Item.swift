@@ -5,24 +5,24 @@
 import Combine
 import Foundation
 
-public class Item<U, T>: NSObject, Identifiable {
+public class Item<U, Cell>: NSObject, Identifiable {
     
     public typealias ID = String
     public typealias SectionType = U
-    public typealias CellType = T
+    public typealias CellType = Cell
     
     // MARK: - Properties
     
     public var id: String
     
     /// Header item
-    @Published public var header: U?
+    public var header: U?
     
     /// Footer item
-    @Published public var footer: U?
+    public var footer: U?
     
     /// Набор ячеек в item
-    @Published public var cells: [T] = []
+    public var cells: [Cell] = []
     
     // MARK: - Lifecycle
     
@@ -30,7 +30,7 @@ public class Item<U, T>: NSObject, Identifiable {
         id: String,
         header: U? = nil,
         footer: U? = nil,
-        cells: [T] = []
+        cells: [Cell] = []
     ) {
         self.id = id
         self.header = header
