@@ -34,6 +34,7 @@ public final class ExampleSectionView: UIView, WrappedViewProtocol {
         let lbl = UILabel()
         lbl.text = "initial txt"
         lbl.textColor = .white
+        lbl.font = .systemFont(ofSize: 24)
         return lbl
     }()
     
