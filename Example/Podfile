@@ -7,6 +7,6 @@ target 'CoreCollectionExample' do
 
   # Pods for CoreCollectionExample
 
-  pod 'CoreCollections', :path => '../../'
+  pod 'CoreCollections', :path => '../'
 
 end

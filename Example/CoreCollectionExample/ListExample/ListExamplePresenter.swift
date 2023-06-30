@@ -5,66 +5,54 @@
 //  Created by Скибин Александр on 01.03.2021.
 //
 
+import Combine
 import CoreCollections
 
-final class ListExamplePresenter: TableViewPresenter {
+public struct ListExampleUseCase {
+    
+    public var items: [ItemViewModel] = [
+        .init(
+            id: "item_1",
+            header: TableViewModelSection<ExampleSectionView, ExampleSectionView.Model>(model: .init(id: "section")),
+            cells: [
+                TableViewModelCell<ExampleCellView, ExampleCellView.Model>(model: .init(id: "cell_1"))
+            ]
+        ),
+        .init(
+            id: "item_2",
+            cells: [
+                TableViewModelCell<ExampleCellView, ExampleCellView.Model>(model: .init(id: "cell_2"))
+            ]
+        )
+    ]
+    
+}
+
+final class ListExamplePresenter: DelegateOutputProtocol {
     
     weak var view: ListExampleView!
+    
+    lazy var context: TableCollectionContext = {
+        TableCollectionContext(
+            containerView: view,
+            items: ListExampleUseCase().items,
+            delegateOutput: self
+        )
+    }()
     
     // MARK: - Initialization
     
     init(view: ListExampleView) {
         self.view = view
-        super.init()
-        
-        ManagerBuilder()
-            .configure(manager: self.manager)
-            .configure(template: ExampleTemplateViewModels())
-            .configure(containerView: self.view)
-            .configure(viewDelegate: self)
-            .configure(items: [.list()])
-            .build()
-        
-        trailingSwipeConfig = { [unowned self] indexPath in
-            print(indexPath)
-            return UISwipeActionsConfiguration(
-                actions: self.configurationActions()
-            )
-        }
-        
-        manager
-            .getData()
-            .replaceCells(
-                in: .list,
-                cells: [
-                    ExampleModelCell(
-                        label: "Тест москва -> питер",
-                        id: "id"
-                    )
-                ],
-                viewCallback: .reloadCollection
-            )
-        
+        self.context.configure()
     }
     
-    // MARK: - TableView
+}
+
+extension String {
     
-    override func didSelect(viewModel: ViewModelCellProtocol) {
-        super.didSelect(viewModel: viewModel)
-        print(viewModel)
-    }
-    
-    func configurationActions() -> [UIContextualAction] {
-        let action = UIContextualAction(
-            style: .destructive,
-            title: "Remove",
-            handler: { (action, view, completionHandler) in
-                print("Handle actions")
-                completionHandler(true)
-            }
-        )
-        
-        return [action]
+    var objIdentifiable: ObjectIdentifier {
+        return .init(NSString(string: self))
     }
     
 }

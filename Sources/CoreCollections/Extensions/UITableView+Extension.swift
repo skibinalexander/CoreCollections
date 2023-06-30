@@ -11,26 +11,18 @@ import UIKit
 public extension UITableView {
     
     /// Регистрация TableViewCell for reuseble Identifier
-    func registerCell<T: TableViewCell>(_ coreCollectionCell: T.Type) {
-        guard UINib.nib(withClass: coreCollectionCell) != nil else {
-            fatalError("CoreCollection->UITableView+Extension: cell \(coreCollectionCell) nibLoad is nil!")
-        }
-        
-        register(
-            UINib(nibName: coreCollectionCell.identifier, bundle: nil),
-            forCellReuseIdentifier: coreCollectionCell.identifier
+    func registerCell<View: WrappedViewProtocol, Model: ModelProtocol>(view: View.Type, model: Model.Type) {
+        self.register(
+            TableViewCell<TableViewModelCell<View, Model>.View>.self,
+            forCellReuseIdentifier: View.reuseIdentifier
         )
     }
     
-    /// Регистрация TableViewCell
-    func registerSection<U: TableViewSection>(_ coreCollectionSection: U.Type) {
-        guard UINib.nib(withClass: coreCollectionSection) != nil else {
-            fatalError("CoreCollection->UITableView+Extension: section \(coreCollectionSection) nibLoad is nil!")
-        }
-
-        register(
-            UINib(nibName: coreCollectionSection.identifier, bundle: nil),
-            forCellReuseIdentifier: coreCollectionSection.identifier
+    /// Регистрация TableViewCell for reuseble Identifier
+    func registerSection<View: WrappedViewProtocol, Model: ModelProtocol>(view: View.Type, model: Model.Type) {
+        self.register(
+            TableViewSection<TableViewModelSection<View, Model>.View>.self,
+            forHeaderFooterViewReuseIdentifier: View.reuseIdentifier
         )
     }
     
