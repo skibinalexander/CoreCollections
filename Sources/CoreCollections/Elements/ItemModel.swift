@@ -13,8 +13,8 @@ public class ItemViewModel: Item<SectionViewModelProtocol, CellViewModelProtocol
         
         public typealias ID = Item<SectionViewModelProtocol, CellViewModelProtocol>.ID
         
-        public var id: Item<SectionViewModelProtocol, CellViewModelProtocol>.ID {
-            return .init(NSString(string: self.rawValue))
+        public var id: String {
+            return self.rawValue
         }
         
         case single

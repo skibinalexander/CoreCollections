@@ -25,6 +25,7 @@ open class TableViewModelCell<View: WrappedViewProtocol, Model: ModelProtocol>: 
     public func eraseTo<Cell>(cell: Cell, at indexPath: IndexPath) {
         self.view = (cell as? TableViewCell<View>)?.view as? View
         self.view.viewModel = self as? View.ViewModel
+        self.indexPath = indexPath
     }
     
     public weak var view: View!
